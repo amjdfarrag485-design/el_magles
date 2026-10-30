@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مولّد أيقونات التطبيق الإسلامي</title>
+  <style>
+    /* ═══════════════════════════════════════════
+       التصميم العام
+       ═══════════════════════════════════════════ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Tajawal', Arial, sans-serif;
+      background: #1a1a0e;
+      color: #e8e0d0;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #d4af37;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #a09880;
+      margin-bottom: 40px;
+      font-size: 14px;
+    }
+
+    /* ═══════════════════════════════════════════
+       شبكة الأيقونات
+       ═══════════════════════════════════════════ */
+    .icons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto 40px;
+    }
+
+    .icon-card {
+      background: #2a2a1a;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.2s, border-color 0.3s;
+    }
+
+    .icon-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212, 175, 55, 0.5);
+    }
+
+    .icon-card canvas {
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      max-width: 100%;
+      height: auto;
+    }
+
+    .icon-size {
+      color: #d4af37;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .icon-label {
+      color: #a09880;
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    /* ═══════════════════════════════════════════
+       الأزرار
+       ═══════════════════════════════════════════ */
+    .download-btn {
+      background: linear-gradient(135deg, #d4af37, #b8960c);
+      color: #1a1a0e;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+    }
+
+    .download-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3);
+    }
+
+    .download-btn:active {
+      transform: scale(0.98);
+    }
+
+    .download-all-container {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .download-all-btn {
+      background: linear-gradient(135deg, #d4af37, #b8960c);
+      color: #1a1a0e;
+      border: none;
+      padding: 16px 48px;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+    }
+
+    .download-all-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+    }
+
+    /* ═══════════════════════════════════════════
+       حالة التحميل والرسائل
+       ═══════════════════════════════════════════ */
+    .status {
+      text-align: center;
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .status.success {
+      display: block;
+      background: rgba(76, 175, 80, 0.15);
+      color: #81c784;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .status.error {
+      display: block;
+      background: rgba(244, 67, 54, 0.15);
+      color: #ef9a9a;
+      border: 1px solid rgba(244, 67, 54, 0.3);
+    }
+
+    .status.info {
+      display: block;
+      background: rgba(212, 175, 55, 0.15);
+      color: #d4af37;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .note {
+      text-align: center;
+      color: #a09880;
+      font-size: 13px;
+      max-width: 600px;
+      margin: 20px auto;
+      line-height: 1.8;
+      padding: 16px;
+      background: rgba(42, 42, 26, 0.5);
+      border-radius: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🕌 مولّد أيقونات التطبيق الإسلامي</h1>
+  <p class="subtitle">اضغط على الأيقونة أو زر التحميل لحفظها بصيغة PNG</p>
+
+  <!-- زر تحميل الكل -->
+  <div class="download-all-container">
+    <button class="download-all-btn" onclick="downloadAll()">
+      ⬇️ تحميل جميع الأيقونات
+    </button>
+  </div>
+
+  <!-- شبكة الأيقونات -->
+  <div class="icons-grid" id="iconsGrid"></div>
+
+  <!-- حالة التحميل -->
+  <div class="status" id="statusMsg"></div>
+
+  <!-- ملاحظة -->
+  <div class="note">
+    💡 <strong>ملاحظة:</strong> يتم رسم الأيقونات باستخدام Canvas API.
+    اضغط على زر "تحميل" لكل حجم لحفظ الأيقونة كملف PNG.
+    <br>
+    ضع الملفات المحملة في مجلد <code>icons/</code> في مشروعك.
+  </div>
+
+  <script>
+    /**
+     * ╔══════════════════════════════════════════════════════════════╗
+     * ║             مولّد أيقونات التطبيق الإسلامي                 ║
+     * ║        يرسم الأيقونة بأحجام مختلفة باستخدام Canvas         ║
+     * ╚══════════════════════════════════════════════════════════════╝
+     */
+
+    // ═══════════════════════════════════════════
+    // الأحجام المطلوبة للأيقونات
+    // ═══════════════════════════════════════════
+    const ICON_SIZES = [
+      { size: 72,  label: 'Android - صغير' },
+      { size: 96,  label: 'Android - متوسط / Shortcuts' },
+      { size: 128, label: 'Chrome Web Store' },
+      { size: 144, label: 'Windows Tiles / iOS' },
+      { size: 152, label: 'iPad' },
+      { size: 192, label: 'Android - كبير (مطلوب)' },
+      { size: 384, label: 'Android - عالي الدقة' },
+      { size: 512, label: 'Splash Screen (مطلوب)' },
+    ];
+
+    // ═══════════════════════════════════════════
+    // رسم الأيقونة على Canvas
+    // ═══════════════════════════════════════════
+
+    /**
+     * يرسم الأيقونة الإسلامية الكاملة على canvas
+     * @param {CanvasRenderingContext2D} ctx - سياق الرسم
+     * @param {number} size - حجم الأيقونة (عرض = ارتفاع)
+     */
+    function drawIcon(ctx, size) {
+      const s = size / 512; // معامل التحجيم
+      const cx = size / 2;  // مركز X
+      const cy = size / 2;  // مركز Y
+
+      // ─── مسح اللوحة ───
+      ctx.clearRect(0, 0, size, size);
+
+      // ─── 1. الخلفية الدائرية ───
+      const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, cx);
+      bgGrad.addColorStop(0, '#2a2a1a');
+      bgGrad.addColorStop(1, '#1a1a0e');
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, cx - 2 * s, 0, Math.PI * 2);
+      ctx.fillStyle = bgGrad;
+      ctx.fill();
+
+      // ─── 2. نقاط زخرفية حول الدائرة ───
+      ctx.fillStyle = 'rgba(212, 175, 55, 0.25)';
+      for (let i = 0; i < 12; i++) {
+        const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
+        const dotX = cx + Math.cos(angle) * (cx - 18 * s);
+        const dotY = cy + Math.sin(angle) * (cx - 18 * s);
+        ctx.beginPath();
+        ctx.arc(dotX, dotY, 3 * s, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // ─── 3. التوهج الداخلي ───
+      const glowGrad = ctx.createRadialGradient(cx, cy * 0.8, 0, cx, cy * 0.8, cx * 0.8);
+      glowGrad.addColorStop(0, 'rgba(212, 175, 55, 0.2)');
+      glowGrad.addColorStop(1, 'rgba(212, 175, 55, 0)');
+      ctx.beginPath();
+      ctx.arc(cx, cy * 0.8, cx * 0.8, 0, Math.PI * 2);
+      ctx.fillStyle = glowGrad;
+      ctx.fill();
+
+      // ─── 4. الحدود الذهبية الخارجية ───
+      const borderGrad = ctx.createLinearGradient(0, 0, size, size);
+      borderGrad.addColorStop(0, '#f0d060');
+      borderGrad.addColorStop(0.25, '#d4af37');
+      borderGrad.addColorStop(0.5, '#f0d060');
+      borderGrad.addColorStop(0.75, '#b8960c');
+      borderGrad.addColorStop(1, '#f0d060');
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, cx - 4 * s, 0, Math.PI * 2);
+      ctx.strokeStyle = borderGrad;
+      ctx.lineWidth = 4 * s;
+      ctx.stroke();
+
+      // ─── 5. الحدود الداخلية ───
+      ctx.beginPath();
+      ctx.arc(cx, cy, cx - 14 * s, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
+      ctx.lineWidth = 1.5 * s;
+      ctx.stroke();
+
+      // ─── 6. الهلال ───
+      const crescentGrad = ctx.createLinearGradient(
+        cx - 60 * s, cy - 120 * s,
+        cx + 60 * s, cy - 40 * s
+      );
+      crescentGrad.addColorStop(0, '#f5e080');
+      crescentGrad.addColorStop(0.4, '#d4af37');
+      crescentGrad.addColorStop(1, '#a07a08');
+
+      // الدائرة الخارجية للهلال
+      ctx.beginPath();
+      ctx.arc(cx, cy - 90 * s, 55 * s, 0, Math.PI * 2);
+      ctx.fillStyle = crescentGrad;
+      ctx.fill();
+
+      // الدائرة الداخلية (لعمل شكل الهلال)
+      ctx.beginPath();
+      ctx.arc(cx + 18 * s, cy - 100 * s, 45 * s, 0, Math.PI * 2);
+      ctx.fillStyle = bgGrad;
+      ctx.fill();
+
+      // ─── 7. النجمة الخماسية ───
+      drawStar(ctx, cx + 42 * s, cy - 115 * s, 5, 17 * s, 7 * s, crescentGrad);
+
+      // ─── 8. نجمات صغيرة مزخرفة ───
+      ctx.globalAlpha = 0.5;
+      drawStar(ctx, cx - 76 * s, cy - 135 * s, 5, 7 * s, 3 * s, '#d4af37');
+      drawStar(ctx, cx + 84 * s, cy - 75 * s, 5, 5 * s, 2 * s, '#d4af37');
+      drawStar(ctx, cx - 86 * s, cy - 55 * s, 5, 4 * s, 1.5 * s, '#f0d060');
+      ctx.globalAlpha = 1;
+
+      // ─── 9. المسجد ───
+      const mosqueY = cy + 65 * s;
+      const mosqueGrad = ctx.createLinearGradient(
+        cx - 90 * s, mosqueY - 80 * s,
+        cx + 90 * s, mosqueY + 60 * s
+      );
+      mosqueGrad.addColorStop(0, '#f0d060');
+      mosqueGrad.addColorStop(0.5, '#d4af37');
+      mosqueGrad.addColorStop(1, '#b8960c');
+
+      // قاعدة المسجد
+      ctx.fillStyle = mosqueGrad;
+      roundRect(ctx, cx - 90 * s, mosqueY, 180 * s, 60 * s, 4 * s);
+
+      // القبة الرئيسية
+      ctx.beginPath();
+      ctx.moveTo(cx - 70 * s, mosqueY);
+      ctx.quadraticCurveTo(cx - 70 * s, mosqueY - 60 * s, cx, mosqueY - 80 * s);
+      ctx.quadraticCurveTo(cx + 70 * s, mosqueY - 60 * s, cx + 70 * s, mosqueY);
+      ctx.closePath();
+      ctx.globalAlpha = 0.85;
+      ctx.fillStyle = mosqueGrad;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // القبة الصغيرة اليمنى
+      ctx.beginPath();
+      ctx.moveTo(cx + 50 * s, mosqueY);
+      ctx.quadraticCurveTo(cx + 50 * s, mosqueY - 25 * s, cx + 70 * s, mosqueY - 35 * s);
+      ctx.quadraticCurveTo(cx + 90 * s, mosqueY - 25 * s, cx + 90 * s, mosqueY);
+      ctx.closePath();
+      ctx.globalAlpha = 0.7;
+      ctx.fillStyle = mosqueGrad;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // القبة الصغيرة اليسرى
+      ctx.beginPath();
+      ctx.moveTo(cx - 90 * s, mosqueY);
+      ctx.quadraticCurveTo(cx - 90 * s, mosqueY - 25 * s, cx - 70 * s, mosqueY - 35 * s);
+      ctx.quadraticCurveTo(cx - 50 * s, mosqueY - 25 * s, cx - 50 * s, mosqueY);
+      ctx.closePath();
+      ctx.globalAlpha = 0.7;
+      ctx.fillStyle = mosqueGrad;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // المئذنة اليمنى
+      ctx.fillStyle = mosqueGrad;
+      ctx.globalAlpha = 0.8;
+      roundRect(ctx, cx + 85 * s, mosqueY - 50 * s, 12 * s, 110 * s, 3 * s);
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      ctx.arc(cx + 91 * s, mosqueY - 52 * s, 5 * s, 0, Math.PI * 2);
+      ctx.fillStyle = '#f0d060';
+      ctx.fill();
+
+      // المئذنة اليسرى
+      ctx.fillStyle = mosqueGrad;
+      ctx.globalAlpha = 0.8;
+      roundRect(ctx, cx - 97 * s, mosqueY - 50 * s, 12 * s, 110 * s, 3 * s);
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath();
+      ctx.arc(cx - 91 * s, mosqueY - 52 * s, 5 * s, 0, Math.PI * 2);
+      ctx.fillStyle = '#f0d060';
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // باب المسجد
+      ctx.beginPath();
+      ctx.moveTo(cx - 15 * s, mosqueY + 60 * s);
+      ctx.lineTo(cx - 15 * s, mosqueY + 25 * s);
+      ctx.quadraticCurveTo(cx, mosqueY + 10 * s, cx + 15 * s, mosqueY + 25 * s);
+      ctx.lineTo(cx + 15 * s, mosqueY + 60 * s);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(26, 26, 14, 0.5)';
+      ctx.fill();
+
+      // نوافذ صغيرة
+      ctx.beginPath();
+      ctx.arc(cx - 35 * s, mosqueY + 20 * s, 6 * s, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(26, 26, 14, 0.3)';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(cx + 35 * s, mosqueY + 20 * s, 6 * s, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(26, 26, 14, 0.3)';
+      ctx.fill();
+
+      // ─── 10. النص ───
+      if (size >= 128) {
+        const fontSize = Math.max(10, 20 * s);
+        ctx.font = `${fontSize}px 'Amiri', 'Traditional Arabic', serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        // التدرج الذهبي للنص
+        const textGrad = ctx.createLinearGradient(
+          cx - 100 * s, cy + 185 * s,
+          cx + 100 * s, cy + 185 * s
+        );
+        textGrad.addColorStop(0, '#f0d060');
+        textGrad.addColorStop(0.5, '#d4af37');
+        textGrad.addColorStop(1, '#b8960c');
+
+        ctx.fillStyle = textGrad;
+        ctx.globalAlpha = 0.85;
+        ctx.fillText('بسم الله الرحمن الرحيم', cx, cy + 185 * s);
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    /**
+     * يرسم نجمة متعددة الأضلاع
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {number} cx - مركز X
+     * @param {number} cy - مركز Y
+     * @param {number} spikes - عدد الأضلاع
+     * @param {number} outerR - نصف القطر الخارجي
+     * @param {number} innerR - نصف القطر الداخلي
+     * @param {string|CanvasGradient} fillStyle - لون أو تدرج التعبئة
+     */
+    function drawStar(ctx, cx, cy, spikes, outerR, innerR, fillStyle) {
+      let rot = (Math.PI / 2) * 3;
+      const step = Math.PI / spikes;
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - outerR);
+
+      for (let i = 0; i < spikes; i++) {
+        ctx.lineTo(
+          cx + Math.cos(rot) * outerR,
+          cy + Math.sin(rot) * outerR
+        );
+        rot += step;
+        ctx.lineTo(
+          cx + Math.cos(rot) * innerR,
+          cy + Math.sin(rot) * innerR
+        );
+        rot += step;
+      }
+
+      ctx.lineTo(cx, cy - outerR);
+      ctx.closePath();
+      ctx.fillStyle = fillStyle;
+      ctx.fill();
+    }
+
+    /**
+     * يرسم مستطيل بزوايا مستديرة
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {number} x
+     * @param {number} y
+     * @param {number} w - العرض
+     * @param {number} h - الارتفاع
+     * @param {number} r - نصف قطر الزوايا
+     */
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // ═══════════════════════════════════════════
+    // إنشاء وعرض الأيقونات
+    // ═══════════════════════════════════════════
+
+    /**
+     * ينشئ عنصر canvas ويرسم الأيقونة عليه
+     * @param {number} size - حجم الأيقونة
+     * @returns {HTMLCanvasElement}
+     */
+    function createIconCanvas(size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+
+      // لتحسين جودة العرض على الشاشات العادية
+      const displaySize = Math.min(size, 160);
+      canvas.style.width = displaySize + 'px';
+      canvas.style.height = displaySize + 'px';
+
+      const ctx = canvas.getContext('2d');
+      drawIcon(ctx, size);
+
+      return canvas;
+    }
+
+    /**
+     * يحمّل الأيقونة كملف PNG
+     * @param {HTMLCanvasElement} canvas - عنصر الـ canvas
+     * @param {number} size - حجم الأيقونة
+     */
+    function downloadIcon(canvas, size) {
+      try {
+        const link = document.createElement('a');
+        link.download = `icon-${size}x${size}.png`;
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        showStatus(`✅ تم تحميل icon-${size}x${size}.png`, 'success');
+      } catch (err) {
+        showStatus(`❌ خطأ أثناء تحميل الأيقونة: ${err.message}`, 'error');
+      }
+    }
+
+    /**
+     * يحمّل جميع الأيقونات دفعة واحدة
+     */
+    function downloadAll() {
+      showStatus('⏳ جاري تحميل جميع الأيقونات...', 'info');
+
+      let delay = 0;
+      const canvases = document.querySelectorAll('.icon-card canvas');
+
+      canvases.forEach((canvas, index) => {
+        const size = ICON_SIZES[index].size;
+        setTimeout(() => {
+          downloadIcon(canvas, size);
+
+          if (index === canvases.length - 1) {
+            setTimeout(() => {
+              showStatus('✅ تم تحميل جميع الأيقونات بنجاح!', 'success');
+            }, 500);
+          }
+        }, delay);
+        delay += 400; // تأخير بين كل تحميل لتجنب حظر المتصفح
+      });
+    }
+
+    /**
+     * يعرض رسالة حالة
+     * @param {string} message - نص الرسالة
+     * @param {string} type - نوع الرسالة (success, error, info)
+     */
+    function showStatus(message, type) {
+      const statusEl = document.getElementById('statusMsg');
+      statusEl.textContent = message;
+      statusEl.className = 'status ' + type;
+
+      // إخفاء تلقائي بعد 4 ثوان
+      if (type === 'success') {
+        setTimeout(() => {
+          statusEl.className = 'status';
+        }, 4000);
+      }
+    }
+
+    // ═══════════════════════════════════════════
+    // التهيئة عند تحميل الصفحة
+    // ═══════════════════════════════════════════
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('iconsGrid');
+
+      ICON_SIZES.forEach(({ size, label }) => {
+        // إنشاء بطاقة الأيقونة
+        const card = document.createElement('div');
+        card.className = 'icon-card';
+
+        // إنشاء الـ canvas
+        const canvas = createIconCanvas(size);
+
+        // معلومات الحجم
+        const sizeLabel = document.createElement('div');
+        sizeLabel.className = 'icon-size';
+        sizeLabel.textContent = `${size} × ${size}`;
+
+        // وصف الاستخدام
+        const infoLabel = document.createElement('div');
+        infoLabel.className = 'icon-label';
+        infoLabel.textContent = label;
+
+        // زر التحميل
+        const btn = document.createElement('button');
+        btn.className = 'download-btn';
+        btn.textContent = '⬇️ تحميل PNG';
+        btn.addEventListener('click', () => downloadIcon(canvas, size));
+
+        // تجميع البطاقة
+        card.appendChild(canvas);
+        card.appendChild(sizeLabel);
+        card.appendChild(infoLabel);
+        card.appendChild(btn);
+
+        grid.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>
