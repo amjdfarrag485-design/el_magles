@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#121212">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="المجلس">
+  <meta name="application-name" content="المجلس">
+  <meta name="description" content="تطبيق المجلس: الموسوعة القرآنية والابتهالات - المصحف التفاعلي المرتل والمجود، إذاعة القرآن الكريم من القاهرة، والتواشيح والابتهالات وحصن المسلم ومواقيت الصلاة">
+
+  <title>المجلس - الموسوعة القرآنية والابتهالات</title>
+
+  <!-- Google Fonts: Amiri (الخط العثماني) + Tajawal (واجهة المستخدم) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- ملف التصميم الفاخر الداكن -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <!-- شاشة التحميل الأولية -->
+  <div id="loading" class="loading-screen">
+    <div class="gold-spinner"></div>
+    <p style="margin-top: 16px; color: var(--gold-light); font-weight: 700;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+  </div>
+
+  <!-- عنصر التنبيهات (Toast) -->
+  <div id="toast" class="toast-alert" role="alert"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 1. الصفحة الرئيسية (Home Page)                                            -->
+  <!-- ========================================================================= -->
+  <section class="page active" id="page-home">
+    <!-- ترويسة الهوية الرسمية لتطبيق المجلس -->
+    <header class="brand-top-banner">
+      <div class="brand-title-box">
+        <span class="brand-subtitle">الموسوعة القرآنية والابتهالات</span>
+        <h1 class="brand-main-title">المَجْلِس</h1>
+      </div>
+      <div class="brand-bismillah">﷽</div>
+    </header>
+
+    <!-- كارت مواقيت الصلاة في صدارة الصفحة الرئيسية فور فتح التطبيق -->
+    <div class="home-prayer-hero" id="home-prayer-hero">
+      <div class="prayer-hero-top">
+        <div class="prayer-hero-badge">
+          <span>🕌</span>
+          <span id="hero-prayer-badge-title">الصلاة القادمة</span>
+        </div>
+        <div class="prayer-hero-location" id="hero-prayer-location">
+          <span>📍</span>
+          <span id="hero-location-text">القاهرة، مصر</span>
+        </div>
+      </div>
+
+      <div class="prayer-hero-main">
+        <div class="prayer-hero-name" id="hero-next-prayer-name">صلاة الظهر</div>
+        <div class="prayer-hero-time" id="hero-next-prayer-time">11:45</div>
+        <div class="prayer-hero-countdown" id="hero-prayer-countdown">متبقي: 01 س و 24 د</div>
+      </div>
+
+      <!-- شبكة مصغرة لجميع الصلوات الخمس والشروق -->
+      <div class="mini-prayer-grid" id="hero-mini-prayers">
+        <div class="mini-prayer-item" id="mini-p-fajr">
+          <span class="mini-p-name">الفجر</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-sunrise">
+          <span class="mini-p-name">الشروق</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-dhuhr">
+          <span class="mini-p-name">الظهر</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-asr">
+          <span class="mini-p-name">العصر</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-maghrib">
+          <span class="mini-p-name">المغرب</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-isha">
+          <span class="mini-p-name">العشاء</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- شريط التاريخ الهجري والميلادي -->
+    <div class="date-strip">
+      <div id="home-hijri-date">-- هـ</div>
+      <div id="home-gregorian-date">--</div>
+    </div>
+
+    <!-- بطاقة نفحات اليوم المتجددة تلقائياً (دعاء اليوم وورد اليوم) -->
+    <div class="card" style="margin-bottom: 16px; border: 1px solid var(--border-gold); background: linear-gradient(145deg, #181c18, #101410);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--border-dark); padding-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 1.3rem;">🌟</span>
+          <span style="font-weight: 700; color: #ffffff; font-size: 1rem;">دعاء وورد اليوم المتجدد</span>
+        </div>
+        <span id="daily-renewal-day-badge" class="badge-gold">اليوم المبارك</span>
+      </div>
+      <div id="daily-dua-text" style="font-family: var(--font-uthmani); font-size: 1.3rem; line-height: 2.1; color: #ffffff; margin-bottom: 12px;">
+        اللهم إنا نسألك زيادة في الدين وبركة في العمر وصحة في الجسد وسعة في الرزق وعفواً عند الحساب
+      </div>
+      <div style="border-top: 1px dashed var(--border-dark); padding-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 0.85rem; color: var(--gold-light);">📖 ورد اليوم القرآني:</span>
+        <span id="daily-wird-text" style="font-size: 0.92rem; color: #ffffff; font-weight: 600;">قراءة سورة الفاتحة وأول ٥ آيات من سورة البقرة مع التدبر</span>
+      </div>
+    </div>
+
+    <!-- شبكة الأقسام الرئيسية للوصول السريع الشامل -->
+    <h3 class="home-section-title">✨ أبواب الخير والقرآن</h3>
+    <div class="home-grid">
+      <!-- المصحف الشريف والتلاوة -->
+      <div class="card home-grid-item" onclick="navigateTo('reader')">
+        <span class="home-grid-icon">📖</span>
+        <span class="home-grid-name">المصحف التفاعلي</span>
+        <span class="home-grid-desc">مرتل ومجود وتزامن الكلمات وعلامة الختمة</span>
+      </div>
+
+      <!-- التواشيح ونوادر التسجيلات الخالدة -->
+      <div class="card home-grid-item" onclick="navigateTo('rare-ibtehalat')">
+        <span class="home-grid-icon">🎙️</span>
+        <span class="home-grid-name">التواشيح والنوادر الخالدة</span>
+        <span class="home-grid-desc">نوادر رفعت، الأقصى، عابدين، وطوبار والنقشبندي</span>
+      </div>
+
+      <!-- إذاعة القرآن الكريم من القاهرة -->
+      <div class="card home-grid-item" onclick="navigateTo('radio')">
+        <span class="home-grid-icon">📻</span>
+        <span class="home-grid-name">إذاعة القرآن من القاهرة</span>
+        <span class="home-grid-desc">البث المباشر الرسمي 24 ساعة بدون انقطاع</span>
+      </div>
+
+      <!-- حصن المسلم والأذكار -->
+      <div class="card home-grid-item" onclick="navigateTo('azkar')">
+        <span class="home-grid-icon">📿</span>
+        <span class="home-grid-name">حصن المسلم</span>
+        <span class="home-grid-desc">أذكار الصباح والمساء والعدادات</span>
+      </div>
+
+      <!-- موسوعة كبار القراء -->
+      <div class="card home-grid-item" onclick="navigateTo('reciters')">
+        <span class="home-grid-icon">🎙️</span>
+        <span class="home-grid-name">موسوعة كبار القراء</span>
+        <span class="home-grid-desc">عمالقة التلاوة وأئمة الحرمين</span>
+      </div>
+
+      <!-- قصص الأنبياء وقصص الأطفال -->
+      <div class="card home-grid-item" onclick="navigateTo('stories')">
+        <span class="home-grid-icon">📚</span>
+        <span class="home-grid-name">قصص الأنبياء</span>
+        <span class="home-grid-desc">قراءة واستماع صوتي مباشر</span>
+      </div>
+
+      <!-- المسبحة الإلكترونية الذكية -->
+      <div class="card home-grid-item" onclick="navigateTo('tasbeeh')">
+        <span class="home-grid-icon">🤲</span>
+        <span class="home-grid-name">المسبحة الذكية</span>
+        <span class="home-grid-desc">تسبيح واهتزاز وإجمالي يومي</span>
+      </div>
+
+      <!-- مواقيت الصلاة والأذان الكاملة -->
+      <div class="card home-grid-item" onclick="navigateTo('prayer')">
+        <span class="home-grid-icon">🕌</span>
+        <span class="home-grid-name">مواقيت الصلاة والأذان</span>
+        <span class="home-grid-desc">كتم وتفعيل صوت الأذان</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 2. شاشة المصحف التفاعلي المتقدم وتزامن الكلمات (Quran Reader & HUD)       -->
+  <!-- ========================================================================= -->
+  <section class="page" id="page-reader">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>📖</span>
+        <span id="reader-header-surah-title">سورة الفاتحة</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('home')" aria-label="رجوع">✕</button>
+    </div>
+
+    <!-- بطاقة علامة الختمة (Bookmark) لحفظ واسترجاع موضع التوقف -->
+    <div class="reader-bookmark-card" id="reader-bookmark-card">
+      <div class="bookmark-info-col">
+        <span class="bookmark-icon">🔖</span>
+        <div class="bookmark-text-wrap">
+          <div class="bookmark-title">علامة الختمة والتوقف</div>
+          <div class="bookmark-status" id="bookmark-status-text">لا توجد علامة محفوظة بعد</div>
+        </div>
+      </div>
+      <div class="bookmark-actions-col">
+        <button class="action-btn action-btn-secondary" id="btn-save-bookmark" onclick="saveCurrentBookmark()" title="حفظ موضع التلاوة الحالي">
+          <span>📌</span> حفظ الموضع
+        </button>
+        <button class="action-btn action-btn-primary" id="btn-jump-bookmark" onclick="jumpToSavedBookmark()" title="الانتقال إلى موضع التوقف المحفوظ">
+          <span>🚀</span> انتقال للعلامة
+        </button>
+      </div>
+    </div>
+
+    <!-- مشغل تفاعلي مطابق لواجهة مشغل الفيديو (Video-Player Style HUD) -->
+    <div class="quran-interactive-hud">
+      <!-- الشريط العلوي للمشغل: السورة، القارئ، الوضع، الوقت -->
+      <div class="hud-top-bar">
+        <div class="hud-surah-info">
+          <span class="hud-surah-title" id="hud-surah-name">سورة الفاتحة</span>
+          <span class="hud-reciter-name" id="hud-reciter-display">محمود خليل الحصري (المصحف المرتل)</span>
+        </div>
+      </div>
+
+      <!-- زر التبديل التفاعلي الثنائي المعتمد: [مرتل] | [مجود] حصراً -->
+      <div class="quran-mode-switch" role="tablist">
+        <button class="mode-toggle-btn active" id="btn-mode-murattal" onclick="switchQuranMode('murattal')">مرتل</button>
+        <button class="mode-toggle-btn" id="btn-mode-mojawwad" onclick="switchQuranMode('mojawwad')">مجود</button>
+      </div>
+
+      <!-- خيارات التحديد: السورة والقارئ بتصميم داكن فاخر -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0;">
+        <div>
+          <select id="reader-surah-select" style="width: 100%; padding: 8px 10px; border-radius: var(--radius-sm); font-size: 0.85rem;" onchange="loadSurah(parseInt(this.value))">
+            <!-- تتولد السور الـ 114 ديناميكياً -->
+          </select>
+        </div>
+        <div>
+          <select id="reader-reciter-select" style="width: 100%; padding: 8px 10px; border-radius: var(--radius-sm); font-size: 0.85rem;" onchange="onReaderReciterChange(this.value)">
+            <!-- تتولد القوائم حسب المرتل أو المجود -->
+          </select>
+        </div>
+      </div>
+
+      <!-- مؤقت النوم والإيقاف التلقائي للمصحف -->
+      <div class="sleep-timer-bar">
+        <div class="sleep-timer-info">
+          <span>⏱️</span>
+          <span>مؤقت النوم:</span>
+          <span class="sleep-timer-badge" id="reader-sleep-timer-badge">متوقف</span>
+        </div>
+        <div class="sleep-timer-select-wrap">
+          <select id="reader-sleep-timer-select" onchange="setSleepTimer(parseInt(this.value))">
+            <option value="0">معطل</option>
+            <option value="15">بعد 15 دقيقة</option>
+            <option value="30">بعد 30 دقيقة</option>
+            <option value="45">بعد 45 دقيقة</option>
+            <option value="60">بعد 60 دقيقة</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- أزرار التحكم بالمشغل -->
+      <div class="hud-controls-row">
+        <button class="hud-ctrl-btn" onclick="playPrevAyah()" aria-label="الآية السابقة">⏮</button>
+        <button class="hud-ctrl-btn" onclick="seekAudioRelative(-10)" aria-label="تأخير 10 ثوان">↺ 10</button>
+        <button class="hud-ctrl-btn play-main" id="hud-main-play-btn" onclick="toggleHudPlay()" aria-label="تشغيل / إيقاف">▶</button>
+        <button class="hud-ctrl-btn" onclick="seekAudioRelative(10)" aria-label="تقديم 10 ثوان">10 ↻</button>
+        <button class="hud-ctrl-btn" onclick="playNextAyah()" aria-label="الآية التالية">⏭</button>
+      </div>
+
+      <!-- شريط التقدم الانسيابي والوقت -->
+      <div class="hud-progress-container">
+        <span id="hud-time-current">0:00</span>
+        <input type="range" class="hud-progress-bar" id="hud-progress" min="0" max="100" value="0" step="0.1" oninput="onHudSeek(this.value)">
+        <span id="hud-time-total">0:00</span>
+      </div>
+    </div>
+
+    <!-- بسملة السورة العثمانية -->
+    <div id="reader-bismillah-banner" class="islamic-header-pattern" style="margin-top: 10px;">
+      <div class="bismillah-art">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    </div>
+
+    <!-- شاشة الآيات مع تزامن الكلمات (Word-by-Word Sync) -->
+    <div class="reader-verses-container" id="reader-verses-container">
+      <!-- يتم حقن الآيات والكلمات عبر JavaScript -->
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3. قسم التواشيح والابتهالات في صفحة واحدة شاملة متصلة                       -->
+  <!-- ========================================================================= -->
+  <section class="page" id="page-rare-ibtehalat">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>🎙️</span>
+        <span>التواشيح والنوادر الخالدة</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('home')">✕</button>
+    </div>
+
+    <!-- فلتر تصنيفات التواشيح والابتهالات ونوادر التسجيلات -->
+    <div class="filter-chips" style="margin-bottom: 14px;">
+      <button class="chip-btn active" onclick="filterIbtehalat('all')">الكل</button>
+      <button class="chip-btn" onclick="filterIbtehalat('rare_quran')">👑 نوادر التسجيلات الخالدة</button>
+      <button class="chip-btn" onclick="filterIbtehalat('ramadan')">🌙 نفحات رمضان</button>
+      <button class="chip-btn" onclick="filterIbtehalat('tobour')">نصر الدين طوبار</button>
+      <button class="chip-btn" onclick="filterIbtehalat('naqshbandi')">سيد النقشبندي</button>
+      <button class="chip-btn" onclick="filterIbtehalat('fashni')">طه الفشني</button>
+      <button class="chip-btn" onclick="filterIbtehalat('omran_fayoumi')">عمران والفيومي</button>
+    </div>
+
+    <!-- قائمة المقاطع الصوتية في صفحة واحدة متصلة -->
+    <div id="ibtehalat-list">
+      <!-- تتولد ديناميكياً بروابط صوتية مباشرة وشغالة 100% -->
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 4. البث المباشر لإذاعة القرآن الكريم من القاهرة حصرياً                    -->
+  <!-- ========================================================================= -->
+  <section class="page" id="page-radio">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>📻</span>
+        <span>إذاعة القرآن الكريم من القاهرة</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('home')">✕</button>
+    </div>
+
+    <!-- بطاقة إذاعة القرآن الكريم من القاهرة الكبرى الحصرية -->
+    <div class="cairo-radio-hero-card">
+      <div class="cairo-radio-emblem-wrap">
+        <div class="cairo-radio-emblem">
+          <span class="radio-large-icon">📻</span>
+        </div>
+        <div class="live-pulse-ring"></div>
+      </div>
+
+      <div class="cairo-live-tag">
+        <span class="live-dot-pulse"></span>
+        <span>بث حي ومباشر 24 ساعة</span>
+      </div>
+
+      <h2 class="cairo-radio-title">إذاعة القرآن الكريم من القاهرة</h2>
+      <p class="cairo-radio-desc">البث المباشر الرسمي لصوت الأزهر الشريف ومصر، نبض التلاوة القرآنية العطرة وتراث كبار القراء على مدار الساعة بدون انقطاع</p>
+
+      <!-- مؤشر الصوت التفاعلي (Equalizer Bars) -->
+      <div class="audio-equalizer" id="cairo-equalizer" style="display: none;">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+        <span class="bar bar-4"></span>
+        <span class="bar bar-5"></span>
+      </div>
+
+      <!-- زر التشغيل والإيقاف الكبير الذهبي -->
+      <button class="cairo-main-play-btn" id="cairo-radio-btn" onclick="toggleCairoRadio()">
+        <span class="btn-play-icon" id="cairo-play-icon">▶</span>
+        <span id="cairo-play-label">تشغيل البث الحي</span>
+      </button>
+
+      <!-- شريط مؤقت النوم الخاص بالإذاعة -->
+      <div class="radio-sleep-timer-box">
+        <span style="font-size: 0.88rem; color: var(--gold-light);">⏱️ مؤقت الإيقاف التلقائي:</span>
+        <select class="radio-timer-select" id="radio-sleep-timer-select" onchange="setSleepTimer(parseInt(this.value))">
+          <option value="0">معطل</option>
+          <option value="15">15 دقيقة</option>
+          <option value="30">30 دقيقة</option>
+          <option value="45">45 دقيقة</option>
+          <option value="60">60 دقيقة</option>
+        </select>
+        <span class="radio-timer-countdown" id="radio-timer-countdown-text"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 5. حصن المسلم: الأذكار والعدادات الرقمية                                  -->
+  <!-- ========================================================================= -->
+  <section class="page" id="page-azkar">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>📿</span>
+        <span>حصن المسلم والأذكار</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('home')">✕</button>
+    </div>
+
+    <!-- شبكة فئات الأذكار الشاملة (7 أقسام كاملة) -->
+    <div class="azkar-grid">
+      <div class="card azkar-category-card" onclick="openAzkarCategory('morning')">
+        <div style="font-size: 2.2rem; margin-bottom: 6px;">☀️</div>
+        <div style="font-weight: 700; color: #ffffff;">أذكار الصباح</div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">تحصين الصباح والبركة</div>
+      </div>
+
+      <div class="card azkar-category-card" onclick="openAzkarCategory('evening')">
+        <div style="font-size: 2.2rem; margin-bottom: 6px;">🌙</div>
+        <div style="font-weight: 700; color: #ffffff;">أذكار المساء</div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">حفظ المساء والسكينة</div>
+      </div>
+
+      <div class="card azkar-category-card" onclick="openAzkarCategory('post_prayer')">
+        <div style="font-size: 2.2rem; margin-bottom: 6px;">🕌</div>
+        <div style="font-weight: 700; color: #ffffff;">أذكار بعد الصلاة</div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">التسبيح والتهليل دبر المكتوبة</div>
+      </div>
+
+      <div class="card azkar-category-card" onclick="openAzkarCategory('sleep_wake')">
+        <div style="font-size: 2.2rem; margin-bottom: 6px;">😴</div>
+        <div style="font-weight: 700; color: #ffffff;">النوم والاستيقاظ</div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">آية الكرسي وخواتيم البقرة</div>
+      </div>
+
+      <div class="card azkar-category-card" onclick="openAzkarCategory('quranic_duas')">
+        <div style="font-size: 2.2rem; margin-bottom: 6px;">📖</div>
+        <div style="font-weight: 700; color: #ffffff;">أدعية قرآنية مأثورة</div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">دعوات الأنبياء في التنزيل</div>
+      </div>
+
+      <div class="card azkar-category-card" onclick="openAzkarCategory('prophetic_duas')">
+        <div style="font-size: 2.2rem; margin-bottom: 6px;">🤲</div>
+        <div style="font-weight: 700; color: #ffffff;">أدعية نبوية جامعة</div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">الهم والحزن والرزق والشفاء</div>
+      </div>
+
+      <div class="card azkar-category-card" onclick="openAzkarCategory('masjid_wudhu')" style="grid-column: span 2;">
+        <div style="font-size: 2.2rem; margin-bottom: 6px;">🕋</div>
+        <div style="font-weight: 700; color: #ffffff;">أذكار المسجد والأذان والوضوء</div>
+        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">سنن دخول المسجد والوضوء التام</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- تفاصيل الأذكار مع العداد الرقمي -->
+  <section class="page" id="page-azkar-detail">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span id="azkar-detail-icon">☀️</span>
+        <span id="azkar-detail-title">أذكار الصباح</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('azkar')">←</button>
+    </div>
+
+    <div id="azkar-items-container">
+      <!-- تتولد الأذكار مع العدادات ديناميكياً -->
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 6. موسوعة كبار القراء                                                     -->
+  <!-- ========================================================================= -->
+  <section class="page" id="page-reciters">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>🎙️</span>
+        <span>موسوعة كبار القراء</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('home')">✕</button>
+    </div>
+
+    <!-- محرك البحث الفوري بالاسم -->
+    <div class="search-wrapper">
+      <input type="text" id="reciters-search-input" class="search-input" placeholder="ابحث بالاسم عن أي قارئ (مثل: الحصري، المنشاوي، عبد الباسط)..." autocomplete="off" oninput="searchReciters(this.value)">
+      <span class="search-icon-inside">🔍</span>
+    </div>
+
+    <!-- شرائح الفلترة السريعة -->
+    <div class="filter-chips">
+      <button class="chip-btn active" onclick="filterRecitersCategory('all')">الكل</button>
+      <button class="chip-btn" onclick="filterRecitersCategory('golden')">عمالقة الرعيل الأول</button>
+      <button class="chip-btn" onclick="filterRecitersCategory('harameen')">أئمة الحرمين الشريفين</button>
+      <button class="chip-btn" onclick="filterRecitersCategory('contemporary')">التلاوات المعاصرة</button>
+    </div>
+
+    <div class="reciters-grid" id="reciters-list-container">
+      <!-- تتولد قائمة القراء ديناميكياً -->
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 7. قصص الأنبياء وقصص الأطفال (مع النطق الصوتي الآلي Web Speech)            -->
+  <!-- ========================================================================= -->
+  <section class="page" id="page-stories">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>📚</span>
+        <span>قصص الأنبياء والأطفال</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('home')">✕</button>
+    </div>
+
+    <div class="tabs-nav">
+      <button class="tab-link active" id="tab-btn-prophets" onclick="switchStoriesTab('prophets')">قصص الأنبياء</button>
+      <button class="tab-link" id="tab-btn-children" onclick="switchStoriesTab('children')">قصص الأطفال الميسرة</button>
+    </div>
+
+    <div id="stories-list-container">
+      <!-- تتولد القصص ديناميكياً -->
+    </div>
+  </section>
+
+  <!-- تفاصيل القصة مع القارئ الصوتي الفوري -->
+  <section class="page" id="page-story-detail">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>📖</span>
+        <span id="story-detail-heading">قصة نبي الله</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('stories')">←</button>
+    </div>
+
+    <div class="story-narrator-panel">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 1.5rem;">🎙️</span>
+        <div>
+          <div style="font-weight: 700; color: var(--gold-light); font-size: 0.95rem;">القارئ الصوتي الذكي</div>
+          <div style="font-size: 0.8rem; color: var(--text-secondary);">استمع للقصة كاملة بصوت عربي واضح</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 6px;">
+        <button class="action-btn action-btn-primary" id="btn-story-speech" onclick="toggleStorySpeech()">
+          <span>🔊</span>
+          <span id="speech-btn-label">استماع</span>
+        </button>
+        <button class="action-btn action-btn-secondary" onclick="stopStorySpeech()" aria-label="إيقاف">⏹</button>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 20px;">
+      <article class="story-body-text" id="story-detail-text">
+        <!-- محتوى القصة -->
+      </article>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 8. المسبحة الإلكترونية الذكية التفاعلية                                   -->
+  <!-- ========================================================================= -->
+  <section class="page" id="page-tasbeeh">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>🤲</span>
+        <span>السبحة الإلكترونية الذكية</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('home')">✕</button>
+    </div>
+
+    <div class="tasbeeh-wrapper">
+      <div style="max-width: 320px; margin: 0 auto 16px;">
+        <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px;">اختر الذكر المبارك:</label>
+        <select id="tasbeeh-dhikr-select" style="width: 100%; padding: 10px; border-radius: var(--radius-md); font-weight: 700;" onchange="onTasbeehDhikrChange(this.value)">
+          <!-- تتولد خيارات الأذكار ديناميكياً -->
+        </select>
+      </div>
+
+      <!-- زر المسبحة الدائري الكبير مع الاهتزاز والتسبيح -->
+      <div class="tasbeeh-ring-btn" id="tasbeeh-main-tap-btn" onclick="tapTasbeehRing()">
+        <span style="font-size: 0.9rem; color: var(--text-gold); margin-bottom: 4px;">المس للتسبيح</span>
+        <span class="tasbeeh-count-big" id="tasbeeh-count-display">0</span>
+        <span style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 6px;" id="tasbeeh-target-hint">الهدف: 33</span>
+      </div>
+
+      <div style="display: flex; justify-content: center; gap: 12px; margin-top: 20px;">
+        <button class="action-btn action-btn-secondary" onclick="resetTasbeehCounter()">🔄 تصفير الدورة الحالية</button>
+      </div>
+
+      <!-- كارت إجمالي التسبيحات اليومية المستمر -->
+      <div class="tasbeeh-daily-total-card">
+        <div>
+          <span style="color: var(--text-secondary); font-size: 0.85rem;">مجموع التسبيحات اليومية:</span>
+          <div style="font-size: 1.4rem; font-weight: 800; color: var(--gold-light);" id="tasbeeh-daily-display">0</div>
+        </div>
+        <button class="action-btn action-btn-secondary" style="padding: 6px 12px; font-size: 0.78rem;" onclick="resetTasbeehDailyTotal()">تصفير اليومي</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 9. مواقيت الصلاة والأذان الكاملة                                          -->
+  <!-- ========================================================================= -->
+  <section class="page" id="page-prayer">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>🕌</span>
+        <span>مواقيت الصلاة والأذان</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('home')">✕</button>
+    </div>
+
+    <div class="card" style="margin-bottom: 14px; text-align: center;">
+      <div style="color: var(--gold-light); font-weight: 700;" id="full-prayer-location">جاري تحديد الموقع...</div>
+      <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;" id="full-prayer-date">--</div>
+    </div>
+
+    <div id="full-prayer-times-list" style="display: flex; flex-direction: column; gap: 10px;">
+      <!-- تتولد بطاقات الصلوات الخمس والشروق ديناميكياً مع أزرار كتم وتفعيل الأذان -->
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 10. المشغل الصوتي العائم العام (Floating Audio Player)                     -->
+  <!-- ========================================================================= -->
+  <div class="global-floating-player" id="global-floating-player" style="display: none;">
+    <div style="display: flex; align-items: center; gap: 10px; overflow: hidden; flex: 1;">
+      <div style="font-size: 1.6rem; color: var(--gold);" id="float-player-icon">📻</div>
+      <div style="overflow: hidden;">
+        <div style="font-size: 0.9rem; font-weight: 700; color: #fff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;" id="float-player-title">البث المباشر</div>
+        <div style="font-size: 0.75rem; color: var(--gold-light);" id="float-player-sub">إذاعة القرآن الكريم من القاهرة</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button class="hud-ctrl-btn" style="width: 38px; height: 38px;" id="float-play-toggle-btn" onclick="toggleGlobalAudioPlay()">▶</button>
+      <button class="hud-ctrl-btn" style="width: 32px; height: 32px; font-size: 0.9rem;" onclick="closeGlobalAudioPlayer()">✕</button>
+    </div>
+  </div>
+
+  <!-- عنصر الصوت الرئيسي HTML5 للمشغل العام (الإذاعة والابتهالات) -->
+  <audio id="main-audio-element" preload="metadata"></audio>
+
+  <!-- ========================================================================= -->
+  <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الأساسية الـ 5 الأكثر استخداماً)   -->
+  <!-- ========================================================================= -->
+  <nav class="bottom-nav-bar" id="bottom-nav">
+    <!-- 1. الرئيسية -->
+    <button class="nav-tab-item active" data-page="home" onclick="navigateTo('home')">
+      <span class="nav-tab-icon">🏠</span>
+      <span class="nav-tab-label">الرئيسية</span>
+    </button>
+
+    <!-- 2. المصحف -->
+    <button class="nav-tab-item" data-page="reader" onclick="navigateTo('reader')">
+      <span class="nav-tab-icon">📖</span>
+      <span class="nav-tab-label">المصحف</span>
+    </button>
+
+    <!-- 3. الإذاعة -->
+    <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')">
+      <span class="nav-tab-icon">📻</span>
+      <span class="nav-tab-label">الإذاعة</span>
+    </button>
+
+    <!-- 4. التواشيح والابتهالات -->
+    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')">
+      <span class="nav-tab-icon">🎙️</span>
+      <span class="nav-tab-label">الابتهالات</span>
+    </button>
+
+    <!-- 5. الأذكار -->
+    <button class="nav-tab-item" data-page="azkar" onclick="navigateTo('azkar')">
+      <span class="nav-tab-icon">📿</span>
+      <span class="nav-tab-label">الأذكار</span>
+    </button>
+  </nav>
+
+  <!-- ملفات البيانات والتطبيق البرمجية -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => {
+            console.log('PWA Service Worker registered:', reg.scope);
+            if (reg.waiting) {
+              reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+            }
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              if (newWorker) {
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    newWorker.postMessage({ type: 'SKIP_WAITING' });
+                  }
+                });
+              }
+            });
+          })
+          .catch(err => console.warn('PWA registration:', err));
+      });
+    }
+  </script>
+</body>
+</html>
