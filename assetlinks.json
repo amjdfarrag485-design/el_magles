@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.amjdfarrag485_design.twa",
+        "sha256_cert_fingerprints": ["A6:17:C1:9F:AF:28:4B:A0:D8:1F:D7:D2:C2:3B:21:5E:B7:CF:FB:20:07:BA:28:4C:9E:AA:FD:98:87:CE:0B:6E"]
+      }
+    }]
