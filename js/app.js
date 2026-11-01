@@ -296,7 +296,7 @@ function initAudioElements() {
     STATE.globalAudio.addEventListener('loadedmetadata', onMiniAudioLoadedMetadata);
     STATE.globalAudio.addEventListener('error', (e) => {
       // تجنب إظهار رسالة الخطأ إذا كان الصوت متوقفاً أو المصدر فارغاً
-      if (!STATE.globalAudio.src || STATE.globalAudio.src === window.location.href) return;
+      if (!STATE.globalAudio.src || STATE.globalAudio.src === '' || STATE.globalAudio.src === window.location.href) return;
 
       if (STATE.isCairoRadioPlaying) {
         cairoRadioFallbackIndex++;
@@ -315,6 +315,9 @@ function initAudioElements() {
         STATE.isCairoRadioPlaying = false;
       }
     });
+
+    // تفعيل إيماءات الضغط المطول على زر التشغيل للإغلاق السريع
+    setupPlayBtnLongPress();
   }
 }
 
@@ -1572,7 +1575,47 @@ function playMediaTrack(url, title, subtitle) {
   });
 }
 
+let playBtnPressTimer = null;
+let isPlayBtnLongPress = false;
+
+function setupPlayBtnLongPress() {
+  const btn = document.getElementById('mini-play-main-btn');
+  if (!btn) return;
+
+  const startPress = () => {
+    isPlayBtnLongPress = false;
+    if (playBtnPressTimer) clearTimeout(playBtnPressTimer);
+    playBtnPressTimer = setTimeout(() => {
+      isPlayBtnLongPress = true;
+      closeMiniPlayer();
+      if (navigator.vibrate) {
+        try { navigator.vibrate(60); } catch (_) {}
+      }
+      showToast('تم إغلاق المشغل نهائياً ✕');
+    }, 600);
+  };
+
+  const cancelPress = () => {
+    if (playBtnPressTimer) {
+      clearTimeout(playBtnPressTimer);
+      playBtnPressTimer = null;
+    }
+  };
+
+  btn.addEventListener('mousedown', startPress);
+  btn.addEventListener('touchstart', startPress, { passive: true });
+  btn.addEventListener('mouseup', cancelPress);
+  btn.addEventListener('mouseleave', cancelPress);
+  btn.addEventListener('touchend', cancelPress);
+  btn.addEventListener('touchcancel', cancelPress);
+}
+
 function toggleMiniAudioPlay() {
+  if (isPlayBtnLongPress) {
+    isPlayBtnLongPress = false;
+    return;
+  }
+
   if (!STATE.globalAudio || !STATE.globalAudio.src) {
     if (STATE.activeAudioTrack) {
       playTrackDirectly(STATE.activeAudioTrack);
@@ -1710,25 +1753,46 @@ function onModernAudioLoadedMetadata() {
 }
 
 function closeMiniPlayer() {
+  // 1. إيقاف الصوت فوراً وبشكل نهائي وتصفير العداد والمصدر
   if (STATE.globalAudio) {
-    STATE.globalAudio.pause();
-    STATE.globalAudio.removeAttribute('src');
+    try {
+      STATE.globalAudio.pause();
+      STATE.globalAudio.currentTime = 0;
+      STATE.globalAudio.removeAttribute('src');
+      STATE.globalAudio.src = '';
+      STATE.globalAudio.load();
+    } catch (e) {
+      console.warn('Audio close notice:', e);
+    }
   }
+
+  // 2. تصفير الحالات النشطة
+  STATE.isGlobalPlaying = false;
   STATE.isCairoRadioPlaying = false;
   STATE.activeAudioTrack = null;
-  if (STATE.modernPlayer) STATE.modernPlayer.track = null;
+  if (STATE.modernPlayer) {
+    STATE.modernPlayer.track = null;
+  }
 
+  // 3. تحديث واجهات المشغل
   updateCairoRadioUI(false);
   updateMiniPlayerState(false);
 
+  // 4. إخفاء شريط المشغل السفلي بالكامل من الشاشة
   const miniPlayer = document.getElementById('bottom-mini-player');
-  if (miniPlayer) miniPlayer.style.display = 'none';
+  if (miniPlayer) {
+    miniPlayer.style.display = 'none';
+  }
 
+  // 5. إرجاع أزرار التشغيل في كافة البطاقات لحالة الإيقاف (Play)
   document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => {
     c.classList.remove('is-playing');
     const b = c.querySelector('.audio-card-play-btn');
     if (b) b.textContent = '▶';
   });
+
+  const playIcon = document.getElementById('mini-play-icon');
+  if (playIcon) playIcon.textContent = '▶';
 }
 
 function closeModernPlayer() {
