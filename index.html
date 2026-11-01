@@ -44,7 +44,7 @@
         <span class="brand-subtitle">الموسوعة القرآنية والابتهالات</span>
         <h1 class="brand-main-title">المَجْلِس</h1>
       </div>
-      <div class="brand-bismillah">﷽</div>
+      <div class="brand-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
     </header>
 
     <!-- كارت مواقيت الصلاة في صدارة الصفحة الرئيسية فور فتح التطبيق -->
@@ -93,6 +93,14 @@
           <span class="mini-p-time">--:--</span>
         </div>
       </div>
+
+      <!-- زر تفعيل وسماح الأذان التلقائي في المتصفح -->
+      <div style="margin-top: 14px; text-align: center;">
+        <button class="adhan-master-toggle-btn" id="adhan-master-toggle-btn" onclick="toggleMasterAdhan()">
+          <span id="adhan-toggle-icon">🔊</span>
+          <span id="adhan-toggle-text">الأذان التلقائي: مفعّل (انقر للتجربة / كتم)</span>
+        </button>
+      </div>
     </div>
 
     <!-- شريط التاريخ الهجري والميلادي -->
@@ -129,11 +137,18 @@
         <span class="home-grid-desc">مرتل ومجود وتزامن الكلمات وعلامة الختمة</span>
       </div>
 
-      <!-- التواشيح ونوادر التسجيلات الخالدة -->
-      <div class="card home-grid-item" onclick="navigateTo('rare-ibtehalat')">
+      <!-- نوادر التلاوات والتسجيلات القرآنية النادرة -->
+      <div class="card home-grid-item" onclick="navigateTo('rare-quran')">
+        <span class="home-grid-icon">✨</span>
+        <span class="home-grid-name">نوادر التلاوات القرآنية</span>
+        <span class="home-grid-desc">المنشاوي، عبد الباسط، رفعت، مصطفى إسماعيل، البهتيمي</span>
+      </div>
+
+      <!-- التواشيح والابتهالات الدينية -->
+      <div class="card home-grid-item" onclick="navigateTo('ibtehalat')">
         <span class="home-grid-icon">🎙️</span>
-        <span class="home-grid-name">التواشيح والنوادر الخالدة</span>
-        <span class="home-grid-desc">نوادر رفعت، الأقصى، عابدين، وطوبار والنقشبندي</span>
+        <span class="home-grid-name">التواشيح والابتهالات</span>
+        <span class="home-grid-desc">نصر الدين طوبار، سيد النقشبندي، الفشني، عمران، رمضان</span>
       </div>
 
       <!-- إذاعة القرآن الكريم من القاهرة -->
@@ -288,31 +303,61 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- 3. قسم التواشيح والابتهالات في صفحة واحدة شاملة متصلة                       -->
+  <!-- 3.1. قسم نوادر التلاوات والتسجيلات القرآنية النادرة لكبار القراء            -->
   <!-- ========================================================================= -->
-  <section class="page" id="page-rare-ibtehalat">
+  <section class="page" id="page-rare-quran">
     <div class="page-header">
       <div class="page-header-title">
-        <span>🎙️</span>
-        <span>التواشيح والنوادر الخالدة</span>
+        <span>✨</span>
+        <span>نوادر التلاوات القرآنية الخالدة</span>
       </div>
       <button class="back-btn" onclick="navigateTo('home')">✕</button>
     </div>
 
-    <!-- فلتر تصنيفات التواشيح والابتهالات ونوادر التسجيلات -->
+    <!-- فلتر كبار القراء للنوادر والتسجيلات التاريخية -->
+    <div class="filter-chips" style="margin-bottom: 14px;">
+      <button class="chip-btn active" onclick="filterRareQuran('all')">الكل</button>
+      <button class="chip-btn" onclick="filterRareQuran('minshawi')">محمد صديق المنشاوي</button>
+      <button class="chip-btn" onclick="filterRareQuran('bahtimi')">كامل يوسف البهتيمي</button>
+      <button class="chip-btn" onclick="filterRareQuran('basit')">عبد الباسط عبد الصمد</button>
+      <button class="chip-btn" onclick="filterRareQuran('mustafa')">مصطفى إسماعيل</button>
+      <button class="chip-btn" onclick="filterRareQuran('refat')">محمد رفعت</button>
+      <button class="chip-btn" onclick="filterRareQuran('banna')">محمود علي البنا</button>
+      <button class="chip-btn" onclick="filterRareQuran('salama')">محمد سلامة</button>
+      <button class="chip-btn" onclick="filterRareQuran('jaber')">علي جابر</button>
+    </div>
+
+    <!-- قائمة نوادر التلاوات التاريخية المباشرة -->
+    <div id="rare-quran-list">
+      <!-- تتولد ديناميكياً عبر JavaScript -->
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3.2. قسم التواشيح والابتهالات الدينية الشاملة (قسم مستقل 100%)              -->
+  <!-- ========================================================================= -->
+  <section class="page" id="page-ibtehalat">
+    <div class="page-header">
+      <div class="page-header-title">
+        <span>🎙️</span>
+        <span>التواشيح والابتهالات الدينية</span>
+      </div>
+      <button class="back-btn" onclick="navigateTo('home')">✕</button>
+    </div>
+
+    <!-- فلتر شيوخ الابتهالات والتواشيح -->
     <div class="filter-chips" style="margin-bottom: 14px;">
       <button class="chip-btn active" onclick="filterIbtehalat('all')">الكل</button>
-      <button class="chip-btn" onclick="filterIbtehalat('rare_quran')">👑 نوادر التسجيلات الخالدة</button>
-      <button class="chip-btn" onclick="filterIbtehalat('ramadan')">🌙 نفحات رمضان</button>
       <button class="chip-btn" onclick="filterIbtehalat('tobour')">نصر الدين طوبار</button>
       <button class="chip-btn" onclick="filterIbtehalat('naqshbandi')">سيد النقشبندي</button>
       <button class="chip-btn" onclick="filterIbtehalat('fashni')">طه الفشني</button>
       <button class="chip-btn" onclick="filterIbtehalat('omran_fayoumi')">عمران والفيومي</button>
+      <button class="chip-btn" onclick="filterIbtehalat('ramadan')">🌙 تراث رمضان</button>
     </div>
 
-    <!-- قائمة المقاطع الصوتية في صفحة واحدة متصلة -->
+    <!-- قائمة الابتهالات والتواشيح المباشرة -->
     <div id="ibtehalat-list">
-      <!-- تتولد ديناميكياً بروابط صوتية مباشرة وشغالة 100% -->
+      <!-- تتولد ديناميكياً عبر JavaScript -->
     </div>
   </section>
 
@@ -594,33 +639,71 @@
       <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;" id="full-prayer-date">--</div>
     </div>
 
+    <!-- زر تفعيل/كتم الأذان التلقائي وسماح الصوت في المتصفح -->
+    <div style="margin-bottom: 14px; text-align: center;">
+      <button class="adhan-master-toggle-btn" id="adhan-master-toggle-btn-page" onclick="toggleMasterAdhan()">
+        <span class="adhan-page-toggle-icon">🔊</span>
+        <span class="adhan-page-toggle-text">الأذان التلقائي: مفعّل (انقر للتجربة / كتم)</span>
+      </button>
+    </div>
+
     <div id="full-prayer-times-list" style="display: flex; flex-direction: column; gap: 10px;">
       <!-- تتولد بطاقات الصلوات الخمس والشروق ديناميكياً مع أزرار كتم وتفعيل الأذان -->
     </div>
   </section>
 
   <!-- ========================================================================= -->
-  <!-- 10. المشغل الصوتي العائم العام (Floating Audio Player)                     -->
+  <!-- 10. المشغل الصوتي المدمج النحيف أسفل الشاشة (Sleek Bottom Mini Player)      -->
   <!-- ========================================================================= -->
-  <div class="global-floating-player" id="global-floating-player" style="display: none;">
-    <div style="display: flex; align-items: center; gap: 10px; overflow: hidden; flex: 1;">
-      <div style="font-size: 1.6rem; color: var(--gold);" id="float-player-icon">📻</div>
-      <div style="overflow: hidden;">
-        <div style="font-size: 0.9rem; font-weight: 700; color: #fff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;" id="float-player-title">البث المباشر</div>
-        <div style="font-size: 0.75rem; color: var(--gold-light);" id="float-player-sub">إذاعة القرآن الكريم من القاهرة</div>
-      </div>
+  <div class="bottom-mini-player" id="bottom-mini-player" style="display: none;">
+    <!-- خط التقدم اللمسي النحيف في الحافة العلوية للمشغل -->
+    <div class="mini-progress-track" id="mini-progress-track" onclick="onMiniProgressTrackClick(event)">
+      <div class="mini-progress-fill" id="mini-progress-fill"></div>
     </div>
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <button class="hud-ctrl-btn" style="width: 38px; height: 38px;" id="float-play-toggle-btn" onclick="toggleGlobalAudioPlay()">▶</button>
-      <button class="hud-ctrl-btn" style="width: 32px; height: 32px; font-size: 0.9rem;" onclick="closeGlobalAudioPlayer()">✕</button>
+
+    <div class="mini-player-body">
+      <!-- صورة القارئ / المنشد -->
+      <div class="mini-player-avatar" id="mini-avatar-wrap">
+        <img id="mini-avatar-img" src="" alt="avatar">
+      </div>
+
+      <!-- بيانات المقطع الصوتي والمدة -->
+      <div class="mini-player-info">
+        <div class="mini-track-title" id="mini-track-title">عنوان المقطع الصوتي</div>
+        <div class="mini-track-meta">
+          <span class="mini-track-artist" id="mini-artist-name">الشيخ</span>
+          <span class="mini-track-bullet">•</span>
+          <span class="mini-track-time" id="mini-track-time">00:00 / 00:00</span>
+        </div>
+      </div>
+
+      <!-- أزرار التحكم السريعة -->
+      <div class="mini-player-controls">
+        <!-- زر تأخير 10 ثوان -->
+        <button class="mini-ctrl-btn" onclick="seekMiniAudioRelative(-10)" title="تأخير 10 ثوانٍ">⏪</button>
+
+        <!-- زر التشغيل / الإيقاف الرئيسي -->
+        <button class="mini-play-main-btn" id="mini-play-main-btn" onclick="toggleMiniAudioPlay()" title="تشغيل / إيقاف">
+          <span id="mini-play-icon">▶</span>
+        </button>
+
+        <!-- زر تقديم 10 ثوان -->
+        <button class="mini-ctrl-btn" onclick="seekMiniAudioRelative(10)" title="تقديم 10 ثوانٍ">⏩</button>
+
+        <!-- زر إغلاق المشغل -->
+        <button class="mini-ctrl-btn close-btn" onclick="closeMiniPlayer()" title="إغلاق">✕</button>
+      </div>
     </div>
   </div>
 
-  <!-- عنصر الصوت الرئيسي HTML5 للمشغل العام (الإذاعة والابتهالات) -->
+  <!-- عنصر الصوت الرئيسي HTML5 للمشغل العام الموحد (الإذاعة والابتهالات والنوادر) -->
   <audio id="main-audio-element" preload="metadata"></audio>
 
+  <!-- عنصر صوت الأذان التلقائي المستقل (أذان الشيخ محمد رفعت التاريخي الخالد) -->
+  <audio id="adhan-audio-element" preload="auto" src="https://dn721809.ca.archive.org/0/items/moharram1965_gmail_20180227/%D8%A7%D8%B0%D8%A7%D9%86%20%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8%20%D9%84%D9%81%D8%B6%D9%8A%D9%84%D8%A9%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%B1%D9%81%D8%B9%D8%AA%20%D8%B1%D8%AD%D9%85%D8%A9%20%D8%A7%D9%84%D9%84%D9%87%20%20%D8%A7%D8%AD%D9%85%D8%AF%20%D8%B9%D8%A8%D8%AF%D9%87%20%D9%88%D9%85%D8%AF%D8%A7%D8%B1%D8%B3%20%D8%A7%D9%84%D8%AA%D9%84%D8%A7%D9%88%D8%A9.mp3"></audio>
+
   <!-- ========================================================================= -->
-  <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الأساسية الـ 5 الأكثر استخداماً)   -->
+  <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الـ 6 الرئيسية)                     -->
   <!-- ========================================================================= -->
   <nav class="bottom-nav-bar" id="bottom-nav">
     <!-- 1. الرئيسية -->
@@ -635,19 +718,25 @@
       <span class="nav-tab-label">المصحف</span>
     </button>
 
-    <!-- 3. الإذاعة -->
+    <!-- 3. النوادر -->
+    <button class="nav-tab-item" data-page="rare-quran" onclick="navigateTo('rare-quran')">
+      <span class="nav-tab-icon">✨</span>
+      <span class="nav-tab-label">النوادر</span>
+    </button>
+
+    <!-- 4. الابتهالات -->
+    <button class="nav-tab-item" data-page="ibtehalat" onclick="navigateTo('ibtehalat')">
+      <span class="nav-tab-icon">🎙️</span>
+      <span class="nav-tab-label">الابتهالات</span>
+    </button>
+
+    <!-- 5. الإذاعة -->
     <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')">
       <span class="nav-tab-icon">📻</span>
       <span class="nav-tab-label">الإذاعة</span>
     </button>
 
-    <!-- 4. التواشيح والابتهالات -->
-    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')">
-      <span class="nav-tab-icon">🎙️</span>
-      <span class="nav-tab-label">الابتهالات</span>
-    </button>
-
-    <!-- 5. الأذكار -->
+    <!-- 6. الأذكار -->
     <button class="nav-tab-item" data-page="azkar" onclick="navigateTo('azkar')">
       <span class="nav-tab-icon">📿</span>
       <span class="nav-tab-label">الأذكار</span>
