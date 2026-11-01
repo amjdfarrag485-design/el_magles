@@ -33,6 +33,14 @@ const STATE = {
   isGlobalPlaying: false,
   isCairoRadioPlaying: false,
 
+  // المشغل الصوتي التفاعلي الموحد (النوادر والابتهالات)
+  modernPlayer: {
+    track: null,
+    isLooping: false,
+    isMinimized: false,
+    isLyricsVisible: true
+  },
+
   // مؤقت النوم والإيقاف التلقائي (Sleep Timer)
   sleepTimer: {
     minutes: 0,
@@ -95,8 +103,11 @@ function initIslamicApp() {
   // تهيئة إذاعة القرآن الكريم من القاهرة
   initRadioSection();
 
-  // تهيئة التواشيح والابتهالات الشاملة
-  initRareAndIbtehalat();
+  // تهيئة نوادر التلاوات القرآنية الخالدة
+  initRareQuranSection();
+
+  // تهيئة التواشيح والابتهالات الدينية الشاملة
+  initIbtehalatSection();
 
   // تهيئة موسوعة كبار القراء
   initRecitersEncyclopedia();
@@ -227,9 +238,18 @@ function initAudioElements() {
   STATE.quranAudio.addEventListener('timeupdate', onQuranAudioTimeUpdate);
   STATE.quranAudio.addEventListener('loadedmetadata', onQuranAudioLoadedMetadata);
   STATE.quranAudio.addEventListener('durationchange', onQuranAudioLoadedMetadata);
-  STATE.quranAudio.addEventListener('ended', onQuranAyahEnded);
-  STATE.quranAudio.addEventListener('play', () => updateHudPlayBtn(true));
-  STATE.quranAudio.addEventListener('pause', () => updateHudPlayBtn(false));
+  STATE.quranAudio.addEventListener('ended', () => {
+    stopQuranSyncLoop();
+    onQuranAyahEnded();
+  });
+  STATE.quranAudio.addEventListener('play', () => {
+    updateHudPlayBtn(true);
+    startQuranSyncLoop();
+  });
+  STATE.quranAudio.addEventListener('pause', () => {
+    updateHudPlayBtn(false);
+    stopQuranSyncLoop();
+  });
   STATE.quranAudio.addEventListener('error', (e) => {
     console.warn('[Smart Fallback] Audio error on:', STATE.quranAudio.src);
     if (STATE.audioFallbackChain && STATE.audioFallbackIndex < STATE.audioFallbackChain.length - 1) {
@@ -245,50 +265,55 @@ function initAudioElements() {
     }
   });
 
-  // أحداث المشغل الصوتي العام (إذاعة القاهرة والابتهالات)
+  // تهيئة عنصر صوت الأذان المستقل
+  STATE.adhanAudio = document.getElementById('adhan-audio-element');
+
+  // أحداث المشغل الصوتي المدمج العام (إذاعة القاهرة والابتهالات والنوادر)
   if (STATE.globalAudio) {
     STATE.globalAudio.preload = 'metadata';
     STATE.globalAudio.addEventListener('play', () => {
-      STATE.isGlobalPlaying = true;
-      updateFloatPlayBtn(true);
+      updateMiniPlayerState(true);
     });
     STATE.globalAudio.addEventListener('playing', () => {
-      STATE.isGlobalPlaying = true;
-      updateFloatPlayBtn(true);
+      updateMiniPlayerState(true);
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(true);
       }
     });
     STATE.globalAudio.addEventListener('pause', () => {
-      STATE.isGlobalPlaying = false;
-      updateFloatPlayBtn(false);
+      updateMiniPlayerState(false);
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(false);
       }
     });
     STATE.globalAudio.addEventListener('ended', () => {
-      STATE.isGlobalPlaying = false;
-      updateFloatPlayBtn(false);
+      updateMiniPlayerState(false);
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(false);
       }
     });
-    STATE.globalAudio.addEventListener('error', () => {
+    STATE.globalAudio.addEventListener('timeupdate', onMiniAudioTimeUpdate);
+    STATE.globalAudio.addEventListener('loadedmetadata', onMiniAudioLoadedMetadata);
+    STATE.globalAudio.addEventListener('error', (e) => {
+      // تجنب إظهار رسالة الخطأ إذا كان الصوت متوقفاً أو المصدر فارغاً
+      if (!STATE.globalAudio.src || STATE.globalAudio.src === window.location.href) return;
+
       if (STATE.isCairoRadioPlaying) {
         cairoRadioFallbackIndex++;
         if (cairoRadioFallbackIndex < CAIRO_RADIO_URLS.length) {
           const nextUrl = CAIRO_RADIO_URLS[cairoRadioFallbackIndex];
           console.warn(`[Cairo Radio Fallback] Switching to mirror #${cairoRadioFallbackIndex}: ${nextUrl}`);
           STATE.globalAudio.src = nextUrl;
-          STATE.globalAudio.load();
-          STATE.globalAudio.play().catch(e => console.warn('Mirror play error:', e));
+          STATE.globalAudio.play().catch(err => console.warn('Mirror play error:', err));
           return;
         }
       }
-      showToast('تعذر تشغيل البث أو التسجيل حالياً ⚠️');
-      updateFloatPlayBtn(false);
-      updateCairoRadioUI(false);
-      STATE.isCairoRadioPlaying = false;
+      console.warn('Audio playback error on source:', STATE.globalAudio.src);
+      updateMiniPlayerState(false);
+      if (STATE.isCairoRadioPlaying) {
+        updateCairoRadioUI(false);
+        STATE.isCairoRadioPlaying = false;
+      }
     });
   }
 }
@@ -442,7 +467,13 @@ function startPrayerCountdownLoop() {
     const diff = STATE.nextPrayer.date - now;
 
     if (diff <= 0) {
-      triggerAdhanAlert(STATE.nextPrayer.name, STATE.nextPrayer.id);
+      const prayerKey = `${now.toDateString()}_${STATE.nextPrayer.id}`;
+      if (!STATE.adhanSettings.playedToday[prayerKey]) {
+        STATE.adhanSettings.playedToday[prayerKey] = true;
+        if (STATE.nextPrayer.id !== 'Sunrise') {
+          playAdhanAudio(STATE.nextPrayer.name, STATE.nextPrayer.id);
+        }
+      }
       updateActivePrayerHero();
       return;
     }
@@ -458,8 +489,95 @@ function startPrayerCountdownLoop() {
   }, 1000);
 }
 
+function toggleMasterAdhan() {
+  STATE.adhanSettings.enabled = !STATE.adhanSettings.enabled;
+  savePersistedData('app_adhan_master_enabled', STATE.adhanSettings.enabled);
+  updateAdhanMasterUI();
+
+  if (STATE.adhanSettings.enabled) {
+    // تجربة الصوت فوراً لتفعيل إذن Autoplay في المتصفح
+    if (!STATE.adhanAudio) {
+      STATE.adhanAudio = document.getElementById('adhan-audio-element');
+    }
+    if (STATE.adhanAudio) {
+      STATE.adhanAudio.volume = 1.0;
+      STATE.adhanAudio.currentTime = 0;
+      STATE.adhanAudio.play().then(() => {
+        setTimeout(() => {
+          if (STATE.adhanAudio && !STATE.isAdhanActive) {
+            try {
+              STATE.adhanAudio.pause();
+              STATE.adhanAudio.currentTime = 0;
+            } catch(e){}
+          }
+        }, 2200);
+      }).catch(err => {
+        console.warn('Adhan preview error:', err);
+      });
+    }
+    showToast('تم تفعيل الأذان التلقائي وسماح الصوت بنجاح 🔔');
+  } else {
+    if (STATE.adhanAudio) {
+      try {
+        STATE.adhanAudio.pause();
+        STATE.adhanAudio.currentTime = 0;
+      } catch(e){}
+    }
+    showToast('تم كتم الأذان التلقائي 🔕');
+  }
+}
+
+function updateAdhanMasterUI() {
+  const isEn = STATE.adhanSettings.enabled;
+  const btnHero = document.getElementById('adhan-master-toggle-btn');
+  const btnPage = document.getElementById('adhan-master-toggle-btn-page');
+
+  if (btnHero) {
+    btnHero.classList.toggle('muted', !isEn);
+    const icon = document.getElementById('adhan-toggle-icon');
+    const text = document.getElementById('adhan-toggle-text');
+    if (icon) icon.textContent = isEn ? '🔊' : '🔕';
+    if (text) text.textContent = isEn ? 'الأذان التلقائي: مفعّل (انقر للتجربة / كتم)' : 'الأذان التلقائي: مكتوم (انقر للتفعيل)';
+  }
+
+  if (btnPage) {
+    btnPage.classList.toggle('muted', !isEn);
+    const icon = btnPage.querySelector('.adhan-page-toggle-icon');
+    const text = btnPage.querySelector('.adhan-page-toggle-text');
+    if (icon) icon.textContent = isEn ? '🔊' : '🔕';
+    if (text) text.textContent = isEn ? 'الأذان التلقائي: مفعّل (انقر للتجربة / كتم)' : 'الأذان التلقائي: مكتوم (انقر للتفعيل)';
+  }
+}
+
+function playAdhanAudio(prayerName, prayerId) {
+  if (!STATE.adhanSettings.enabled) return;
+  if (!STATE.adhanAudio) {
+    STATE.adhanAudio = document.getElementById('adhan-audio-element');
+  }
+  if (!STATE.adhanAudio) return;
+
+  STATE.isAdhanActive = true;
+  STATE.adhanAudio.currentTime = 0;
+  STATE.adhanAudio.volume = 1.0;
+
+  // إيقاف أي مشغل آخر يعمل حالياً لرفع الأذان بوضوح
+  if (STATE.globalAudio) {
+    try { STATE.globalAudio.pause(); } catch(e){}
+  }
+  if (STATE.quranAudio) {
+    try { STATE.quranAudio.pause(); } catch(e){}
+  }
+
+  STATE.adhanAudio.play().then(() => {
+    showToast(`🕌 الله أكبر.. حان الآن موعد ${prayerName} حسب التوقيت المحلي لمصر 🇪🇬`, 6000);
+  }).catch(err => {
+    console.warn('Adhan autoplay blocked by browser:', err);
+    showToast(`🕌 حان موعد ${prayerName} (انقر هنا لسماع الأذان) 🔊`, 8000);
+  });
+}
+
 function triggerAdhanAlert(prayerName, prayerId) {
-  showToast(`🕌 حان الآن موعد ${prayerName}`);
+  playAdhanAudio(prayerName, prayerId);
 }
 
 function renderFullPrayersPage(timings) {
@@ -521,12 +639,25 @@ function initDailyRenewalSystem() {
     badgeEl.textContent = `اليوم ${toArabicDigits(dayOfMonth)} من الشهر`;
   }
 
-  if (typeof DAILY_RENEWAL_DATA !== 'undefined' && DAILY_RENEWAL_DATA.length > 0) {
+  // التجديد التلقائي لذكر ودعاء اليوم من مصفوفة الـ 31 يوماً الشاملة
+  if (typeof DAILY_ROTATING_ADHKAR !== 'undefined' && DAILY_ROTATING_ADHKAR.length > 0) {
+    const itemIndex = (dayOfMonth - 1) % DAILY_ROTATING_ADHKAR.length;
+    const item = DAILY_ROTATING_ADHKAR[itemIndex];
+    if (duaEl && item.text) {
+      duaEl.textContent = item.text;
+    }
+  } else if (typeof DAILY_RENEWAL_DATA !== 'undefined' && DAILY_RENEWAL_DATA.length > 0) {
     const itemIndex = (dayOfMonth - 1) % DAILY_RENEWAL_DATA.length;
     const item = DAILY_RENEWAL_DATA[itemIndex];
     if (duaEl && item.dua) {
       duaEl.textContent = item.dua;
     }
+  }
+
+  // ورد اليوم القرآني
+  if (typeof DAILY_RENEWAL_DATA !== 'undefined' && DAILY_RENEWAL_DATA.length > 0) {
+    const itemIndex = (dayOfMonth - 1) % DAILY_RENEWAL_DATA.length;
+    const item = DAILY_RENEWAL_DATA[itemIndex];
     if (wirdEl && item.wird) {
       wirdEl.textContent = item.wird;
     }
@@ -695,12 +826,15 @@ function renderVersesWithWords(verses, surahNumber) {
   const container = document.getElementById('reader-verses-container');
   if (!container) return;
 
+  resetQuranSyncState();
+
   container.innerHTML = verses.map(v => {
     const ayahNum = v.verse_number;
     const wordsHtml = v.words.map((w, wIdx) => {
       if (w.char_type_name === 'end') return '';
+      const pos = w.position || (wIdx + 1);
       const cleanWord = w.text_uthmani || w.text;
-      return `<span class="quran-word" id="word-${ayahNum}-${wIdx}" data-ayah="${ayahNum}" data-word-idx="${wIdx}" onclick="onWordClicked(${ayahNum}, ${wIdx})">${cleanWord}</span>`;
+      return `<span class="quran-word" id="word-${ayahNum}-${pos}" data-ayah="${ayahNum}" data-pos="${pos}" onclick="onWordClicked(${ayahNum}, ${pos})">${cleanWord}</span>`;
     }).join(' ');
 
     return `
@@ -718,6 +852,7 @@ async function fallbackLoadSurahVerses(surahNumber) {
     const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}`);
     const data = await res.json();
     if (data.code === 200 && data.data && data.data.ayahs) {
+      resetQuranSyncState();
       const ayahs = data.data.ayahs;
       container.innerHTML = ayahs.map((a, idx) => {
         let text = a.text;
@@ -728,9 +863,10 @@ async function fallbackLoadSurahVerses(surahNumber) {
         }
 
         const words = text.split(/\s+/);
-        const wordsHtml = words.map((w, wIdx) =>
-          `<span class="quran-word" id="word-${a.numberInSurah}-${wIdx}" data-ayah="${a.numberInSurah}" data-word-idx="${wIdx}" onclick="onWordClicked(${a.numberInSurah}, ${wIdx})">${w}</span>`
-        ).join(' ');
+        const wordsHtml = words.map((w, wIdx) => {
+          const pos = wIdx + 1;
+          return `<span class="quran-word" id="word-${a.numberInSurah}-${pos}" data-ayah="${a.numberInSurah}" data-pos="${pos}" onclick="onWordClicked(${a.numberInSurah}, ${pos})">${w}</span>`;
+        }).join(' ');
 
         return `
           <div class="verse" id="verse-${a.numberInSurah}" data-verse="${a.numberInSurah}" onclick="playAyahByNumber(${a.numberInSurah})">
@@ -828,17 +964,69 @@ function loadSurahAudio(surahNumber) {
   fetchWordTimings(surahNumber, reciter);
 }
 
+function getQdcReciterId(reciterId, mode) {
+  const map = {
+    hussary: 6,
+    minshawi: mode === 'mojawwad' ? 8 : 9,
+    abdulbasit: mode === 'mojawwad' ? 1 : 2,
+    sudais: 3,
+    shatri: 4,
+    alafasy: 7,
+    shuraim: 10,
+    tablawi: 11
+  };
+  return map[reciterId] || 7;
+}
+
+// مؤشرات التخزين المؤقت لتحقيق O(1) في التزامن ومنع التقطيع تماماً
+let currentActiveAyahNumber = -1;
+let currentActiveAyahEl = null;
+let currentActiveWordId = null;
+let currentActiveWordEl = null;
+let quranRafId = null;
+
+function resetQuranSyncState() {
+  currentActiveAyahNumber = -1;
+  currentActiveAyahEl = null;
+  currentActiveWordId = null;
+  currentActiveWordEl = null;
+}
+
+function startQuranSyncLoop() {
+  if (quranRafId) cancelAnimationFrame(quranRafId);
+  function syncLoop() {
+    if (STATE.quranAudio && !STATE.quranAudio.paused) {
+      const curr = STATE.quranAudio.currentTime;
+      const dur = STATE.quranAudio.duration;
+      if (!isNaN(dur) && dur > 0) {
+        syncActiveWordAtTime(curr, dur);
+      }
+      quranRafId = requestAnimationFrame(syncLoop);
+    } else {
+      quranRafId = null;
+    }
+  }
+  quranRafId = requestAnimationFrame(syncLoop);
+}
+
+function stopQuranSyncLoop() {
+  if (quranRafId) {
+    cancelAnimationFrame(quranRafId);
+    quranRafId = null;
+  }
+}
+
 async function fetchWordTimings(surahNumber, reciter) {
   STATE.wordSegments = [];
   try {
-    const qdcReciterId = 7; // مشاري العفاسي افتراضياً لتوقيتات الكلمات
-    const res = await fetch(`https://api.quran.com/api/v4/chapter_recitations/${qdcReciterId}/${surahNumber}`);
+    const qdcReciterId = getQdcReciterId(reciter ? reciter.id : '', STATE.currentMode);
+    const res = await fetch(`https://api.quran.com/api/v4/chapter_recitations/${qdcReciterId}/${surahNumber}?segments=true`);
     const data = await res.json();
     if (data.audio_file && data.audio_file.timestamps) {
       STATE.wordSegments = data.audio_file.timestamps;
     }
   } catch (e) {
-    // التزامن التقديري سيعمل تلقائياً
+    console.warn('Word timings fetch notice (fallback mode active):', e);
   }
 }
 
@@ -883,25 +1071,31 @@ function onQuranAudioTimeUpdate() {
     progEl.value = (curr / dur) * 100;
   }
 
-  syncActiveWordAtTime(curr, dur);
+  // في حال توقف حلقة RAF أو عدم تفعيلها، نضمن استمرار التزامن
+  if (!quranRafId) {
+    syncActiveWordAtTime(curr, dur);
+  }
 }
 
 function syncActiveWordAtTime(currentTimeSec, totalDurationSec) {
-  const currentMs = currentTimeSec * 1000;
+  // إضافة إزاحة استباقية ذكية (50 مللي ثانية) لتعويض تأخر فك التشفير وإدراك الأذن البشرية
+  const currentMs = (currentTimeSec * 1000) + 50;
 
   if (STATE.wordSegments && STATE.wordSegments.length > 0) {
-    for (const seg of STATE.wordSegments) {
+    for (let i = 0; i < STATE.wordSegments.length; i++) {
+      const seg = STATE.wordSegments[i];
       if (currentMs >= seg.timestamp_from && currentMs <= seg.timestamp_to) {
         const ayahNum = parseInt(seg.verse_key.split(':')[1]);
         highlightActiveAyah(ayahNum);
 
         if (seg.segments && seg.segments.length > 0) {
-          for (const s of seg.segments) {
-            const wIdx = s[0];
+          for (let j = 0; j < seg.segments.length; j++) {
+            const s = seg.segments[j];
+            const wPos = s[0];
             const wStart = s[1];
             const wEnd = s[2];
             if (currentMs >= wStart && currentMs <= wEnd) {
-              highlightActiveWord(ayahNum, wIdx);
+              highlightActiveWord(ayahNum, wPos);
               return;
             }
           }
@@ -911,10 +1105,11 @@ function syncActiveWordAtTime(currentTimeSec, totalDurationSec) {
     }
   }
 
+  // التزامن التقديري السلس والآمن بدون ثقل على المتصفح
   const verses = document.querySelectorAll('.verse');
   if (verses.length === 0 || totalDurationSec <= 0) return;
 
-  const progressRatio = currentTimeSec / totalDurationSec;
+  const progressRatio = Math.max(0, Math.min(1, currentTimeSec / totalDurationSec));
   const estimatedAyahIdx = Math.min(verses.length - 1, Math.floor(progressRatio * verses.length));
   const activeAyahEl = verses[estimatedAyahIdx];
 
@@ -926,40 +1121,65 @@ function syncActiveWordAtTime(currentTimeSec, totalDurationSec) {
     if (wordsInAyah.length > 0) {
       const ayahRatio = (progressRatio * verses.length) - estimatedAyahIdx;
       const wordIdx = Math.min(wordsInAyah.length - 1, Math.floor(ayahRatio * wordsInAyah.length));
-      highlightActiveWord(ayahNum, wordIdx);
+      highlightActiveWord(ayahNum, wordIdx + 1);
     }
   }
 }
 
-function highlightActiveWord(ayahNum, wordIdx) {
-  document.querySelectorAll('.quran-word.active-word').forEach(el => el.classList.remove('active-word'));
-  const wordEl = document.getElementById(`word-${ayahNum}-${wordIdx}`);
-  if (wordEl) wordEl.classList.add('active-word');
-}
+function highlightActiveWord(ayahNum, wordPos) {
+  const wordId = `word-${ayahNum}-${wordPos}`;
+  if (currentActiveWordId === wordId) return;
 
-function highlightActiveAyah(ayahNum) {
-  document.querySelectorAll('.verse.active').forEach(v => v.classList.remove('active'));
-  const verseEl = document.getElementById(`verse-${ayahNum}`);
-  if (verseEl) {
-    verseEl.classList.add('active');
-    verseEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (currentActiveWordEl) {
+    currentActiveWordEl.classList.remove('active-word');
+  }
+
+  currentActiveWordId = wordId;
+  currentActiveWordEl = document.getElementById(wordId);
+  if (currentActiveWordEl) {
+    currentActiveWordEl.classList.add('active-word');
   }
 }
 
-function onWordClicked(ayahNum, wordIdx) {
-  highlightActiveAyah(ayahNum);
-  highlightActiveWord(ayahNum, wordIdx);
-  playAyahByNumber(ayahNum);
+function highlightActiveAyah(ayahNum, autoScroll = true) {
+  if (currentActiveAyahNumber === ayahNum) return;
+
+  if (currentActiveAyahEl) {
+    currentActiveAyahEl.classList.remove('active');
+  }
+
+  currentActiveAyahNumber = ayahNum;
+  currentActiveAyahEl = document.getElementById(`verse-${ayahNum}`);
+  if (currentActiveAyahEl) {
+    currentActiveAyahEl.classList.add('active');
+    if (autoScroll) {
+      currentActiveAyahEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
 }
 
-function playAyahByNumber(ayahNum) {
-  highlightActiveAyah(ayahNum);
+function onWordClicked(ayahNum, wordPos) {
+  highlightActiveAyah(ayahNum, true);
+  highlightActiveWord(ayahNum, wordPos);
+  playAyahByNumber(ayahNum, wordPos);
+}
+
+function playAyahByNumber(ayahNum, targetWordPos = null) {
+  highlightActiveAyah(ayahNum, true);
 
   if (STATE.wordSegments && STATE.wordSegments.length > 0) {
     const seg = STATE.wordSegments.find(s => s.verse_key === `${STATE.currentSurahNumber}:${ayahNum}`);
     if (seg && STATE.quranAudio) {
+      if (targetWordPos && seg.segments && seg.segments.length > 0) {
+        const wordSeg = seg.segments.find(s => s[0] === targetWordPos);
+        if (wordSeg) {
+          STATE.quranAudio.currentTime = wordSeg[1] / 1000;
+          if (STATE.quranAudio.paused) toggleHudPlay();
+          return;
+        }
+      }
       STATE.quranAudio.currentTime = seg.timestamp_from / 1000;
-      if (STATE.quranAudio.paused) STATE.quranAudio.play();
+      if (STATE.quranAudio.paused) toggleHudPlay();
       return;
     }
   }
@@ -968,7 +1188,7 @@ function playAyahByNumber(ayahNum) {
   if (surah && STATE.quranAudio && STATE.quranAudio.duration) {
     const ratio = (ayahNum - 1) / surah.ayahCount;
     STATE.quranAudio.currentTime = ratio * STATE.quranAudio.duration;
-    if (STATE.quranAudio.paused) STATE.quranAudio.play();
+    if (STATE.quranAudio.paused) toggleHudPlay();
   }
 }
 
@@ -1236,90 +1456,392 @@ function updateCairoRadioUI(isPlaying) {
   if (eq) eq.style.display = isPlaying ? 'flex' : 'none';
 }
 
-function showFloatingPlayerForRadio() {
-  const floatPlayer = document.getElementById('global-floating-player');
-  if (!floatPlayer) return;
+// ═══════════════════════════════════════════════════════════════
+// 13. المشغل الصوتي المدمج النحيف أسفل الشاشة (Bottom Mini Player)
+// ═══════════════════════════════════════════════════════════════
 
-  floatPlayer.style.display = 'flex';
-  const titleEl = document.getElementById('float-player-title');
-  if (titleEl) titleEl.textContent = 'إذاعة القرآن الكريم من القاهرة';
-  const subEl = document.getElementById('float-player-sub');
-  if (subEl) subEl.textContent = 'البث المباشر الرسمي 24 ساعة 🔴';
-  const iconEl = document.getElementById('float-player-icon');
-  if (iconEl) iconEl.textContent = '📻';
-  updateFloatPlayBtn(true);
+function getSheikhAvatarSvg(name, isIbtehal = false) {
+  const icon = isIbtehal ? '🎙️' : '📖';
+  const cleanName = (name || '').replace(/الشيخ\s*/g, '').trim().split(' ')[0] || 'المجلس';
+  return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%231c261c"/><stop offset="100%" stop-color="%230c120c"/></linearGradient><linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23f5d77f"/><stop offset="100%" stop-color="%23d4af37"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(%23bg)" stroke="url(%23gold)" stroke-width="3"/><text x="50" y="44" font-size="28" text-anchor="middle">${icon}</text><text x="50" y="74" font-size="14" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="%23ffffff">${cleanName}</text></svg>`;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// 13. المشغل الصوتي العائم العام
-// ═══════════════════════════════════════════════════════════════
-function playMediaTrack(url, title, subtitle) {
+function showMiniPlayerForRadio() {
+  const miniPlayer = document.getElementById('bottom-mini-player');
+  if (miniPlayer) miniPlayer.style.display = 'flex';
+
+  const titleEl = document.getElementById('mini-track-title');
+  if (titleEl) titleEl.textContent = 'إذاعة القرآن الكريم من القاهرة';
+
+  const artistEl = document.getElementById('mini-artist-name');
+  if (artistEl) artistEl.textContent = 'بث حي ومباشر 24 ساعة';
+
+  const timeEl = document.getElementById('mini-track-time');
+  if (timeEl) timeEl.textContent = '🔴 بث مباشر حي';
+
+  const avatarImg = document.getElementById('mini-avatar-img');
+  if (avatarImg) avatarImg.src = getSheikhAvatarSvg('إذاعة القاهرة', true);
+
+  const fillEl = document.getElementById('mini-progress-fill');
+  if (fillEl) fillEl.style.width = '100%';
+
+  updateMiniPlayerState(true);
+}
+
+function showFloatingPlayerForRadio() {
+  showMiniPlayerForRadio();
+}
+
+function playTrackDirectly(track) {
+  if (!track || !track.url) return;
   if (!STATE.globalAudio) initAudioElements();
 
+  // إيقاف صوت المصحف إذا كان قيد التشغيل لمنع تداخل الأصوات
   if (STATE.quranAudio && !STATE.quranAudio.paused) {
     STATE.quranAudio.pause();
     updateHudPlayBtn(false);
   }
 
+  // إيقاف بث إذاعة القاهرة إذا كان مقطعاً عادياً
   STATE.isCairoRadioPlaying = false;
   updateCairoRadioUI(false);
 
-  STATE.globalAudio.preload = 'metadata';
-  STATE.globalAudio.src = url;
-  STATE.globalAudio.load();
-  STATE.globalAudio.play().catch(console.warn);
+  STATE.activeAudioTrack = track;
+  if (!STATE.modernPlayer) STATE.modernPlayer = {};
+  STATE.modernPlayer.track = track;
 
-  const floatPlayer = document.getElementById('global-floating-player');
-  if (floatPlayer) floatPlayer.style.display = 'flex';
+  // إسناد المصدر والتشغيل الفوري
+  STATE.globalAudio.src = track.url;
+  const playPromise = STATE.globalAudio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      updateMiniPlayerState(true);
+    }).catch(err => {
+      console.warn('Playback notice:', err);
+    });
+  }
 
-  const titleEl = document.getElementById('float-player-title');
-  if (titleEl) titleEl.textContent = title;
+  // إظهار وتحديث شريط المشغل المدمج النحيف أسفل الشاشة
+  const miniPlayer = document.getElementById('bottom-mini-player');
+  if (miniPlayer) miniPlayer.style.display = 'flex';
 
-  const subEl = document.getElementById('float-player-sub');
-  if (subEl) subEl.textContent = subtitle;
+  const titleEl = document.getElementById('mini-track-title');
+  if (titleEl) titleEl.textContent = track.title || 'تسجيل صوتي مبارك';
 
-  const iconEl = document.getElementById('float-player-icon');
-  if (iconEl) iconEl.textContent = '🎙️';
+  const artistEl = document.getElementById('mini-artist-name');
+  if (artistEl) artistEl.textContent = track.reciter || track.sheikh || 'القارئ';
 
-  updateFloatPlayBtn(true);
+  const timeEl = document.getElementById('mini-track-time');
+  if (timeEl) timeEl.textContent = `00:00 / ${track.duration || '--:--'}`;
+
+  const avatarSvg = track.avatar || getSheikhAvatarSvg(track.reciter || track.sheikh, !!track.lyricsQuote);
+  const avatarImg = document.getElementById('mini-avatar-img');
+  if (avatarImg) avatarImg.src = avatarSvg;
+
+  const fillEl = document.getElementById('mini-progress-fill');
+  if (fillEl) fillEl.style.width = '0%';
+
+  updateMiniPlayerState(true);
+
+  // تحديث تمييز الكارت النشط في القوائم
+  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => {
+    c.classList.remove('is-playing');
+    const b = c.querySelector('.audio-card-play-btn');
+    if (b) b.textContent = '▶';
+  });
+  if (track.id) {
+    const activeCard = document.getElementById(`track-card-${track.id}`);
+    if (activeCard) {
+      activeCard.classList.add('is-playing');
+      const b = activeCard.querySelector('.audio-card-play-btn');
+      if (b) b.textContent = '⏸';
+    }
+  }
 }
 
-function toggleGlobalAudioPlay() {
-  if (!STATE.globalAudio || !STATE.globalAudio.src) return;
+function playModernTrack(track) {
+  playTrackDirectly(track);
+}
+
+function playMediaTrack(url, title, subtitle) {
+  playTrackDirectly({
+    id: 'generic_' + Date.now(),
+    title: title || 'تسجيل مبارك',
+    reciter: subtitle || 'إذاعة القرآن الكريم',
+    url: url
+  });
+}
+
+function toggleMiniAudioPlay() {
+  if (!STATE.globalAudio || !STATE.globalAudio.src) {
+    if (STATE.activeAudioTrack) {
+      playTrackDirectly(STATE.activeAudioTrack);
+    } else if (STATE.isCairoRadioPlaying) {
+      toggleCairoRadio();
+    }
+    return;
+  }
 
   if (STATE.globalAudio.paused) {
     STATE.globalAudio.play().then(() => {
-      updateFloatPlayBtn(true);
+      updateMiniPlayerState(true);
       if (STATE.isCairoRadioPlaying) updateCairoRadioUI(true);
     }).catch(console.warn);
   } else {
     STATE.globalAudio.pause();
-    updateFloatPlayBtn(false);
+    updateMiniPlayerState(false);
     if (STATE.isCairoRadioPlaying) updateCairoRadioUI(false);
   }
 }
 
+function toggleModernPlayPause() {
+  toggleMiniAudioPlay();
+}
+
+function toggleGlobalAudioPlay() {
+  toggleMiniAudioPlay();
+}
+
+function updateMiniPlayerState(isPlaying) {
+  STATE.isGlobalPlaying = isPlaying;
+
+  const mainBtnIcon = document.getElementById('mini-play-icon');
+  if (mainBtnIcon) mainBtnIcon.textContent = isPlaying ? '⏸' : '▶';
+
+  // تحديث أزرار الكروت في القوائم
+  const currentTrackId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
+  document.querySelectorAll('.audio-item-card').forEach(card => {
+    const isThisCard = currentTrackId && card.id === `track-card-${currentTrackId}`;
+    card.classList.toggle('is-playing', isThisCard && isPlaying);
+    const btn = card.querySelector('.audio-card-play-btn');
+    if (btn) {
+      btn.textContent = (isThisCard && isPlaying) ? '⏸' : '▶';
+    }
+  });
+
+  if (STATE.isCairoRadioPlaying) {
+    updateCairoRadioUI(isPlaying);
+  }
+}
+
+function updateModernPlayBtn(isPlaying) {
+  updateMiniPlayerState(isPlaying);
+}
+
 function updateFloatPlayBtn(isPlaying) {
-  const btn = document.getElementById('float-play-toggle-btn');
-  if (btn) btn.innerHTML = isPlaying ? '⏸' : '▶';
+  updateMiniPlayerState(isPlaying);
+}
+
+function seekMiniAudioRelative(seconds) {
+  if (!STATE.globalAudio || !STATE.globalAudio.src) return;
+  if (STATE.isCairoRadioPlaying || !STATE.globalAudio.duration || !isFinite(STATE.globalAudio.duration)) return;
+
+  const cur = STATE.globalAudio.currentTime || 0;
+  const dur = STATE.globalAudio.duration;
+  let target = cur + seconds;
+  if (target < 0) target = 0;
+  if (dur && target > dur) target = dur;
+  STATE.globalAudio.currentTime = target;
+  onMiniAudioTimeUpdate();
+}
+
+function seekModernRelative(seconds) {
+  seekMiniAudioRelative(seconds);
+}
+
+function onMiniProgressTrackClick(event) {
+  if (!STATE.globalAudio || !STATE.globalAudio.src) return;
+  if (STATE.isCairoRadioPlaying || !STATE.globalAudio.duration || !isFinite(STATE.globalAudio.duration)) return;
+
+  const trackEl = document.getElementById('mini-progress-track');
+  if (!trackEl) return;
+
+  const rect = trackEl.getBoundingClientRect();
+  const clickX = event.clientX - rect.left;
+  const isRtl = (document.documentElement.dir === 'rtl' || getComputedStyle(document.body).direction === 'rtl');
+  let pct = isRtl ? (rect.width - clickX) / rect.width : clickX / rect.width;
+  if (pct < 0) pct = 0;
+  if (pct > 1) pct = 1;
+
+  STATE.globalAudio.currentTime = pct * STATE.globalAudio.duration;
+  onMiniAudioTimeUpdate();
+}
+
+function onMiniAudioTimeUpdate() {
+  if (!STATE.globalAudio) return;
+  const cur = STATE.globalAudio.currentTime || 0;
+  const dur = STATE.globalAudio.duration;
+
+  const timeEl = document.getElementById('mini-track-time');
+  const fillEl = document.getElementById('mini-progress-fill');
+
+  if (STATE.isCairoRadioPlaying) {
+    if (timeEl) timeEl.textContent = '🔴 بث حي مباشر';
+    if (fillEl) fillEl.style.width = '100%';
+    return;
+  }
+
+  if (dur && !isNaN(dur) && isFinite(dur) && dur > 0) {
+    const pct = Math.min(100, Math.max(0, (cur / dur) * 100));
+    if (fillEl) fillEl.style.width = pct + '%';
+    if (timeEl) timeEl.textContent = `${formatAudioTime(cur)} / ${formatAudioTime(dur)}`;
+  } else {
+    if (timeEl) timeEl.textContent = `${formatAudioTime(cur)} / --:--`;
+  }
+}
+
+function onModernAudioTimeUpdate() {
+  onMiniAudioTimeUpdate();
+}
+
+function onMiniAudioLoadedMetadata() {
+  if (!STATE.globalAudio) return;
+  const dur = STATE.globalAudio.duration;
+  const cur = STATE.globalAudio.currentTime || 0;
+  const timeEl = document.getElementById('mini-track-time');
+
+  if (!STATE.isCairoRadioPlaying && dur && !isNaN(dur) && isFinite(dur) && timeEl) {
+    timeEl.textContent = `${formatAudioTime(cur)} / ${formatAudioTime(dur)}`;
+  }
+}
+
+function onModernAudioLoadedMetadata() {
+  onMiniAudioLoadedMetadata();
+}
+
+function closeMiniPlayer() {
+  if (STATE.globalAudio) {
+    STATE.globalAudio.pause();
+    STATE.globalAudio.removeAttribute('src');
+  }
+  STATE.isCairoRadioPlaying = false;
+  STATE.activeAudioTrack = null;
+  if (STATE.modernPlayer) STATE.modernPlayer.track = null;
+
+  updateCairoRadioUI(false);
+  updateMiniPlayerState(false);
+
+  const miniPlayer = document.getElementById('bottom-mini-player');
+  if (miniPlayer) miniPlayer.style.display = 'none';
+
+  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => {
+    c.classList.remove('is-playing');
+    const b = c.querySelector('.audio-card-play-btn');
+    if (b) b.textContent = '▶';
+  });
+}
+
+function closeModernPlayer() {
+  closeMiniPlayer();
 }
 
 function closeGlobalAudioPlayer() {
-  if (STATE.globalAudio) {
-    STATE.globalAudio.pause();
-    STATE.globalAudio.src = '';
+  closeMiniPlayer();
+}
+
+function minimizeModernPlayer() {}
+function expandModernPlayer() {}
+function toggleModernRepeat() {}
+function togglePlayerLyrics() {}
+function onModernSeekInput(val) {}
+function onModernSeekChange(val) {}
+
+function shareCurrentModernTrack() {
+  const track = STATE.activeAudioTrack || STATE.modernPlayer?.track;
+  if (!track) return;
+  const shareData = {
+    title: track.title,
+    text: `استمع إلى: ${track.title} بصوت ${track.reciter || ''} عبر تطبيق المجلس`,
+    url: track.url || window.location.href
+  };
+
+  if (navigator.share) {
+    navigator.share(shareData).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(track.url).then(() => {
+      showToast('تم نسخ رابط التسجيل إلى الحافظة 📋');
+    }).catch(() => {
+      showToast('تم نسخ العنوان للمشاركة 📋');
+    });
+  } else {
+    showToast('رابط التسجيل جاهز للمشاركة 📋');
   }
-  STATE.isCairoRadioPlaying = false;
-  updateCairoRadioUI(false);
-  const floatPlayer = document.getElementById('global-floating-player');
-  if (floatPlayer) floatPlayer.style.display = 'none';
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 14. التواشيح والابتهالات الدينية الشاملة (صفحة واحدة متصلة)
+// 14. نوادر التلاوات القرآنية الخالدة (قسم مخصص ومستقل)
 // ═══════════════════════════════════════════════════════════════
-function initRareAndIbtehalat() {
+
+function initRareQuranSection() {
+  renderRareQuranList('all');
+}
+
+function renderRareQuranList(filterCat) {
+  const container = document.getElementById('rare-quran-list');
+  if (!container || typeof RARE_RECITATIONS_DATA === 'undefined') return;
+
+  const filtered = (!filterCat || filterCat === 'all') ?
+    RARE_RECITATIONS_DATA : RARE_RECITATIONS_DATA.filter(item => item.category === filterCat);
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="card" style="text-align: center; color: var(--text-secondary); padding: 24px;">لا توجد تسجيلات نادرة متوفرة في هذا القسم حالياً.</div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(item => {
+    const avatar = getSheikhAvatarSvg(item.reciter, false);
+    const currentId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
+    const isCurPlaying = currentId === item.id && STATE.isGlobalPlaying;
+    return `
+      <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${item.id}" onclick="playRareQuranTrack('${item.id}')">
+        <div class="audio-card-avatar">
+          <img src="${avatar}" alt="${item.reciter}">
+        </div>
+        <div class="audio-card-meta">
+          <div class="audio-card-title">${item.title}</div>
+          <div class="audio-card-artist">${item.reciter}</div>
+          <div class="audio-card-details">
+            <span class="rare-badge">${item.badge || 'تسجيل نادر'}</span>
+            ${item.duration ? `<span>⏱ ${item.duration}</span>` : ''}
+          </div>
+        </div>
+        <button class="audio-card-play-btn" aria-label="تشغيل">
+          ${isCurPlaying ? '⏸' : '▶'}
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+function filterRareQuran(category) {
+  document.querySelectorAll('#page-rare-quran .chip-btn').forEach(btn => {
+    const onclickAttr = btn.getAttribute('onclick') || '';
+    btn.classList.toggle('active', onclickAttr.includes(`'${category}'`));
+  });
+  renderRareQuranList(category);
+}
+
+function playRareQuranTrack(trackId) {
+  const track = RARE_RECITATIONS_DATA.find(t => t.id === trackId);
+  if (!track) return;
+  const currentId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
+  if (currentId === trackId) {
+    toggleMiniAudioPlay();
+  } else {
+    playTrackDirectly(track);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 14.1. التواشيح والابتهالات الدينية الشاملة (قسم مستقل)
+// ═══════════════════════════════════════════════════════════════
+
+function initIbtehalatSection() {
   renderIbtehalatList('all');
+}
+
+function initRareAndIbtehalat() {
+  initIbtehalatSection();
 }
 
 function renderIbtehalatList(filterCat) {
@@ -1331,38 +1853,52 @@ function renderIbtehalatList(filterCat) {
     IBTEHALAT_DATA : IBTEHALAT_DATA.filter(i => i.category === normalizedCat);
 
   if (filtered.length === 0) {
-    container.innerHTML = `<div class="card" style="text-align: center; color: var(--text-secondary); padding: 24px;">لا توجد تسجيلات متوفرة في هذا القسم حالياً.</div>`;
+    container.innerHTML = `<div class="card" style="text-align: center; color: var(--text-secondary); padding: 24px;">لا توجد ابتهالات متوفرة في هذا القسم حالياً.</div>`;
     return;
   }
 
   container.innerHTML = filtered.map(item => {
-    const safeTitle = (item.title || '').replace(/'/g, "\\'");
-    const safeReciter = (item.reciter || '').replace(/'/g, "\\'");
+    const avatar = getSheikhAvatarSvg(item.reciter, true);
+    const currentId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
+    const isCurPlaying = currentId === item.id && STATE.isGlobalPlaying;
     return `
-      <div class="media-audio-card" onclick="playMediaTrack('${item.url}', '${safeTitle}', '${safeReciter}')">
-        <div style="flex: 1; padding-left: 12px; overflow: hidden;">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-            <span style="font-weight: 700; color: #fff; font-size: 0.95rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${item.title}</span>
-            ${item.badge ? `<span style="font-size: 0.7rem; padding: 2px 7px; background: rgba(212,175,55,0.15); color: var(--gold-primary); border-radius: 4px; border: 1px solid rgba(212,175,55,0.3); flex-shrink: 0;">${item.badge}</span>` : ''}
-          </div>
-          <div style="font-size: 0.82rem; color: var(--gold-light);">${item.reciter}</div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
-            <span style="font-size: 0.78rem; color: var(--text-secondary); white-space: nowrap; text-overflow: ellipsis; overflow: hidden; max-width: 230px;">${item.desc || ''}</span>
-            ${item.duration ? `<span style="font-size: 0.75rem; color: var(--gold-light); direction: ltr;">⏱ ${item.duration}</span>` : ''}
+      <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${item.id}" onclick="playIbtehalTrack('${item.id}')">
+        <div class="audio-card-avatar">
+          <img src="${avatar}" alt="${item.reciter}">
+        </div>
+        <div class="audio-card-meta">
+          <div class="audio-card-title">${item.title}</div>
+          <div class="audio-card-artist">${item.reciter}</div>
+          <div class="audio-card-details">
+            <span class="rare-badge">${item.badge || 'ابتهال'}</span>
+            ${item.duration ? `<span>⏱ ${item.duration}</span>` : ''}
           </div>
         </div>
-        <div class="media-play-circle" aria-label="استماع">▶</div>
+        <button class="audio-card-play-btn" aria-label="تشغيل">
+          ${isCurPlaying ? '⏸' : '▶'}
+        </button>
       </div>
     `;
   }).join('');
 }
 
 function filterIbtehalat(category) {
-  document.querySelectorAll('#page-rare-ibtehalat .chip-btn').forEach(btn => {
+  document.querySelectorAll('#page-ibtehalat .chip-btn').forEach(btn => {
     const onclickAttr = btn.getAttribute('onclick') || '';
     btn.classList.toggle('active', onclickAttr.includes(`'${category}'`));
   });
   renderIbtehalatList(category);
+}
+
+function playIbtehalTrack(trackId) {
+  const track = IBTEHALAT_DATA.find(t => t.id === trackId);
+  if (!track) return;
+  const currentId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
+  if (currentId === trackId) {
+    toggleMiniAudioPlay();
+  } else {
+    playTrackDirectly(track);
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1447,7 +1983,7 @@ function openReciterInReader(reciterId) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 16. حصن المسلم: الأذكار والعداد الرقمي
+// 16. حصن المسلم: الأذكار والعدادات التفاعلية المتقدمة
 // ═══════════════════════════════════════════════════════════════
 function initAzkarSection() {}
 
@@ -1458,8 +1994,8 @@ function openAzkarCategory(catKey) {
   if (catKey === 'prophetic') catKey = 'prophetic_duas';
   if (catKey === 'mosque_wudhu') catKey = 'masjid_wudhu';
 
-  const cat = AZKAR_DATA[catKey];
-  if (!cat) return;
+  const cat = (typeof AZKAR_DATA !== 'undefined') ? AZKAR_DATA[catKey] : null;
+  if (!cat || !cat.items) return;
 
   navigateTo('azkar-detail');
 
@@ -1467,7 +2003,7 @@ function openAzkarCategory(catKey) {
   if (titleEl) titleEl.textContent = cat.title;
 
   const iconEl = document.getElementById('azkar-detail-icon');
-  if (iconEl) iconEl.textContent = cat.icon;
+  if (iconEl) iconEl.textContent = cat.icon || '📿';
 
   const container = document.getElementById('azkar-items-container');
   if (!container) return;
@@ -1478,21 +2014,22 @@ function openAzkarCategory(catKey) {
     const current = saved[idx] || 0;
     const remaining = Math.max(0, item.count - current);
     const isDone = remaining === 0;
+    const virtue = item.fadl || item.reward;
 
     return `
-      <div class="card azkar-item-card ${isDone ? 'gold-border' : ''}" id="zikr-card-${catKey}-${idx}">
-        <div class="zikr-text-large">${item.text}</div>
-        ${item.reward ? `<div style="font-size: 0.85rem; color: var(--gold-light); margin-bottom: 12px;">⭐ ${item.reward}</div>` : ''}
-        <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-dark); padding-top: 12px;">
-          <span style="font-size: 0.85rem; color: var(--text-secondary);">الهدف: ${item.count} مرات</span>
-          <button class="zikr-counter-btn" id="zikr-btn-${catKey}-${idx}" onclick="tapZikrItem('${catKey}', ${idx}, ${item.count})" ${isDone ? 'disabled' : ''}>
-            ${isDone ? '✓ تم' : remaining}
+      <div class="azkar-item-card ${isDone ? 'is-completed' : ''}" id="zikr-card-${catKey}-${idx}">
+        <div class="azkar-text-arabic">${item.text}</div>
+        ${virtue ? `<div class="azkar-virtue-box">⭐ ${virtue}</div>` : ''}
+        <div class="azkar-actions-footer">
+          <span class="azkar-target-badge">العدد المطلوب: ${toArabicDigits(item.count)} ${item.count === 1 ? 'مرة' : 'مرات'}</span>
+          <button class="azkar-counter-btn ${isDone ? 'done' : ''}" id="zikr-btn-${catKey}-${idx}" onclick="tapZikrItem('${catKey}', ${idx}, ${item.count})" ${isDone ? 'disabled' : ''}>
+            ${isDone ? '✓ تَمّ بحمد الله' : toArabicDigits(remaining)}
           </button>
         </div>
       </div>
     `;
   }).join('') + `
-    <div style="text-align: center; margin: 24px 0;">
+    <div style="text-align: center; margin: 24px 0 40px;">
       <button class="action-btn action-btn-secondary" onclick="resetZikrCategory('${catKey}')">🔄 إعادة تعيين عدادات هذا القسم</button>
     </div>
   `;
@@ -1506,27 +2043,28 @@ function tapZikrItem(catKey, idx, target) {
 
   const remaining = Math.max(0, target - current);
   const btn = document.getElementById(`zikr-btn-${catKey}-${idx}`);
+  const card = document.getElementById(`zikr-card-${catKey}-${idx}`);
 
   if (remaining === 0) {
     if (btn) {
-      btn.textContent = '✓ تم';
+      btn.textContent = '✓ تَمّ بحمد الله';
+      btn.classList.add('done');
       btn.disabled = true;
     }
-    const card = document.getElementById(`zikr-card-${catKey}-${idx}`);
-    if (card) card.classList.add('gold-border');
+    if (card) card.classList.add('is-completed');
 
-    if (navigator.vibrate) navigator.vibrate([70, 40, 70]);
-    showToast('تقبل الله طاعتكم 🤲');
+    if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
+    showToast('تقبل الله طاعتكم وجزاكم خيراً 🤲');
   } else {
-    if (btn) btn.textContent = remaining;
-    if (navigator.vibrate) navigator.vibrate(30);
+    if (btn) btn.textContent = toArabicDigits(remaining);
+    if (navigator.vibrate) navigator.vibrate(35);
   }
 }
 
 function resetZikrCategory(catKey) {
   localStorage.removeItem(`zikr_progress_${catKey}`);
   openAzkarCategory(catKey);
-  showToast('تمت إعادة ضبط العدادات 🔄');
+  showToast('تمت إعادة ضبط العدادات لهذا القسم 🔄');
 }
 
 // ═══════════════════════════════════════════════════════════════

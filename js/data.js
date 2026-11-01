@@ -1,4 +1,4 @@
-/**
+﻿/**
  * =============================================================================
  * تطبيق «المجلس: الموسوعة القرآنية والابتهالات»
  * ملف البيانات والروابط الرسمية المعتمدة (js/data.js)
@@ -188,7 +188,7 @@ const ALL_RECITERS_DATA = [
     supportsMurattal: false,
     supportsMojawwad: true,
     serverMurattal: "",
-    serverMojawwad: "https://server10.mp3quran.net/bahtimi/",
+    serverMojawwad: "https://server10.mp3quran.net/minsh_mjwd/",
     info: "سلطان التلاوة القرآنية وإمام روائع المحافل المجودة الخالدة"
   },
   {
@@ -339,7 +339,7 @@ const ALL_RECITERS_DATA = [
     category: "unique",
     supportsMurattal: true,
     supportsMojawwad: false,
-    serverMurattal: "https://server16.mp3quran.net/soufi/R رواية_حفص_عن_عاصم/",
+    serverMurattal: "https://cdn.mp3quran.net/audio/abdulrasheed-sufi/r3/",
     serverMojawwad: "",
     info: "شيخ القراءات ومتقن الروايات القرآنية بدقة إسناد عالية"
   },
@@ -349,7 +349,7 @@ const ALL_RECITERS_DATA = [
     category: "unique",
     supportsMurattal: true,
     supportsMojawwad: false,
-    serverMurattal: "https://server16.mp3quran.net/nourin/",
+    serverMurattal: "https://cdn.mp3quran.net/audio/noreen-siddiq/r1/",
     serverMojawwad: "",
     info: "القارئ السوداني الراحل صاحب التلاوة الدورية الإفريقية الخاشعة"
   },
@@ -369,7 +369,7 @@ const ALL_RECITERS_DATA = [
     category: "contemporary",
     supportsMurattal: true,
     supportsMojawwad: false,
-    serverMurattal: "https://server14.mp3quran.net/islam/R/",
+    serverMurattal: "https://cdn.mp3quran.net/audio/islam-sobhi/r1/",
     serverMojawwad: "",
     info: "تلاوات هادئة مطمئنة للقلوب بأداء عصري خاشع"
   }
@@ -399,170 +399,355 @@ const RADIO_STATIONS = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// 4. موسوعة التواشيح والابتهالات الدينية الشاملة ونوادر التسجيلات
+// 4.1. نوادر التلاوات والتسجيلات القرآنية التاريخية الخالدة لكبار القراء
 // ═══════════════════════════════════════════════════════════════
-const IBTEHALAT_DATA = [
-  // ─── 0. نوادر التسجيلات الخالدة (روائع التلاوات التاريخية النادرة) ───
+const RARE_RECITATIONS_DATA = [
+  // ─── 1. الشيخ محمد صديق المنشاوي (تسجيلات ونوادر خارجية خاشعة) ───
   {
-    id: "rare_refat_kahf",
-    category: "rare_quran",
-    title: "سورة الكهف المباركة (التسجيل التاريخي الخالد)",
-    reciter: "الشيخ محمد رفعت",
-    desc: "روائع التلاوات الخاشعة التي ارتبطت بيوم الجمعة في وجدان المسلمين",
-    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/018.mp3",
-    badge: "نوادر الجمعة",
-    duration: "1:26:10"
+    id: "rare_minshawi_hashr",
+    category: "minshawi",
+    title: "سورة الحشر والفجر (محفل الكويت التاريخي 1966)",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    desc: "لو أنزلنا هذا القرآن على جبل لرأيته خاشعاً.. درة التلاوات الباكية التي هزت الكويت",
+    url: "https://server10.mp3quran.net/minsh_mjwd/059.mp3",
+    badge: "محفل الكويت 1966",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "23:45",
+    lyricsQuote: "لَوْ أَنزَلْنَا هَٰذَا الْقُرْآنَ عَلَىٰ جَبَلٍ لَّرَأَيْتَهُ خَاشِعًا مُّتَصَدِّعًا مِّنْ خَشْيَةِ اللَّهِ ۚ وَتِلْكَ الْأَمْثَالُ نَضْرِبُهَا لِلنَّاسِ لَعَلَّهُمْ يَتَفَكَّرُونَ"
   },
   {
-    id: "rare_refat_maryam",
-    category: "rare_quran",
-    title: "سورة مريم كاملة (التسجيل التاريخي الخالد)",
-    reciter: "الشيخ محمد رفعت",
-    desc: "كهيعص.. تلاوة ملائكية تاريخية تهز القلوب بخشوع يفوق الوصف",
-    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/019.mp3",
-    badge: "قيثارة السماء",
-    duration: "39:15"
+    id: "rare_minshawi_yusuf",
+    category: "minshawi",
+    title: "سورة يوسف (أحسن القصص ومقام النهاوند الخالد)",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    desc: "نحن نقص عليك أحسن القصص.. قمة السلطنة الخاشعة وإعجاز الصوت الباكي المتقن",
+    url: "https://server10.mp3quran.net/minsh_mjwd/012.mp3",
+    badge: "نهاوند المنشاوي",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "53:15",
+    lyricsQuote: "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِن كُنتَ مِن قَبْلِهِ لَمِنَ الْغَافِلِينَ"
   },
   {
-    id: "rare_refat_yusuf",
-    category: "rare_quran",
-    title: "سورة يوسف (أحسن القصص)",
-    reciter: "الشيخ محمد رفعت",
-    desc: "إذ قال يوسف لأبيه.. أداء بديع يفيض بالإحساس والخشوع الرباني",
-    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/012.mp3",
-    badge: "تراث الإذاعة",
-    duration: "48:35"
+    id: "rare_minshawi_shuara",
+    category: "minshawi",
+    title: "سورة الشعراء (تلاوة تهز القلوب بخشوع يفوق الوصف)",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    desc: "طسم.. تلك آيات الكتاب المبين.. تلاوة تفيض بالخشوع الإيماني والسكينة",
+    url: "https://server10.mp3quran.net/minsh_mjwd/026.mp3",
+    badge: "روائع التجويد",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "46:20",
+    lyricsQuote: "وَإِنَّهُ لَتَنزِيلُ رَبِّ الْعَالَمِينَ ۝ نَزَلَ بِهِ الرُّوحُ الْأَمِينُ ۝ عَلَىٰ قَلْبِكَ لِتَكُونَ مِنَ الْمُنذِرِينَ ۝ بِلِسَانٍ عَرَبِيٍّ مُّبِينٍ"
   },
   {
-    id: "rare_refat_rahman",
-    category: "rare_quran",
-    title: "سورة الرحمن (عروس القرآن)",
-    reciter: "الشيخ محمد رفعت",
-    desc: "فبأي آلاء ربكما تكذبان.. نبرات خاشعة تبكي العيون من جلال التلاوة",
-    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/055.mp3",
+    id: "rare_minshawi_rahman",
+    category: "minshawi",
+    title: "سورة الرحمن (عروس القرآن بالتلاوة الباكية)",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    desc: "الرحمن علم القرآن.. نبرات حزينة مبكية تلامس شغاف القلوب",
+    url: "https://server10.mp3quran.net/minsh_mjwd/055.mp3",
     badge: "عروس القرآن",
-    duration: "29:05"
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "22:30",
+    lyricsQuote: "الرَّحْمَٰنُ ۝ عَلَّمَ الْقُرْآنَ ۝ خَلَقَ الْإِنسَانَ ۝ عَلَّمَهُ الْبَيَانَ ۝ الشَّمْسُ وَالْقَمَرُ بِحُسْبَانٍ"
+  },
+
+  // ─── 2. الشيخ كامل يوسف البهتيمي (نوادر التلاوات والمحافل) ───
+  {
+    id: "rare_bahtimi_maryam",
+    category: "bahtimi",
+    title: "سورة مريم (محفل الجامع الأزهر الشريف كامل 1963)",
+    reciter: "الشيخ كامل يوسف البهتيمي",
+    desc: "سلطان التلاوة القرآنية في أروع تجلياته الصوتية والمقامية برحاب الجامع الأزهر",
+    url: "https://dn711107.ca.archive.org/0/items/way2sona_20160405_2216/030-_2.mp3",
+    badge: "محفل الجامع الأزهر",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "45:30",
+    lyricsQuote: "كهيعص ۝ ذِكْرُ رَحْمَتِ رَبِّكَ عَبْدَهُ زَكَرِيَّا ۝ إِذْ نَادَىٰ رَبَّهُ نِدَاءً خَفِيًّا"
   },
   {
-    id: "rare_refat_qisar",
-    category: "rare_quran",
-    title: "قصار السور (الضحى والشرح والتين)",
-    reciter: "الشيخ محمد رفعت",
-    desc: "والضحى والليل إذا سجى.. تلاوة نادرة تاريخية عذبة تفيض بالسكينة والإيمان",
-    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/093.mp3",
-    badge: "قصار السور الخالدة",
-    duration: "18:20"
+    id: "rare_bahtimi_isra",
+    category: "bahtimi",
+    title: "سورة الإسراء (محفل الجامع الأزهر النادر)",
+    reciter: "الشيخ كامل يوسف البهتيمي",
+    desc: "وقضى ربك ألا تعبدوا إلا إياه.. تلاوة شجية من نفحات الرعيل الأول المخلص بالجامع الأزهر",
+    url: "https://dn711107.ca.archive.org/0/items/way2sona_20160405_2216/006-_2.mp3",
+    badge: "محفل الجامع الأزهر",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "41:15",
+    lyricsQuote: "وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا ۚ إِمَّا يَبْلُغَنَّ عِندَكَ الْكِبَرَ أَحَدُهُمَا أَوْ كِلَاهُمَا فَلَا تَقُل لَّهُمَا أُفٍّ وَلَا تَنْهَرْهُمَا"
   },
+
+  // ─── 3. الشيخ عبد الباسط عبد الصمد (نوادر المقامات والمحافل الخارجية) ───
   {
     id: "rare_basit_aqsa_isra",
-    category: "rare_quran",
+    category: "basit",
     title: "سورة الإسراء (محفل المسجد الأقصى المبارك 1964)",
     reciter: "الشيخ عبد الباسط عبد الصمد",
     desc: "سبحان الذي أسرى بعبده ليلاً من المسجد الحرام إلى المسجد الأقصى.. أعظم محفل تاريخي للشيخ بالأقصى",
-    url: "https://archive.org/download/khaled_alridwany_201707/%D8%A7%D9%84%D8%A7%D8%B3%D8%B1%D8%A7%D8%A1%20%D8%AA%D9%84%D8%A7%D9%88%D8%A9%202%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A7%D9%82%D8%B5%D9%89%201964.mp3",
+    url: "https://dn710704.ca.archive.org/0/items/khaled_alridwany_201707/%D8%A7%D9%84%D8%A7%D8%B3%D8%B1%D8%A7%D8%A1%20%D8%AA%D9%84%D8%A7%D9%88%D8%A9%202%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A7%D9%82%D8%B5%D9%89%201964.mp3",
     badge: "نوادر المسجد الأقصى",
-    duration: "34:20"
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "34:20",
+    lyricsQuote: "سُبْحَانَ الَّذِي أَسْرَىٰ بِعَبْدِهِ لَيْلًا مِّنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الْأَقْصَى الَّذِي بَارَكْنَا حَوْلَهُ لِنُرِيَهُ مِنْ آيَاتِنَا"
   },
   {
     id: "rare_basit_aqsa_yusuf",
-    category: "rare_quran",
+    category: "basit",
     title: "سورة يوسف وقصار السور (محفل المسجد الأقصى)",
     reciter: "الشيخ عبد الباسط عبد الصمد",
     desc: "تسجيل تاريخي مهيب من رحاب القدس الشريف بأعلى درجات السلطنة والتجويد",
-    url: "https://archive.org/download/khaled_alridwany_201707/%D9%8A%D9%88%D8%B3%D9%81%20-%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A3%D9%82%D8%B5%D9%89.mp3",
+    url: "https://ia800803.us.archive.org/27/items/khaled_alridwany_201707/%D9%8A%D9%88%D8%B3%D9%81%20-%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A3%D9%82%D8%B5%D9%89.mp3",
     badge: "نوادر المسجد الأقصى",
-    duration: "42:15"
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "42:15",
+    lyricsQuote: "إِذْ قَالَ يُوسُفُ لِأَبِيهِ يَا أَبَتِ إِنِّي رَأَيْتُ أَحَدَ عَشَرَ كَوْكَبًا وَالشَّمْسَ وَالْقَمَرَ رَأَيْتُهُمْ لِي سَاجِدِينَ"
   },
   {
     id: "rare_basit_aqsa_qamar",
-    category: "rare_quran",
+    category: "basit",
     title: "سورة القمر والرحمن وقصار السور (المسجد الأقصى)",
     reciter: "الشيخ عبد الباسط عبد الصمد",
     desc: "اقتربت الساعة وانشق القمر.. من أندر تسجيلات الشيخ التاريخية بالقدس الشريف",
-    url: "https://archive.org/download/khaled_alridwany_201707/%D8%A7%D9%84%D9%82%D9%85%D8%B1%20%D9%88%D8%A7%D9%84%D8%B1%D8%AD%D9%85%D9%86%20%D9%88%D8%A7%D9%84%D8%A8%D9%84%D8%AF%20%D9%88%D8%A7%D9%84%D8%B4%D9%85%D8%B3%20%D9%88%D8%A7%D9%84%D8%AA%D9%8A%D9%86%20%D9%88%D8%A7%D9%84%D9%86%D8%B5%D8%B1%20-%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A3%D9%82%D8%B5%D9%89.mp3",
+    url: "https://dn710704.ca.archive.org/0/items/khaled_alridwany_201707/%D8%A7%D9%84%D9%82%D9%85%D8%B1%20%D9%88%D8%A7%D9%84%D8%B1%D8%AD%D9%85%D9%86%20%D9%88%D8%A7%D9%84%D8%A8%D9%84%D8%AF%20%D9%88%D8%A7%D9%84%D8%B4%D9%85%D8%B3%20%D9%88%D8%A7%D9%84%D8%AA%D9%8A%D9%86%20%D9%88%D8%A7%D9%84%D9%86%D8%B5%D8%B1%20-%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A3%D9%82%D8%B5%D9%89.mp3",
     badge: "نوادر المسجد الأقصى",
-    duration: "38:40"
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "38:40",
+    lyricsQuote: "اقْتَرَبَتِ السَّاعَةُ وَانشَقَّ الْقَمَرُ ۝ وَإِن يَرَوْا آيَةً يُعْرِضُوا وَيَقُولُوا سِحْرٌ مُّسْتَمِرٌّ"
   },
   {
     id: "rare_basit_umayyad_maryam",
-    category: "rare_quran",
+    category: "basit",
     title: "سورة مريم وقصار السور (المسجد الأموي بدمشق)",
     reciter: "الشيخ عبد الباسط عبد الصمد",
     desc: "التلاوة الشامية الخالدة التي أبهرت دمشق وسجلت في التاريخ بأنصع الحروف",
     url: "https://server7.mp3quran.net/basit_mjwd/019.mp3",
     badge: "المسجد الأموي",
-    duration: "31:10"
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "31:10",
+    lyricsQuote: "قَالَ كَذَٰلِكِ قَالَ رَبُّكِ هُوَ عَلَيَّ هَيِّنٌ ۖ وَلِنَجْعَلَهُ آيَةً لِّلنَّاسِ وَرَحْمَةً مِّنَّا ۚ وَكَانَ أَمْرًا مَّقْضِيًّا"
   },
   {
+    id: "rare_basit_hajj",
+    category: "basit",
+    title: "سورة الحج (محفل تاريخي ملوكي نادر)",
+    reciter: "الشيخ عبد الباسط عبد الصمد",
+    desc: "يا أيها الناس اتقوا ربكم.. استعراض مقامات التلاوة الصافية والنفس الطويل المذهل",
+    url: "https://server7.mp3quran.net/basit_mjwd/022.mp3",
+    badge: "محفل نادر",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "35:45",
+    lyricsQuote: "يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمْ ۚ إِنَّ زَلْزَلَةَ السَّاعَةِ شَيْءٌ عَظِيمٌ"
+  },
+
+  // ─── 4. الشيخ مصطفى إسماعيل (محافل قصر عابدين والجامع الأزهر) ───
+  {
     id: "rare_mustafa_abdeen_hajj",
-    category: "rare_quran",
+    category: "mustafa",
     title: "سورة الحج وقصار السور (محفل الجامع الأزهر وقصر عابدين)",
     reciter: "الشيخ مصطفى إسماعيل",
     desc: "يا أيها الناس اتقوا ربكم.. قمة إعجاز المقامات وتفسير القرآن الكريم بالنغم في رحاب الأزهر الشريف",
     url: "https://cdn.mp3quran.net/audio/mustafa-ismail/r1/022.mp3",
-    badge: "محفل الجامع الأزهر",
-    duration: "52:40"
+    badge: "محفل قصر عابدين",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "52:40",
+    lyricsQuote: "وَأَذِّن فِي النَّاسِ بِالْحَجِّ يَأْتُوكَ رِجَالًا وَعَلَىٰ كُلِّ ضَامِرٍ يَأْتِينَ مِن كُلِّ فَجٍّ عَمِيقٍ"
   },
   {
     id: "rare_mustafa_maryam",
-    category: "rare_quran",
+    category: "mustafa",
     title: "سورة مريم (محفل نادر تاريخي)",
     reciter: "الشيخ مصطفى إسماعيل",
     desc: "روائع الشيخ مصطفى إسماعيل في استعراض مقامات التلاوة والخشوع الملكي الفخم",
     url: "https://cdn.mp3quran.net/audio/mustafa-ismail/r1/019.mp3",
     badge: "محفل ملكي نادر",
-    duration: "46:25"
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "46:25",
+    lyricsQuote: "فَأَتَتْ بِهِ قَوْمَهَا تَحْمِلُهُ ۖ قَالُوا يَا مَرْيَمُ لَقَدْ جِئْتِ شَيْئًا فَرِيًّا"
   },
   {
+    id: "rare_mustafa_fatir",
+    category: "mustafa",
+    title: "سورة فاطر وقصار السور (محفل الإسكندرية الخالد 1965)",
+    reciter: "الشيخ مصطفى إسماعيل",
+    desc: "الحمد لله فاطر السماوات والأرض.. من أروع ما جادت به قريحة الشيخ في المحافل الجماهيرية",
+    url: "https://server8.mp3quran.net/mustafa/035.mp3",
+    badge: "محفل الإسكندرية",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "33:20",
+    lyricsQuote: "الْحَمْدُ لِلَّهِ فَاطِرِ السَّمَاوَاتِ وَالْأَرْضِ جَاعِلِ الْمَلَائِكَةِ رُسُلًا أُولِي أَجْنِحَةٍ مَّثْنَىٰ وَثُلَاثَ وَرُبَاعَ"
+  },
+
+  // ─── 5. الشيخ محمد رفعت (قيثارة السماء الخالدة) ───
+  {
+    id: "rare_refat_kahf",
+    category: "refat",
+    title: "سورة الكهف المباركة (التسجيل التاريخي الخالد)",
+    reciter: "الشيخ محمد رفعت",
+    desc: "روائع التلاوات الخاشعة التي ارتبطت بيوم الجمعة في وجدان المسلمين",
+    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/018.mp3",
+    badge: "نوادر الجمعة",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "1:26:10",
+    lyricsQuote: "الْحَمْدُ لِلَّهِ الَّذِي أَنزَلَ عَلَىٰ عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَل لَّهُ عِوَجًا ۜ قَيِّمًا لِّيُنذِرَ بَأْسًا شَدِيدًا مِّن لَّدُنْهُ"
+  },
+  {
+    id: "rare_refat_maryam",
+    category: "refat",
+    title: "سورة مريم كاملة (التسجيل التاريخي الخالد)",
+    reciter: "الشيخ محمد رفعت",
+    desc: "كهيعص.. تلاوة ملائكية تاريخية تهز القلوب بخشوع يفوق الوصف",
+    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/019.mp3",
+    badge: "قيثارة السماء",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "39:15",
+    lyricsQuote: "كهيعص ۝ ذِكْرُ رَحْمَتِ رَبِّكَ عَبْدَهُ زَكَرِيَّا ۝ إِذْ نَادَىٰ رَبَّهُ نِدَاءً خَفِيًّا ۝ قَالَ رَبِّ إِنِّي وَهَنَ الْعَظْمُ مِنِّي"
+  },
+  {
+    id: "rare_refat_yusuf",
+    category: "refat",
+    title: "سورة يوسف (أحسن القصص)",
+    reciter: "الشيخ محمد رفعت",
+    desc: "إذ قال يوسف لأبيه.. أداء بديع يفيض بالإحساس والخشوع الرباني",
+    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/012.mp3",
+    badge: "تراث الإذاعة",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "48:35",
+    lyricsQuote: "إِذْ قَالَ يُوسُفُ لِأَبِيهِ يَا أَبَتِ إِنِّي رَأَيْتُ أَحَدَ عَشَرَ كَوْكَبًا وَالشَّمْسَ وَالْقَمَرَ رَأَيْتُهُمْ لِي سَاجِدِينَ"
+  },
+  {
+    id: "rare_refat_rahman",
+    category: "refat",
+    title: "سورة الرحمن (عروس القرآن)",
+    reciter: "الشيخ محمد رفعت",
+    desc: "فبأي آلاء ربكما تكذبان.. نبرات خاشعة تبكي العيون من جلال التلاوة",
+    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/055.mp3",
+    badge: "عروس القرآن",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "29:05",
+    lyricsQuote: "فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ ۝ خَلَقَ الْإِنسَانَ مِن صَلْصَالٍ كَالْفَخَّارِ ۝ وَخَلَقَ الْجَانَّ مِن مَّارِجٍ مِّن نَّارٍ"
+  },
+  {
+    id: "rare_refat_qisar",
+    category: "refat",
+    title: "قصار السور (الضحى والشرح والتين)",
+    reciter: "الشيخ محمد رفعت",
+    desc: "والضحى والليل إذا سجى.. تلاوة نادرة تاريخية عذبة تفيض بالسكينة والإيمان",
+    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/093.mp3",
+    badge: "قصار السور الخالدة",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "18:20",
+    lyricsQuote: "وَالضُّحَىٰ ۝ وَاللَّيْلِ إِذَا سَجَىٰ ۝ مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ ۝ وَلَلْآخِرَةُ خَيْرٌ لَّكَ مِنَ الْأُولَىٰ"
+  },
+
+  // ─── 6. الشيخ محمود علي البنا (نوادر محافل القاهرة والإسكندرية) ───
+  {
+    id: "rare_banna_maryam",
+    category: "banna",
+    title: "سورة مريم (محفل مسجد الإمام الحسين بالقاهرة)",
+    reciter: "الشيخ محمود علي البنا",
+    desc: "تلاوة رخيمة قوية تفيض بالجلال والإتقان برحاب مسجد الإمام الحسين عليه السلام",
+    url: "https://server8.mp3quran.net/bna_mjwd/019.mp3",
+    badge: "محفل الحسين",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "36:10",
+    lyricsQuote: "وَاذْكُرْ فِي الْكِتَابِ مَرْيَمَ إِذِ انتَبَذَتْ مِنْ أَهْلِهَا مَكَانًا شَرْقِيًّا"
+  },
+  {
+    id: "rare_banna_ibrahim",
+    category: "banna",
+    title: "سورة إبراهيم (محفل تاريخي بالإسكندرية)",
+    reciter: "الشيخ محمود علي البنا",
+    desc: "ألم تر كيف ضرب الله مثلاً كلمة طيبة.. أداء مهيب متفرد بالخشوع والتجويد الصافي",
+    url: "https://server8.mp3quran.net/bna_mjwd/014.mp3",
+    badge: "محفل الإسكندرية",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "38:40",
+    lyricsQuote: "أَلَمْ تَرَ كَيْفَ ضَرَبَ اللَّهُ مَثَلًا كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ أَصْلُهَا ثَابِتٌ وَفَرْعُهَا فِي السَّمَاءِ"
+  },
+
+  // ─── 7. الشيخ محمد سلامة (شيخ القراء وأستاذ الأجيال) ───
+  {
+    id: "rare_salama_nahl",
+    category: "salama",
+    title: "سورة النحل (محفل خارجي عالي الجودة)",
+    reciter: "الشيخ محمد سلامة",
+    desc: "شيخ القراء وأستاذ عمالقة التلاوة في تسجيل تاريخي نادر يحفظ عبق الزمان الجميل",
+    url: "https://dn710003.ca.archive.org/0/items/20240312_20240312_0307/016%20%20%20%2016%20%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%B3%D9%84%D8%A7%D9%85%D8%A9%20_..%20%D8%B3%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D9%86%D8%AD%D9%84%20%D9%85%D8%AD%D9%81%D9%84%20%D8%AE%D8%A7%D8%B1%D8%AC%D9%8A%20%D8%AC%D9%88%D8%AF%D8%A9%20%D8%B9%D8%A7%D9%84%D9%8A%D8%A9%20%20%D9%84%D8%A3%D9%88%D9%84%20%D9%85%D8%B1%D8%A9%20HD.mp3",
+    badge: "شيخ المقارئ",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "1:05:45",
+    lyricsQuote: "أَتَىٰ أَمْرُ اللَّهِ فَلَا تَسْتَعْجِلُوهُ ۚ سُبْحَانَهُ وَتَعَالَىٰ عَمَّا يُشْرِكُونَ"
+  },
+  {
+    id: "rare_salama_anbiya",
+    category: "salama",
+    title: "سورة الأنبياء (محفل 1956 التاريخي الخالد)",
+    reciter: "الشيخ محمد سلامة",
+    desc: "اقترب للناس حسابهم وهم في غفلة معرضون.. تفاعل مذهل مع الجماهير وأداء أسطوري نادر",
+    url: "https://dn710003.ca.archive.org/0/items/20240312_20240312_0307/021%20%20%20%2021%20%20%D9%85%D8%AD%D9%85%D9%80%D8%AF%20%D8%B3%D9%80%D9%84%D8%A7%D9%85%D9%80%D8%A9%20%20%D8%A7%D9%84%D8%A7%D9%86%D8%A8%D9%8A%D9%80%D9%80%D9%80%D8%A7%D8%A1%20%20%D8%AA%D9%80%D9%84%D8%A7%D9%88%D8%A9%20%D9%86%D9%80%D8%A7%D8%AF%D8%B1%D8%A9%20%D9%85%D9%80%D8%B9%20%D8%AA%D9%81%D9%80%D8%A7%D8%B9%D9%80%D9%84%20%D8%A7%D9%84%D8%AC%D9%85%D9%87%D9%80%D9%88%D8%B1%20%D8%B1%D8%A7%D8%A6%D8%B9%D9%80%D9%80%D8%A9%20%D8%B9%D8%A7%D9%85%201956%D9%85%20!!%20%D8%AC%D9%88%D8%AF%D8%A9%20%D8%B9%D8%A7%D9%84%D9%8A%D8%A9%20HD.mp3",
+    badge: "محفل 1956",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "56:20",
+    lyricsQuote: "اقْتَرَبَ لِلنَّاسِ حِسَابُهُمْ وَهُمْ فِي غَفْلَةٍ مُّعْرِضُونَ ۝ مَا يَأْتِيهِم مِّن ذِكْرٍ مِّن رَّبِّهِم مُّحْدَثٍ إِلَّا اسْتَمَعُوهُ وَهُمْ يَلْعَبُونَ"
+  },
+
+  // ─── 8. الشيخ علي جابر (تسجيلات الحرم المكي الشريف التاريخية) ───
+  {
     id: "rare_jaber_haram_rahman",
-    category: "rare_quran",
+    category: "jaber",
     title: "سورة الرحمن (تسجيلات الحرم المكي التاريخية)",
     reciter: "الشيخ علي جابر",
     desc: "تلاوة الحرم المكي الشريف التاريخية التي أحيت القلوب في ليالي رمضان العطرة",
     url: "https://cdn.mp3quran.net/audio/ali-jaber/r1/055.mp3",
     badge: "تراويح الحرم المكي",
-    duration: "14:15"
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "14:15",
+    lyricsQuote: "كُلُّ مَنْ عَلَيْهَا فَانٍ ۝ وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو الْجَلَالِ وَالْإِكْرَامِ"
   },
   {
     id: "rare_jaber_haram_qiyamah",
-    category: "rare_quran",
+    category: "jaber",
     title: "سورة القيامة والبلد (تسجيلات الحرم المكي التاريخية)",
     reciter: "الشيخ علي جابر",
     desc: "لا أقسم بيوم القيامة.. أداء حجازي مؤثر وخشوع يبكي جموع المصلين بالحرم المكي",
     url: "https://cdn.mp3quran.net/audio/ali-jaber/r1/075.mp3",
     badge: "تراويح الحرم المكي",
-    duration: "11:50"
-  },
-  {
-    id: "rare_bahtimi_maryam",
-    category: "rare_quran",
-    title: "سورة مريم (محفل الجامع الأزهر الشريف كامل)",
-    reciter: "الشيخ كامل يوسف البهتيمي",
-    desc: "سلطان التلاوة القرآنية في أروع تجلياته الصوتية والمقامية برحاب الجامع الأزهر",
-    url: "https://archive.org/download/way2sona_20160405_2216/030-_2.mp3",
-    badge: "محفل الجامع الأزهر",
-    duration: "45:30"
-  },
-  {
-    id: "rare_bahtimi_isra",
-    category: "rare_quran",
-    title: "سورة الإسراء (محفل الجامع الأزهر النادر)",
-    reciter: "الشيخ كامل يوسف البهتيمي",
-    desc: "وقضى ربك ألا تعبدوا إلا إياه.. تلاوة شجية من نفحات الرعيل الأول المخلص بالجامع الأزهر",
-    url: "https://archive.org/download/way2sona_20160405_2216/006-_2.mp3",
-    badge: "محفل الجامع الأزهر",
-    duration: "41:15"
-  },
-  {
-    id: "rare_salama_anbiya",
-    category: "rare_quran",
-    title: "سورة الأنبياء والواقعة (محفل تاريخي نادر)",
-    reciter: "الشيخ محمد سلامة",
-    desc: "شيخ القراء وأستاذ عمالقة التلاوة في تسجيل تاريخي نادر يحفظ عبق الزمان الجميل",
-    url: "https://archive.org/download/20240312_20240312_0307/021.mp3",
-    badge: "شيخ المقارئ",
-    duration: "36:45"
-  },
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أصلي نادر",
+    duration: "11:50",
+    lyricsQuote: "لَا أُقْسِمُ بِيَوْمِ الْقِيَامَةِ ۝ وَلَا أُقْسِمُ بِالنَّفْسِ اللَّوَّامَةِ ۝ أَيَحْسَبُ الْإِنسَانُ أَلَّن نَّجْمَعَ عِظَامَهُ"
+  }
+];
+
+// ═══════════════════════════════════════════════════════════════
+// 4.2. موسوعة التواشيح والابتهالات الدينية الشاملة (قسم مستقل 100%)
+// ═══════════════════════════════════════════════════════════════
+const IBTEHALAT_DATA = [
   // ─── 1. نفحات وتواشيح رمضان التراثية ───
   {
     id: "ramadan_madfa",
@@ -570,7 +755,7 @@ const IBTEHALAT_DATA = [
     title: "مدفع الإفطار (النسخة الأصلية الكاملة مع أذان المغرب)",
     reciter: "تراث الإذاعة المصرية",
     desc: "مدفع الإفطار اضرب.. صوت الإفطار التاريخي المحفور في وجدان الأمة",
-    url: "https://archive.org/download/20260913_20260913_1334/%D9%85%D8%AF%D9%81%D8%B9%20%D8%A7%D9%84%D8%A5%D9%81%D8%B7%D8%A7%D8%B1%20%D8%A7%D9%84%D9%86%D8%B3%D8%AE%D8%A9%20%D8%A7%D9%84%D8%A3%D8%B5%D9%84%D9%8A%D8%A9.mp3",
+    url: "https://dn711202.ca.archive.org/0/items/20260913_20260913_1334/%D9%85%D8%AF%D9%81%D8%B9%20%D8%A7%D9%84%D8%A5%D9%81%D8%B7%D8%A7%D8%B1%20%D8%A7%D9%84%D9%86%D8%B3%D8%AE%D8%A9%20%D8%A7%D9%84%D8%A3%D8%B5%D9%84%D9%8A%D8%A9.mp3",
     badge: "تراث رمضاني",
     duration: "02:15"
   },
@@ -580,7 +765,7 @@ const IBTEHALAT_DATA = [
     title: "أذان المغرب الخالد",
     reciter: "الشيخ محمد رفعت",
     desc: "أذان مغرب رمضان الأسطوري الذي ارتبط بذكريات المسلمين لعقود",
-    url: "https://archive.org/download/moharram1965_gmail_20180227/%D8%A7%D8%B0%D8%A7%D9%86%20%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8%20%D9%84%D9%81%D8%B6%D9%8A%D9%84%D8%A9%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%B1%D9%81%D8%B9%D8%AA%20%D8%B1%D8%AD%D9%85%D8%A9%20%D8%A7%D9%84%D9%84%D9%87%20%20%D8%A7%D8%AD%D9%85%D8%AF%20%D8%B9%D8%A8%D8%AF%D9%87%20%D9%88%D9%85%D8%AF%D8%A7%D8%B1%D8%B3%20%D8%A7%D9%84%D8%AA%D9%84%D8%A7%D9%88%D8%A9.mp3",
+    url: "https://dn721809.ca.archive.org/0/items/moharram1965_gmail_20180227/%D8%A7%D8%B0%D8%A7%D9%86%20%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8%20%D9%84%D9%81%D8%B6%D9%8A%D9%84%D8%A9%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%B1%D9%81%D8%B9%D8%AA%20%D8%B1%D8%AD%D9%85%D8%A9%20%D8%A7%D9%84%D9%84%D9%87%20%20%D8%A7%D8%AD%D9%85%D8%AF%20%D8%B9%D8%A8%D8%AF%D9%87%20%D9%88%D9%85%D8%AF%D8%A7%D8%B1%D8%B3%20%D8%A7%D9%84%D8%AA%D9%84%D8%A7%D9%88%D8%A9.mp3",
     badge: "تسجيل تاريخي",
     duration: "04:32"
   },
@@ -590,27 +775,27 @@ const IBTEHALAT_DATA = [
     title: "مرحب شهر الصوم مرحب",
     reciter: "عبد العزيز محمود",
     desc: "أنشودة استقبال شهر رمضان المبارك الرسمية في الإذاعة المصرية",
-    url: "https://archive.org/download/Sama3almelouk_yahoo_20160518_1125/%D9%85%D8%B1%D8%AD%D8%A8%20%D8%B4%D9%87%D8%B1%20%D8%A7%D9%84%D8%B5%D9%88%D9%85.mp3",
+    url: "https://dn710908.ca.archive.org/0/items/Sama3almelouk_yahoo_20160518_1125/%D9%85%D8%B1%D8%AD%D8%A8%20%D8%B4%D9%87%D8%B1%20%D8%A7%D9%84%D8%B5%D9%88%D9%85.mp3",
     badge: "أيقونة رمضان",
     duration: "03:45"
   },
   {
     id: "ramadan_tobar_ashraq",
     category: "ramadan",
-    title: "رمضان أشرق بالهدى",
+    title: "أشرق الحق بالهدى",
     reciter: "الشيخ نصر الدين طوبار",
-    desc: "ابتهال رمضاني نادر ومؤثر في استقبال ونفحات شهر الصيام",
-    url: "https://archive.org/download/NasrEldin-TobartheBestOfIslamicNashed/%D8%B1%D9%85%D8%B6%D8%A7%D9%86%20%D8%A3%D8%B4%D8%B1%D9%82.mp3",
+    desc: "ابتهال رمضاني فجري نادر ومؤثر في استقبال ونفحات شهر الصيام",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/03.%D8%A3%D8%B4%D8%B1%D9%82%20%D8%A7%D9%84%D8%AD%D9%82.mp3",
     badge: "نفحات الصيام",
     duration: "07:22"
   },
   {
     id: "ramadan_laylat_qadr",
     category: "ramadan",
-    title: "ليلة القدر يا نوراً تجلى",
+    title: "في ليلة القدر قد طافت ملائكة",
     reciter: "الشيخ سيد النقشبندي",
     desc: "روائع الابتهالات الرمضانية في فضل ليلة القدر المباركة",
-    url: "https://archive.org/download/Sayed-AlnaqshabandytheBestOfIslamicNashed/%D9%84%D9%8A%D9%84%D8%A9%20%D8%A7%D9%84%D9%82%D8%AF%D8%B1.mp3",
+    url: "https://dn711002.ca.archive.org/0/items/Naqshabandee/%D9%81%D9%8A%20%D9%84%D9%8A%D9%84%D8%A9%20%D8%A7%D9%84%D9%82%D8%AF%D8%B1%20%D9%82%D8%AF%20%D8%B7%D8%A7%D9%81%D8%AA%20%D9%85%D9%84%D8%A7%D8%A6%D9%83%D8%A9.mp3",
     badge: "العشر الأواخر",
     duration: "08:14"
   },
@@ -620,7 +805,7 @@ const IBTEHALAT_DATA = [
     title: "النفس تشكو ومن لي أن أداويها",
     reciter: "الشيخ سيد النقشبندي",
     desc: "مناجاة وتوبة خاشعة تهز الوجدان وتلين القلوب في ليالي رمضان",
-    url: "https://archive.org/download/Sayed-AlnaqshabandytheBestOfIslamicNashed/%D8%A7%D9%84%D9%86%D9%81%D8%B3%20%D8%AA%D8%B4%D9%83%D9%88.mp3",
+    url: "https://dn711002.ca.archive.org/0/items/Naqshabandee/%D8%A7%D9%84%D9%86%D9%81%D8%B3%20%D8%AA%D8%B4%D9%83%D9%88.mp3",
     badge: "توبة ومناجاة",
     duration: "06:50"
   },
@@ -630,7 +815,7 @@ const IBTEHALAT_DATA = [
     title: "أهلاً بربيع الهدى (وافى ربيع فمرحباً)",
     reciter: "الشيخ سيد النقشبندي",
     desc: "ابتهال نادر وبديع في مدح الحبيب المصطفى ﷺ وأنوار ميلاده",
-    url: "https://archive.org/download/Sama3almelouk_yahoo_20160525/%D8%A8%D8%B3%D9%85%20%D8%A7%D9%84%D9%84%D9%87%20%D9%88%D9%84%D8%AC%D9%86%D8%A7%20%20%D9%88%D8%A7%D9%81%D9%8A%20%D8%B1%D8%A8%D9%8A%D8%B9%20%D9%81%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B.MP3",
+    url: "https://dn721800.ca.archive.org/0/items/Sama3almelouk_yahoo_20160525/%D8%A8%D8%B3%D9%85%20%D8%A7%D9%84%D9%84%D9%87%20%D9%88%D9%84%D8%AC%D9%86%D8%A7%20%20%D9%88%D8%A7%D9%81%D9%8A%20%D8%B1%D8%A8%D9%8A%D8%B9%20%D9%81%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B.MP3",
     badge: "مديح نبوي",
     duration: "09:30"
   },
@@ -642,7 +827,7 @@ const IBTEHALAT_DATA = [
     title: "يا مجيب السائلين",
     reciter: "الشيخ نصر الدين طوبار",
     desc: "درة ابتهالات الفجر الخالدة.. يا سالك الدرب لا تركن إلى الدعة",
-    url: "https://archive.org/download/NasrEldin-TobartheBestOfIslamicNashed/%D9%85%D8%AC%D9%8A%D8%A8%20%D8%A7%D9%84%D8%B3%D8%A7%D8%A6%D9%84%D9%8A%D9%86.mp3",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/06.%D9%85%D8%AC%D9%8A%D8%A8%20%D8%A7%D9%84%D8%B3%D8%A7%D8%A6%D9%84%D9%8A%D9%86.mp3",
     badge: "أيقونة الفجر",
     duration: "11:15"
   },
@@ -652,7 +837,7 @@ const IBTEHALAT_DATA = [
     title: "حين يهدي الصبح إشراق سناه",
     reciter: "الشيخ نصر الدين طوبار",
     desc: "تحفة فجرية بديعة تشرح الصدور وتملأ النفس بالسكينة واليقين",
-    url: "https://archive.org/download/NasrEldin-TobartheBestOfIslamicNashed/%D8%AD%D9%8A%D9%86%20%D9%8A%D9%87%D8%AF%D9%8A%20%D8%A7%D9%84%D8%B5%D8%A8%D8%AD%20%D8%A7%D8%B4%D8%B1%D8%A7%D9%82%20%D8%B3%D9%86%D8%A7%D9%87.mp3",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/03.%D8%AD%D9%8A%D9%86%20%D9%8A%D9%87%D8%AF%D9%8A%20%D8%A7%D9%84%D8%B5%D8%A8%D8%AD%20%D8%A7%D8%B4%D8%B1%D8%A7%D9%82%20%D8%B3%D9%86%D8%A7%D9%87.mp3",
     badge: "شروق وإيمان",
     duration: "10:40"
   },
@@ -662,37 +847,37 @@ const IBTEHALAT_DATA = [
     title: "يا بارئ الكون",
     reciter: "الشيخ نصر الدين طوبار",
     desc: "تسبيح عظيم وتأمل خاشع في ملكوت السموات والأرض",
-    url: "https://archive.org/download/NasrEldin-TobartheBestOfIslamicNashed/%D9%8A%D8%A7%20%D8%A8%D8%A7%D8%B1%D8%A6%20%D8%A7%D9%84%D9%83%D9%88%D9%86.mp3",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/10.%D9%8A%D8%A7%20%D8%A8%D8%A7%D8%B1%D8%A6%20%D8%A7%D9%84%D9%83%D9%88%D9%86.mp3",
     badge: "توحيد وتسبيح",
     duration: "09:20"
   },
   {
     id: "tobar_ghareeb",
     category: "tobour",
-    title: "غريب يا رب حرت في دنياي",
+    title: "إلهي دموعي (غريب يا رب)",
     reciter: "الشيخ نصر الدين طوبار",
-    desc: "مناجاة الغريب المستجير بباب ربه الكريم الرحيم",
-    url: "https://archive.org/download/NasrEldin-TobartheBestOfIslamicNashed/%D8%BA%D8%B1%D9%8A%D8%A8.mp3",
+    desc: "مناجاة التائب المستجير بباب ربه الكريم الرحيم",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/01.%D8%A7%D9%84%D9%87%D9%8A%20%D8%AF%D9%85%D9%88%D8%B9%D9%8A.mp3",
     badge: "مناجاة خاشعة",
     duration: "08:50"
   },
   {
     id: "tobar_kol_quloob",
     category: "tobour",
-    title: "كل القلوب إلى الحبيب تميل",
+    title: "مولد الرسول ﷺ (كل القلوب إلى الحبيب تميل)",
     reciter: "الشيخ نصر الدين طوبار",
     desc: "ومعي بذلك شاهد ودليل.. أما الدليل إذا ذكرت محمداً",
-    url: "https://archive.org/download/NasrEldin-TobartheBestOfIslamicNashed/%D9%83%D9%84%20%D8%A7%D9%84%D9%82%D9%84%D9%88%D8%A8%20%D8%A7%D9%84%D9%8A%20%D8%A7%D9%84%D8%AD%D8%A8%D9%8A%D8%A8%20%D8%AA%D9%85%D9%8A%D9%84.mp3",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/08.%D9%85%D9%88%D9%84%D8%AF%20%D8%A7%D9%84%D8%B1%D8%B3%D9%88%D9%84.mp3",
     badge: "مديح نبوي",
     duration: "07:18"
   },
   {
     id: "tobar_salik_darb",
     category: "tobour",
-    title: "يا سالك الدرب",
+    title: "يا سالكين الدرب",
     reciter: "الشيخ نصر الدين طوبار",
-    desc: "ابتهال نادر من أروع ما أنشد الشيخ في التوكل والثبات",
-    url: "https://archive.org/download/NasrEldin-TobartheBestOfIslamicNashed/%D9%8A%D8%A7%20%D8%B3%D8%A7%D9%84%D9%83%20%D8%A7%D9%84%D8%AF%D8%B1%D8%A8.mp3",
+    desc: "ابتهال نادر من أروع ما أنشد الشيخ في التوكل والثبات واليقين",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/11.%D9%8A%D8%A7%20%D8%B3%D8%A7%D9%84%D9%83%D9%8A%D9%86%20%D8%A7%D9%84%D8%AF%D8%B1%D8%A8.mp3",
     badge: "هداية واستقامة",
     duration: "08:05"
   },
@@ -702,17 +887,17 @@ const IBTEHALAT_DATA = [
     title: "هو الله جل جلاله",
     reciter: "الشيخ نصر الدين طوبار",
     desc: "تسبيح جامع في صفات الجلال والجمال والكمال الإلهي",
-    url: "https://archive.org/download/NasrEldin-TobartheBestOfIslamicNashed/%D9%87%D9%88%20%D8%A7%D9%84%D9%84%D9%87.mp3",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/08.%D9%87%D9%80%D9%80%D9%80%D9%80%D9%80%D9%80%D9%88%20%D8%A7%D9%84%D9%84%D9%80%D9%80%D9%80%D9%80%D9%87.mp3",
     badge: "أسماء الله الحسنى",
     duration: "09:45"
   },
   {
     id: "tobar_qabas",
     category: "tobour",
-    title: "قبس من الرحمن (ضياؤك مشكاتي)",
+    title: "قبس من الرحمن (ضياؤك مشكاة)",
     reciter: "الشيخ نصر الدين طوبار",
     desc: "وفيضك منبعي.. من أندر ابتهالات الشيخ طوبار التاريخية النورانية",
-    url: "https://archive.org/download/54696850/%D9%86%D8%B5%D8%B1%20%D8%A7%D9%84%D8%AF%D9%8A%D9%86%20%D8%B7%D9%88%D8%A8%D8%A7%D8%B1..%20%D8%B6%D9%8A%D9%80%D8%A7%D8%A4%D9%8F%D9%83%D9%8E%20%D9%85%D9%90%D8%B4%D9%83%D9%80%D8%A7%D8%AA%D9%8A%D8%8C%20%D9%88%D9%8E%D9%81%D9%8E%D9%8A%D8%B6%D9%8F%D9%83%20%D9%85%D9%8E%D9%86%D9%92%D8%A8%D9%8E%D8%B9%D9%8A-146974749.mp3",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/05.%D8%B6%D9%8A%D8%A7%D8%A4%D9%83%20%D9%85%D8%B4%D9%83%D8%A7%D8%A9%20%D9%88%D9%81%D9%8A%D8%B6%D9%83%20%D9%85%D9%86%D8%A8%D8%B9%D9%8A.mp3",
     badge: "تسجيل نادر",
     duration: "12:30"
   },
@@ -722,7 +907,7 @@ const IBTEHALAT_DATA = [
     title: "طائر الروح (الطير سبحه)",
     reciter: "الشيخ نصر الدين طوبار",
     desc: "الطير سبحه والوحش مجده.. والموج كبره والحوت ناجاه",
-    url: "https://archive.org/download/54696850/%D9%86%D8%B5%D8%B1%20%D8%A7%D9%84%D8%AF%D9%8A%D9%86%20%D8%B7%D9%88%D8%A8%D8%A7%D8%B1..%20%D8%A7%D9%84%D8%B7%D9%8A%D9%80%D8%B1%D9%8F%20%D8%B3%D9%8E%D8%A8%D9%91%D8%AD%D9%8E%D9%87%D9%8F-160192738.mp3",
+    url: "https://dn721607.ca.archive.org/0/items/07._20210119/07.%D9%85%D9%86%D8%A7%D8%AC%D8%A7%D8%A9%20%D8%A7%D9%84%D8%B7%D9%8A%D8%B1%20%D8%B3%D8%A8%D9%91%D8%AD%D9%87.mp3",
     badge: "تسبيح الكائنات",
     duration: "10:15"
   },
@@ -734,47 +919,47 @@ const IBTEHALAT_DATA = [
     title: "مولاي إني ببابك قد بسطت يدي",
     reciter: "الشيخ سيد النقشبندي",
     desc: "أعظم ابتهال في تاريخ الإنشاد الديني بالتعاون مع الموسيقار بليغ حمدي",
-    url: "https://archive.org/download/Sayed-AlnaqshabandytheBestOfIslamicNashed/%D9%85%D9%88%D9%84%D8%A7%D9%8A%20%D8%A7%D9%86%D9%8A%20%D8%A8%D8%A8%D8%A7%D8%A8%D9%83.mp3",
+    url: "https://dn721807.ca.archive.org/0/items/20201225_20201225_1759/%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%A7%D9%84%D9%86%D9%82%D8%B4%D8%A8%D9%86%D8%AF%D9%8A%20_%20%D9%85%D9%88%D9%84%D8%A7%D9%8A%20%D8%A5%D9%86%D9%8A%20%D8%A8%D8%A8%D8%A7%D8%A8%D9%83.mp3",
     badge: "تاج الابتهالات",
     duration: "05:42"
   },
   {
     id: "naqsh_aqool_ommati",
     category: "naqshbandi",
-    title: "أقول أمتي يا رب أمتي",
+    title: "محمد سيد الكونين (أقول أمتي)",
     reciter: "الشيخ سيد النقشبندي",
     desc: "شفاعة النبي الأكرم ﷺ يوم القيامة بأداء يبكي العيون والقلوب",
-    url: "https://archive.org/download/Sayed-AlnaqshabandytheBestOfIslamicNashed/%D8%A7%D9%82%D9%88%D9%84%20%D8%A7%D9%85%D8%AA%D9%8A.mp3",
+    url: "https://dn711002.ca.archive.org/0/items/Naqshabandee/%D9%85%D8%AD%D9%85%D8%AF%20%D8%B3%D9%8A%D8%AF%20%D8%A7%D9%84%D9%83%D9%88%D9%86%D9%8A%D9%86.mp3",
     badge: "شفاعة الحبيب",
     duration: "06:18"
   },
   {
     id: "naqsh_aal_bayt",
     category: "naqshbandi",
-    title: "يا آل بيت النبي (يا آل طه)",
+    title: "مولاي حبك زادي (يا آل طه)",
     reciter: "الشيخ سيد النقشبندي",
     desc: "محبة آل البيت الأطهار والصلاة على الحبيب المصطفى ﷺ",
-    url: "https://archive.org/download/Sayed-AlnaqshabandytheBestOfIslamicNashed/%D9%8A%D8%A7%20%D8%A7%D9%84%20%D8%A8%D9%8A%D8%AA%20%D8%A7%D9%84%D9%86%D8%A8%D9%8A.mp3",
+    url: "https://dn711002.ca.archive.org/0/items/Naqshabandee/%D9%85%D9%88%D9%84%D8%A7%D9%8A%20%D8%AD%D8%A8%D9%83%20%D8%B2%D8%A7%D8%AF%D9%8A.mp3",
     badge: "محبة آل البيت",
     duration: "07:35"
   },
   {
     id: "naqsh_ashraq_masoom",
     category: "naqshbandi",
-    title: "أشرق المعصوم (لما بدا في الأفق نور)",
+    title: "كبّر المصطفى ولاح الضياء (أشرق المعصوم)",
     reciter: "الشيخ سيد النقشبندي",
     desc: "نور النبوة وإشراق الرسالة المحمدية بأنوار الهدى والإيمان",
-    url: "https://archive.org/download/Sayed-AlnaqshabandytheBestOfIslamicNashed/%D8%A7%D8%B4%D8%B1%D9%82%20%D8%A7%D9%84%D9%85%D8%B9%D8%B5%D9%88%D9%85.mp3",
+    url: "https://dn711002.ca.archive.org/0/items/Naqshabandee/%D9%83%D8%A8%D8%B1%20%D8%A7%D9%84%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%D9%88%D9%84%D8%A7%D8%AD%20%D8%A7%D9%84%D8%B6%D9%8A%D8%A7%D8%A1.mp3",
     badge: "أنوار المولد",
     duration: "08:12"
   },
   {
     id: "naqsh_mashi_benoor",
     category: "naqshbandi",
-    title: "ماشي بنور الله",
+    title: "أغيب وذو اللطائف لا يغيب (ماشي بنور الله)",
     reciter: "الشيخ سيد النقشبندي",
     desc: "ماشي بنور الله أدعي وأقول يا رب.. من أرق ما شدى به قيثارة السماء",
-    url: "https://archive.org/download/Sayed-AlnaqshabandytheBestOfIslamicNashed/%D9%85%D8%A7%D8%B4%D9%8A%20%D8%A8%D9%86%D9%88%D8%B1%20%D8%A7%D9%84%D9%84%D9%87.mp3",
+    url: "https://dn711002.ca.archive.org/0/items/Naqshabandee/%D8%A3%D8%BA%D9%8A%D8%A8%20%D9%88%D8%B0%D9%88%20%D8%A7%D9%84%D9%84%D8%B7%D8%A7%D8%A6%D9%81%20%D9%84%D8%A7%D9%8A%D8%BA%D9%8A%D8%A8.mp3",
     badge: "نور وسكينة",
     duration: "04:55"
   },
@@ -784,18 +969,18 @@ const IBTEHALAT_DATA = [
     title: "يا رب إن عظمت ذنوبي كثرة",
     reciter: "الشيخ سيد النقشبندي",
     desc: "فلقد علمت بأن عفوك أعظم.. أبيات الإمام الشافعي بأداء باهر",
-    url: "https://archive.org/download/54696850/%D8%B3%D9%8A%D8%AF%20%D8%A7%D9%84%D9%86%D9%82%D8%B4%D8%A8%D9%86%D8%AF%D9%8A%20_%20%D8%A5%D9%86%20%D8%B9%D8%B8%D9%85%D8%AA%20%D8%B0%D9%86%D9%88%D8%A8%D9%8A'%20%D8%A5%D9%86%D8%AA%D8%A7%D8%AC%20%D8%A7%D9%84%D8%A3%D8%B3%D9%88%D8%AF%20'-205796183.mp3",
+    url: "https://dn711002.ca.archive.org/0/items/Naqshabandee/%D9%8A%D8%A7%D8%B1%D8%A8%20%D8%A5%D9%86%20%D8%B9%D8%B8%D9%85%D8%AA%20%D8%B0%D9%86%D9%88%D8%A8%D9%8A%20%D9%83%D8%AB%D8%B1%D8%A9.mp3",
     badge: "استغفار ورجاء",
     duration: "08:45"
   },
   {
     id: "naqsh_ayoha_sahir",
     category: "naqshbandi",
-    title: "أيها الساهر أضناك الضنى",
+    title: "أسماء الله الحسنى",
     reciter: "الشيخ سيد النقشبندي",
-    desc: "دعوة المؤمنين لقيام الليل ومناجاة السميع القريب في الأسحار",
-    url: "https://archive.org/download/Sama3almelouk_yahoo_20160525/%D8%A3%D9%8A%D9%87%D8%A7%20%D8%A7%D9%84%D8%B3%D8%A7%D8%A6%D9%84.mp3",
-    badge: "نفحات الأسحار",
+    desc: "التسجيل الكامل لأسماء الله الحسنى بصوت قيثارة السماء الشيخ سيد النقشبندي",
+    url: "https://dn711002.ca.archive.org/0/items/Naqshabandee/%D8%A3%D8%B3%D9%85%D8%A7%D8%A1%20%D8%A7%D9%84%D9%84%D9%87%20%D8%A7%D9%84%D8%AD%D8%B3%D9%86%D9%89%20%D8%A8%D8%B5%D9%88%D8%AA%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B3%D9%8A%D8%AF%20%D8%A7%D9%84%D9%86%D9%82%D8%B4%D8%A8%D9%86%D8%AF%D9%8A.mp3",
+    badge: "أسماء الجلال",
     duration: "07:50"
   },
 
@@ -806,17 +991,17 @@ const IBTEHALAT_DATA = [
     title: "يا أيها المختار من خير الورى",
     reciter: "الشيخ طه الفشني",
     desc: "تاج التواشيح الصوفية الخالدة وإمام المنشدين في مدح خير البرية",
-    url: "https://archive.org/download/Taha-ElfashnetheBestOfIslamicNashed/%D9%8A%D8%A7%20%D8%A7%D9%8A%D9%87%D8%A7%20%D8%A7%D9%84%D9%85%D8%AE%D8%AA%D8%A7%D8%B1.mp3",
+    url: "https://dn721901.ca.archive.org/0/items/20230916_20230916_1609/009%20%20%D9%8A%D8%A7%20%D8%A3%D9%8A%D9%87%D8%A7%20%D8%A7%D9%84%D9%85%D8%AE%D8%AA%D8%A7%D8%B1%20%D8%AB%D9%85%20%D8%AD%D8%A8%20%D8%A7%D9%84%D8%AD%D8%B3%D9%8A%D9%86%20%20%D8%B7%D9%87%20%D8%A7%D9%84%D9%81%D8%B4%D9%86%D9%8A%20%20%D8%A7%D8%A8%D8%AA%D9%87%D8%A7%D9%84%D8%A7%D8%AA.mp3",
     badge: "سيد التواشيح",
     duration: "13:20"
   },
   {
     id: "fashni_hob_hussein",
     category: "fashni",
-    title: "حب الحسين وسيلة وتوسل",
+    title: "يا آل بيت النبي (محفل نادر بحمص 1959)",
     reciter: "الشيخ طه الفشني",
-    desc: "توشيح خالد من أرق ما أنشد الفشني في محبة السبط الشهيد وآل البيت",
-    url: "https://archive.org/download/Taha-ElfashnetheBestOfIslamicNashed/%D8%AD%D8%A8%20%D8%A7%D9%84%D8%AD%D8%B3%D9%8A%D9%86.mp3",
+    desc: "توشيح خالد من أندر وأرق ما أنشد الفشني في محبة السبط الشهيد وآل البيت الأطهار",
+    url: "https://dn721901.ca.archive.org/0/items/20230916_20230916_1609/008%20%20%D9%83%D9%86%D8%B2%20%D8%AB%D9%85%D9%8A%D9%86%20!%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B7%D9%87%20%D8%A7%D9%84%D9%81%D8%B4%D9%86%D9%89%20%D8%A7%D8%A8%D8%AA%D9%87%D8%A7%D9%84%20%D9%8A%D8%A7%20%D8%A2%D9%84%20%D8%A8%D9%8A%D8%AA%20%D8%A7%D9%84%D9%86%D8%A8%D9%89%20%D8%A8%D9%85%D8%B3%D8%AC%D8%AF%20%D8%AE%D8%A7%D9%84%D8%AF%20%D8%A8%D9%86%20%D8%A7%D9%84%D9%88%D9%84%D9%8A%D8%AF%20%D8%A8%D8%AD%D9%85%D8%B5%201959%20%20%D8%AD%D8%B5%D8%B1%D9%8A%D9%91%D8%A7%D8%AA.mp3",
     badge: "شوق ومحبة",
     duration: "09:15"
   },
@@ -826,17 +1011,17 @@ const IBTEHALAT_DATA = [
     title: "ميلاد طه أشرقت أنواره",
     reciter: "الشيخ طه الفشني",
     desc: "بشارة ميلاد المصطفى ﷺ بأداء فخم ومقامات صوتية بديعة نادرة",
-    url: "https://archive.org/download/Taha-ElfashnetheBestOfIslamicNashed/%D9%85%D9%8A%D9%84%D8%A7%D8%AF%20%D8%B7%D9%87.mp3",
+    url: "https://dn720905.ca.archive.org/0/items/Sheikh-Taha-Al-Fashni-Ibtihalat/%D9%85%D9%8A%D9%84%D8%A7%D8%AF%20%D8%B7%D9%87%20%20%20%D8%B7%D9%87%20%D8%A7%D9%84%D9%81%D8%B4%D9%86%D9%8A%20%20%20%D8%A7%D8%A8%D8%AA%D9%87%D8%A7%D9%84%D8%A7%D8%AA.mp3",
     badge: "المولد النبوي",
     duration: "11:40"
   },
   {
     id: "fashni_ilahi_lazimtu",
     category: "fashni",
-    title: "إلهي لزمت باب الرجا",
+    title: "إلهي إن يكن ذنبي عظيماً (لزمت باب الرجا)",
     reciter: "الشيخ طه الفشني",
     desc: "تضرع واستغاثة خاشعة بالله العلي القدير في جوف الليل البهيم",
-    url: "https://archive.org/download/Taha-ElfashnetheBestOfIslamicNashed/%D8%A7%D9%84%D9%87%D9%8A%20%D9%84%D8%B2%D9%85%D8%AA%20%D8%A8%D8%A7%D8%A8%20%D8%A7%D9%84%D8%B1%D8%AC%D8%A7.mp3",
+    url: "https://dn721901.ca.archive.org/0/items/20230916_20230916_1609/002%20%20%D8%A7%D8%A8%D8%AA%D9%87%D8%A7%D9%84%D8%A7%D8%AA%20%D8%A7%D9%84%D9%82%D8%A7%D8%B1%D8%A6%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B7%D9%87%20%D8%A7%D9%84%D9%81%D8%B4%D9%86%D9%8A%20-%20%D8%A5%D9%84%D9%87%D9%8A%20%D8%A5%D9%86%20%D9%8A%D9%83%D9%86%20%D8%B0%D9%86%D8%A8%D9%8A%20%D8%B9%D8%B8%D9%8A%D9%85%D9%8B%D8%A7.mp3",
     badge: "تضرع ورجاء",
     duration: "08:30"
   },
@@ -848,7 +1033,7 @@ const IBTEHALAT_DATA = [
     title: "فكم لله من لطف خفي",
     reciter: "الشيخ محمد عمران",
     desc: "يدق خفاه عن فهم الذكي.. قمة الإبداع الصوتي والنغمي الفريد",
-    url: "https://archive.org/download/Mohamed-OmrantheBestOfIslamicNashed/%D9%81%D9%83%D9%85%20%D9%84%D9%84%D9%87%20%D9%85%D9%86%20%D9%84%D8%B7%D9%81%20%D8%AE%D9%81%D9%8A.mp3",
+    url: "https://dn720700.ca.archive.org/0/items/3emran_20250909/17%20%D9%81%D9%83%D9%85%20%D9%84%D9%84%D9%87%20%D9%85%D9%86%20%D9%84%D8%B7%D9%81%20%D8%AE%D9%81%D9%8A.mp3",
     badge: "قمة المقامات",
     duration: "14:10"
   },
@@ -858,37 +1043,37 @@ const IBTEHALAT_DATA = [
     title: "يا سيد الكونين يا علم الهدى",
     reciter: "الشيخ محمد عمران",
     desc: "مديح نبوي فائق الروعة يحلق بالسامعين في آفاق المحبة والجمال",
-    url: "https://archive.org/download/Mohamed-OmrantheBestOfIslamicNashed/%D9%8A%D8%A7%20%D8%B3%D9%8A%D8%AF%20%D8%A7%D9%84%D9%83%D9%88%D9%86%D9%8A%D9%86.mp3",
+    url: "https://ia600506.us.archive.org/19/items/20230916_20230916_0318/008%20%20%D9%8A%D8%A7%20%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D9%86%D9%88%D8%A7%D8%AF%D8%B1%20%20%D9%81%D9%8A%D8%AF%D9%8A%D9%88%20%D9%84%D9%84%D8%B4%D9%8A%D8%AE%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%B9%D9%85%D8%B1%D8%A7%D9%86%20%D8%A7%D8%A8%D8%AA%D9%87%D8%A7%D9%84%20%D9%86%D8%A7%D8%AF%D8%B1%20%D9%8A%D8%A7%D8%B3%D9%8A%D8%AF%20%D8%A7%D9%84%D9%83%D9%88%D9%86%D9%8A%D9%86%20%D8%B9%D8%A7%D9%85%201993%20%D8%B1%D9%88%D8%A7%D8%A6%D8%B9%20%D9%88%D9%86%D9%88%D8%A7%D8%AF%D8%B1.mp3",
     badge: "مديح شريف",
     duration: "10:25"
   },
   {
     id: "omran_adrikna",
     category: "omran_fayoumi",
-    title: "أدركنا يا رسول الله",
+    title: "قصدت باب الرجا (أدركنا يا رسول الله)",
     reciter: "الشيخ محمد عمران",
     desc: "استغاثة ومديح خاشع بصوت قيثارة الإنشاد الشيخ محمد عمران",
-    url: "https://archive.org/download/Mohamed-OmrantheBestOfIslamicNashed/%D8%A7%D8%AF%D8%B1%D9%83%D9%86%D8%A7%20%D9%8A%D8%A7%20%D8%B1%D8%B3%D9%88%D9%84%20%D8%A7%D9%84%D9%84%D9%87.mp3",
-    badge: "شوق للرسول",
+    url: "https://dn720700.ca.archive.org/0/items/3emran_20250909/21%20%D9%82%D8%B5%D8%AF%D8%AA%20%D8%A8%D8%A7%D8%A8%20%D8%A7%D9%84%D8%B1%D8%AC%D8%A7.mp3",
+    badge: "شوق ورجاء",
     duration: "09:40"
   },
   {
     id: "omran_asmaa_allah",
     category: "omran_fayoumi",
-    title: "أسماء الله الحسنى",
+    title: "سبحان من عنت الوجوه لوجهه",
     reciter: "الشيخ محمد عمران",
-    desc: "إنشاد جليل لأسماء الله الحسنى التسعة والتسعين بأداء مهيب",
-    url: "https://archive.org/download/Mohamed-OmrantheBestOfIslamicNashed/%D8%A7%D8%B3%D9%85%D8%A7%D8%A1%20%D8%A7%D9%84%D9%84%D9%87%20%D8%A7%D9%84%D8%AD%D8%B3%D9%86%D9%8A.mp3",
+    desc: "إنشاد جليل وتسبيح عظيم لصفات الجلال والكمال الإلهي",
+    url: "https://dn720700.ca.archive.org/0/items/3emran_20250909/15%20%D8%B3%D8%A8%D8%AD%D8%A7%D9%86%20%D9%85%D9%86%20%D8%B9%D9%86%D8%AA%20%D8%A7%D9%84%D9%88%D8%AC%D9%88%D9%87%20%D9%84%D9%88%D8%AC%D9%87%D9%87.mp3",
     badge: "أسماء الجلال",
     duration: "12:50"
   },
   {
     id: "fayoumi_amana_khawf",
     category: "omran_fayoumi",
-    title: "أماناً أيها الخوف (أنت الحمى وأنت الأمان)",
+    title: "أنت الحمى وأنت الأمان (أماناً أيها الخوف)",
     reciter: "الشيخ محمد الفيومي وسيد النقشبندي",
     desc: "تسجيل مشترك نادر وتاريخي يجمع بين عملاقين من عمالقة الابتهال",
-    url: "https://archive.org/download/54696850/%D8%A3%D9%86%D8%AA%D9%8E%20%D8%A3%D9%86%D8%AA%D9%8E%20%D8%A7%D9%84%D8%AD%D9%90%D9%85%D9%8E%D9%89%20%D9%88%D8%A3%D9%86%D8%AA%D9%8E%20%D8%A7%D9%84%D8%A3%D9%85%D9%8E%D8%A7%D9%86%D9%8F%20%20-%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B3%D9%8A%D8%AF%20%D8%A7%D9%84%D9%86%D9%82%D8%B4%D8%A8%D9%86%D8%AF%D9%8A-103912025.mp3",
+    url: "https://dn711002.ca.archive.org/0/items/Naqshabandee/%D8%A3%D9%86%D8%AA%20%D8%A3%D9%86%D8%AA%20%D8%A7%D9%84%D8%AD%D9%85%D9%89%20%D9%88%D8%A3%D9%86%D8%AA%20%D8%A7%D9%84%D8%A3%D9%85%D8%A7%D9%86.mp3",
     badge: "لقاء العمالقة",
     duration: "08:10"
   },
@@ -898,7 +1083,7 @@ const IBTEHALAT_DATA = [
     title: "إلهي يا سميع ويا بصير",
     reciter: "الشيخ محمد الفيومي",
     desc: "شيخ المنشدين وإمام جامع الإمام الحسين عليه السلام في تضرع فجر باهر",
-    url: "https://archive.org/download/54696850/%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%A7%D9%84%D9%81%D9%8A%D9%88%D9%85%D9%8A%20-%20%D8%A5%D8%A8%D8%AA%D9%87%D8%A7%D9%84%20%D8%A5%D9%84%D9%87%D9%89%20%D9%8A%D8%A7%20%D8%B3%D9%85%D9%8A%D8%B9%20%D9%88%20%D9%8A%D8%A7%20%D8%A8%D8%B5%D9%8A%D8%B1-235896310.mp3",
+    url: "https://dn710807.ca.archive.org/0/items/Sama3almelouk_yahoo_20160527/%D8%A7%D9%84%D9%87%D9%89%20%D9%8A%D8%A7%D8%B3%D9%85%D9%8A%D8%B9%20%D9%88%D9%8A%D8%A7%D8%A8%D8%B5%D9%8A%D8%B1.mp3",
     badge: "تراث الحسين",
     duration: "07:45"
   }
@@ -1066,7 +1251,7 @@ const DAILY_RENEWAL_DATA = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// 6. موسوعة حصن المسلم والأذكار اليومية
+// 6. موسوعة حصن المسلم والأذكار اليومية الشاملة (أكثر من 80 ذكراً ودعاءً بالتشكيل التام)
 // ═══════════════════════════════════════════════════════════════
 const AZKAR_DATA = {
   morning: {
@@ -1074,169 +1259,543 @@ const AZKAR_DATA = {
     icon: "☀️",
     items: [
       {
-        text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ.",
+        id: "m_kursi",
+        text: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ.",
         count: 1,
-        reward: "حفظ تام وبركة وسعة في الرزق طوال اليوم"
+        reward: "مَن قرأها حين يُصبح أُجير من الجنّ حتى يُمسي"
       },
       {
-        text: "اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ.",
+        id: "m_muawidhat",
+        text: "قراءة سُوَر: الإخلاص، والفلق، والناس (ثلاث مرّات).",
+        count: 3,
+        reward: "تكفيكَ من كلِّ شيءٍ في يومِك"
+      },
+      {
+        id: "m_asbahna",
+        text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ.",
         count: 1,
-        reward: "سيد الاستغفار: من قاله موقناً به ومات دخل الجنة"
+        reward: "حفظ تام، ونفي الكسل، والوقاية من عذاب القبر والنار"
       },
       {
-        text: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لاَ إِلَهَ إِلاَّ أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لاَ إِلَهَ إِلاَّ أَنْتَ.",
+        id: "m_sayyid_istighfar",
+        text: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.",
+        count: 1,
+        reward: "سيد الاستغفار: مَن قاله موقناً به ومات من يومه دخل الجنة"
+      },
+      {
+        id: "m_raditu",
+        text: "رَضِيتُ بِاللَّهِ رَبّاً، وَبِالإِسْلاَمِ دِيناً، وَبِمُحَمَّدٍ ﷺ نَبِيّاً وَرَسُولاً.",
         count: 3,
-        reward: "حفظ العافية في الجسد والحواس والاستعاذة من الفقر"
+        reward: "كان حقّاً على الله أن يُرضيَه يوم القيامة"
       },
       {
-        text: "بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.",
+        id: "m_afw_afiyah",
+        text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي.",
+        count: 1,
+        reward: "دعاء الحفظ والستر الشامل في الدين والبدن والأهل والمال"
+      },
+      {
+        id: "m_bismillah_ladi",
+        text: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.",
         count: 3,
-        reward: "لم يضره شيء من فجأة بلاء حتى يمسي"
+        reward: "لم يضرّه شيءٌ ولم تُصِبه فجأة بلاء حتى يُمسي"
       },
       {
+        id: "m_aoodhu_bikalimat",
         text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.",
         count: 3,
-        reward: "حفظ ووقاية تامة من كل سوء ودابة وهامة"
+        reward: "حفظ تام من شر الهوام وكل ذي شر وخبيث"
       },
       {
-        text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلاَ تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.",
+        id: "m_ya_hayyu",
+        text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.",
         count: 1,
-        reward: "صلاح الأمر كله والاعتصام برحمة الله القيوم"
+        reward: "صلاح الشأن كله ودوام التوكل على الحي القيوم"
       },
       {
+        id: "m_allahumma_bika_asbahna",
+        text: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ.",
+        count: 1,
+        reward: "استشعار معية الله وتجديد العهد بحمده ونعمه"
+      },
+      {
+        id: "m_aafini",
+        text: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلَهَ إِلَّا أَنْتَ.",
+        count: 3,
+        reward: "حفظ العافية في الجسد والحواس والاستعاذة من الفقر وعذاب القبر"
+      },
+      {
+        id: "m_fitrat_islam",
+        text: "أَصْبَحْنَا عَلَى فِطْرَةِ الإِسْلَامِ، وَعَلَى كَلِمَةِ الإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفاً مُسْلِماً وَمَا كَانَ مِنَ الْمُشْرِكِينَ.",
+        count: 1,
+        reward: "الثبات على التوحيد الخالص والفطرة النبوية المباركة"
+      },
+      {
+        id: "m_subhan_adada_khalqihi",
         text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ.",
         count: 3,
-        reward: "تزن عبادة ساعات طوال من التسبيح والذكر"
+        reward: "تزن عبادة ساعات طوال من التسبيح والذكر المتواصل"
+      },
+      {
+        id: "m_fatir_samawat",
+        text: "اللَّهُمَّ فَاطِرَ السَّمَاوَاتِ وَالأَرْضِ، عَالِمَ الْغَيْبِ وَالشَّهَادَةِ، رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطَانِ وَشِرْكِهِ، وَأَنْ أَقْتَرِفَ عَلَى نَفْسِي سُوءاً أَوْ أَجُرَّهُ إِلَى مُسْلِمٍ.",
+        count: 1,
+        reward: "الحصن الحصين من نزغات الشيطان ومكائد النفس الأمارة"
+      },
+      {
+        id: "m_tahlil_100",
+        text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",
+        count: 10,
+        reward: "كانت له عدل عشر رقاب، وكُتبت له مائة حسنة ومُحيت عنه مائة سيئة"
+      },
+      {
+        id: "m_salawat",
+        text: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِيِّنَا مُحَمَّدٍ.",
+        count: 10,
+        reward: "مَن صلّى عليّ حين يُصبح وحين يُمسي أدركته شفاعتي يوم القيامة"
       }
     ]
   },
+
   evening: {
     title: "أذكار المساء",
     icon: "🌙",
     items: [
       {
-        text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا.",
+        id: "e_kursi",
+        text: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ.",
+        count: 1,
+        reward: "مَن قرأها حين يُمسي أُجير من الجنّ حتى يُصبح"
+      },
+      {
+        id: "e_khawateem_baqarah",
+        text: "آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ ۝ لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ.",
+        count: 1,
+        reward: "مَن قرأ بالآيتين من آخر سورة البقرة في ليلةٍ كفتاه"
+      },
+      {
+        id: "e_muawidhat",
+        text: "قراءة سُوَر: الإخلاص، والفلق، والناس (ثلاث مرّات).",
+        count: 3,
+        reward: "حفظ ووقاية تامة من كل مكروه وشر حتى الصباح"
+      },
+      {
+        id: "e_amsayna",
+        text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ.",
         count: 1,
         reward: "حفظ المساء وراحة النفس وأمان الليلة حتى يصبح"
       },
       {
-        text: "اللَّهُمَّ أَنْتَ رَبِّي لاَ إِلَهَ إِلاَّ أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لاَ يَغْفِرُ الذُّنُوبَ إِلاَّ أَنْتَ.",
+        id: "e_sayyid_istighfar",
+        text: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.",
         count: 1,
-        reward: "سيد الاستغفار: من قاله موقناً به فمات من ليلته دخل الجنة"
+        reward: "سيد الاستغفار: مَن قاله موقناً به فمات من ليلته دخل الجنة"
       },
       {
-        text: "بِسْمِ اللَّهِ الَّذِي لاَ يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلاَ فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.",
+        id: "e_raditu",
+        text: "رَضِيتُ بِاللَّهِ رَبّاً، وَبِالإِسْلاَمِ دِيناً، وَبِمُحَمَّدٍ ﷺ نَبِيّاً وَرَسُولاً.",
         count: 3,
-        reward: "لم تصبه فجأة بلاء حتى يصبح في حفظ الله"
+        reward: "كان حقّاً على الله أن يُرضيَه ويسعده في ليلته"
       },
       {
+        id: "e_bismillah_ladi",
+        text: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.",
+        count: 3,
+        reward: "لم تصبه فجأة بلاء حتى يصبح في رعاية الله وحفظه"
+      },
+      {
+        id: "e_aoodhu_bikalimat",
         text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.",
         count: 3,
-        reward: "حفظ تام من شر الهوام وكل ذي شر"
+        reward: "لم يضره في تلك الليلة شيء من لدغة أو هامة"
       },
       {
-        text: "اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ، وَأُشْهِدُ حَمَلَةَ عَرْشِكَ، وَمَلاَئِكَتَكَ، وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لاَ إِلَهَ إِلاَّ أَنْتَ وَحْدَكَ لاَ شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ.",
+        id: "e_afw_afiyah",
+        text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي.",
+        count: 1,
+        reward: "حفظ تام من نوائب الليل وغوائله"
+      },
+      {
+        id: "e_allahumma_ushhiduka",
+        text: "اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ، وَأُشْهِدُ حَمَلَةَ عَرْشِكَ، وَمَلَائِكَتَكَ، وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلَّا أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّداً عَبْدُكَ وَرَسُولُكَ.",
         count: 4,
-        reward: "من قالها أربع مرات أعتقه الله من النار"
+        reward: "مَن قالها أربع مرات أعتقه الله من النار"
+      },
+      {
+        id: "e_ya_hayyu",
+        text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.",
+        count: 1,
+        reward: "الاعتصام برحمة الله وتوكيله في تدبير الليل كله"
+      },
+      {
+        id: "e_allahumma_bika_amsayna",
+        text: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ.",
+        count: 1,
+        reward: "حمداً لله على نعمة المساء والإقرار بالمصير إليه"
+      },
+      {
+        id: "e_aafini",
+        text: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ، وَالْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلَهَ إِلَّا أَنْتَ.",
+        count: 3,
+        reward: "العافية في الجسد والسمع والبصر والأمان من الفتن"
+      },
+      {
+        id: "e_subhan_100",
+        text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.",
+        count: 100,
+        reward: "حُطّت خطاياه وإن كانت مثل زبد البحر ولم يأتِ أحدٌ بأفضل مما جاء به"
+      },
+      {
+        id: "e_astaghfirullah_100",
+        text: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ.",
+        count: 100,
+        reward: "مغفرة الذنوب وفتح أبواب الرزق والسكينة"
+      },
+      {
+        id: "e_salawat",
+        text: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِيِّنَا مُحَمَّدٍ.",
+        count: 10,
+        reward: "مَن صلّى عليّ عشراً حين يُمسي أدركته شفاعتي"
       }
     ]
   },
+
   post_prayer: {
     title: "أذكار بعد الصلاة",
     icon: "🕌",
     items: [
       {
+        id: "p_istighfar",
         text: "أَسْتَغْفِرُ اللَّهَ، أَسْتَغْفِرُ اللَّهَ، أَسْتَغْفِرُ اللَّهَ. اللَّهُمَّ أَنْتَ السَّلاَمُ وَمِنْكَ السَّلاَمُ، تَبَارَكْتَ يَا ذَا الْجَلاَلِ وَالإِكْرَامِ.",
         count: 1,
         reward: "سنة المصطفى ﷺ فور التسليم من الفريضة"
       },
       {
-        text: "سُبْحَانَ اللَّهِ (33)، وَالْحَمْدُ لِلَّهِ (33)، وَاللَّهُ أَكْبَرُ (33)، تَمَامَ الْمِائَةِ: لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",
+        id: "p_tahlil_la_mania",
+        text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، اللَّهُمَّ لَا مَانِعَ لِمَا أَعْطَيْتَ، وَلَا مُعْطِيَ لِمَا مَنَعْتَ، وَلَا يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ.",
         count: 1,
-        reward: "غفرت خطاياه وإن كانت مثل زبد البحر"
+        reward: "الإقرار بكمال قدرة الله وتفرده بالعطاء والمنع"
       },
       {
-        text: "اللَّهُ لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ لاَ تَأْخُذُهُ سِنَةٌ وَلاَ نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلاَّ بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلاَ يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلاَّ بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالأَرْضَ وَلاَ يَؤُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ.",
+        id: "p_la_hawla",
+        text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ، لَا إِلَهَ إِلَّا اللَّهُ، وَلَا نَعْبُدُ إِلَّا إِيَّاهُ، لَهُ النِّعْمَةُ وَلَهُ الْفَضْلُ وَلَهُ الثَّنَاءُ الْحَسَنُ، لَا إِلَهَ إِلَّا اللَّهُ مُخْلِصِينَ لَهُ الدِّينَ وَلَوْ كَرِهَ الْكَافِرُونَ.",
         count: 1,
-        reward: "من قرأها دبر كل صلاة مكتوبة لم يمنعه من دخول الجنة إلا أن يموت"
+        reward: "تحقيق التوحيد الخالص وشكر النعم والآلاء"
+      },
+      {
+        id: "p_tasbeeh_33",
+        text: "سُبْحَانَ اللَّهِ (33)، وَالْحَمْدُ لِلَّهِ (33)، وَاللَّهُ أَكْبَرُ (33)، وَتَمَامَ الْمِائَةِ: لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.",
+        count: 1,
+        reward: "غُفرت خطاياه وإن كانت مثل زبد البحر"
+      },
+      {
+        id: "p_kursi",
+        text: "قراءة آية الكرسي دبر كل صلاة مكتوبة: {اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...}",
+        count: 1,
+        reward: "مَن قرأها دبر كل صلاة مكتوبة لم يمنعه من دخول الجنة إلا أن يموت"
+      },
+      {
+        id: "p_ikhlas_muawidhat",
+        text: "قراءة سورة الإخلاص، والمعوذتين (الفلق والناس) دبر كل صلاة.",
+        count: 1,
+        reward: "حفظ وصيانة إلهية بين الصلوات الخمس"
+      },
+      {
+        id: "p_aanni_ala_dhikrika",
+        text: "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ، وَشُكْرِكَ، وَحُسْنِ عِبَادَتِكَ.",
+        count: 1,
+        reward: "وصية النبي ﷺ لمعاذ بن جبل رضي الله عنه"
+      },
+      {
+        id: "p_aoodhu_minal_jubn",
+        text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْجُبْنِ، وَأَعُوذُ بِكَ أَنْ أُرَدَّ إِلَى أَرْذَلِ الْعُمُرِ، وَأَعُوذُ بِكَ مِنْ فِتْنَةِ الدُّنْيَا، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ.",
+        count: 1,
+        reward: "الاستعاذة النبوية الجامعة من آفات النفس والآخرة"
+      },
+      {
+        id: "p_qini_adhabak",
+        text: "رَبِّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ.",
+        count: 3,
+        reward: "طلب النجاة والسلامة يوم الحساب والقيامة"
+      },
+      {
+        id: "p_fajr_maghrib_10",
+        text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ يُحْيِي وَيُمِيتُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ (10 مرات بعد الفجر والمغرب قبل أن يثني رجليه).",
+        count: 10,
+        reward: "كُتبت له عشر حسنات ومُحيت عنه عشر سيئات ورُفع له عشر درجات وكان في حرز من كل مكروه"
       }
     ]
   },
+
   sleep_wake: {
     title: "النوم والاستيقاظ",
     icon: "😴",
     items: [
       {
+        id: "s_bismika_rabbi",
         text: "بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، فَإِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ.",
         count: 1,
         reward: "حفظ النفس والروح عند النوم ورعايتها بلطف الله"
       },
       {
-        text: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ.",
-        count: 1,
-        reward: "شكر نعمة الحياة والانتباه من النوم بالحمد"
+        id: "s_nafk_kaffayn",
+        text: "جمع الكفين وقراءة الإخلاص والمعوذتين، والنفث فيهما ومسح ما استطاع من الجسد (ثلاث مرّات).",
+        count: 3,
+        reward: "سنة المصطفى ﷺ لوقاية الجسد والروح من الكوابيس والشرور"
       },
       {
-        text: "قراءة سورة الإخلاص والمعوذتين والنفث في الكفين ومسح الجسد ثلاث مرات.",
-        count: 3,
-        reward: "حفظ من الكوابيس والشياطين حتى يصبح"
+        id: "s_kursi",
+        text: "قراءة آية الكرسي كاملة قبل النوم: {اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...}",
+        count: 1,
+        reward: "لا يزال عليك من الله حافظ ولا يقربك شيطان حتى تصبح"
+      },
+      {
+        id: "s_aslamtu_nafsi",
+        text: "اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ، وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ.",
+        count: 1,
+        reward: "مَن قالها ومات من ليلته مات على الفطرة"
+      },
+      {
+        id: "s_tasbeeh_fatimah",
+        text: "سُبْحَانَ اللَّهِ (33)، وَالْحَمْدُ لِلَّهِ (33)، وَاللَّهُ أَكْبَرُ (34) عند النوم.",
+        count: 1,
+        reward: "وصية النبي ﷺ لفاطمة وعلي رضي الله عنهما؛ خيرٌ لهما من خادم وقوة للبدن"
+      },
+      {
+        id: "s_quran_mulk",
+        text: "قراءة سورة الملك المباركة كاملة: {تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ...}",
+        count: 1,
+        reward: "المانعة المنجية من عذاب القبر"
+      },
+      {
+        id: "s_wake_alhamdulillah",
+        text: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ.",
+        count: 1,
+        reward: "حمد الله فور اليقظة على نعمة الحياة وانبعاث الجسد"
+      },
+      {
+        id: "s_wake_aafani",
+        text: "الْحَمْدُ لِلَّهِ الَّذِي عَافَانِي فِي جَسَدِي، وَرَدَّ عَلَيَّ رُوحِي، وَأَذِنَ لِي بِذِكْرِهِ.",
+        count: 1,
+        reward: "شكر العافية وتجدد الأجل لذكره تبارك وتعالى"
+      },
+      {
+        id: "s_wake_tahlil",
+        text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ، اللَّهُمَّ اغْفِرْ لِي.",
+        count: 1,
+        reward: "مَن تعارّ من الليل فقالها ثم دعا استُجيب له، وإن قام فتوضأ وصلى قُبلت صلاته"
+      },
+      {
+        id: "s_quran_kafirun",
+        text: "قراءة سورة الكافرون كاملة: {قُلْ يَا أَيُّهَا الْكَافِرُونَ...} عند النوم.",
+        count: 1,
+        reward: "براءةٌ من الشرك لمن قرأها قبل أن ينام"
       }
     ]
   },
+
   quranic_duas: {
     title: "أدعية قرآنية مأثورة",
     icon: "📖",
     items: [
       {
+        id: "q_rabbana_atina",
         text: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
         count: 3,
-        reward: "أجمع دعاء للخير كله في الأولى والآخرة"
+        reward: "أجمع دعاء للخير كله وسعادة الدارين ووقاية من النار"
       },
       {
-        text: "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً إِنَّكَ أَنتَ الْوَهَّابُ",
+        id: "q_la_tuzigh",
+        text: "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ الْوَهَّابُ",
         count: 3,
-        reward: "سؤال الثبات على الصراط المستقيم حتى الممات"
+        reward: "سؤال الثبات على الصراط المستقيم والاعتصام بالرحمة الإلهية"
       },
       {
+        id: "q_walidayn",
         text: "رَّبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
         count: 3,
-        reward: "بر الوالدين وطلب الرحمة الواسعة لهما"
+        reward: "أعظم دعاء لبر الوالدين وطلب الرحمة والرضوان لهما"
+      },
+      {
+        id: "q_sharh_sadr",
+        text: "رَبِّ اشْرَحْ لِي صَدْرِي ۝ وَيَسِّرْ لِي أَمْرِي ۝ وَاحْلُلْ عُقْدَةً مِّن لِّسَانِي ۝ يَفْقَهُوا قَوْلِي",
+        count: 3,
+        reward: "دعاء موسى عليه السلام لانشراح الصدر وتيسير العسير"
+      },
+      {
+        id: "q_hab_lana_azwajina",
+        text: "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا",
+        count: 3,
+        reward: "صلاح الذرية والأسرة ونيل إمامة المتقين بالهدى والتقى"
+      },
+      {
+        id: "q_yunus",
+        text: "لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ",
+        count: 3,
+        reward: "دعوة ذي النون: ما دعا بها مسلم في كربة إلا فرّج الله عنه"
+      },
+      {
+        id: "q_rabbana_faghfir_lana",
+        text: "رَّبَّنَا إِنَّنَا سَمِعْنَا مُنَادِيًا يُنَادِي لِلْإِيمَانِ أَنْ آمِنُوا بِرَبِّكُمْ فَآمَنَّا ۚ رَبَّنَا فَاغْفِرْ لَنَا ذُنُوبَنَا وَكَفِّرْ عَنَّا سَيِّئَاتِنَا وَتَوَفَّنَا مَعَ الْأَبْرَارِ",
+        count: 3,
+        reward: "سؤال المغفرة وتكفير السيئات والوفاة مع الصالحين الأخيار"
+      },
+      {
+        id: "q_hasbiyallah",
+        text: "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ",
+        count: 7,
+        reward: "مَن قالها سبع مرات كفاه الله ما أهمه من أمر الدنيا والآخرة"
+      },
+      {
+        id: "q_rabb_innee_lima_anzalta",
+        text: "رَبِّ إِنِّي لِمَا أَنزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ",
+        count: 3,
+        reward: "دعاء الكليم موسى عليه السلام لجلب الخير والرزق وتيسير الزواج"
+      },
+      {
+        id: "q_rabb_hab_lee_hukman",
+        text: "رَبِّ هَبْ لِي حُكْمًا وَأَلْحِقْنِي بِالصَّالِحِينَ ۝ وَاجْعَل لِّي لِسَانَ صِدْقٍ فِي الْآخِرِينَ ۝ وَاجْعَلْنِي مِن وَرَثَةِ جَنَّةِ النَّعِيمِ",
+        count: 3,
+        reward: "دعاء إبراهيم الخليل عليه السلام لنيل الحكمة والذكر الطيب والجنة"
       }
     ]
   },
+
   prophetic_duas: {
     title: "أدعية نبوية جامعة",
     icon: "🤲",
     items: [
       {
-        text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى",
+        id: "pr_huda_tuqa",
+        text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى.",
         count: 3,
-        reward: "جمع أصول الفلاح في النفس والمال والدين"
+        reward: "جمع أصول الفلاح في النفس والمال والدين والعاقبة"
       },
       {
-        text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ زَوَالِ نِعْمَتِكَ، وَتَحَوُّلِ عَافِيَتِكَ، وَفُجَاءَةِ نِقْمَتِكَ، وَجَمِيعِ سَخَطِكَ",
+        id: "pr_zawaal_nimatika",
+        text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ زَوَالِ نِعْمَتِكَ، وَتَحَوُّلِ عَافِيَتِكَ، وَفُجَاءَةِ نِقْمَتِكَ، وَجَمِيعِ سَخَطِكَ.",
         count: 3,
-        reward: "استدامة النعم ودفع البلايا والمصائب"
+        reward: "استدامة النعم ودفع البلايا الفجائية والمصائب"
+      },
+      {
+        id: "pr_ya_muqallib",
+        text: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ.",
+        count: 3,
+        reward: "أكثر دعاء كان يدعو به الحبيب المصطفى ﷺ للثبات"
+      },
+      {
+        id: "pr_hamm_hazan",
+        text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ.",
+        count: 3,
+        reward: "تفريج الهموم والديون ودفع الوهن والكسل"
+      },
+      {
+        id: "pr_sayyid_duaa",
+        text: "اللَّهُمَّ أَصْلِحْ لِي دِينِي الَّذِي هُوَ عِصْمَةُ أَمْرِي، وَأَصْلِحْ لِي دُنْيَايَ الَّتِي فِيهَا مَعَاشِي، وَأَصْلِحْ لِي آخِرَتِي الَّتِي فِيهَا مَعَادِي، وَاجْعَلِ الْحَيَاةَ زِيَادَةً لِي فِي كُلِّ خَيْرٍ، وَاجْعَلِ الْمَوْتَ رَاحَةً لِي مِنْ كُلِّ شَرٍّ.",
+        count: 1,
+        reward: "دعاء جامع لخير المعاش والمعاد ومآلات الأمور كلها"
+      },
+      {
+        id: "pr_ilm_naafi",
+        text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْماً نَافِعاً، وَرِزْقاً طَيِّباً، وَعَمَلاً مُتَقَبَّلاً.",
+        count: 3,
+        reward: "يقال كل صباح لنيل التوفيق في العلم والرزق والعمل"
+      },
+      {
+        id: "pr_hasbi_rabbi",
+        text: "اللَّهُمَّ لَكَ أَسْلَمْتُ، وَبِكَ آمَنْتُ، وَعَلَيْكَ تَوَكَّلْتُ، وَإِلَيْكَ أَنَبْتُ، وَبِكَ خَاصَمْتُ، اللَّهُمَّ إِنِّي أَعُوذُ بِعِزَّتِكَ لَا إِلَهَ إِلَّا أَنْتَ أَنْ تُضِلَّنِي، أَنْتَ الْحَيُّ الَّذِي لَا يَمُوتُ، وَالْجِنُّ وَالإِنْسُ يَمُوتُونَ.",
+        count: 1,
+        reward: "الاعتصام بعزة الحي القيوم الذي لا تأخذه سنة ولا نوم"
+      },
+      {
+        id: "pr_maghfirah_jami",
+        text: "اللَّهُمَّ اغْفِرْ لِي خَطِيئَتِي وَجَهْلِي، وَإِسْرَافِي فِي أَمْرِي، وَمَا أَنْتَ أَعْلَمُ بِهِ مِنِّي، اللَّهُمَّ اغْفِرْ لِي جِدِّي وَهَزْلِي، وَخَطَئِي وَعَمْدِي، وَكُلُّ ذَلِكَ عِنْدِي.",
+        count: 1,
+        reward: "الاستغفار الجامع النبوي لجميع صنوف الزلل"
       }
     ]
   },
+
   masjid_wudhu: {
     title: "أذكار المسجد والوضوء",
     icon: "🕋",
     items: [
       {
-        text: "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ (عند دخول المسجد). اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ (عند الخروج).",
+        id: "w_tasmiyah",
+        text: "بِسْمِ اللَّهِ (قبل الوضوء).",
         count: 1,
-        reward: "سنة نبوية جليلة لاستنزال الرحمات والفضل"
+        reward: "لا وضوء لمن لم يذكر اسم الله عليه"
       },
       {
-        text: "أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ.",
+        id: "w_shahadah",
+        text: "أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ.",
         count: 1,
-        reward: "فتحت له أبواب الجنة الثمانية يدخل من أيها شاء"
+        reward: "فُتحت له أبواب الجنة الثمانية يدخل من أيها شاء"
+      },
+      {
+        id: "m_masjid_dukhool",
+        text: "بِسْمِ اللَّهِ، وَالصَّلاَةُ وَالسَّلاَمُ عَلَى رَسُولِ اللَّهِ، اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ (عند دخول المسجد مع تقديم الرجل اليمنى).",
+        count: 1,
+        reward: "استنزال رحمات الله ودخول بيت من بيوته بطمأنينة"
+      },
+      {
+        id: "m_masjid_khurooj",
+        text: "بِسْمِ اللَّهِ، وَالصَّلاَةُ وَالسَّلاَمُ عَلَى رَسُولِ اللَّهِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ، اللَّهُمَّ اعْصِمْنِي مِنَ الشَّيْطَانِ الرَّجِيمِ (عند الخروج مع تقديم الرجل اليسرى).",
+        count: 1,
+        reward: "سؤال الفضل والرزق والاعتصام من الشيطان"
+      },
+      {
+        id: "m_adhan_say",
+        text: "ترديد الأذان خلف المؤذن كما يقول، إلا في الحيعلتين فيقول: (لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ).",
+        count: 1,
+        reward: "غفر له ذنبه ونال مثل أجر المؤذن"
+      },
+      {
+        id: "m_adhan_duaa",
+        text: "اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ، وَالصَّلاَةِ الْقَائِمَةِ، آتِ مُحَمَّداً الْوَسِيلَةَ وَالْفَضِيلَةَ، وَابْعَثْهُ مَقَاماً مَحْمُوداً الَّذِي وَعَدْتَهُ.",
+        count: 1,
+        reward: "حلّت له شفاعة النبي ﷺ يوم القيامة"
       }
     ]
   }
 };
+
+// ═══════════════════════════════════════════════════════════════
+// 6.2. نظام الأذكار اليومية المتجددة تلقائياً (31 يوماً كاملة)
+// ═══════════════════════════════════════════════════════════════
+const DAILY_ROTATING_ADHKAR = [
+  { day: 1, title: "ذكر التوحيد والاستفتاح", text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ", reward: "عدل عتق عشر رقاب وكُتبت له مائة حسنة ومُحيت عنه مائة سيئة", count: 100 },
+  { day: 2, title: "سيد الاستغفار والتوبة", text: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ", reward: "مَن قاله موقناً به في يومه فمات دخل الجنة", count: 1 },
+  { day: 3, title: "تسبيح الملائكة وحط الخطايا", text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ", reward: "كلمتان خفيفتان على اللسان ثقيلتان في الميزان حبيبتان إلى الرحمن", count: 100 },
+  { day: 4, title: "الحصن المنيع من فجأة البلاء", text: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ", reward: "لم يضره شيء ولم تصبه فجأة بلاء حتى يمسي", count: 3 },
+  { day: 5, title: "كنز من كنوز الجنة", text: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ", reward: "كنز من تحت عرش الرحمن وباب من أبواب الجنة", count: 100 },
+  { day: 6, title: "الصلاة على النبي ﷺ", text: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ", reward: "مَن صلى عليّ صلاة صلى الله عليه بها عشراً ورُفعت له عشر درجات", count: 100 },
+  { day: 7, title: "دعوة ذي النون لتفريج الكروب", text: "لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ", reward: "ما دعا بها مكروب إلا فرّج الله عنه ونفّس كربته", count: 33 },
+  { day: 8, title: "طلب العافية والستر التام", text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي", reward: "الحفظ النبوي الأتم من بين يديك ومن خلفك وعن يمينك وشمالك", count: 3 },
+  { day: 9, title: "صلاح الشأن كله والاستغاثة", text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ", reward: "استدامة التوفيق والتوكل التام على القيوم", count: 3 },
+  { day: 10, title: "الاعتصام بكلمات الله التامات", text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ", reward: "حفظ تام من شر الهوام والحسد وذوي الشرور", count: 3 },
+  { day: 11, title: "الباقيات الصالحات", text: "سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ", reward: "أحب الكلام إلى الله وهن الباقيات الصالحات", count: 100 },
+  { day: 12, title: "الرضا بالله ورسوله", text: "رَضِيتُ بِاللَّهِ رَبّاً، وَبِالإِسْلاَمِ دِيناً، وَبِمُحَمَّدٍ ﷺ نَبِيّاً وَرَسُولاً", reward: "كان حقاً على الله تعالى أن يرضيه يوم القيامة", count: 3 },
+  { day: 13, title: "الاستعاذة من الهم والحزن", text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ", reward: "دواء نبوي مجرب لدفع الهموم والغموم وقضاء الديون", count: 3 },
+  { day: 14, title: "سؤال الهدى والتقى والغنى", text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى", reward: "جامع خيري الدنيا والآخرة في النفس والمال", count: 3 },
+  { day: 15, title: "حسبنا الله ونعم الوكيل", text: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ، عَلَى اللَّهِ تَوَكَّلْنَا", reward: "قالها إبراهيم حين أُلقي في النار وقالها المسلمون يوم أحد فكفاهم الله", count: 100 },
+  { day: 16, title: "تسبيح يزن عبادة الساعات", text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ", reward: "تزن عبادة ساعات طوال من الذكر والتسبيح", count: 3 },
+  { day: 17, title: "الثبات على الإيمان", text: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ", reward: "سؤال الثبات على الهدى حتى لقاء الله", count: 7 },
+  { day: 18, title: "طلب العلم النافع والرزق الطيب", text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْماً نَافِعاً، وَرِزْقاً طَيِّباً، وَعَمَلاً مُتَقَبَّلاً", reward: "دعاء البركة والتوفيق في بداية كل صباح ومسعى", count: 3 },
+  { day: 19, title: "استدامة النعمة والعافية", text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ زَوَالِ نِعْمَتِكَ، وَتَحَوُّلِ عَافِيَتِكَ، وَفُجَاءَةِ نِقْمَتِكَ، وَجَمِيعِ سَخَطِكَ", reward: "حفظ النعم الحاضرة واستدفاع النقم الغائبة", count: 3 },
+  { day: 20, title: "العتق من النار", text: "اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ", reward: "مَن استجار من النار سبعاً قالت النار: يا رب أجره", count: 7 },
+  { day: 21, title: "عافية الجسد والسمع والبصر", text: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ", reward: "حفظ الحواس والبدن من الأمراض والأسقام", count: 3 },
+  { day: 22, title: "الفطرة الإسلامية النقية", text: "أَصْبَحْنَا عَلَى فِطْرَةِ الإِسْلَامِ، وَعَلَى كَلِمَةِ الإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ", reward: "تجديد الانتماء والاعتزاز بهدي النبيين الكرام", count: 1 },
+  { day: 23, title: "دعاء الكفاية والأمان", text: "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ", reward: "مَن قالها سبعاً كفاه الله ما أهمه من أمر دنياه وآخرته", count: 7 },
+  { day: 24, title: "الاستغفار المحاء للذنوب", text: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ", reward: "غُفرت ذنوبه وإن كان قد فرّ من الزحف", count: 100 },
+  { day: 25, title: "دعاء البركة والخير العميم", text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ خَيْرِ مَا سَأَلَكَ مِنْهُ نَبِيُّكَ مُحَمَّدٌ ﷺ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا اسْتَعَاذَ مِنْهُ نَبِيُّكَ مُحَمَّدٌ ﷺ", reward: "جامع لكل دعاء استعاذ منه أو سأله النبي الكريم", count: 3 },
+  { day: 26, title: "بر الوالدين في كل وقت", text: "رَّبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا", reward: "بر الوالدين بعد موتهما وحياتهما ورفعة درجاتهم", count: 10 },
+  { day: 27, title: "دعاء التيسير وانشراح الصدر", text: "رَبِّ اشْرَحْ لِي صَدْرِي، وَيَسِّرْ لِي أَمْرِي، وَاحْلُلْ عُقْدَةً مِّن لِّسَانِي يَفْقَهُوا قَوْلِي", reward: "انفراج الهموم وتسهيل العسير ونيل الفصاحة والبيان", count: 3 },
+  { day: 28, title: "تطهير القلب من الغل والحسد", text: "رَبَّنَا اغْفِرْ لَنَا وَلإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالإِيمَانِ وَلا تَجْعَلْ فِي قُلُوبِنَا غِلاً لِّلَّذِينَ آمَنُوا", reward: "سلامة الصدر ونقاء القلب ومحبة الصالحين", count: 3 },
+  { day: 29, title: "الاستعاذة من عذاب القبر", text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، وَمِنْ عَذَابِ النَّارِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ", reward: "الوقاية النبوية الكبرى من الفتن الأربع العظام", count: 3 },
+  { day: 30, title: "دعاء الفرج واليسر بعد العسر", text: "اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلاً، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلاً", reward: "تيسير كل شأن شاق وتفريج كل كرب مستعصٍ", count: 3 },
+  { day: 31, title: "الخاتمة بالباقيات الصالحات", text: "اللَّهُمَّ اخْتِمْ لَنَا بِالْبَاقِيَاتِ الصَّالِحَاتِ أَعْمَالَنَا، وَاجْعَلْ خَيْرَ أَيَّامِنَا يَوْمَ نَلْقَاكَ، وَتَوَفَّنَا وَأَنْتَ رَاضٍ عَنَّا", reward: "نيل حسن الخاتمة والفوز برضوان الله وجنته", count: 3 }
+];
 
 // ═══════════════════════════════════════════════════════════════
 // 7. خيارات وأذكار السبحة الإلكترونية الذكية
