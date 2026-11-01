@@ -268,32 +268,32 @@ function initAudioElements() {
   // تهيئة عنصر صوت الأذان المستقل
   STATE.adhanAudio = document.getElementById('adhan-audio-element');
 
-  // أحداث المشغل الصوتي المدمج العام (إذاعة القاهرة والابتهالات والنوادر)
+  // أحداث المشغل الصوتي التفاعلي الموحد (الإذاعة والابتهالات والنوادر)
   if (STATE.globalAudio) {
     STATE.globalAudio.preload = 'metadata';
     STATE.globalAudio.addEventListener('play', () => {
-      updateMiniPlayerState(true);
+      updateModernPlayBtn(true);
     });
     STATE.globalAudio.addEventListener('playing', () => {
-      updateMiniPlayerState(true);
+      updateModernPlayBtn(true);
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(true);
       }
     });
     STATE.globalAudio.addEventListener('pause', () => {
-      updateMiniPlayerState(false);
+      updateModernPlayBtn(false);
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(false);
       }
     });
     STATE.globalAudio.addEventListener('ended', () => {
-      updateMiniPlayerState(false);
+      updateModernPlayBtn(false);
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(false);
       }
     });
-    STATE.globalAudio.addEventListener('timeupdate', onMiniAudioTimeUpdate);
-    STATE.globalAudio.addEventListener('loadedmetadata', onMiniAudioLoadedMetadata);
+    STATE.globalAudio.addEventListener('timeupdate', onModernAudioTimeUpdate);
+    STATE.globalAudio.addEventListener('loadedmetadata', onModernAudioLoadedMetadata);
     STATE.globalAudio.addEventListener('error', (e) => {
       // تجنب إظهار رسالة الخطأ إذا كان الصوت متوقفاً أو المصدر فارغاً
       if (!STATE.globalAudio.src || STATE.globalAudio.src === '' || STATE.globalAudio.src === window.location.href) return;
@@ -309,15 +309,12 @@ function initAudioElements() {
         }
       }
       console.warn('Audio playback error on source:', STATE.globalAudio.src);
-      updateMiniPlayerState(false);
+      updateModernPlayBtn(false);
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(false);
         STATE.isCairoRadioPlaying = false;
       }
     });
-
-    // تفعيل إيماءات الضغط المطول على زر التشغيل للإغلاق السريع
-    setupPlayBtnLongPress();
   }
 }
 
@@ -1460,7 +1457,7 @@ function updateCairoRadioUI(isPlaying) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 13. المشغل الصوتي المدمج النحيف أسفل الشاشة (Bottom Mini Player)
+// 13. المشغل الصوتي التفاعلي الموحد (Unified Modern Interactive Player)
 // ═══════════════════════════════════════════════════════════════
 
 function getSheikhAvatarSvg(name, isIbtehal = false) {
@@ -1469,353 +1466,316 @@ function getSheikhAvatarSvg(name, isIbtehal = false) {
   return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%231c261c"/><stop offset="100%" stop-color="%230c120c"/></linearGradient><linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23f5d77f"/><stop offset="100%" stop-color="%23d4af37"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(%23bg)" stroke="url(%23gold)" stroke-width="3"/><text x="50" y="44" font-size="28" text-anchor="middle">${icon}</text><text x="50" y="74" font-size="14" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="%23ffffff">${cleanName}</text></svg>`;
 }
 
-function showMiniPlayerForRadio() {
-  const miniPlayer = document.getElementById('bottom-mini-player');
-  if (miniPlayer) miniPlayer.style.display = 'flex';
-
-  const titleEl = document.getElementById('mini-track-title');
-  if (titleEl) titleEl.textContent = 'إذاعة القرآن الكريم من القاهرة';
-
-  const artistEl = document.getElementById('mini-artist-name');
-  if (artistEl) artistEl.textContent = 'بث حي ومباشر 24 ساعة';
-
-  const timeEl = document.getElementById('mini-track-time');
-  if (timeEl) timeEl.textContent = '🔴 بث مباشر حي';
-
-  const avatarImg = document.getElementById('mini-avatar-img');
-  if (avatarImg) avatarImg.src = getSheikhAvatarSvg('إذاعة القاهرة', true);
-
-  const fillEl = document.getElementById('mini-progress-fill');
-  if (fillEl) fillEl.style.width = '100%';
-
-  updateMiniPlayerState(true);
-}
-
 function showFloatingPlayerForRadio() {
-  showMiniPlayerForRadio();
+  const minBar = document.getElementById('minimized-floating-bar');
+  if (minBar) {
+    minBar.style.display = 'flex';
+    const titleEl = document.getElementById('min-track-title');
+    if (titleEl) titleEl.textContent = 'إذاعة القرآن الكريم من القاهرة';
+    const artistEl = document.getElementById('min-artist-name');
+    if (artistEl) artistEl.textContent = 'بث مباشر حي 24 ساعة';
+    const minAvatar = document.getElementById('min-avatar-img');
+    if (minAvatar) minAvatar.src = getSheikhAvatarSvg('إذاعة القاهرة', true);
+  }
+
+  const fullPlayer = document.getElementById('unified-modern-player');
+  if (fullPlayer) {
+    const titleEl = document.getElementById('player-track-title');
+    if (titleEl) titleEl.textContent = 'إذاعة القرآن الكريم من القاهرة';
+    const artistEl = document.getElementById('player-artist-name');
+    if (artistEl) artistEl.textContent = 'صوت الأزهر الشريف ومصر - بث حي 24 ساعة';
+    const sourceTag = document.getElementById('player-source-tag');
+    if (sourceTag) sourceTag.textContent = 'المصدر: البث الإذاعي المباشر';
+    const verTag = document.getElementById('player-version-tag');
+    if (verTag) verTag.textContent = 'التردد: 98.8 FM';
+    const lyricsText = document.getElementById('player-lyrics-text');
+    if (lyricsText) lyricsText.textContent = 'إذاعة القرآن الكريم من القاهرة.. إذاعة كل بيت مسلم ونبض التلاوات العطرة على مدار الساعة';
+    const avatar = document.getElementById('player-avatar-img');
+    if (avatar) avatar.src = getSheikhAvatarSvg('إذاعة القاهرة', true);
+  }
+  updateModernPlayBtn(true);
 }
 
-function playTrackDirectly(track) {
+function playModernTrack(track) {
   if (!track || !track.url) return;
   if (!STATE.globalAudio) initAudioElements();
 
-  // إيقاف صوت المصحف إذا كان قيد التشغيل لمنع تداخل الأصوات
+  // إيقاف صوت المصحف إذا كان قيد التشغيل
   if (STATE.quranAudio && !STATE.quranAudio.paused) {
     STATE.quranAudio.pause();
     updateHudPlayBtn(false);
   }
 
-  // إيقاف بث إذاعة القاهرة إذا كان مقطعاً عادياً
+  // إيقاف بث إذاعة القاهرة
   STATE.isCairoRadioPlaying = false;
   updateCairoRadioUI(false);
 
-  STATE.activeAudioTrack = track;
-  if (!STATE.modernPlayer) STATE.modernPlayer = {};
   STATE.modernPlayer.track = track;
 
-  // إسناد المصدر والتشغيل الفوري
+  // تهيئة عنصر الصوت الرئيسي
+  STATE.globalAudio.preload = 'metadata';
   STATE.globalAudio.src = track.url;
-  const playPromise = STATE.globalAudio.play();
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      updateMiniPlayerState(true);
-    }).catch(err => {
-      console.warn('Playback notice:', err);
-    });
-  }
+  STATE.globalAudio.loop = !!STATE.modernPlayer.isLooping;
+  STATE.globalAudio.load();
+  STATE.globalAudio.play().catch(err => {
+    console.warn('Modern audio playback notice:', err);
+    showToast('جاري بدء تشغيل التسجيل المبارك...');
+  });
 
-  // إظهار وتحديث شريط المشغل المدمج النحيف أسفل الشاشة
-  const miniPlayer = document.getElementById('bottom-mini-player');
-  if (miniPlayer) miniPlayer.style.display = 'flex';
+  // تحديث واجهة المشغل التفاعلي الموحد
+  const fullPlayer = document.getElementById('unified-modern-player');
+  if (fullPlayer) fullPlayer.style.display = 'block';
 
-  const titleEl = document.getElementById('mini-track-title');
-  if (titleEl) titleEl.textContent = track.title || 'تسجيل صوتي مبارك';
+  const minBar = document.getElementById('minimized-floating-bar');
+  if (minBar) minBar.style.display = 'none';
 
-  const artistEl = document.getElementById('mini-artist-name');
+  const titleEl = document.getElementById('player-track-title');
+  if (titleEl) titleEl.textContent = track.title || 'مقطع مبارك';
+
+  const artistEl = document.getElementById('player-artist-name');
   if (artistEl) artistEl.textContent = track.reciter || track.sheikh || 'القارئ';
 
-  const timeEl = document.getElementById('mini-track-time');
-  if (timeEl) timeEl.textContent = `00:00 / ${track.duration || '--:--'}`;
+  const sourceTag = document.getElementById('player-source-tag');
+  if (sourceTag) {
+    sourceTag.textContent = track.sourceTag || (track.category === 'ramadan' ? 'المصدر: تراث رمضان' : (track.lyricsQuote ? 'المصدر: ابتهال ديني' : 'المصدر: نوادر التلاوات'));
+  }
+
+  const verTag = document.getElementById('player-version-tag');
+  if (verTag) {
+    verTag.textContent = track.versionTag || track.badge || 'النسخة: تسجيل أصلي نادر';
+  }
 
   const avatarSvg = track.avatar || getSheikhAvatarSvg(track.reciter || track.sheikh, !!track.lyricsQuote);
-  const avatarImg = document.getElementById('mini-avatar-img');
+  const avatarImg = document.getElementById('player-avatar-img');
   if (avatarImg) avatarImg.src = avatarSvg;
 
-  const fillEl = document.getElementById('mini-progress-fill');
+  const minAvatarImg = document.getElementById('min-avatar-img');
+  if (minAvatarImg) minAvatarImg.src = avatarSvg;
+
+  const minTitle = document.getElementById('min-track-title');
+  if (minTitle) minTitle.textContent = track.title || '';
+
+  const minSub = document.getElementById('min-artist-name');
+  if (minSub) minSub.textContent = track.reciter || track.sheikh || '';
+
+  const lyricsText = document.getElementById('player-lyrics-text');
+  if (lyricsText) {
+    lyricsText.textContent = track.lyricsQuote || track.desc || 'استمع بقلب خاشع ونفحات إيمانية مباركة';
+  }
+
+  const curTimeEl = document.getElementById('player-current-time');
+  if (curTimeEl) curTimeEl.textContent = '00:00';
+
+  const remTimeEl = document.getElementById('player-remaining-time');
+  if (remTimeEl) remTimeEl.textContent = '-' + (track.duration || '00:00');
+
+  const rangeEl = document.getElementById('player-seek-range');
+  if (rangeEl) rangeEl.value = 0;
+
+  const fillEl = document.getElementById('player-progress-fill');
   if (fillEl) fillEl.style.width = '0%';
 
-  updateMiniPlayerState(true);
+  updateModernPlayBtn(true);
 
   // تحديث تمييز الكارت النشط في القوائم
-  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => {
-    c.classList.remove('is-playing');
-    const b = c.querySelector('.audio-card-play-btn');
-    if (b) b.textContent = '▶';
-  });
+  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => c.classList.remove('is-playing'));
   if (track.id) {
     const activeCard = document.getElementById(`track-card-${track.id}`);
-    if (activeCard) {
-      activeCard.classList.add('is-playing');
-      const b = activeCard.querySelector('.audio-card-play-btn');
-      if (b) b.textContent = '⏸';
-    }
+    if (activeCard) activeCard.classList.add('is-playing');
   }
-}
-
-function playModernTrack(track) {
-  playTrackDirectly(track);
 }
 
 function playMediaTrack(url, title, subtitle) {
-  playTrackDirectly({
+  playModernTrack({
     id: 'generic_' + Date.now(),
-    title: title || 'تسجيل مبارك',
-    reciter: subtitle || 'إذاعة القرآن الكريم',
-    url: url
+    title: title || 'تسجيل صوتي',
+    reciter: subtitle || 'الإذاعة',
+    url: url,
+    sourceTag: 'تسجيل مبارك',
+    versionTag: 'تسجيل عالي الجودة'
   });
 }
 
-let playBtnPressTimer = null;
-let isPlayBtnLongPress = false;
-
-function setupPlayBtnLongPress() {
-  const btn = document.getElementById('mini-play-main-btn');
-  if (!btn) return;
-
-  const startPress = () => {
-    isPlayBtnLongPress = false;
-    if (playBtnPressTimer) clearTimeout(playBtnPressTimer);
-    playBtnPressTimer = setTimeout(() => {
-      isPlayBtnLongPress = true;
-      closeMiniPlayer();
-      if (navigator.vibrate) {
-        try { navigator.vibrate(60); } catch (_) {}
-      }
-      showToast('تم إغلاق المشغل نهائياً ✕');
-    }, 600);
-  };
-
-  const cancelPress = () => {
-    if (playBtnPressTimer) {
-      clearTimeout(playBtnPressTimer);
-      playBtnPressTimer = null;
-    }
-  };
-
-  btn.addEventListener('mousedown', startPress);
-  btn.addEventListener('touchstart', startPress, { passive: true });
-  btn.addEventListener('mouseup', cancelPress);
-  btn.addEventListener('mouseleave', cancelPress);
-  btn.addEventListener('touchend', cancelPress);
-  btn.addEventListener('touchcancel', cancelPress);
-}
-
-function toggleMiniAudioPlay() {
-  if (isPlayBtnLongPress) {
-    isPlayBtnLongPress = false;
-    return;
-  }
-
+function toggleModernPlayPause() {
   if (!STATE.globalAudio || !STATE.globalAudio.src) {
-    if (STATE.activeAudioTrack) {
-      playTrackDirectly(STATE.activeAudioTrack);
-    } else if (STATE.isCairoRadioPlaying) {
-      toggleCairoRadio();
+    if (STATE.modernPlayer.track) {
+      playModernTrack(STATE.modernPlayer.track);
     }
     return;
   }
 
   if (STATE.globalAudio.paused) {
     STATE.globalAudio.play().then(() => {
-      updateMiniPlayerState(true);
+      updateModernPlayBtn(true);
       if (STATE.isCairoRadioPlaying) updateCairoRadioUI(true);
     }).catch(console.warn);
   } else {
     STATE.globalAudio.pause();
-    updateMiniPlayerState(false);
+    updateModernPlayBtn(false);
     if (STATE.isCairoRadioPlaying) updateCairoRadioUI(false);
   }
 }
 
-function toggleModernPlayPause() {
-  toggleMiniAudioPlay();
-}
-
 function toggleGlobalAudioPlay() {
-  toggleMiniAudioPlay();
-}
-
-function updateMiniPlayerState(isPlaying) {
-  STATE.isGlobalPlaying = isPlaying;
-
-  const mainBtnIcon = document.getElementById('mini-play-icon');
-  if (mainBtnIcon) mainBtnIcon.textContent = isPlaying ? '⏸' : '▶';
-
-  // تحديث أزرار الكروت في القوائم
-  const currentTrackId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
-  document.querySelectorAll('.audio-item-card').forEach(card => {
-    const isThisCard = currentTrackId && card.id === `track-card-${currentTrackId}`;
-    card.classList.toggle('is-playing', isThisCard && isPlaying);
-    const btn = card.querySelector('.audio-card-play-btn');
-    if (btn) {
-      btn.textContent = (isThisCard && isPlaying) ? '⏸' : '▶';
-    }
-  });
-
-  if (STATE.isCairoRadioPlaying) {
-    updateCairoRadioUI(isPlaying);
-  }
+  toggleModernPlayPause();
 }
 
 function updateModernPlayBtn(isPlaying) {
-  updateMiniPlayerState(isPlaying);
+  const mainBtnIcon = document.getElementById('player-play-icon');
+  if (mainBtnIcon) mainBtnIcon.textContent = isPlaying ? '⏸' : '▶';
+
+  const minBtn = document.getElementById('min-play-btn');
+  if (minBtn) minBtn.textContent = isPlaying ? '⏸' : '▶';
+
+  const badge = document.getElementById('player-status-badge');
+  if (badge) badge.textContent = isPlaying ? 'قيد التشغيل الآن' : 'متوقف مؤقتاً';
 }
 
 function updateFloatPlayBtn(isPlaying) {
-  updateMiniPlayerState(isPlaying);
+  updateModernPlayBtn(isPlaying);
 }
 
-function seekMiniAudioRelative(seconds) {
+function seekModernRelative(seconds) {
   if (!STATE.globalAudio || !STATE.globalAudio.src) return;
-  if (STATE.isCairoRadioPlaying || !STATE.globalAudio.duration || !isFinite(STATE.globalAudio.duration)) return;
-
   const cur = STATE.globalAudio.currentTime || 0;
   const dur = STATE.globalAudio.duration;
   let target = cur + seconds;
   if (target < 0) target = 0;
   if (dur && target > dur) target = dur;
   STATE.globalAudio.currentTime = target;
-  onMiniAudioTimeUpdate();
+  onModernAudioTimeUpdate();
 }
 
-function seekModernRelative(seconds) {
-  seekMiniAudioRelative(seconds);
-}
-
-function onMiniProgressTrackClick(event) {
-  if (!STATE.globalAudio || !STATE.globalAudio.src) return;
-  if (STATE.isCairoRadioPlaying || !STATE.globalAudio.duration || !isFinite(STATE.globalAudio.duration)) return;
-
-  const trackEl = document.getElementById('mini-progress-track');
-  if (!trackEl) return;
-
-  const rect = trackEl.getBoundingClientRect();
-  const clickX = event.clientX - rect.left;
-  const isRtl = (document.documentElement.dir === 'rtl' || getComputedStyle(document.body).direction === 'rtl');
-  let pct = isRtl ? (rect.width - clickX) / rect.width : clickX / rect.width;
-  if (pct < 0) pct = 0;
-  if (pct > 1) pct = 1;
-
-  STATE.globalAudio.currentTime = pct * STATE.globalAudio.duration;
-  onMiniAudioTimeUpdate();
-}
-
-function onMiniAudioTimeUpdate() {
+function toggleModernRepeat() {
   if (!STATE.globalAudio) return;
-  const cur = STATE.globalAudio.currentTime || 0;
-  const dur = STATE.globalAudio.duration;
+  STATE.modernPlayer.isLooping = !STATE.modernPlayer.isLooping;
+  STATE.globalAudio.loop = STATE.modernPlayer.isLooping;
 
-  const timeEl = document.getElementById('mini-track-time');
-  const fillEl = document.getElementById('mini-progress-fill');
-
-  if (STATE.isCairoRadioPlaying) {
-    if (timeEl) timeEl.textContent = '🔴 بث حي مباشر';
-    if (fillEl) fillEl.style.width = '100%';
-    return;
+  const repeatBtn = document.getElementById('player-repeat-btn');
+  if (repeatBtn) {
+    repeatBtn.classList.toggle('active', STATE.modernPlayer.isLooping);
   }
+  showToast(STATE.modernPlayer.isLooping ? 'تم تفعيل تكرار المقطع 🔁' : 'تم إلغاء التكرار');
+}
 
-  if (dur && !isNaN(dur) && isFinite(dur) && dur > 0) {
-    const pct = Math.min(100, Math.max(0, (cur / dur) * 100));
-    if (fillEl) fillEl.style.width = pct + '%';
-    if (timeEl) timeEl.textContent = `${formatAudioTime(cur)} / ${formatAudioTime(dur)}`;
-  } else {
-    if (timeEl) timeEl.textContent = `${formatAudioTime(cur)} / --:--`;
+function togglePlayerLyrics() {
+  STATE.modernPlayer.isLyricsVisible = !STATE.modernPlayer.isLyricsVisible;
+  const lyricsCard = document.getElementById('player-lyrics-card');
+  const toggleBtnText = document.getElementById('player-lyrics-toggle-text');
+  const toggleBtnIcon = document.getElementById('player-lyrics-toggle-icon');
+
+  if (lyricsCard) {
+    lyricsCard.classList.toggle('collapsed', !STATE.modernPlayer.isLyricsVisible);
+  }
+  if (toggleBtnText) {
+    toggleBtnText.textContent = STATE.modernPlayer.isLyricsVisible ? 'إخفاء الكلمات' : 'إظهار الكلمات';
+  }
+  if (toggleBtnIcon) {
+    toggleBtnIcon.textContent = STATE.modernPlayer.isLyricsVisible ? '👁️' : '📝';
+  }
+}
+
+function onModernSeekInput(val) {
+  const fillEl = document.getElementById('player-progress-fill');
+  if (fillEl) fillEl.style.width = val + '%';
+  if (STATE.globalAudio && STATE.globalAudio.duration) {
+    const cur = (val / 100) * STATE.globalAudio.duration;
+    const curTimeEl = document.getElementById('player-current-time');
+    if (curTimeEl) curTimeEl.textContent = formatAudioTime(cur);
+    const remTimeEl = document.getElementById('player-remaining-time');
+    if (remTimeEl) remTimeEl.textContent = '-' + formatAudioTime(Math.max(0, STATE.globalAudio.duration - cur));
+  }
+}
+
+function onModernSeekChange(val) {
+  if (STATE.globalAudio && STATE.globalAudio.duration) {
+    STATE.globalAudio.currentTime = (val / 100) * STATE.globalAudio.duration;
   }
 }
 
 function onModernAudioTimeUpdate() {
-  onMiniAudioTimeUpdate();
-}
-
-function onMiniAudioLoadedMetadata() {
   if (!STATE.globalAudio) return;
-  const dur = STATE.globalAudio.duration;
   const cur = STATE.globalAudio.currentTime || 0;
-  const timeEl = document.getElementById('mini-track-time');
+  const dur = STATE.globalAudio.duration;
 
-  if (!STATE.isCairoRadioPlaying && dur && !isNaN(dur) && isFinite(dur) && timeEl) {
-    timeEl.textContent = `${formatAudioTime(cur)} / ${formatAudioTime(dur)}`;
+  const curTimeEl = document.getElementById('player-current-time');
+  if (curTimeEl) curTimeEl.textContent = formatAudioTime(cur);
+
+  const remTimeEl = document.getElementById('player-remaining-time');
+  if (remTimeEl) {
+    if (dur && !isNaN(dur) && isFinite(dur)) {
+      const rem = Math.max(0, dur - cur);
+      remTimeEl.textContent = '-' + formatAudioTime(rem);
+    } else {
+      remTimeEl.textContent = '-00:00';
+    }
+  }
+
+  const rangeEl = document.getElementById('player-seek-range');
+  const fillEl = document.getElementById('player-progress-fill');
+  if (dur && !isNaN(dur) && isFinite(dur) && dur > 0) {
+    const pct = (cur / dur) * 100;
+    if (rangeEl && !rangeEl.matches(':active')) rangeEl.value = pct;
+    if (fillEl) fillEl.style.width = pct + '%';
   }
 }
 
 function onModernAudioLoadedMetadata() {
-  onMiniAudioLoadedMetadata();
+  const dur = STATE.globalAudio.duration;
+  const remTimeEl = document.getElementById('player-remaining-time');
+  if (remTimeEl && dur && !isNaN(dur) && isFinite(dur)) {
+    remTimeEl.textContent = '-' + formatAudioTime(dur);
+  }
 }
 
-function closeMiniPlayer() {
-  // 1. إيقاف الصوت فوراً وبشكل نهائي وتصفير العداد والمصدر
+function minimizeModernPlayer() {
+  const full = document.getElementById('unified-modern-player');
+  const min = document.getElementById('minimized-floating-bar');
+  if (full) full.style.display = 'none';
+  if (min) min.style.display = 'flex';
+  STATE.modernPlayer.isMinimized = true;
+}
+
+function expandModernPlayer() {
+  const full = document.getElementById('unified-modern-player');
+  const min = document.getElementById('minimized-floating-bar');
+  if (full) full.style.display = 'block';
+  if (min) min.style.display = 'none';
+  STATE.modernPlayer.isMinimized = false;
+}
+
+function closeModernPlayer() {
   if (STATE.globalAudio) {
     try {
       STATE.globalAudio.pause();
       STATE.globalAudio.currentTime = 0;
       STATE.globalAudio.removeAttribute('src');
       STATE.globalAudio.src = '';
-      STATE.globalAudio.load();
-    } catch (e) {
-      console.warn('Audio close notice:', e);
-    }
+    } catch(e) {}
   }
-
-  // 2. تصفير الحالات النشطة
-  STATE.isGlobalPlaying = false;
   STATE.isCairoRadioPlaying = false;
-  STATE.activeAudioTrack = null;
-  if (STATE.modernPlayer) {
-    STATE.modernPlayer.track = null;
-  }
-
-  // 3. تحديث واجهات المشغل
   updateCairoRadioUI(false);
-  updateMiniPlayerState(false);
+  updateModernPlayBtn(false);
 
-  // 4. إخفاء شريط المشغل السفلي بالكامل من الشاشة
-  const miniPlayer = document.getElementById('bottom-mini-player');
-  if (miniPlayer) {
-    miniPlayer.style.display = 'none';
-  }
+  const full = document.getElementById('unified-modern-player');
+  if (full) full.style.display = 'none';
 
-  // 5. إرجاع أزرار التشغيل في كافة البطاقات لحالة الإيقاف (Play)
-  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => {
-    c.classList.remove('is-playing');
-    const b = c.querySelector('.audio-card-play-btn');
-    if (b) b.textContent = '▶';
-  });
+  const min = document.getElementById('minimized-floating-bar');
+  if (min) min.style.display = 'none';
 
-  const playIcon = document.getElementById('mini-play-icon');
-  if (playIcon) playIcon.textContent = '▶';
-}
-
-function closeModernPlayer() {
-  closeMiniPlayer();
+  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => c.classList.remove('is-playing'));
 }
 
 function closeGlobalAudioPlayer() {
-  closeMiniPlayer();
+  closeModernPlayer();
 }
 
-function minimizeModernPlayer() {}
-function expandModernPlayer() {}
-function toggleModernRepeat() {}
-function togglePlayerLyrics() {}
-function onModernSeekInput(val) {}
-function onModernSeekChange(val) {}
-
 function shareCurrentModernTrack() {
-  const track = STATE.activeAudioTrack || STATE.modernPlayer?.track;
+  const track = STATE.modernPlayer.track;
   if (!track) return;
   const shareData = {
     title: track.title,
-    text: `استمع إلى: ${track.title} بصوت ${track.reciter || ''} عبر تطبيق المجلس`,
+    text: `استمع إلى: ${track.title} بصوت ${track.reciter || ''} عبر تطبيق المجلس - الموسوعة القرآنية والابتهالات`,
     url: track.url || window.location.href
   };
 
@@ -1854,8 +1814,7 @@ function renderRareQuranList(filterCat) {
 
   container.innerHTML = filtered.map(item => {
     const avatar = getSheikhAvatarSvg(item.reciter, false);
-    const currentId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
-    const isCurPlaying = currentId === item.id && STATE.isGlobalPlaying;
+    const isCurPlaying = STATE.modernPlayer.track && STATE.modernPlayer.track.id === item.id && STATE.isGlobalPlaying;
     return `
       <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${item.id}" onclick="playRareQuranTrack('${item.id}')">
         <div class="audio-card-avatar">
@@ -1887,13 +1846,7 @@ function filterRareQuran(category) {
 
 function playRareQuranTrack(trackId) {
   const track = RARE_RECITATIONS_DATA.find(t => t.id === trackId);
-  if (!track) return;
-  const currentId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
-  if (currentId === trackId) {
-    toggleMiniAudioPlay();
-  } else {
-    playTrackDirectly(track);
-  }
+  if (track) playModernTrack(track);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1923,8 +1876,7 @@ function renderIbtehalatList(filterCat) {
 
   container.innerHTML = filtered.map(item => {
     const avatar = getSheikhAvatarSvg(item.reciter, true);
-    const currentId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
-    const isCurPlaying = currentId === item.id && STATE.isGlobalPlaying;
+    const isCurPlaying = STATE.modernPlayer.track && STATE.modernPlayer.track.id === item.id && STATE.isGlobalPlaying;
     return `
       <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${item.id}" onclick="playIbtehalTrack('${item.id}')">
         <div class="audio-card-avatar">
@@ -1956,13 +1908,7 @@ function filterIbtehalat(category) {
 
 function playIbtehalTrack(trackId) {
   const track = IBTEHALAT_DATA.find(t => t.id === trackId);
-  if (!track) return;
-  const currentId = STATE.activeAudioTrack?.id || STATE.modernPlayer?.track?.id;
-  if (currentId === trackId) {
-    toggleMiniAudioPlay();
-  } else {
-    playTrackDirectly(track);
-  }
+  if (track) playModernTrack(track);
 }
 
 // ═══════════════════════════════════════════════════════════════
