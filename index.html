@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=3">
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -137,15 +137,15 @@
         <span class="home-grid-desc">مرتل ومجود وتزامن الكلمات وعلامة الختمة</span>
       </div>
 
-      <!-- نوادر التلاوات والتسجيلات القرآنية النادرة -->
-      <div class="card home-grid-item" onclick="navigateTo('rare-quran')">
+      <!-- نوادر التلاوات القرآنية النادرة -->
+      <div class="card home-grid-item" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('rare_all');">
         <span class="home-grid-icon">✨</span>
         <span class="home-grid-name">نوادر التلاوات القرآنية</span>
         <span class="home-grid-desc">المنشاوي، عبد الباسط، رفعت، مصطفى إسماعيل، البهتيمي</span>
       </div>
 
       <!-- التواشيح والابتهالات الدينية -->
-      <div class="card home-grid-item" onclick="navigateTo('ibtehalat')">
+      <div class="card home-grid-item" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all');">
         <span class="home-grid-icon">🎙️</span>
         <span class="home-grid-name">التواشيح والابتهالات</span>
         <span class="home-grid-desc">نصر الدين طوبار، سيد النقشبندي، الفشني، عمران، رمضان</span>
@@ -303,60 +303,45 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- 3.1. قسم نوادر التلاوات والتسجيلات القرآنية النادرة لكبار القراء            -->
+  <!-- 3. قسم النوادر والابتهالات الدينية الشاملة (قسم موحد متكامل)                 -->
   <!-- ========================================================================= -->
-  <section class="page" id="page-rare-quran">
-    <div class="page-header">
-      <div class="page-header-title">
-        <span>✨</span>
-        <span>نوادر التلاوات القرآنية الخالدة</span>
-      </div>
-      <button class="back-btn" onclick="navigateTo('home')">✕</button>
-    </div>
-
-    <!-- فلتر كبار القراء للنوادر والتسجيلات التاريخية -->
-    <div class="filter-chips" style="margin-bottom: 14px;">
-      <button class="chip-btn active" onclick="filterRareQuran('all')">الكل</button>
-      <button class="chip-btn" onclick="filterRareQuran('minshawi')">محمد صديق المنشاوي</button>
-      <button class="chip-btn" onclick="filterRareQuran('bahtimi')">كامل يوسف البهتيمي</button>
-      <button class="chip-btn" onclick="filterRareQuran('basit')">عبد الباسط عبد الصمد</button>
-      <button class="chip-btn" onclick="filterRareQuran('mustafa')">مصطفى إسماعيل</button>
-      <button class="chip-btn" onclick="filterRareQuran('refat')">محمد رفعت</button>
-      <button class="chip-btn" onclick="filterRareQuran('banna')">محمود علي البنا</button>
-      <button class="chip-btn" onclick="filterRareQuran('salama')">محمد سلامة</button>
-      <button class="chip-btn" onclick="filterRareQuran('jaber')">علي جابر</button>
-    </div>
-
-    <!-- قائمة نوادر التلاوات التاريخية المباشرة -->
-    <div id="rare-quran-list">
-      <!-- تتولد ديناميكياً عبر JavaScript -->
-    </div>
-  </section>
-
-  <!-- ========================================================================= -->
-  <!-- 3.2. قسم التواشيح والابتهالات الدينية الشاملة (قسم مستقل 100%)              -->
-  <!-- ========================================================================= -->
-  <section class="page" id="page-ibtehalat">
+  <section class="page" id="page-rare-ibtehalat">
     <div class="page-header">
       <div class="page-header-title">
         <span>🎙️</span>
-        <span>التواشيح والابتهالات الدينية</span>
+        <span>النوادر والابتهالات</span>
       </div>
       <button class="back-btn" onclick="navigateTo('home')">✕</button>
     </div>
 
-    <!-- فلتر شيوخ الابتهالات والتواشيح -->
-    <div class="filter-chips" style="margin-bottom: 14px;">
-      <button class="chip-btn active" onclick="filterIbtehalat('all')">الكل</button>
-      <button class="chip-btn" onclick="filterIbtehalat('tobour')">نصر الدين طوبار</button>
-      <button class="chip-btn" onclick="filterIbtehalat('naqshbandi')">سيد النقشبندي</button>
-      <button class="chip-btn" onclick="filterIbtehalat('fashni')">طه الفشني</button>
-      <button class="chip-btn" onclick="filterIbtehalat('omran_fayoumi')">عمران والفيومي</button>
-      <button class="chip-btn" onclick="filterIbtehalat('ramadan')">🌙 تراث رمضان</button>
+    <!-- شريط البحث الفوري في النوادر والابتهالات -->
+    <div class="search-input-wrap" style="margin-bottom: 12px;">
+      <input type="text" class="search-input" id="rare-ibtehalat-search" placeholder="ابحث باسم الشيخ، التلاوة، أو الابتهال..." oninput="onRareIbtehalatSearch(this.value)">
     </div>
 
-    <!-- قائمة الابتهالات والتواشيح المباشرة -->
-    <div id="ibtehalat-list">
+    <!-- فلاتر التبويب السريعة للنوادر والابتهالات -->
+    <div class="filter-chips" id="rare-ibtehalat-filter-chips" style="margin-bottom: 14px;">
+      <button class="chip-btn active" data-filter="all" onclick="filterRareAndIbtehalat('all')">الكل</button>
+      <button class="chip-btn" data-filter="rare_all" onclick="filterRareAndIbtehalat('rare_all')">📜 نوادر التلاوات</button>
+      <button class="chip-btn" data-filter="ibtehal_all" onclick="filterRareAndIbtehalat('ibtehal_all')">🎙️ الابتهالات</button>
+      <button class="chip-btn" data-filter="minshawi" onclick="filterRareAndIbtehalat('minshawi')">محمد صديق المنشاوي</button>
+      <button class="chip-btn" data-filter="bahtimi" onclick="filterRareAndIbtehalat('bahtimi')">كامل يوسف البهتيمي</button>
+      <button class="chip-btn" data-filter="basit" onclick="filterRareAndIbtehalat('basit')">عبد الباسط عبد الصمد</button>
+      <button class="chip-btn" data-filter="mustafa" onclick="filterRareAndIbtehalat('mustafa')">مصطفى إسماعيل</button>
+      <button class="chip-btn" data-filter="refat" onclick="filterRareAndIbtehalat('refat')">محمد رفعت</button>
+      <button class="chip-btn" data-filter="banna" onclick="filterRareAndIbtehalat('banna')">محمود علي البنا</button>
+      <button class="chip-btn" data-filter="tobour" onclick="filterRareAndIbtehalat('tobour')">نصر الدين طوبار</button>
+      <button class="chip-btn" data-filter="naqshbandi" onclick="filterRareAndIbtehalat('naqshbandi')">سيد النقشبندي</button>
+      <button class="chip-btn" data-filter="fashni" onclick="filterRareAndIbtehalat('fashni')">طه الفشني</button>
+      <button class="chip-btn" data-filter="omran_fayoumi" onclick="filterRareAndIbtehalat('omran_fayoumi')">عمران والفيومي</button>
+      <button class="chip-btn" data-filter="ramadan" onclick="filterRareAndIbtehalat('ramadan')">🌙 تراث رمضان</button>
+    </div>
+
+    <!-- عدد المقاطع المتاحة -->
+    <div id="rare-ibtehalat-counter" style="font-size: 0.82rem; color: var(--gold-light); margin-bottom: 12px; font-weight: 600; padding: 0 4px;"></div>
+
+    <!-- قائمة نوادر التلاوات والابتهالات المباشرة -->
+    <div id="rare-ibtehalat-list">
       <!-- تتولد ديناميكياً عبر JavaScript -->
     </div>
   </section>
@@ -653,45 +638,51 @@
   </section>
 
   <!-- ========================================================================= -->
-  <!-- 10. المشغل الصوتي المدمج النحيف أسفل الشاشة (Sleek Bottom Mini Player)      -->
+  <!-- 10. شريط الصوت النحيف المدمج للأندرويد والآيفون (Sleek Mini Audio Bar)     -->
   <!-- ========================================================================= -->
-  <div class="bottom-mini-player" id="bottom-mini-player" style="display: none;">
-    <!-- خط التقدم اللمسي النحيف في الحافة العلوية للمشغل -->
-    <div class="mini-progress-track" id="mini-progress-track" onclick="onMiniProgressTrackClick(event)">
-      <div class="mini-progress-fill" id="mini-progress-fill"></div>
+  <div class="sleek-bottom-player" id="sleek-bottom-player" style="display: none;">
+    <!-- شريط التقدم اللمسي النحيف أعلى الشريط -->
+    <div class="sleek-player-progress-bar" id="sleek-player-progress-bar" onclick="onSleekProgressClick(event)" title="انقر للتقديم أو التأخير">
+      <div class="sleek-player-progress-fill" id="sleek-player-progress-fill"></div>
     </div>
 
-    <div class="mini-player-body">
-      <!-- صورة القارئ / المنشد -->
-      <div class="mini-player-avatar" id="mini-avatar-wrap">
-        <img id="mini-avatar-img" src="" alt="avatar">
+    <div class="sleek-player-main-content">
+      <!-- صورة القارئ/المنشد الدائرية -->
+      <div class="sleek-player-avatar-wrap">
+        <img id="sleek-player-avatar" src="" alt="القارئ">
       </div>
 
-      <!-- بيانات المقطع الصوتي والمدة -->
-      <div class="mini-player-info">
-        <div class="mini-track-title" id="mini-track-title">عنوان المقطع الصوتي</div>
-        <div class="mini-track-meta">
-          <span class="mini-track-artist" id="mini-artist-name">الشيخ</span>
-          <span class="mini-track-bullet">•</span>
-          <span class="mini-track-time" id="mini-track-time">00:00 / 00:00</span>
+      <!-- اسم التلاوة/الابتهال واسم الشيخ والوقت -->
+      <div class="sleek-player-info">
+        <div class="sleek-player-title" id="sleek-player-title">عنوان المقطع المبارك</div>
+        <div class="sleek-player-meta">
+          <span class="sleek-player-sheikh" id="sleek-player-sheikh">الشيخ</span>
+          <span class="sleek-player-dot">•</span>
+          <span class="sleek-player-time" id="sleek-player-time">00:00 / 00:00</span>
         </div>
       </div>
 
-      <!-- أزرار التحكم السريعة -->
-      <div class="mini-player-controls">
-        <!-- زر تأخير 10 ثوان -->
-        <button class="mini-ctrl-btn" onclick="seekMiniAudioRelative(-10)" title="تأخير 10 ثوانٍ">⏪</button>
-
-        <!-- زر التشغيل / الإيقاف الرئيسي -->
-        <button class="mini-play-main-btn" id="mini-play-main-btn" onclick="toggleMiniAudioPlay()" title="تشغيل / إيقاف">
-          <span id="mini-play-icon">▶</span>
+      <!-- أزرار التحكم اللمسية المضبوطة للأندرويد والآيفون -->
+      <div class="sleek-player-actions">
+        <!-- تأخير 10 ثوان -->
+        <button class="sleek-player-btn sleek-seek-btn" onclick="seekModernRelative(-10)" title="تأخير 10 ثوانٍ" aria-label="تأخير 10 ثوانٍ">
+          <span class="sleek-btn-label">10-</span>
         </button>
 
-        <!-- زر تقديم 10 ثوان -->
-        <button class="mini-ctrl-btn" onclick="seekMiniAudioRelative(10)" title="تقديم 10 ثوانٍ">⏩</button>
+        <!-- زر التشغيل / الإيقاف المؤقت -->
+        <button class="sleek-player-play-btn" id="sleek-play-btn" onclick="toggleModernPlayPause()" title="تشغيل / إيقاف مؤقت" aria-label="تشغيل / إيقاف مؤقت">
+          <span id="sleek-play-icon">▶</span>
+        </button>
 
-        <!-- زر إغلاق المشغل -->
-        <button class="mini-ctrl-btn close-btn" onclick="closeMiniPlayer()" title="إغلاق">✕</button>
+        <!-- تقديم 10 ثوان -->
+        <button class="sleek-player-btn sleek-seek-btn" onclick="seekModernRelative(10)" title="تقديم 10 ثوانٍ" aria-label="تقديم 10 ثوانٍ">
+          <span class="sleek-btn-label">+10</span>
+        </button>
+
+        <!-- زر إغلاق صريح ونهائي للمشغل -->
+        <button class="sleek-player-close-btn" onclick="closeModernPlayer()" title="إغلاق المشغل نهائياً" aria-label="إغلاق المشغل">
+          ✕
+        </button>
       </div>
     </div>
   </div>
@@ -703,7 +694,7 @@
   <audio id="adhan-audio-element" preload="auto" src="https://dn721809.ca.archive.org/0/items/moharram1965_gmail_20180227/%D8%A7%D8%B0%D8%A7%D9%86%20%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8%20%D9%84%D9%81%D8%B6%D9%8A%D9%84%D8%A9%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%B1%D9%81%D8%B9%D8%AA%20%D8%B1%D8%AD%D9%85%D8%A9%20%D8%A7%D9%84%D9%84%D9%87%20%20%D8%A7%D8%AD%D9%85%D8%AF%20%D8%B9%D8%A8%D8%AF%D9%87%20%D9%88%D9%85%D8%AF%D8%A7%D8%B1%D8%B3%20%D8%A7%D9%84%D8%AA%D9%84%D8%A7%D9%88%D8%A9.mp3"></audio>
 
   <!-- ========================================================================= -->
-  <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الـ 6 الرئيسية)                     -->
+  <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الـ 5 الرئيسية)                     -->
   <!-- ========================================================================= -->
   <nav class="bottom-nav-bar" id="bottom-nav">
     <!-- 1. الرئيسية -->
@@ -718,34 +709,28 @@
       <span class="nav-tab-label">المصحف</span>
     </button>
 
-    <!-- 3. النوادر -->
-    <button class="nav-tab-item" data-page="rare-quran" onclick="navigateTo('rare-quran')">
-      <span class="nav-tab-icon">✨</span>
-      <span class="nav-tab-label">النوادر</span>
-    </button>
-
-    <!-- 4. الابتهالات -->
-    <button class="nav-tab-item" data-page="ibtehalat" onclick="navigateTo('ibtehalat')">
+    <!-- 3. النوادر والابتهالات -->
+    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')">
       <span class="nav-tab-icon">🎙️</span>
-      <span class="nav-tab-label">الابتهالات</span>
+      <span class="nav-tab-label">النوادر والابتهالات</span>
     </button>
 
-    <!-- 5. الإذاعة -->
+    <!-- 4. الإذاعة -->
     <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')">
       <span class="nav-tab-icon">📻</span>
       <span class="nav-tab-label">الإذاعة</span>
     </button>
 
-    <!-- 6. الأذكار -->
+    <!-- 5. الأذكار -->
     <button class="nav-tab-item" data-page="azkar" onclick="navigateTo('azkar')">
       <span class="nav-tab-icon">📿</span>
       <span class="nav-tab-label">الأذكار</span>
     </button>
   </nav>
 
-  <!-- ملفات البيانات والتطبيق البرمجية -->
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
+  <script src="js/data.js?v=3"></script>
+  <script src="js/app.js?v=3"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
@@ -754,6 +739,7 @@
         navigator.serviceWorker.register('sw.js')
           .then(reg => {
             console.log('PWA Service Worker registered:', reg.scope);
+            try { reg.update(); } catch(e) {}
             if (reg.waiting) {
               reg.waiting.postMessage({ type: 'SKIP_WAITING' });
             }
