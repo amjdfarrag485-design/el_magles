@@ -103,11 +103,8 @@ function initIslamicApp() {
   // تهيئة إذاعة القرآن الكريم من القاهرة
   initRadioSection();
 
-  // تهيئة نوادر التلاوات القرآنية الخالدة
-  initRareQuranSection();
-
-  // تهيئة التواشيح والابتهالات الدينية الشاملة
-  initIbtehalatSection();
+  // تهيئة قسم النوادر والابتهالات الموحد
+  initRareAndIbtehalatSection();
 
   // تهيئة موسوعة كبار القراء
   initRecitersEncyclopedia();
@@ -186,6 +183,11 @@ function savePersistedData(key, value) {
 // ═══════════════════════════════════════════════════════════════
 function navigateTo(pageId) {
   if (!pageId) return;
+
+  // توجيه تلقائي للأقسام القديمة إلى قسم النوادر والابتهالات الموحد
+  if (pageId === 'rare-quran' || pageId === 'ibtehalat') {
+    pageId = 'rare-ibtehalat';
+  }
 
   const targetPage = document.getElementById(`page-${pageId}`);
   if (!targetPage) return;
@@ -1467,32 +1469,25 @@ function getSheikhAvatarSvg(name, isIbtehal = false) {
 }
 
 function showFloatingPlayerForRadio() {
-  const minBar = document.getElementById('minimized-floating-bar');
-  if (minBar) {
-    minBar.style.display = 'flex';
-    const titleEl = document.getElementById('min-track-title');
+  const sleek = document.getElementById('sleek-bottom-player');
+  if (sleek) {
+    sleek.style.display = 'flex';
+    const titleEl = document.getElementById('sleek-player-title');
     if (titleEl) titleEl.textContent = 'إذاعة القرآن الكريم من القاهرة';
-    const artistEl = document.getElementById('min-artist-name');
-    if (artistEl) artistEl.textContent = 'بث مباشر حي 24 ساعة';
-    const minAvatar = document.getElementById('min-avatar-img');
-    if (minAvatar) minAvatar.src = getSheikhAvatarSvg('إذاعة القاهرة', true);
-  }
-
-  const fullPlayer = document.getElementById('unified-modern-player');
-  if (fullPlayer) {
-    const titleEl = document.getElementById('player-track-title');
-    if (titleEl) titleEl.textContent = 'إذاعة القرآن الكريم من القاهرة';
-    const artistEl = document.getElementById('player-artist-name');
-    if (artistEl) artistEl.textContent = 'صوت الأزهر الشريف ومصر - بث حي 24 ساعة';
-    const sourceTag = document.getElementById('player-source-tag');
-    if (sourceTag) sourceTag.textContent = 'المصدر: البث الإذاعي المباشر';
-    const verTag = document.getElementById('player-version-tag');
-    if (verTag) verTag.textContent = 'التردد: 98.8 FM';
-    const lyricsText = document.getElementById('player-lyrics-text');
-    if (lyricsText) lyricsText.textContent = 'إذاعة القرآن الكريم من القاهرة.. إذاعة كل بيت مسلم ونبض التلاوات العطرة على مدار الساعة';
-    const avatar = document.getElementById('player-avatar-img');
+    const sheikhEl = document.getElementById('sleek-player-sheikh');
+    if (sheikhEl) sheikhEl.textContent = 'بث مباشر 24 ساعة';
+    const timeEl = document.getElementById('sleek-player-time');
+    if (timeEl) timeEl.textContent = 'مباشر 🔴';
+    const avatar = document.getElementById('sleek-player-avatar');
     if (avatar) avatar.src = getSheikhAvatarSvg('إذاعة القاهرة', true);
   }
+
+  // دعم العناصر القديمة إن وُجدت
+  const minBar = document.getElementById('minimized-floating-bar');
+  if (minBar) minBar.style.display = 'none';
+  const fullPlayer = document.getElementById('unified-modern-player');
+  if (fullPlayer) fullPlayer.style.display = 'none';
+
   updateModernPlayBtn(true);
 }
 
@@ -1506,9 +1501,11 @@ function playModernTrack(track) {
     updateHudPlayBtn(false);
   }
 
-  // إيقاف بث إذاعة القاهرة
-  STATE.isCairoRadioPlaying = false;
-  updateCairoRadioUI(false);
+  // إيقاف بث إذاعة القاهرة إذا لم يكن المسار هو الإذاعة
+  if (track.category !== 'radio' && track.id !== 'cairo_live_stream') {
+    STATE.isCairoRadioPlaying = false;
+    updateCairoRadioUI(false);
+  }
 
   STATE.modernPlayer.track = track;
 
@@ -1522,66 +1519,50 @@ function playModernTrack(track) {
     showToast('جاري بدء تشغيل التسجيل المبارك...');
   });
 
-  // تحديث واجهة المشغل التفاعلي الموحد
-  const fullPlayer = document.getElementById('unified-modern-player');
-  if (fullPlayer) fullPlayer.style.display = 'block';
+  // تحديث وإظهار شريط الصوت النحيف المدمج للأندرويد والآيفون
+  const sleek = document.getElementById('sleek-bottom-player');
+  if (sleek) {
+    sleek.style.display = 'flex';
 
+    const titleEl = document.getElementById('sleek-player-title');
+    if (titleEl) titleEl.textContent = track.title || 'مقطع مبارك';
+
+    const sheikhEl = document.getElementById('sleek-player-sheikh');
+    if (sheikhEl) sheikhEl.textContent = track.reciter || track.sheikh || '';
+
+    const timeEl = document.getElementById('sleek-player-time');
+    if (timeEl) timeEl.textContent = `00:00 / ${track.duration || '--:--'}`;
+
+    const avatarSvg = track.avatar || getSheikhAvatarSvg(track.reciter || track.sheikh, !!track.lyricsQuote);
+    const avatarEl = document.getElementById('sleek-player-avatar');
+    if (avatarEl) avatarEl.src = avatarSvg;
+
+    const fillEl = document.getElementById('sleek-player-progress-fill');
+    if (fillEl) fillEl.style.width = '0%';
+  }
+
+  // إخفاء أي نوافذ عائمة قديمة
+  const fullPlayer = document.getElementById('unified-modern-player');
+  if (fullPlayer) fullPlayer.style.display = 'none';
   const minBar = document.getElementById('minimized-floating-bar');
   if (minBar) minBar.style.display = 'none';
-
-  const titleEl = document.getElementById('player-track-title');
-  if (titleEl) titleEl.textContent = track.title || 'مقطع مبارك';
-
-  const artistEl = document.getElementById('player-artist-name');
-  if (artistEl) artistEl.textContent = track.reciter || track.sheikh || 'القارئ';
-
-  const sourceTag = document.getElementById('player-source-tag');
-  if (sourceTag) {
-    sourceTag.textContent = track.sourceTag || (track.category === 'ramadan' ? 'المصدر: تراث رمضان' : (track.lyricsQuote ? 'المصدر: ابتهال ديني' : 'المصدر: نوادر التلاوات'));
-  }
-
-  const verTag = document.getElementById('player-version-tag');
-  if (verTag) {
-    verTag.textContent = track.versionTag || track.badge || 'النسخة: تسجيل أصلي نادر';
-  }
-
-  const avatarSvg = track.avatar || getSheikhAvatarSvg(track.reciter || track.sheikh, !!track.lyricsQuote);
-  const avatarImg = document.getElementById('player-avatar-img');
-  if (avatarImg) avatarImg.src = avatarSvg;
-
-  const minAvatarImg = document.getElementById('min-avatar-img');
-  if (minAvatarImg) minAvatarImg.src = avatarSvg;
-
-  const minTitle = document.getElementById('min-track-title');
-  if (minTitle) minTitle.textContent = track.title || '';
-
-  const minSub = document.getElementById('min-artist-name');
-  if (minSub) minSub.textContent = track.reciter || track.sheikh || '';
-
-  const lyricsText = document.getElementById('player-lyrics-text');
-  if (lyricsText) {
-    lyricsText.textContent = track.lyricsQuote || track.desc || 'استمع بقلب خاشع ونفحات إيمانية مباركة';
-  }
-
-  const curTimeEl = document.getElementById('player-current-time');
-  if (curTimeEl) curTimeEl.textContent = '00:00';
-
-  const remTimeEl = document.getElementById('player-remaining-time');
-  if (remTimeEl) remTimeEl.textContent = '-' + (track.duration || '00:00');
-
-  const rangeEl = document.getElementById('player-seek-range');
-  if (rangeEl) rangeEl.value = 0;
-
-  const fillEl = document.getElementById('player-progress-fill');
-  if (fillEl) fillEl.style.width = '0%';
 
   updateModernPlayBtn(true);
 
   // تحديث تمييز الكارت النشط في القوائم
-  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => c.classList.remove('is-playing'));
+  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => {
+    c.classList.remove('is-playing');
+    const b = c.querySelector('.audio-card-play-btn');
+    if (b) b.textContent = '▶';
+  });
+
   if (track.id) {
     const activeCard = document.getElementById(`track-card-${track.id}`);
-    if (activeCard) activeCard.classList.add('is-playing');
+    if (activeCard) {
+      activeCard.classList.add('is-playing');
+      const b = activeCard.querySelector('.audio-card-play-btn');
+      if (b) b.textContent = '⏸';
+    }
   }
 }
 
@@ -1621,6 +1602,13 @@ function toggleGlobalAudioPlay() {
 }
 
 function updateModernPlayBtn(isPlaying) {
+  STATE.isGlobalPlaying = isPlaying;
+
+  // شريط الصوت النحيف
+  const sleekPlayIcon = document.getElementById('sleek-play-icon');
+  if (sleekPlayIcon) sleekPlayIcon.textContent = isPlaying ? '⏸' : '▶';
+
+  // عناصر المشغل القديمة إن وُجدت
   const mainBtnIcon = document.getElementById('player-play-icon');
   if (mainBtnIcon) mainBtnIcon.textContent = isPlaying ? '⏸' : '▶';
 
@@ -1629,6 +1617,16 @@ function updateModernPlayBtn(isPlaying) {
 
   const badge = document.getElementById('player-status-badge');
   if (badge) badge.textContent = isPlaying ? 'قيد التشغيل الآن' : 'متوقف مؤقتاً';
+
+  // تحديث زر التشغيل في الكارت الحالي بالقائمة
+  if (STATE.modernPlayer.track && STATE.modernPlayer.track.id) {
+    const card = document.getElementById(`track-card-${STATE.modernPlayer.track.id}`);
+    if (card) {
+      card.classList.toggle('is-playing', isPlaying);
+      const playBtn = card.querySelector('.audio-card-play-btn');
+      if (playBtn) playBtn.textContent = isPlaying ? '⏸' : '▶';
+    }
+  }
 }
 
 function updateFloatPlayBtn(isPlaying) {
@@ -1643,6 +1641,17 @@ function seekModernRelative(seconds) {
   if (target < 0) target = 0;
   if (dur && target > dur) target = dur;
   STATE.globalAudio.currentTime = target;
+  onModernAudioTimeUpdate();
+}
+
+function onSleekProgressClick(e) {
+  if (!STATE.globalAudio || !STATE.globalAudio.duration) return;
+  const bar = document.getElementById('sleek-player-progress-bar');
+  if (!bar) return;
+  const rect = bar.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  const pct = Math.max(0, Math.min(1, clickX / rect.width));
+  STATE.globalAudio.currentTime = pct * STATE.globalAudio.duration;
   onModernAudioTimeUpdate();
 }
 
@@ -1698,6 +1707,21 @@ function onModernAudioTimeUpdate() {
   const cur = STATE.globalAudio.currentTime || 0;
   const dur = STATE.globalAudio.duration;
 
+  // تحديث شريط الصوت النحيف (الأندرويد والآيفون)
+  const sleekTimeEl = document.getElementById('sleek-player-time');
+  if (sleekTimeEl) {
+    const curStr = formatAudioTime(cur);
+    const durStr = (dur && !isNaN(dur) && isFinite(dur)) ? formatAudioTime(dur) : (STATE.modernPlayer.track?.duration || '--:--');
+    sleekTimeEl.textContent = `${curStr} / ${durStr}`;
+  }
+
+  const sleekFill = document.getElementById('sleek-player-progress-fill');
+  if (sleekFill && dur && !isNaN(dur) && isFinite(dur) && dur > 0) {
+    const pct = Math.min(100, Math.max(0, (cur / dur) * 100));
+    sleekFill.style.width = `${pct}%`;
+  }
+
+  // دعم المشغل القديم إن وجد
   const curTimeEl = document.getElementById('player-current-time');
   if (curTimeEl) curTimeEl.textContent = formatAudioTime(cur);
 
@@ -1726,22 +1750,19 @@ function onModernAudioLoadedMetadata() {
   if (remTimeEl && dur && !isNaN(dur) && isFinite(dur)) {
     remTimeEl.textContent = '-' + formatAudioTime(dur);
   }
+  onModernAudioTimeUpdate();
 }
 
 function minimizeModernPlayer() {
+  const sleek = document.getElementById('sleek-bottom-player');
+  if (sleek) sleek.style.display = 'flex';
   const full = document.getElementById('unified-modern-player');
-  const min = document.getElementById('minimized-floating-bar');
   if (full) full.style.display = 'none';
-  if (min) min.style.display = 'flex';
-  STATE.modernPlayer.isMinimized = true;
 }
 
 function expandModernPlayer() {
-  const full = document.getElementById('unified-modern-player');
-  const min = document.getElementById('minimized-floating-bar');
-  if (full) full.style.display = 'block';
-  if (min) min.style.display = 'none';
-  STATE.modernPlayer.isMinimized = false;
+  const sleek = document.getElementById('sleek-bottom-player');
+  if (sleek) sleek.style.display = 'flex';
 }
 
 function closeModernPlayer() {
@@ -1754,8 +1775,13 @@ function closeModernPlayer() {
     } catch(e) {}
   }
   STATE.isCairoRadioPlaying = false;
+  STATE.isGlobalPlaying = false;
   updateCairoRadioUI(false);
   updateModernPlayBtn(false);
+
+  // إخفاء شريط الصوت النحيف فوراً
+  const sleek = document.getElementById('sleek-bottom-player');
+  if (sleek) sleek.style.display = 'none';
 
   const full = document.getElementById('unified-modern-player');
   if (full) full.style.display = 'none';
@@ -1763,7 +1789,12 @@ function closeModernPlayer() {
   const min = document.getElementById('minimized-floating-bar');
   if (min) min.style.display = 'none';
 
-  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => c.classList.remove('is-playing'));
+  // إعادة حالة كافة البطاقات إلى إيقاف
+  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => {
+    c.classList.remove('is-playing');
+    const b = c.querySelector('.audio-card-play-btn');
+    if (b) b.textContent = '▶';
+  });
 }
 
 function closeGlobalAudioPlayer() {
@@ -1793,30 +1824,115 @@ function shareCurrentModernTrack() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 14. نوادر التلاوات القرآنية الخالدة (قسم مخصص ومستقل)
+// 14. قسم النوادر والابتهالات الدينية الشاملة (قسم موحد متكامل)
 // ═══════════════════════════════════════════════════════════════
 
-function initRareQuranSection() {
-  renderRareQuranList('all');
+let currentRareIbtehalFilter = 'all';
+let currentRareIbtehalSearchQuery = '';
+
+function getAllAudioItems() {
+  const rare = (typeof RARE_RECITATIONS_DATA !== 'undefined') ? RARE_RECITATIONS_DATA : [];
+  const ibtehalat = (typeof IBTEHALAT_DATA !== 'undefined') ? IBTEHALAT_DATA : [];
+  return [...rare, ...ibtehalat];
 }
 
-function renderRareQuranList(filterCat) {
-  const container = document.getElementById('rare-quran-list');
-  if (!container || typeof RARE_RECITATIONS_DATA === 'undefined') return;
+function initRareAndIbtehalatSection() {
+  currentRareIbtehalFilter = 'all';
+  currentRareIbtehalSearchQuery = '';
+  renderRareAndIbtehalatList('all', '');
+}
 
-  const filtered = (!filterCat || filterCat === 'all') ?
-    RARE_RECITATIONS_DATA : RARE_RECITATIONS_DATA.filter(item => item.category === filterCat);
+function onRareIbtehalatSearch(query) {
+  currentRareIbtehalSearchQuery = (query || '').trim().toLowerCase();
+  renderRareAndIbtehalatList(currentRareIbtehalFilter, currentRareIbtehalSearchQuery);
+}
+
+function filterRareAndIbtehalat(category) {
+  currentRareIbtehalFilter = category || 'all';
+
+  // تحديث حالة أزرار الفلتر
+  document.querySelectorAll('#rare-ibtehalat-filter-chips .chip-btn').forEach(btn => {
+    const f = btn.dataset.filter || '';
+    btn.classList.toggle('active', f === currentRareIbtehalFilter);
+  });
+
+  renderRareAndIbtehalatList(currentRareIbtehalFilter, currentRareIbtehalSearchQuery);
+}
+
+function renderRareAndIbtehalatList(filterCat, searchStr) {
+  const container = document.getElementById('rare-ibtehalat-list');
+  const counterEl = document.getElementById('rare-ibtehalat-counter');
+  if (!container) return;
+
+  const allItems = getAllAudioItems();
+  let filtered = allItems;
+
+  // 1. فلترة حسب التصنيف
+  if (filterCat && filterCat !== 'all') {
+    if (filterCat === 'rare_all') {
+      filtered = (typeof RARE_RECITATIONS_DATA !== 'undefined') ? RARE_RECITATIONS_DATA : [];
+    } else if (filterCat === 'ibtehal_all') {
+      filtered = (typeof IBTEHALAT_DATA !== 'undefined') ? IBTEHALAT_DATA : [];
+    } else if (filterCat === 'tobour' || filterCat === 'tobar') {
+      filtered = allItems.filter(item => item.category === 'tobour' || item.category === 'tobar' || (item.reciter && item.reciter.includes('طوبار')));
+    } else if (filterCat === 'naqshbandi') {
+      filtered = allItems.filter(item => item.category === 'naqshbandi' || (item.reciter && item.reciter.includes('النقشبندي')));
+    } else if (filterCat === 'minshawi') {
+      filtered = allItems.filter(item => item.category === 'minshawi' || (item.reciter && item.reciter.includes('المنشاوي')));
+    } else if (filterCat === 'bahtimi') {
+      filtered = allItems.filter(item => item.category === 'bahtimi' || (item.reciter && item.reciter.includes('البهتيمي')));
+    } else if (filterCat === 'basit') {
+      filtered = allItems.filter(item => item.category === 'basit' || (item.reciter && item.reciter.includes('عبد الباسط')));
+    } else if (filterCat === 'mustafa') {
+      filtered = allItems.filter(item => item.category === 'mustafa' || (item.reciter && item.reciter.includes('مصطفى إسماعيل')));
+    } else if (filterCat === 'refat') {
+      filtered = allItems.filter(item => item.category === 'refat' || (item.reciter && item.reciter.includes('رفعت')));
+    } else if (filterCat === 'banna') {
+      filtered = allItems.filter(item => item.category === 'banna' || (item.reciter && item.reciter.includes('البنا')));
+    } else if (filterCat === 'fashni') {
+      filtered = allItems.filter(item => item.category === 'fashni' || (item.reciter && item.reciter.includes('الفشني')));
+    } else if (filterCat === 'omran_fayoumi') {
+      filtered = allItems.filter(item => item.category === 'omran_fayoumi' || (item.reciter && (item.reciter.includes('عمران') || item.reciter.includes('الفيومي'))));
+    } else if (filterCat === 'ramadan') {
+      filtered = allItems.filter(item => item.category === 'ramadan');
+    } else {
+      filtered = allItems.filter(item => item.category === filterCat);
+    }
+  }
+
+  // 2. فلترة بالبحث الفوري
+  if (searchStr) {
+    filtered = filtered.filter(item => {
+      const t = (item.title || '').toLowerCase();
+      const r = (item.reciter || '').toLowerCase();
+      const d = (item.desc || '').toLowerCase();
+      const b = (item.badge || '').toLowerCase();
+      return t.includes(searchStr) || r.includes(searchStr) || d.includes(searchStr) || b.includes(searchStr);
+    });
+  }
+
+  // تحديث عداد المقاطع المتاحة
+  if (counterEl) {
+    counterEl.textContent = `المتاح: ${filtered.length} مقطعاً مباركاً`;
+  }
 
   if (filtered.length === 0) {
-    container.innerHTML = `<div class="card" style="text-align: center; color: var(--text-secondary); padding: 24px;">لا توجد تسجيلات نادرة متوفرة في هذا القسم حالياً.</div>`;
+    container.innerHTML = `
+      <div class="card" style="text-align: center; color: var(--text-secondary); padding: 28px;">
+        <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🔍</span>
+        <div>لم يتم العثور على أي مقطع مطابق في هذا الاختيار.</div>
+      </div>
+    `;
     return;
   }
 
   container.innerHTML = filtered.map(item => {
-    const avatar = getSheikhAvatarSvg(item.reciter, false);
+    const isIbtehal = !!(item.lyricsQuote || item.category === 'tobour' || item.category === 'naqshbandi' || item.category === 'fashni' || item.category === 'omran_fayoumi' || item.category === 'ramadan');
+    const avatar = getSheikhAvatarSvg(item.reciter, isIbtehal);
     const isCurPlaying = STATE.modernPlayer.track && STATE.modernPlayer.track.id === item.id && STATE.isGlobalPlaying;
+
     return `
-      <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${item.id}" onclick="playRareQuranTrack('${item.id}')">
+      <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${item.id}" onclick="playAudioItem('${item.id}')">
         <div class="audio-card-avatar">
           <img src="${avatar}" alt="${item.reciter}">
         </div>
@@ -1824,7 +1940,7 @@ function renderRareQuranList(filterCat) {
           <div class="audio-card-title">${item.title}</div>
           <div class="audio-card-artist">${item.reciter}</div>
           <div class="audio-card-details">
-            <span class="rare-badge">${item.badge || 'تسجيل نادر'}</span>
+            <span class="rare-badge">${item.badge || (isIbtehal ? 'ابتهال' : 'تسجيل نادر')}</span>
             ${item.duration ? `<span>⏱ ${item.duration}</span>` : ''}
           </div>
         </div>
@@ -1836,80 +1952,32 @@ function renderRareQuranList(filterCat) {
   }).join('');
 }
 
-function filterRareQuran(category) {
-  document.querySelectorAll('#page-rare-quran .chip-btn').forEach(btn => {
-    const onclickAttr = btn.getAttribute('onclick') || '';
-    btn.classList.toggle('active', onclickAttr.includes(`'${category}'`));
-  });
-  renderRareQuranList(category);
-}
-
-function playRareQuranTrack(trackId) {
-  const track = RARE_RECITATIONS_DATA.find(t => t.id === trackId);
-  if (track) playModernTrack(track);
-}
-
-// ═══════════════════════════════════════════════════════════════
-// 14.1. التواشيح والابتهالات الدينية الشاملة (قسم مستقل)
-// ═══════════════════════════════════════════════════════════════
-
-function initIbtehalatSection() {
-  renderIbtehalatList('all');
-}
-
-function initRareAndIbtehalat() {
-  initIbtehalatSection();
-}
-
-function renderIbtehalatList(filterCat) {
-  const container = document.getElementById('ibtehalat-list');
-  if (!container || typeof IBTEHALAT_DATA === 'undefined') return;
-
-  const normalizedCat = (filterCat === 'tobar') ? 'tobour' : filterCat;
-  const filtered = (!normalizedCat || normalizedCat === 'all') ?
-    IBTEHALAT_DATA : IBTEHALAT_DATA.filter(i => i.category === normalizedCat);
-
-  if (filtered.length === 0) {
-    container.innerHTML = `<div class="card" style="text-align: center; color: var(--text-secondary); padding: 24px;">لا توجد ابتهالات متوفرة في هذا القسم حالياً.</div>`;
-    return;
+function playAudioItem(itemId) {
+  const allItems = getAllAudioItems();
+  const track = allItems.find(t => t.id === itemId);
+  if (track) {
+    if (STATE.modernPlayer.track && STATE.modernPlayer.track.id === itemId && STATE.globalAudio && STATE.globalAudio.src) {
+      toggleModernPlayPause();
+    } else {
+      playModernTrack(track);
+    }
   }
-
-  container.innerHTML = filtered.map(item => {
-    const avatar = getSheikhAvatarSvg(item.reciter, true);
-    const isCurPlaying = STATE.modernPlayer.track && STATE.modernPlayer.track.id === item.id && STATE.isGlobalPlaying;
-    return `
-      <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${item.id}" onclick="playIbtehalTrack('${item.id}')">
-        <div class="audio-card-avatar">
-          <img src="${avatar}" alt="${item.reciter}">
-        </div>
-        <div class="audio-card-meta">
-          <div class="audio-card-title">${item.title}</div>
-          <div class="audio-card-artist">${item.reciter}</div>
-          <div class="audio-card-details">
-            <span class="rare-badge">${item.badge || 'ابتهال'}</span>
-            ${item.duration ? `<span>⏱ ${item.duration}</span>` : ''}
-          </div>
-        </div>
-        <button class="audio-card-play-btn" aria-label="تشغيل">
-          ${isCurPlaying ? '⏸' : '▶'}
-        </button>
-      </div>
-    `;
-  }).join('');
 }
 
-function filterIbtehalat(category) {
-  document.querySelectorAll('#page-ibtehalat .chip-btn').forEach(btn => {
-    const onclickAttr = btn.getAttribute('onclick') || '';
-    btn.classList.toggle('active', onclickAttr.includes(`'${category}'`));
-  });
-  renderIbtehalatList(category);
+// توفير دوال التوافق القديمة (Backward Compatibility)
+function initRareQuranSection() { initRareAndIbtehalatSection(); }
+function initIbtehalatSection() { initRareAndIbtehalatSection(); }
+function initRareAndIbtehalat() { initRareAndIbtehalatSection(); }
+function filterRareQuran(cat) {
+  navigateTo('rare-ibtehalat');
+  filterRareAndIbtehalat(cat === 'all' ? 'rare_all' : cat);
 }
-
-function playIbtehalTrack(trackId) {
-  const track = IBTEHALAT_DATA.find(t => t.id === trackId);
-  if (track) playModernTrack(track);
+function filterIbtehalat(cat) {
+  navigateTo('rare-ibtehalat');
+  filterRareAndIbtehalat(cat === 'all' ? 'ibtehal_all' : cat);
 }
+function playRareQuranTrack(trackId) { playAudioItem(trackId); }
+function playIbtehalTrack(trackId) { playAudioItem(trackId); }
 
 // ═══════════════════════════════════════════════════════════════
 // 15. موسوعة كبار القراء ومحرك البحث الفوري
