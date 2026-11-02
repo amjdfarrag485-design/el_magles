@@ -1,4 +1,4 @@
-﻿/* =============================================================================
+/* =============================================================================
    التطبيق الإسلامي الشامل - PWA Mobile-First
    التصميم الإسلامي الفاخر (Dark Gold Theme - Olive & Royal Gold)
    ============================================================================= */
@@ -65,7 +65,7 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
-  padding-bottom: 90px; /* مساحة شريط التنقل السفلي */
+  padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px)); /* مساحة شريط التنقل السفلي وشريط الصوت المدمج */
 }
 
 /* حل جذري ونهائي لمربعات الإدخال والقوائم المنسدلة */
@@ -312,17 +312,33 @@ select:-webkit-autofill {
 }
 .brand-bismillah {
   font-family: var(--font-uthmani);
-  font-size: 0.95rem;
+  font-size: 1.55rem;
   color: var(--gold-light);
-  text-shadow: 0 0 8px rgba(212, 175, 55, 0.35);
-  opacity: 0.88;
+  text-shadow: 0 0 16px rgba(212, 175, 55, 0.55), 0 2px 4px rgba(0, 0, 0, 0.85);
+  font-weight: 700;
   white-space: nowrap;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   text-align: center;
+  line-height: 1.3;
 }
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+  .brand-top-banner {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 14px 16px;
+  }
+  .brand-title-box {
+    align-items: center;
+  }
   .brand-bismillah {
-    font-size: 0.82rem;
+    font-size: 1.35rem;
+    letter-spacing: 0.4px;
+  }
+}
+@media (max-width: 380px) {
+  .brand-bismillah {
+    font-size: 1.22rem;
   }
 }
 
@@ -966,22 +982,25 @@ select:-webkit-autofill {
   color: #ffffff;
 }
 
-/* ─── 17. شريط التنقل السفلي الفاخر (الأقسام الـ 6 الرئيسية) ─── */
+/* ─── 17. شريط التنقل السفلي الفاخر (الأقسام الـ 5 الرئيسية) ─── */
 .bottom-nav-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 68px;
+  height: calc(64px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   background: rgba(14, 18, 14, 0.97);
   border-top: 1px solid var(--border-gold);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   display: flex;
   justify-content: space-around;
   align-items: center;
   z-index: 1000;
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.6);
-  padding: 0 4px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 .nav-tab-item {
   display: flex;
@@ -991,7 +1010,7 @@ select:-webkit-autofill {
   color: var(--text-secondary);
   background: none !important;
   border: none !important;
-  padding: 4px 6px;
+  padding: 4px 4px;
   cursor: pointer;
   transition: all 0.2s ease;
   flex: 1;
@@ -1016,7 +1035,7 @@ select:-webkit-autofill {
   box-shadow: 0 0 8px var(--gold);
 }
 .nav-tab-icon {
-  font-size: 1.25rem;
+  font-size: 1.22rem;
   line-height: 1.2;
   transition: transform 0.2s;
 }
@@ -1025,6 +1044,201 @@ select:-webkit-autofill {
   font-weight: 700;
   margin-top: 2px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ─── 18. شريط الصوت النحيف والمدمج للأندرويد والآيفون (Sleek Mini Audio Bar) ─── */
+.sleek-bottom-player {
+  position: fixed;
+  bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  left: 10px;
+  right: 10px;
+  max-width: 620px;
+  margin: 0 auto;
+  height: 60px;
+  background: rgba(14, 20, 15, 0.97);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.75), 0 0 16px rgba(212, 175, 55, 0.15);
+  z-index: 999;
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUpSleekBar 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideUpSleekBar {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.sleek-player-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  position: relative;
+  cursor: pointer;
+  direction: ltr;
+}
+.sleek-player-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+  box-shadow: 0 0 8px var(--gold);
+  pointer-events: none;
+  transition: width 0.1s linear;
+}
+.sleek-player-main-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  flex: 1;
+}
+.sleek-player-avatar-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #0f140f;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+.sleek-player-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sleek-player-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.sleek-player-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}
+.sleek-player-meta {
+  font-size: 0.72rem;
+  color: var(--gold-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1.25;
+  margin-top: 2px;
+}
+.sleek-player-dot {
+  opacity: 0.6;
+  font-size: 0.65rem;
+}
+.sleek-player-time {
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.sleek-player-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.sleek-player-btn {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(212, 175, 55, 0.25) !important;
+  color: #ffffff !important;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0 6px;
+}
+.sleek-player-btn:active {
+  transform: scale(0.92);
+}
+.sleek-seek-btn {
+  min-width: 32px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+.sleek-player-play-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold)) !important;
+  border: none !important;
+  color: #0c120c !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 0 12px var(--gold-glow);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+.sleek-player-play-btn:active {
+  transform: scale(0.92);
+}
+.sleek-player-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.15) !important;
+  border: 1px solid rgba(239, 68, 68, 0.45) !important;
+  color: #ff9999 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.sleek-player-close-btn:hover {
+  background: rgba(239, 68, 68, 0.35) !important;
+  color: #ffffff !important;
+}
+.sleek-player-close-btn:active {
+  transform: scale(0.92);
+}
+@media (max-width: 440px) {
+  .sleek-bottom-player {
+    left: 8px;
+    right: 8px;
+    height: 56px;
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+  }
+  .sleek-seek-btn {
+    display: none;
+  }
+  .sleek-player-avatar-wrap {
+    width: 34px;
+    height: 34px;
+  }
+  .sleek-player-title {
+    font-size: 0.8rem;
+  }
+  .sleek-player-meta {
+    font-size: 0.68rem;
+  }
 }
 
 /* ─── 18. المشغل الصوتي التفاعلي الموحد (Unified Modern Interactive Player) ─── */
