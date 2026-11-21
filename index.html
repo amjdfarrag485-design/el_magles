@@ -657,12 +657,12 @@
 
     <div class="sleek-player-main-content">
       <!-- صورة القارئ/المنشد الدائرية -->
-      <div class="sleek-player-avatar-wrap">
+      <div class="sleek-player-avatar-wrap" onclick="expandModernPlayer()" role="button" tabindex="0" aria-label="فتح المشغل الموسع">
         <img id="sleek-player-avatar" src="" alt="القارئ">
       </div>
 
       <!-- اسم التلاوة/الابتهال واسم الشيخ والوقت -->
-      <div class="sleek-player-info">
+      <div class="sleek-player-info" onclick="expandModernPlayer()" role="button" tabindex="0" aria-label="فتح المشغل الموسع">
         <div class="sleek-player-title" id="sleek-player-title">عنوان المقطع المبارك</div>
         <div class="sleek-player-meta">
           <span class="sleek-player-sheikh" id="sleek-player-sheikh">الشيخ</span>
@@ -695,6 +695,19 @@
       </div>
     </div>
   </div>
+
+  <section class="council-player-screen" id="council-player-screen" aria-label="مشغل الصوت الموسع" aria-hidden="true">
+    <div class="council-player-sheet">
+      <div class="council-player-grabber"></div>
+      <button class="council-player-minimize" onclick="minimizeModernPlayer()" aria-label="تصغير المشغل">⌄</button>
+      <div class="council-player-topline"><span id="council-player-track-number">استماع من مكتبة المجلس</span><span class="council-player-live" id="council-player-live">● يعمل الآن</span></div>
+      <div class="council-player-art-wrap"><div class="council-player-vinyl"><div class="council-player-vinyl-hole"><img id="council-player-art" src="" alt="صورة القارئ أو المنشد"></div></div></div>
+      <div class="council-player-heading"><h2 id="council-player-title">عنوان التسجيل</h2><p id="council-player-reciter">اسم الشيخ</p><div class="council-player-source" id="council-player-source">من مكتبة المجلس</div></div>
+      <div class="council-player-seek"><input id="council-player-range" type="range" min="0" max="100" value="0" step="0.1" oninput="onCouncilPlayerSeekInput(this.value)" onchange="onCouncilPlayerSeekChange(this.value)" aria-label="موضع التشغيل"><div class="council-player-times"><span id="council-player-current">00:00</span><span id="council-player-remaining">-00:00</span></div></div>
+      <div class="council-player-controls"><button onclick="playAdjacentAudioTrack(1)" aria-label="التالي">⏭</button><button onclick="seekModernRelative(-10)" aria-label="رجوع عشر ثوان">↶<small>10</small></button><button class="council-player-main-play" id="council-player-play" onclick="toggleModernPlayPause()" aria-label="تشغيل أو إيقاف">Ⅱ</button><button onclick="seekModernRelative(10)" aria-label="تقديم عشر ثوان">↷<small>10</small></button><button onclick="playAdjacentAudioTrack(-1)" aria-label="السابق">⏮</button></div>
+      <div class="council-player-tools"><button onclick="downloadCurrentTrack()"><span>⇩</span>تحميل</button><button onclick="toggleReferenceAutoSave()"><span>☁</span>حفظ تلقائي</button><button onclick="addCurrentTrackToQueue()"><span>☷</span>إلى قائمة</button><button onclick="setReferenceSleepTimer()"><span>☾</span>مؤقت النوم</button><button onclick="toggleModernRepeat()"><span>⟳</span>تكرار</button><button onclick="shareCurrentTrack()"><span>↗</span>مشاركة</button></div>
+    </div>
+  </section>
 
   <!-- عنصر الصوت الرئيسي HTML5 للمشغل العام الموحد (الإذاعة والابتهالات والنوادر) -->
   <audio id="main-audio-element" preload="metadata"></audio>
