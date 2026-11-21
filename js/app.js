@@ -940,6 +940,11 @@ async function getMp3QuranMoshafSources(reciter, mode, surahNumber) {
         .then(response => {
           if (!response.ok) throw new Error('MP3Quran API response ' + response.status);
           return response.json();
+        })
+        .catch(error => {
+          mp3QuranRecitersPromise = null;
+          mp3QuranCatalogAvailable = false;
+          throw error;
         });
     }
     const payload = await mp3QuranRecitersPromise;
