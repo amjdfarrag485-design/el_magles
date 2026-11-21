@@ -61,6 +61,9 @@ const STATE = {
   nextPrayer: null,
   countdownInterval: null,
   adhanMuteSettings: {},
+  adhanSettings: { enabled: false, playedToday: {} },
+  isAdhanActive: false,
+  dailyRenewalTimer: null,
 
   // السبحة الإلكترونية الذكية
   tasbeeh: {
@@ -150,6 +153,14 @@ function loadPersistedData() {
       }
     } else {
       STATE.tasbeeh.lastDate = todayStr;
+    }
+
+    // استرجاع حالة الأذان العامة وسجل الصلوات التي تم تنبيهها اليوم
+    STATE.adhanSettings.enabled = localStorage.getItem('app_adhan_master_enabled') === 'true';
+    const savedPlayed = localStorage.getItem('app_adhan_played_today');
+    if (savedPlayed) {
+      const parsed = JSON.parse(savedPlayed);
+      STATE.adhanSettings.playedToday = parsed.date === new Date().toLocaleDateString('en-CA') ? (parsed.items || {}) : {};
     }
 
     // استرجاع إعدادات كتم الأذان
@@ -472,7 +483,8 @@ function startPrayerCountdownLoop() {
       const prayerKey = `${now.toDateString()}_${STATE.nextPrayer.id}`;
       if (!STATE.adhanSettings.playedToday[prayerKey]) {
         STATE.adhanSettings.playedToday[prayerKey] = true;
-        if (STATE.nextPrayer.id !== 'Sunrise') {
+        savePersistedData('app_adhan_played_today', { date: now.toLocaleDateString('en-CA'), items: STATE.adhanSettings.playedToday });
+        if (STATE.nextPrayer.id !== 'Sunrise' && STATE.adhanMuteSettings[STATE.nextPrayer.id] !== false) {
           playAdhanAudio(STATE.nextPrayer.name, STATE.nextPrayer.id);
         }
       }
@@ -493,7 +505,7 @@ function startPrayerCountdownLoop() {
 
 function toggleMasterAdhan() {
   STATE.adhanSettings.enabled = !STATE.adhanSettings.enabled;
-  savePersistedData('app_adhan_master_enabled', STATE.adhanSettings.enabled);
+  localStorage.setItem('app_adhan_master_enabled', String(STATE.adhanSettings.enabled));
   updateAdhanMasterUI();
 
   if (STATE.adhanSettings.enabled) {
@@ -559,6 +571,7 @@ function playAdhanAudio(prayerName, prayerId) {
   if (!STATE.adhanAudio) return;
 
   STATE.isAdhanActive = true;
+  STATE.adhanAudio.onended = () => { STATE.isAdhanActive = false; };
   STATE.adhanAudio.currentTime = 0;
   STATE.adhanAudio.volume = 1.0;
 
@@ -645,6 +658,10 @@ function initDailyRenewalSystem() {
   if (typeof DAILY_ROTATING_ADHKAR !== 'undefined' && DAILY_ROTATING_ADHKAR.length > 0) {
     const itemIndex = (dayOfMonth - 1) % DAILY_ROTATING_ADHKAR.length;
     const item = DAILY_ROTATING_ADHKAR[itemIndex];
+    const titleEl = document.getElementById('daily-adhkar-title');
+    const rewardEl = document.getElementById('daily-adhkar-reward');
+    if (titleEl) titleEl.textContent = item.title || 'ذكر اليوم';
+    if (rewardEl) rewardEl.textContent = item.reward || '';
     if (duaEl && item.text) {
       duaEl.textContent = item.text;
     }
@@ -664,6 +681,12 @@ function initDailyRenewalSystem() {
       wirdEl.textContent = item.wird;
     }
   }
+
+  // تحديث المحتوى عند منتصف الليل حتى لو ظل التطبيق مفتوحاً.
+  if (STATE.dailyRenewalTimer) clearTimeout(STATE.dailyRenewalTimer);
+  const now = new Date();
+  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 2);
+  STATE.dailyRenewalTimer = setTimeout(() => { initDailyRenewalSystem(); }, Math.max(1000, midnight - now));
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1954,6 +1977,8 @@ function renderRareAndIbtehalatList(filterCat, searchStr) {
       filtered = allItems.filter(item => item.category === 'omran_fayoumi' || (item.reciter && (item.reciter.includes('عمران') || item.reciter.includes('الفيومي'))));
     } else if (filterCat === 'ramadan') {
       filtered = allItems.filter(item => item.category === 'ramadan');
+    } else if (filterCat === 'eid') {
+      filtered = allItems.filter(item => item.category === 'eid');
     } else {
       filtered = allItems.filter(item => item.category === filterCat);
     }
