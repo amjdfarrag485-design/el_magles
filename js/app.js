@@ -1570,11 +1570,12 @@ const SHEIKH_PORTRAITS = [
   { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://images.akhbarelyom.com/images/images/large/20250605183400581.jpg' },
   { keys: ['السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
   { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ali_Jaber.jpg' },
+  { keys: ['عبد العزيز محمود','عبدالعزيز محمود'], url: 'https://www.marefa.org/w/images/0/0b/%D8%A7%D9%84%D9%85%D8%B7%D8%B1%D8%A8_%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D8%B9%D8%B2%D9%8A%D8%B2_%D9%85%D8%AD%D9%85%D9%88%D8%AF.jpg' },
   { keys: ['محمد عمران','عمران'], url: 'https://i1.sndcdn.com/artworks-000443025276-sni8sp-t500x500.jpg' }
 ];
 
 function getSheikhAvatarImage(name, isIbtehal = false) {
-  const normalized = (name || '').replace(/الشيخ\\s*/g, '').trim();
+  const normalized = (name || '').replace(/الشيخ\s*/g, '').trim();
   const match = SHEIKH_PORTRAITS.find(item => item.keys.some(key => normalized.includes(key)));
   return match ? match.url : getSheikhAvatarSvg(name, isIbtehal);
 }
