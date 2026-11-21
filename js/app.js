@@ -917,11 +917,11 @@ async function fallbackLoadSurahVerses(surahNumber) {
 let mp3QuranRecitersPromise = null;
 function normalizeReciterName(value) {
   return String(value || '')
-    .replace(/[\\u064B-\\u065F\\u0670]/g, '')
+    .replace(/[\u064B-\u065F\u0670]/g, '')
     .replace(/[أإآٱ]/g, 'ا')
     .replace(/ى/g, 'ي')
     .replace(/الشيخ/g, '')
-    .replace(/[\\sـ]/g, '')
+    .replace(/[\sـ]/g, '')
     .toLowerCase();
 }
 
