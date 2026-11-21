@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=3">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -43,51 +43,165 @@
   <!-- ========================================================================= -->
   <!-- 1. الصفحة الرئيسية (Home Page)                                            -->
   <!-- ========================================================================= -->
-  <section class="page active reference-home" id="page-home">
-    <header class="ref-home-header">
-      <div class="ref-profile"><img src="icons/icon-192x192.png" alt="المجلس" onerror="this.style.display='none'"></div>
-      <button class="ref-theme-btn" type="button" onclick="toggleCouncilTheme()" aria-label="تغيير المظهر">☾</button>
-      <div class="ref-welcome"><span>مرحباً بك في المجلس،</span><h1>زائرنا الكريم</h1></div>
+  <section class="page active" id="page-home">
+    <!-- ترويسة الهوية الرسمية لتطبيق المجلس -->
+    <header class="brand-top-banner">
+      <div class="brand-title-box">
+        <span class="brand-subtitle">الموسوعة القرآنية والابتهالات</span>
+        <h1 class="brand-main-title">المَجْلِس</h1>
+      </div>
+      <div class="brand-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
     </header>
 
-    <div class="ref-top-actions">
-      <button class="ref-top-card" onclick="navigateTo('stories')"><span class="ref-top-icon">▶</span><b>المرئيات</b></button>
-      <button class="ref-top-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all')"><span class="ref-top-icon">🎙️</span><b>الابتهالات</b></button>
+    <!-- كارت مواقيت الصلاة في صدارة الصفحة الرئيسية فور فتح التطبيق -->
+    <div class="home-prayer-hero" id="home-prayer-hero">
+      <div class="prayer-hero-top">
+        <div class="prayer-hero-badge">
+          <span>🕌</span>
+          <span id="hero-prayer-badge-title">الصلاة القادمة</span>
+        </div>
+        <div class="prayer-hero-location" id="hero-prayer-location">
+          <span>📍</span>
+          <span id="hero-location-text">القاهرة، مصر</span>
+        </div>
+      </div>
+
+      <div class="prayer-hero-main">
+        <div class="prayer-hero-name" id="hero-next-prayer-name">صلاة الظهر</div>
+        <div class="prayer-hero-time" id="hero-next-prayer-time">11:45</div>
+        <div class="prayer-hero-countdown" id="hero-prayer-countdown">متبقي: 01 س و 24 د</div>
+      </div>
+
+      <!-- شبكة مصغرة لجميع الصلوات الخمس والشروق -->
+      <div class="mini-prayer-grid" id="hero-mini-prayers">
+        <div class="mini-prayer-item" id="mini-p-fajr">
+          <span class="mini-p-name">الفجر</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-sunrise">
+          <span class="mini-p-name">الشروق</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-dhuhr">
+          <span class="mini-p-name">الظهر</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-asr">
+          <span class="mini-p-name">العصر</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-maghrib">
+          <span class="mini-p-name">المغرب</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+        <div class="mini-prayer-item" id="mini-p-isha">
+          <span class="mini-p-name">العشاء</span>
+          <span class="mini-p-time">--:--</span>
+        </div>
+      </div>
+
+      <!-- زر تفعيل وسماح الأذان التلقائي في المتصفح -->
+      <div style="margin-top: 14px; text-align: center;">
+        <button class="adhan-master-toggle-btn" id="adhan-master-toggle-btn" onclick="toggleMasterAdhan()">
+          <span id="adhan-toggle-icon">🔊</span>
+          <span id="adhan-toggle-text">الأذان التلقائي: مفعّل (انقر للتجربة / كتم)</span>
+        </button>
+      </div>
     </div>
 
-    <button class="ref-new-readers" onclick="navigateTo('reciters')">
-      <span class="ref-new-count">٦</span>
-      <span class="ref-new-copy"><b>قُرّاء جُدد</b><small>انضمّوا حديثاً إلى المجلس</small></span>
-      <span class="ref-new-arrow">‹</span>
-    </button>
+    <!-- شريط التاريخ الهجري والميلادي -->
+    <div class="date-strip">
+      <div id="home-hijri-date">-- هـ</div>
+      <div id="home-gregorian-date">--</div>
+    </div>
 
-    <section class="ref-home-section">
-      <div class="ref-section-title"><h2>قُرّاء آخرون</h2><button onclick="navigateTo('reciters')" aria-label="بحث عن قارئ">⌕</button></div>
-      <div class="ref-reader-strip">
-        <button class="ref-reader-card" onclick="openReciterInReader('banna')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/President_Sadat_welcomes_Sheikh_Mahmoud_Ali_al-Banna_at_a_religious_celebration.jpg" alt="محمود علي البنا" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمود علي البنا</b></button>
-        <button class="ref-reader-card" onclick="openReciterInReader('abdulbasit')"><img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Abdel_Basit_Abdel_Samad_1955.png" alt="عبد الباسط عبد الصمد" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>عبد الباسط عبد الصمد</b></button>
-        <button class="ref-reader-card" onclick="openReciterInReader('bahtimi')"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kamil_Yusuf_Al-Bahtimi.jpg" alt="كامل يوسف البهتيمي" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>كامل يوسف البهتيمي</b></button>
-        <button class="ref-reader-card" onclick="openReciterInReader('minshawi')"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمد صديق المنشاوي</b></button>
-        <button class="ref-reader-card" onclick="openReciterInReader('hussary')"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Hussary.jpg" alt="محمود خليل الحصري" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمود خليل الحصري</b></button>
-        <button class="ref-reader-card" onclick="openReciterInReader('rifaat')"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Great_Rifat.jpg" alt="الشيخ محمد رفعت" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>الشيخ محمد رفعت</b></button>
-      </div>    </section>
-
-    <section class="ref-home-section ref-featured-audio">
-      <div class="ref-section-title"><h2>تلاوات</h2><button onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('rare_all')">عرض الكل ←</button></div>
-      <div class="ref-recitation-card" onclick="playAudioItem('rare_minshawi_hashr')">
-        <span class="ref-reciter-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy"></span>
-        <span class="ref-recitation-copy"><small>تلاوات</small><b>الشيخ محمد صديق المنشاوي</b><span>سورة الحشر والفجر • محفل الكويت</span></span>
-        <button class="ref-save" onclick="event.stopPropagation();toggleLibraryItem('rare_minshawi_hashr')" aria-label="حفظ في مكتبتي">☆</button><span class="ref-play">▶</span>
+    <!-- بطاقة نفحات اليوم المتجددة تلقائياً (دعاء اليوم وورد اليوم) -->
+    <div class="card" style="margin-bottom: 16px; border: 1px solid var(--border-gold); background: linear-gradient(145deg, #181c18, #101410);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--border-dark); padding-bottom: 8px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 1.3rem;">🌟</span>
+          <span style="font-weight: 700; color: #ffffff; font-size: 1rem;">دعاء وورد اليوم المتجدد</span>
+        </div>
+        <span id="daily-renewal-day-badge" class="badge-gold">اليوم المبارك</span>
       </div>
-      <div class="ref-recitation-card" onclick="playAudioItem('rare_minshawi_yusuf')">
-        <span class="ref-reciter-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy"></span>
-        <span class="ref-recitation-copy"><small>تلاوات</small><b>الشيخ محمد صديق المنشاوي</b><span>سورة يوسف • تلاوة خاشعة</span></span>
-        <button class="ref-save" onclick="event.stopPropagation();toggleLibraryItem('rare_minshawi_yusuf')" aria-label="حفظ في مكتبتي">☆</button><span class="ref-play">▶</span>
+      <div id="daily-dua-text" style="font-family: var(--font-uthmani); font-size: 1.3rem; line-height: 2.1; color: #ffffff; margin-bottom: 12px;">
+        اللهم إنا نسألك زيادة في الدين وبركة في العمر وصحة في الجسد وسعة في الرزق وعفواً عند الحساب
       </div>
-    </section>
+      <div style="border-top: 1px dashed var(--border-dark); padding-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 0.85rem; color: var(--gold-light);">📖 ورد اليوم القرآني:</span>
+        <span id="daily-wird-text" style="font-size: 0.92rem; color: #ffffff; font-weight: 600;">قراءة سورة الفاتحة وأول ٥ آيات من سورة البقرة مع التدبر</span>
+      </div>
+    </div>
 
+    <!-- شبكة الأقسام الرئيسية للوصول السريع الشامل -->
+    <h3 class="home-section-title">✨ أبواب الخير والقرآن</h3>
+    <div class="home-grid">
+      <!-- المصحف الشريف والتلاوة -->
+      <div class="card home-grid-item" onclick="navigateTo('reader')">
+        <span class="home-grid-icon">📖</span>
+        <span class="home-grid-name">المصحف التفاعلي</span>
+        <span class="home-grid-desc">مرتل ومجود وتزامن الكلمات وعلامة الختمة</span>
+      </div>
+
+      <!-- نوادر التلاوات القرآنية النادرة -->
+      <div class="card home-grid-item" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('rare_all');">
+        <span class="home-grid-icon">✨</span>
+        <span class="home-grid-name">نوادر التلاوات القرآنية</span>
+        <span class="home-grid-desc">المنشاوي، عبد الباسط، رفعت، مصطفى إسماعيل، البهتيمي</span>
+      </div>
+
+      <!-- التواشيح والابتهالات الدينية -->
+      <div class="card home-grid-item" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all');">
+        <span class="home-grid-icon">🎙️</span>
+        <span class="home-grid-name">التواشيح والابتهالات</span>
+        <span class="home-grid-desc">نصر الدين طوبار، سيد النقشبندي، الفشني، عمران، رمضان</span>
+      </div>
+
+      <!-- إذاعة القرآن الكريم من القاهرة -->
+      <div class="card home-grid-item" onclick="navigateTo('radio')">
+        <span class="home-grid-icon">📻</span>
+        <span class="home-grid-name">إذاعة القرآن من القاهرة</span>
+        <span class="home-grid-desc">البث المباشر الرسمي 24 ساعة بدون انقطاع</span>
+      </div>
+
+      <!-- حصن المسلم والأذكار -->
+      <div class="card home-grid-item" onclick="navigateTo('azkar')">
+        <span class="home-grid-icon">📿</span>
+        <span class="home-grid-name">حصن المسلم</span>
+        <span class="home-grid-desc">أذكار الصباح والمساء والعدادات</span>
+      </div>
+
+      <!-- موسوعة كبار القراء -->
+      <div class="card home-grid-item" onclick="navigateTo('reciters')">
+        <span class="home-grid-icon">🎙️</span>
+        <span class="home-grid-name">موسوعة كبار القراء</span>
+        <span class="home-grid-desc">عمالقة التلاوة وأئمة الحرمين</span>
+      </div>
+
+      <!-- قصص الأنبياء وقصص الأطفال -->
+      <div class="card home-grid-item" onclick="navigateTo('stories')">
+        <span class="home-grid-icon">📚</span>
+        <span class="home-grid-name">قصص الأنبياء</span>
+        <span class="home-grid-desc">قراءة واستماع صوتي مباشر</span>
+      </div>
+
+      <!-- المسبحة الإلكترونية الذكية -->
+      <div class="card home-grid-item" onclick="navigateTo('tasbeeh')">
+        <span class="home-grid-icon">🤲</span>
+        <span class="home-grid-name">المسبحة الذكية</span>
+        <span class="home-grid-desc">تسبيح واهتزاز وإجمالي يومي</span>
+      </div>
+
+      <!-- مواقيت الصلاة والأذان الكاملة -->
+      <div class="card home-grid-item" onclick="navigateTo('prayer')">
+        <span class="home-grid-icon">🕌</span>
+        <span class="home-grid-name">مواقيت الصلاة والأذان</span>
+        <span class="home-grid-desc">كتم وتفعيل صوت الأذان</span>
+      </div>
+    </div>
   </section>
 
+  <!-- ========================================================================= -->
   <!-- 2. شاشة المصحف التفاعلي المتقدم وتزامن الكلمات (Quran Reader & HUD)       -->
   <!-- ========================================================================= -->
   <section class="page" id="page-reader">
@@ -227,7 +341,6 @@
       <button class="chip-btn" data-filter="fashni" onclick="filterRareAndIbtehalat('fashni')">طه الفشني</button>
       <button class="chip-btn" data-filter="omran_fayoumi" onclick="filterRareAndIbtehalat('omran_fayoumi')">عمران والفيومي</button>
       <button class="chip-btn" data-filter="ramadan" onclick="filterRareAndIbtehalat('ramadan')">🌙 تراث رمضان</button>
-      <button class="chip-btn" data-filter="eid" onclick="filterRareAndIbtehalat('eid')">🎉 تواشيح وتكبيرات العيد</button>
     </div>
 
     <!-- عدد المقاطع المتاحة -->
@@ -580,33 +693,6 @@
     </div>
   </div>
 
- 
-  <section class="page ref-utility-page" id="page-more">
-    <div class="ref-utility-header"><h1>المزيد</h1><p>كل خدمات المجلس في مكان واحد</p></div>
-    <div class="ref-utility-grid">
-      <button onclick="navigateTo('reader')">📖<b>المصحف الشريف</b></button>
-      <button onclick="navigateTo('reciters')">🎙️<b>موسوعة القراء</b></button>
-      <button onclick="navigateTo('azkar')">📿<b>الأذكار</b></button>
-      <button onclick="navigateTo('prayer')">🕌<b>مواقيت الصلاة</b></button>
-      <button onclick="navigateTo('tasbeeh')">🤲<b>المسبحة</b></button>
-      <button onclick="navigateTo('stories')">📚<b>قصص الأنبياء</b></button>
-      <button onclick="navigateTo('rare-ibtehalat')">✨<b>النوادر والابتهالات</b></button>
-      <button onclick="navigateTo('radio')">📻<b>الإذاعة</b></button>
-    </div>
-  </section>
-  <section class="page ref-utility-page" id="page-library">
-    <div class="ref-utility-header"><h1>مكتبتي</h1><p>التلاوات التي حفظتها للرجوع إليها</p></div>
-    <div id="ref-library-items" class="ref-library-list"></div>
-  </section>
-  <section class="page ref-utility-page" id="page-assistants">
-    <div class="ref-utility-header"><h1>المساعدين</h1><p>اختصارات تساعدك توصل للي محتاجه بسرعة</p></div>
-    <div class="ref-assistant-list">
-      <button onclick="navigateTo('reader')"><span>📖</span><b>مساعد اختيار القارئ</b><small>اختار قارئك وابدأ الاستماع</small></button>
-      <button onclick="navigateTo('azkar')"><span>📿</span><b>مساعد الأذكار</b><small>أذكار الصباح والمساء واليوم</small></button>
-      <button onclick="navigateTo('prayer')"><span>🕌</span><b>مساعد مواقيت الصلاة</b><small>تابع الصلاة القادمة ومواعيدها</small></button>
-    </div>
-  </section>
-
   <!-- عنصر الصوت الرئيسي HTML5 للمشغل العام الموحد (الإذاعة والابتهالات والنوادر) -->
   <audio id="main-audio-element" preload="metadata"></audio>
 
@@ -616,18 +702,41 @@
   <!-- ========================================================================= -->
   <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الـ 5 الرئيسية)                     -->
   <!-- ========================================================================= -->
-  <nav class="bottom-nav-bar ref-bottom-nav" id="bottom-nav">
-    <button class="nav-tab-item active" data-page="home" onclick="navigateTo('home')"><span class="nav-tab-icon">⌂</span><span class="nav-tab-label">الرئيسية</span></button>
-    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')"><span class="nav-tab-icon">♧</span><span class="nav-tab-label">الأرشيف</span></button>
-    <button class="nav-tab-item" data-page="assistants" onclick="navigateTo('assistants')"><span class="nav-tab-icon">☏</span><span class="nav-tab-label">المساعدين</span></button>
-    <button class="nav-tab-item" data-page="library" onclick="navigateTo('library')"><span class="nav-tab-icon">▤</span><span class="nav-tab-label">مكتبتي</span></button>
-    <button class="nav-tab-item" data-page="more" onclick="navigateTo('more')"><span class="nav-tab-icon">•••</span><span class="nav-tab-label">المزيد</span></button>
-    <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')"><span class="nav-tab-icon">◉</span><span class="nav-tab-label">الإذاعات</span></button>
+  <nav class="bottom-nav-bar" id="bottom-nav">
+    <!-- 1. الرئيسية -->
+    <button class="nav-tab-item active" data-page="home" onclick="navigateTo('home')">
+      <span class="nav-tab-icon">🏠</span>
+      <span class="nav-tab-label">الرئيسية</span>
+    </button>
+
+    <!-- 2. المصحف -->
+    <button class="nav-tab-item" data-page="reader" onclick="navigateTo('reader')">
+      <span class="nav-tab-icon">📖</span>
+      <span class="nav-tab-label">المصحف</span>
+    </button>
+
+    <!-- 3. النوادر والابتهالات -->
+    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')">
+      <span class="nav-tab-icon">🎙️</span>
+      <span class="nav-tab-label">النوادر والابتهالات</span>
+    </button>
+
+    <!-- 4. الإذاعة -->
+    <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')">
+      <span class="nav-tab-icon">📻</span>
+      <span class="nav-tab-label">الإذاعة</span>
+    </button>
+
+    <!-- 5. الأذكار -->
+    <button class="nav-tab-item" data-page="azkar" onclick="navigateTo('azkar')">
+      <span class="nav-tab-icon">📿</span>
+      <span class="nav-tab-label">الأذكار</span>
+    </button>
   </nav>
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
-  <script src="js/data.js?v=6"></script>
-  <script src="js/app.js?v=11"></script>
+  <script src="js/data.js?v=3"></script>
+  <script src="js/app.js?v=3"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>

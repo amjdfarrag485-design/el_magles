@@ -24,7 +24,6 @@ const STATE = {
   quranAudio: null,
   audioFallbackChain: [],
   audioFallbackIndex: 0,
-  audioRequestId: 0,
   wordSegments: [],
   activeWordIndex: -1,
 
@@ -62,9 +61,6 @@ const STATE = {
   nextPrayer: null,
   countdownInterval: null,
   adhanMuteSettings: {},
-  adhanSettings: { enabled: false, playedToday: {} },
-  isAdhanActive: false,
-  dailyRenewalTimer: null,
 
   // السبحة الإلكترونية الذكية
   tasbeeh: {
@@ -88,7 +84,6 @@ function initIslamicApp() {
 
   // استرجاع الإعدادات المحفوظة محلياً
   loadPersistedData();
-  initCouncilHomeExtras();
 
   // تهيئة مشغلات الصوت
   initAudioElements();
@@ -139,66 +134,13 @@ function initIslamicApp() {
   }, 450);
 }
 
-
-/* واجهة المجلس المرجعية: المظهر والمكتبة الشخصية */
-function toggleCouncilTheme() {
-  document.body.classList.toggle('ref-night');
-  const dark = document.body.classList.contains('ref-night');
-  try { localStorage.setItem('council_theme', dark ? 'dark' : 'light'); } catch (e) {}
-  const button = document.querySelector('.ref-theme-btn');
-  if (button) button.textContent = dark ? '☀' : '☾';
-}
-function initCouncilHomeExtras() {
-  try {
-    if (localStorage.getItem('council_theme') === 'dark') {
-      document.body.classList.add('ref-night');
-      const button = document.querySelector('.ref-theme-btn');
-      if (button) button.textContent = '☀';
-    }
-  } catch (e) {}
-}
-function getCouncilLibrary() {
-  try { return JSON.parse(localStorage.getItem('council_library') || '[]'); }
-  catch (e) { return []; }
-}
-function toggleLibraryItem(itemId) {
-  const saved = getCouncilLibrary();
-  const next = saved.includes(itemId) ? saved.filter(id => id !== itemId) : [...saved, itemId];
-  try { localStorage.setItem('council_library', JSON.stringify(next)); } catch (e) {}
-  showToast(next.includes(itemId) ? 'اتضافت التلاوة لمكتبتك' : 'اتشالت التلاوة من مكتبتك');
-  if (STATE.currentPage === 'library') renderLibraryPage();
-}
-function renderLibraryPage() {
-  const container = document.getElementById('ref-library-items');
-  if (!container) return;
-  const saved = getCouncilLibrary();
-  const all = getAllAudioItems();
-  const items = saved.map(id => all.find(item => item.id === id)).filter(Boolean);
-  if (!items.length) {
-    container.innerHTML = '<div class="ref-library-empty">مكتبتك لسه فاضية 🌿<br>احفظ أي تلاوة من الصفحة الرئيسية أو الأرشيف وهتلاقيها هنا.</div>';
-    return;
-  }
-  container.innerHTML = items.map(item => `
-    <div class="ref-library-item">
-      <div><b>${item.title}</b><div style="font-size:.72rem;color:#9a8d6b;margin-top:4px">${item.reciter}</div></div>
-      <div style="display:flex;gap:6px"><button onclick="playAudioItem('${item.id}')">▶ استماع</button><button onclick="toggleLibraryItem('${item.id}')">حذف</button></div>
-    </div>`).join('');
-}
-
 // ═══════════════════════════════════════════════════════════════
 // 3. التخزين المحلي (LocalStorage)
 // ═══════════════════════════════════════════════════════════════
-function getLocalDateKey(date = new Date()) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
 function loadPersistedData() {
   try {
     // استرجاع بيانات السبحة والتسبيح اليومي
-    const todayStr = getLocalDateKey();
+    const todayStr = new Date().toISOString().slice(0, 10);
     const savedTasbeeh = localStorage.getItem('app_tasbeeh_data');
     if (savedTasbeeh) {
       STATE.tasbeeh = { ...STATE.tasbeeh, ...JSON.parse(savedTasbeeh) };
@@ -208,14 +150,6 @@ function loadPersistedData() {
       }
     } else {
       STATE.tasbeeh.lastDate = todayStr;
-    }
-
-    // استرجاع حالة الأذان العامة وسجل الصلوات التي تم تنبيهها اليوم
-    STATE.adhanSettings.enabled = localStorage.getItem('app_adhan_master_enabled') === 'true';
-    const savedPlayed = localStorage.getItem('app_adhan_played_today');
-    if (savedPlayed) {
-      const parsed = JSON.parse(savedPlayed);
-      STATE.adhanSettings.playedToday = parsed.date === getLocalDateKey() ? (parsed.items || {}) : {};
     }
 
     // استرجاع إعدادات كتم الأذان
@@ -272,7 +206,6 @@ function navigateTo(pageId) {
   // التمرير لأعلى بسلاسة
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  if (pageId === 'library') renderLibraryPage();
   // تحديث الرابط في المتصفح
   if (window.location.hash.replace('#', '') !== pageId) {
     window.location.hash = pageId;
@@ -319,18 +252,18 @@ function initAudioElements() {
     updateHudPlayBtn(false);
     stopQuranSyncLoop();
   });
-  STATE.quranAudio.addEventListener('error', () => {
-    console.warn('[Quran Audio] Failed source:', STATE.quranAudio.src);
+  STATE.quranAudio.addEventListener('error', (e) => {
+    console.warn('[Smart Fallback] Audio error on:', STATE.quranAudio.src);
     if (STATE.audioFallbackChain && STATE.audioFallbackIndex < STATE.audioFallbackChain.length - 1) {
       STATE.audioFallbackIndex++;
       const nextSource = STATE.audioFallbackChain[STATE.audioFallbackIndex];
-      showToast('تعذر هذا الخادم، بنجرّب خادماً آخر لنفس القارئ…');
+      showToast('⚠️ جاري التبديل التلقائي إلى خادم بديل مباشر...');
       STATE.quranAudio.src = nextSource;
       STATE.quranAudio.load();
       STATE.quranAudio.play().catch(() => {});
     } else {
       updateHudPlayBtn(false);
-      showToast('تعذر تشغيل تلاوة هذا الشيخ حالياً. جرّب قارئاً آخر أو أعد المحاولة لاحقاً.');
+      showToast('تعذر تشغيل هذا المقطع حالياً ⚠️');
     }
   });
 
@@ -539,8 +472,7 @@ function startPrayerCountdownLoop() {
       const prayerKey = `${now.toDateString()}_${STATE.nextPrayer.id}`;
       if (!STATE.adhanSettings.playedToday[prayerKey]) {
         STATE.adhanSettings.playedToday[prayerKey] = true;
-        savePersistedData('app_adhan_played_today', { date: getLocalDateKey(now), items: STATE.adhanSettings.playedToday });
-        if (STATE.nextPrayer.id !== 'Sunrise' && STATE.adhanMuteSettings[STATE.nextPrayer.id] !== false) {
+        if (STATE.nextPrayer.id !== 'Sunrise') {
           playAdhanAudio(STATE.nextPrayer.name, STATE.nextPrayer.id);
         }
       }
@@ -561,7 +493,7 @@ function startPrayerCountdownLoop() {
 
 function toggleMasterAdhan() {
   STATE.adhanSettings.enabled = !STATE.adhanSettings.enabled;
-  localStorage.setItem('app_adhan_master_enabled', String(STATE.adhanSettings.enabled));
+  savePersistedData('app_adhan_master_enabled', STATE.adhanSettings.enabled);
   updateAdhanMasterUI();
 
   if (STATE.adhanSettings.enabled) {
@@ -627,7 +559,6 @@ function playAdhanAudio(prayerName, prayerId) {
   if (!STATE.adhanAudio) return;
 
   STATE.isAdhanActive = true;
-  STATE.adhanAudio.onended = () => { STATE.isAdhanActive = false; };
   STATE.adhanAudio.currentTime = 0;
   STATE.adhanAudio.volume = 1.0;
 
@@ -714,10 +645,6 @@ function initDailyRenewalSystem() {
   if (typeof DAILY_ROTATING_ADHKAR !== 'undefined' && DAILY_ROTATING_ADHKAR.length > 0) {
     const itemIndex = (dayOfMonth - 1) % DAILY_ROTATING_ADHKAR.length;
     const item = DAILY_ROTATING_ADHKAR[itemIndex];
-    const titleEl = document.getElementById('daily-adhkar-title');
-    const rewardEl = document.getElementById('daily-adhkar-reward');
-    if (titleEl) titleEl.textContent = item.title || 'ذكر اليوم';
-    if (rewardEl) rewardEl.textContent = item.reward || '';
     if (duaEl && item.text) {
       duaEl.textContent = item.text;
     }
@@ -737,12 +664,6 @@ function initDailyRenewalSystem() {
       wirdEl.textContent = item.wird;
     }
   }
-
-  // تحديث المحتوى عند منتصف الليل حتى لو ظل التطبيق مفتوحاً.
-  if (STATE.dailyRenewalTimer) clearTimeout(STATE.dailyRenewalTimer);
-  const now = new Date();
-  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 2);
-  STATE.dailyRenewalTimer = setTimeout(() => { initDailyRenewalSystem(); }, Math.max(1000, midnight - now));
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -968,88 +889,25 @@ async function fallbackLoadSurahVerses(surahNumber) {
 // ═══════════════════════════════════════════════════════════════
 // 9. تشغيل صوت السور بنظام الترقيم الثلاثي وحل مشكلة 0:00
 // ═══════════════════════════════════════════════════════════════
-// كتالوج MP3Quran الرسمي: اختيار تسجيلات القارئ نفسه فقط ومنع تشغيل شيخ آخر كبديل.
-let mp3QuranRecitersPromise = null;
-let mp3QuranCatalogAvailable = false;
-function normalizeReciterName(value) {
-  return String(value || '')
-    .replace(/[\u064B-\u065F\u0670]/g, '')
-    .replace(/[أإآٱ]/g, 'ا')
-    .replace(/ى/g, 'ي')
-    .replace(/الشيخ/g, '')
-    .replace(/[\sـ]/g, '')
-    .toLowerCase();
-}
-
-async function getMp3QuranMoshafSources(reciter, mode, surahNumber) {
-  try {
-    if (!mp3QuranRecitersPromise) {
-      mp3QuranRecitersPromise = fetch('https://mp3quran.net/api/v3/reciters?language=ar', { cache: 'force-cache' })
-        .then(response => {
-          if (!response.ok) throw new Error('MP3Quran API response ' + response.status);
-          return response.json();
-        })
-        .catch(error => {
-          mp3QuranRecitersPromise = null;
-          mp3QuranCatalogAvailable = false;
-          throw error;
-        });
-    }
-    const payload = await mp3QuranRecitersPromise;
-    mp3QuranCatalogAvailable = Array.isArray(payload.reciters);
-    const aliases = {
-      rifaat: ['محمد رفعت', 'محمد رفعت المصري'],
-      bahtimi: ['كامل يوسف البهتيمي', 'كامل يوسف البهتيمى', 'كامل يوسف البهتيمي المصري'],
-      banna: ['محمود علي البنا', 'محمود علي البنا المصري'],
-      tablawi: ['محمد محمود الطبلاوي', 'محمد محمود الطبلاوى', 'محمد محمود الطبلاوي المصري'],
-      jaber: ['علي جابر'],
-      abdulbasit: ['عبدالباسط عبدالصمد'],
-      minshawi: ['محمد صديق المنشاوي'],
-      hussary: ['محمود خليل الحصري']
-    };
-    const wanted = [reciter.name, ...(aliases[reciter.id] || [])].map(normalizeReciterName);
-    const catalogue = payload.reciters || [];
-    const exactMatch = catalogue.find(item => wanted.includes(normalizeReciterName(item.name)));
-    const match = exactMatch || catalogue.find(item => {
-      const name = normalizeReciterName(item.name);
-      // مطابقة جزئية محافظة للأسماء المركبة فقط، لتجنب اختيار قارئ آخر بالخطأ.
-      return wanted.some(alias => alias.length >= 10 && name.length >= 10 &&
-        (name.startsWith(alias) || alias.startsWith(name)));
-    });
-    if (!match) return [];
-    const moshafList = (match.moshaf || []).filter(item => item.server);
-    const isMojawwad = mode === 'mojawwad';
-    const isMojawwadLabel = value => /مجود|تجويد|mojawwad|mujawwad|tajweed|tajwid/i.test(String(value || ''));
-    const preferred = moshafList.filter(item => {
-      const isMojawwadRead = isMojawwadLabel(item.name);
-      return isMojawwad ? isMojawwadRead : !isMojawwadRead;
-    });
-    return preferred
-      .filter(item => {
-        if (!item.surah_list) return true;
-        return String(item.surah_list).split(',').map(value => value.trim()).includes(String(surahNumber));
-      })
-      .map(item => item.server.endsWith('/') ? item.server : item.server + '/')
-      .map(server => server + String(surahNumber).padStart(3, '0') + '.mp3');
-  } catch (error) {
-    console.warn('MP3Quran catalogue unavailable; using this reciter configured source only.', error);
-    return [];
+function loadSurahAudio(surahNumber) {
+  if (!STATE.quranAudio) {
+    initAudioElements();
+  } else {
+    STATE.quranAudio.pause();
   }
-}
 
-async function loadSurahAudio(surahNumber) {
-  if (!STATE.quranAudio) initAudioElements();
-  else STATE.quranAudio.pause();
-
-  const requestId = ++STATE.audioRequestId;
   const reciter = STATE.currentReciter || ALL_RECITERS_DATA[0];
+
+  // بيانات الوسائط الخاصة بتلاوات المصحف على شاشة القفل وأجهزة أندرويد
   if ('mediaSession' in navigator && typeof MediaMetadata !== 'undefined') {
     try {
-      const surah = SURAHS_LIST.find(item => item.number === surahNumber);
+      const surah = (typeof SURAHS_LIST !== 'undefined')
+        ? SURAHS_LIST.find(item => item.number === surahNumber)
+        : null;
       const artwork = new URL('icons/icon-512x512.png', window.location.href).href;
       navigator.mediaSession.metadata = new MediaMetadata({
         title: surah ? ('سورة ' + surah.name) : ('تلاوة القرآن - سورة ' + surahNumber),
-        artist: reciter.name || 'تلاوة من المجلس',
+        artist: reciter.name || reciter.title || 'تلاوة من المجلس',
         album: 'المجلس - القرآن الكريم',
         artwork: [{ src: artwork, sizes: '512x512', type: 'image/png' }]
       });
@@ -1067,7 +925,11 @@ async function loadSurahAudio(surahNumber) {
       console.warn('Quran media metadata unavailable:', error);
     }
   }
+  // الترقيم الثلاثي الصارم: 001.mp3 إلى 114.mp3
+  const paddedNum = surahNumber.toString().padStart(3, '0');
+  const mode = STATE.currentMode;
 
+  // إعادة ضبط مؤشرات وقت المشغل فوراً لتفادي التوقف الوهمي عند 0:00
   const curEl = document.getElementById('hud-time-current');
   if (curEl) curEl.textContent = '0:00';
   const totEl = document.getElementById('hud-time-total');
@@ -1075,32 +937,60 @@ async function loadSurahAudio(surahNumber) {
   const progEl = document.getElementById('hud-progress');
   if (progEl) progEl.value = 0;
 
-  const mode = STATE.currentMode;
-  const apiSources = await getMp3QuranMoshafSources(reciter, mode, surahNumber);
-  if (requestId !== STATE.audioRequestId) return;
+  const chain = [];
 
-  const modeSupported = mode === 'mojawwad' ? reciter.supportsMojawwad !== false : reciter.supportsMurattal !== false;
-  // إذا لم يُرجع الكتالوج رابطاً مطابقاً للقارئ/الوضع، جرّب خادمه المعرّف محلياً
-  // دون استبدال تسجيل بقارئ آخر.
-  const configuredServer = modeSupported && apiSources.length === 0
-    ? (mode === 'mojawwad' ? reciter.serverMojawwad : reciter.serverMurattal)
-    : '';
-  const configuredSource = configuredServer
-    ? configuredServer.replace(/\/$/, '/') + String(surahNumber).padStart(3, '0') + '.mp3'
-    : '';
-  const sources = [...new Set([...apiSources, configuredSource].filter(Boolean))];
+  if (mode === 'mojawwad') {
+    // ─── سيرفرات المجود الرسمية المباشرة ───
+    if (reciter.serverMojawwad) chain.push(`${reciter.serverMojawwad}${paddedNum}.mp3`);
 
-  if (!sources.length) {
-    updateHudPlayBtn(false);
-    showToast('ملقيناش تسجيل موثوق للسورة دي بصوت الشيخ المختار في الوضع ده.');
-    return;
+    if (reciter.id === 'abdulbasit') {
+      chain.push(`https://server7.mp3quran.net/basit_mjwd/${paddedNum}.mp3`);
+      chain.push(`https://cdn.mp3quran.net/audio/abdulbasit-abdulsamad/r1/${paddedNum}.mp3`);
+    } else if (reciter.id === 'minshawi') {
+      chain.push(`https://server10.mp3quran.net/minsh_mjwd/${paddedNum}.mp3`);
+      chain.push(`https://cdn.mp3quran.net/audio/muhammad-minshawi/r2/${paddedNum}.mp3`);
+    } else if (reciter.id === 'hussary') {
+      chain.push(`https://server13.mp3quran.net/husr_mjwd/${paddedNum}.mp3`);
+      chain.push(`https://cdn.mp3quran.net/audio/mahmoud-husary/r2/${paddedNum}.mp3`);
+    } else if (reciter.id === 'mustafa') {
+      chain.push(`https://server8.mp3quran.net/mustafa/${paddedNum}.mp3`);
+    } else if (reciter.id === 'rifaat') {
+      chain.push(`https://cdn.mp3quran.net/audio/muhammad-refaat/r1/${paddedNum}.mp3`);
+      chain.push(`https://server14.mp3quran.net/refat/${paddedNum}.mp3`);
+    } else if (reciter.id === 'bahtimi') {
+      chain.push(`https://server10.mp3quran.net/bahtimi/${paddedNum}.mp3`);
+    } else if (reciter.id === 'banna') {
+      chain.push(`https://server8.mp3quran.net/bna_mjwd/${paddedNum}.mp3`);
+    } else if (reciter.id === 'tablawi') {
+      chain.push(`https://server12.mp3quran.net/tblawi/${paddedNum}.mp3`);
+    }
+
+    chain.push(`https://server10.mp3quran.net/minsh_mjwd/${paddedNum}.mp3`);
+    chain.push(`https://server7.mp3quran.net/basit_mjwd/${paddedNum}.mp3`);
+  } else {
+    // ─── سيرفرات المرتل الرسمية المباشرة ───
+    if (reciter.serverMurattal) {
+      chain.push(`${reciter.serverMurattal}${paddedNum}.mp3`);
+    }
+    if (reciter.id === 'rifaat') {
+      chain.push(`https://cdn.mp3quran.net/audio/muhammad-refaat/r1/${paddedNum}.mp3`);
+      chain.push(`https://server14.mp3quran.net/refat/${paddedNum}.mp3`);
+    }
+
+    chain.push(`https://server13.mp3quran.net/husr/${paddedNum}.mp3`);
+    chain.push(`https://server10.mp3quran.net/minsh/${paddedNum}.mp3`);
+    chain.push(`https://server7.mp3quran.net/basit/${paddedNum}.mp3`);
+    chain.push(`https://server8.mp3quran.net/mustafa/${paddedNum}.mp3`);
+    chain.push(`https://server8.mp3quran.net/afs/${paddedNum}.mp3`);
   }
 
-  STATE.audioFallbackChain = sources;
+  STATE.audioFallbackChain = [...new Set(chain.filter(Boolean))];
   STATE.audioFallbackIndex = 0;
+
   STATE.quranAudio.preload = 'metadata';
-  STATE.quranAudio.src = sources[0];
+  STATE.quranAudio.src = STATE.audioFallbackChain[0];
   STATE.quranAudio.load();
+
   fetchWordTimings(surahNumber, reciter);
 }
 
@@ -1603,8 +1493,7 @@ function updateCairoRadioUI(isPlaying) {
 function getSheikhAvatarSvg(name, isIbtehal = false) {
   const icon = isIbtehal ? '🎙️' : '📖';
   const cleanName = (name || '').replace(/الشيخ\s*/g, '').trim().split(' ')[0] || 'المجلس';
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1c261c"/><stop offset="100%" stop-color="#0c120c"/></linearGradient><linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5d77f"/><stop offset="100%" stop-color="#d4af37"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#bg)" stroke="url(#gold)" stroke-width="3"/><text x="50" y="44" font-size="28" text-anchor="middle">${icon}</text><text x="50" y="74" font-size="14" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="#ffffff">${cleanName}</text></svg>`;
-  return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+  return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%231c261c"/><stop offset="100%" stop-color="%230c120c"/></linearGradient><linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23f5d77f"/><stop offset="100%" stop-color="%23d4af37"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(%23bg)" stroke="url(%23gold)" stroke-width="3"/><text x="50" y="44" font-size="28" text-anchor="middle">${icon}</text><text x="50" y="74" font-size="14" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="%23ffffff">${cleanName}</text></svg>`;
 }
 
 function showFloatingPlayerForRadio() {
@@ -2065,8 +1954,6 @@ function renderRareAndIbtehalatList(filterCat, searchStr) {
       filtered = allItems.filter(item => item.category === 'omran_fayoumi' || (item.reciter && (item.reciter.includes('عمران') || item.reciter.includes('الفيومي'))));
     } else if (filterCat === 'ramadan') {
       filtered = allItems.filter(item => item.category === 'ramadan');
-    } else if (filterCat === 'eid') {
-      filtered = allItems.filter(item => item.category === 'eid');
     } else {
       filtered = allItems.filter(item => item.category === filterCat);
     }
