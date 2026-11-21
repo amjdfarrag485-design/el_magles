@@ -181,6 +181,36 @@ function savePersistedData(key, value) {
 // ═══════════════════════════════════════════════════════════════
 // 4. نظام التنقل السلس بين الأقسام
 // ═══════════════════════════════════════════════════════════════
+
+function toggleReferenceTheme() {
+  document.body.classList.toggle('ref-night');
+  const dark = document.body.classList.contains('ref-night');
+  try { localStorage.setItem('council_theme', dark ? 'dark' : 'light'); } catch (e) {}
+  const btn = document.querySelector('.ref-theme-btn');
+  if (btn) btn.textContent = dark ? '☀' : '☾';
+}
+function getReferenceLibrary() {
+  try { return JSON.parse(localStorage.getItem('council_library') || '[]'); } catch (e) { return []; }
+}
+function toggleReferenceLibrary(itemId) {
+  const saved = getReferenceLibrary();
+  const next = saved.includes(itemId) ? saved.filter(id => id !== itemId) : [...saved, itemId];
+  try { localStorage.setItem('council_library', JSON.stringify(next)); } catch (e) {}
+  if (typeof showToast === 'function') showToast(next.includes(itemId) ? 'اتضافت لمكتبتك' : 'اتشالت من مكتبتك');
+  if (STATE.currentPage === 'library') renderReferenceLibrary();
+}
+function renderReferenceLibrary() {
+  const box = document.getElementById('ref-library-items');
+  if (!box) return;
+  const saved = getReferenceLibrary();
+  const all = getAllAudioItems();
+  const items = saved.map(id => all.find(item => item.id === id)).filter(Boolean);
+  if (!items.length) {
+    box.innerHTML = '<div class="ref-library-empty">مكتبتك لسه فاضية 🌿<br>اضغط ☆ على أي تلاوة عشان تحفظها هنا.</div>';
+    return;
+  }
+  box.innerHTML = items.map(item => `<div class="ref-library-item"><div><b>${item.title}</b><div>${item.reciter || ''}</div></div><div><button onclick="playAudioItem('${item.id}')">▶ استماع</button><button onclick="toggleReferenceLibrary('${item.id}')">حذف</button></div></div>`).join('');
+}
 function navigateTo(pageId) {
   if (!pageId) return;
 
