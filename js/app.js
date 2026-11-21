@@ -50,6 +50,7 @@ const STATE = {
 
   // علامة الختمة والتوقف (Bookmark)
   bookmark: null,
+  lastRead: null,
 
   // قارئ القصص الصوتي الآلي (Speech Synthesis)
   speechSynth: window.speechSynthesis || null,
@@ -160,11 +161,11 @@ function loadPersistedData() {
       STATE.adhanMuteSettings = { Fajr: true, Dhuhr: true, Asr: true, Maghrib: true, Isha: true };
     }
 
-    // استرجاع علامة الختمة
+    // استرجاع علامة الختمة وآخر موضع قراءة
     const savedBookmark = localStorage.getItem('quran_bookmark');
-    if (savedBookmark) {
-      STATE.bookmark = JSON.parse(savedBookmark);
-    }
+    if (savedBookmark) STATE.bookmark = JSON.parse(savedBookmark);
+    const savedLastRead = localStorage.getItem('quran_last_read');
+    if (savedLastRead) STATE.lastRead = JSON.parse(savedLastRead);
   } catch (e) {
     console.warn('LocalStorage load error:', e);
   }
@@ -682,8 +683,15 @@ function initQuranReader() {
   // تعيين القارئ الافتراضي وتحديث قائمة القراء حسب وضع المرتل / المجود
   populateReaderReciters();
 
-  // تحميل سورة الفاتحة كبداية
-  loadSurah(1);
+  // استعادة آخر موضع قراءة، وإلا تبدأ الفاتحة كالمعتاد
+  const resume = STATE.lastRead;
+  const startSurah = resume && Number.isInteger(resume.surahNumber) && resume.surahNumber >= 1 && resume.surahNumber <= 114 ? resume.surahNumber : 1;
+  loadSurah(startSurah).then(() => {
+    if (startSurah !== 1 && resume && Number.isInteger(resume.ayahNumber) && resume.ayahNumber > 1) {
+      setTimeout(() => highlightActiveAyah(resume.ayahNumber, false), 250);
+    }
+  });
+  updateLastReadDisplay();
 }
 
 function switchQuranMode(mode) {
@@ -778,6 +786,10 @@ function onReaderReciterChange(reciterId) {
 async function loadSurah(surahNumber) {
   STATE.currentSurahNumber = surahNumber;
   STATE.currentAyahIndex = 0;
+  const selectedSurah = SURAHS_LIST.find(s => s.number === surahNumber);
+  STATE.lastRead = { ...(STATE.lastRead || {}), surahNumber, surahName: selectedSurah ? selectedSurah.name : '', ayahNumber: 1, updatedAt: new Date().toISOString() };
+  savePersistedData('quran_last_read', STATE.lastRead);
+  updateLastReadDisplay();
   STATE.activeWordIndex = -1;
 
   const surah = SURAHS_LIST.find(s => s.number === surahNumber);
@@ -1189,6 +1201,9 @@ function highlightActiveAyah(ayahNum, autoScroll = true) {
   currentActiveAyahEl = document.getElementById(`verse-${ayahNum}`);
   if (currentActiveAyahEl) {
     currentActiveAyahEl.classList.add('active');
+    STATE.lastRead = { ...(STATE.lastRead || {}), surahNumber: STATE.currentSurahNumber, surahName: SURAHS_LIST.find(s => s.number === STATE.currentSurahNumber)?.name || '', ayahNumber: ayahNum, updatedAt: new Date().toISOString() };
+    savePersistedData('quran_last_read', STATE.lastRead);
+    updateLastReadDisplay();
     if (autoScroll) {
       currentActiveAyahEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -1270,6 +1285,38 @@ function playNextAyah() {
 // ═══════════════════════════════════════════════════════════════
 function initBookmarkSystem() {
   updateBookmarkDisplay();
+  updateLastReadDisplay();
+}
+
+function updateLastReadDisplay() {
+  const status = document.getElementById('last-read-status');
+  const button = document.getElementById('btn-resume-last-read');
+  if (!status || !button) return;
+  const last = STATE.lastRead;
+  if (!last || !last.surahNumber) {
+    status.textContent = 'آخر قراءة: لم تبدأ بعد';
+    button.disabled = true;
+    button.style.opacity = '0.55';
+    return;
+  }
+  status.textContent = `آخر قراءة: سورة ${last.surahName || last.surahNumber} • الآية ${toArabicDigits(last.ayahNumber || 1)}`;
+  button.disabled = false;
+  button.style.opacity = '1';
+}
+
+function resumeLastRead() {
+  const last = STATE.lastRead;
+  if (!last || !last.surahNumber) {
+    showToast('ابدأ القراءة أولًا وسيتم حفظ موضعك تلقائيًا.');
+    return;
+  }
+  if (STATE.currentPage !== 'reader') navigateTo('reader');
+  loadSurah(last.surahNumber).then(() => {
+    setTimeout(() => {
+      highlightActiveAyah(last.ayahNumber || 1, true);
+      showToast(`رجعناك لآخر موضع قراءة: سورة ${last.surahName || last.surahNumber}`);
+    }, 250);
+  });
 }
 
 function updateBookmarkDisplay() {
