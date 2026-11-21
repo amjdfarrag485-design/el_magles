@@ -45,20 +45,14 @@
   <!-- ========================================================================= -->
   <section class="page active reference-home" id="page-home">
     <header class="ref-home-header">
-      <div class="ref-profile">
-        <img src="icons/icon-192x192.png" alt="المجلس" onerror="this.style.display='none'">
-      </div>
+      <div class="ref-profile"><img src="icons/icon-192x192.png" alt="المجلس" onerror="this.style.display='none'"></div>
       <button class="ref-theme-btn" type="button" onclick="toggleCouncilTheme()" aria-label="تغيير المظهر">☾</button>
       <div class="ref-welcome"><span>مرحباً بك في المجلس،</span><h1>زائرنا الكريم</h1></div>
     </header>
 
     <div class="ref-top-actions">
-      <button class="ref-top-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all')">
-        <span class="ref-top-icon">🎙️</span><b>الابتهالات</b>
-      </button>
-      <button class="ref-top-card" onclick="navigateTo('stories')">
-        <span class="ref-top-icon">▶</span><b>المرئيات</b>
-      </button>
+      <button class="ref-top-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all')"><span class="ref-top-icon">🎙️</span><b>الابتهالات</b></button>
+      <button class="ref-top-card" onclick="navigateTo('stories')"><span class="ref-top-icon">▶</span><b>المرئيات</b></button>
     </div>
 
     <button class="ref-new-readers" onclick="navigateTo('reciters')">
@@ -70,33 +64,24 @@
     <section class="ref-home-section">
       <div class="ref-section-title"><h2>قُرّاء آخرون</h2><button onclick="navigateTo('reciters')" aria-label="بحث عن قارئ">⌕</button></div>
       <div class="ref-reader-strip">
-        <button class="ref-reader-card" onclick="openReciterInReader('minshawi')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy" onerror="this.src='icons/icon-192x192.png'">
-          <b>محمد صديق المنشاوي</b>
-        </button>
-        <button class="ref-reader-card" onclick="openReciterInReader('abdulbasit')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Abdel_Basit_Abdel_Samad_1955.png" alt="عبد الباسط عبد الصمد" loading="lazy" onerror="this.src='icons/icon-192x192.png'">
-          <b>عبد الباسط عبد الصمد</b>
-        </button>
-        <button class="ref-reader-card" onclick="openReciterInReader('banna')">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/President_Sadat_welcomes_Sheikh_Mahmoud_Ali_al-Banna_at_a_religious_celebration.jpg" alt="محمود علي البنا" loading="lazy" onerror="this.src='icons/icon-192x192.png'">
-          <b>محمود علي البنا</b>
-        </button>
+        <button class="ref-reader-card" onclick="openReciterInReader('minshawi')"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمد صديق المنشاوي</b></button>
+        <button class="ref-reader-card" onclick="openReciterInReader('abdulbasit')"><img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Abdel_Basit_Abdel_Samad_1955.png" alt="عبد الباسط عبد الصمد" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>عبد الباسط عبد الصمد</b></button>
+        <button class="ref-reader-card" onclick="openReciterInReader('banna')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/President_Sadat_welcomes_Sheikh_Mahmoud_Ali_al-Banna_at_a_religious_celebration.jpg" alt="محمود علي البنا" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمود علي البنا</b></button>
         <button class="ref-reader-card" onclick="openReciterInReader('hussary')"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Hussary.jpg" alt="محمود خليل الحصري" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمود خليل الحصري</b></button>
-        <button class="ref-reader-card ref-reader-initial" onclick="openReciterInReader('rifaat')"><span>رفعت</span><b>الشيخ محمد رفعت</b></button>
-        <button class="ref-reader-card ref-reader-initial" onclick="openReciterInReader('bahtimi')"><span>البهتيمي</span><b>كامل يوسف البهتيمي</b></button>
+        <button class="ref-reader-card" onclick="openReciterInReader('rifaat')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Great_Rifat.jpg/240px-Great_Rifat.jpg" alt="الشيخ محمد رفعت" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>الشيخ محمد رفعت</b></button>
+        <button class="ref-reader-card" onclick="openReciterInReader('bahtimi')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kamil_Yusuf_Al-Bahtimi.jpg/240px-Kamil_Yusuf_Al-Bahtimi.jpg" alt="كامل يوسف البهتيمي" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>كامل يوسف البهتيمي</b></button>
       </div>
     </section>
 
     <section class="ref-home-section ref-featured-audio">
       <div class="ref-section-title"><h2>تلاوات</h2><button onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('rare_all')">عرض الكل ←</button></div>
       <div class="ref-recitation-card" onclick="playAudioItem('rare_minshawi_hashr')">
-        <span class="ref-reciter-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="" loading="lazy"></span>
+        <span class="ref-reciter-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy"></span>
         <span class="ref-recitation-copy"><small>تلاوات</small><b>الشيخ محمد صديق المنشاوي</b><span>سورة الحشر والفجر • محفل الكويت</span></span>
         <button class="ref-save" onclick="event.stopPropagation();toggleLibraryItem('rare_minshawi_hashr')" aria-label="حفظ في مكتبتي">☆</button><span class="ref-play">▶</span>
       </div>
       <div class="ref-recitation-card" onclick="playAudioItem('rare_minshawi_yusuf')">
-        <span class="ref-reciter-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="" loading="lazy"></span>
+        <span class="ref-reciter-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy"></span>
         <span class="ref-recitation-copy"><small>تلاوات</small><b>الشيخ محمد صديق المنشاوي</b><span>سورة يوسف • تلاوة خاشعة</span></span>
         <button class="ref-save" onclick="event.stopPropagation();toggleLibraryItem('rare_minshawi_yusuf')" aria-label="حفظ في مكتبتي">☆</button><span class="ref-play">▶</span>
       </div>
@@ -122,32 +107,6 @@
     </section>
   </section>
 
-    <section class="dash-daily-card">
-      <div class="dash-daily-heading"><span>🌙 نفحات اليوم</span><span id="daily-renewal-day-badge">يتجدد يومياً</span></div>
-      <div id="daily-adhkar-title" class="dash-daily-title">ذكر اليوم</div>
-      <div id="daily-dua-text" class="dash-dua-text">اللهم أعنّا على ذكرك وشكرك وحسن عبادتك</div>
-      <div id="daily-adhkar-reward" class="dash-daily-reward"></div>
-      <div class="dash-wird-row"><span>📖 ورد اليوم</span><b id="daily-wird-text">قراءة ما تيسر من القرآن الكريم</b></div>
-    </section>
-
-    <section class="dash-section">
-      <div class="dash-section-heading"><div><span class="dash-kicker">أصوات من الزمن الجميل</span><h2>كبار القراء</h2></div><button class="dash-text-link" onclick="navigateTo('reciters')">عرض الكل ←</button></div>
-      <div class="dash-reciter-row">
-        <button class="dash-reciter" onclick="openReciterInReader('hussary')"><span class="dash-reciter-art">🎙️</span><b>محمود خليل الحصري</b><small>المرتل والمجود</small></button>
-        <button class="dash-reciter" onclick="openReciterInReader('minshawi')"><span class="dash-reciter-art">🎙️</span><b>محمد صديق المنشاوي</b><small>صوت الخشوع</small></button>
-        <button class="dash-reciter" onclick="openReciterInReader('rifaat')"><span class="dash-reciter-art">🎙️</span><b>الشيخ محمد رفعت</b><small>قيثارة السماء</small></button>
-        <button class="dash-reciter" onclick="openReciterInReader('bahtimi')"><span class="dash-reciter-art">🎙️</span><b>كامل يوسف البهتيمي</b><small>روائع المجود</small></button>
-        <button class="dash-reciter" onclick="openReciterInReader('banna')"><span class="dash-reciter-art">🎙️</span><b>محمود علي البنا</b><small>صوت رخيم</small></button>
-      </div>
-    </section>
-
-    <section class="dash-feature-grid">
-      <button class="dash-feature-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('rare_all')"><span>✨</span><b>نوادر التلاوات</b><small>تسجيلات نادرة لكبار القراء</small></button>
-      <button class="dash-feature-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all')"><span>🎙️</span><b>التواشيح والابتهالات</b><small>نفحات روحانية وأصوات خاشعة</small></button>
-    </section>
-  </section>
-
-  <!-- ========================================================================= -->
   <!-- 2. شاشة المصحف التفاعلي المتقدم وتزامن الكلمات (Quran Reader & HUD)       -->
   <!-- ========================================================================= -->
   <section class="page" id="page-reader">
@@ -687,7 +646,7 @@
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=5"></script>
-  <script src="js/app.js?v=9"></script>
+  <script src="js/app.js?v=10"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
