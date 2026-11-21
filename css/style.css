@@ -2310,3 +2310,5 @@ body.ref-night:has(.reference-home.active) .ref-welcome h1{color:#e4c76d}
 body.ref-night:has(.reference-home.active) .ref-top-card,body.ref-night:has(.reference-home.active) .ref-new-readers,body.ref-night:has(.reference-home.active) .ref-recitation-card{background:linear-gradient(110deg,#302a18,#211f17);color:#ead99c}
 body.ref-night:has(.reference-home.active) .ref-bottom-nav{background:#171711!important}
 @media(max-width:370px){.ref-reader-card{flex-basis:98px}.ref-reader-card img{width:94px;height:94px}.ref-home-header{grid-template-columns:46px 42px 1fr;gap:7px}}
+
+.ref-save{width:30px;height:30px;border:1px solid #dfc77d;border-radius:50%;background:#fff8e3;color:#b78b24;font-size:1.2rem;display:grid;place-items:center;flex:0 0 30px}.ref-recitation-card .ref-play{flex:0 0 31px}
