@@ -1012,7 +1012,7 @@ async function loadSurahAudio(surahNumber) {
 
   const configuredServer = mode === 'mojawwad' ? reciter.serverMojawwad : reciter.serverMurattal;
   const configuredSource = configuredServer
-    ? configuredServer.replace(/\\/$/, '/') + String(surahNumber).padStart(3, '0') + '.mp3'
+    ? configuredServer.replace(/\/$/, '/') + String(surahNumber).padStart(3, '0') + '.mp3'
     : '';
   const sources = [...new Set([...apiSources, configuredSource].filter(Boolean))];
 
