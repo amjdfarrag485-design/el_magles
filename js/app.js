@@ -2145,6 +2145,16 @@ function initRecitersEncyclopedia() {
   renderRecitersGrid(ALL_RECITERS_DATA);
 }
 
+function openReciterDirectoryItem(id, category) {
+  const reciter = ALL_RECITERS_DATA.find(item => item.id === id);
+  if (reciter && (reciter.supportsMurattal || reciter.supportsMojawwad)) {
+    openReciterInReader(id);
+    return;
+  }
+  navigateTo('rare-ibtehalat');
+  filterRareAndIbtehalat(category || 'ibtehal_all');
+}
+
 function renderRecitersGrid(list) {
   const container = document.getElementById('reciters-list-container');
   if (!container) return;
@@ -2155,13 +2165,13 @@ function renderRecitersGrid(list) {
   }
 
   container.innerHTML = list.map(r => `
-    <div class="card reciter-card" onclick="openReciterInReader('${r.id}')">
+    <div class="card reciter-card" onclick="openReciterDirectoryItem('${r.id}', '${r.category}')">
       <img class="reciter-list-avatar" src="${getSheikhAvatarImage(r.name)}" alt="${r.name}" loading="lazy" onerror="this.onerror=null;this.src=getSheikhAvatarSvg('${r.name}')">
       <div class="reciter-list-copy">
         <div class="reciter-name-bold">${r.name}</div>
         <div class="reciter-subtitle">${r.info}</div>
       </div>
-      <button class="action-btn action-btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">استماع 📖</button>
+      <button class="action-btn action-btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">${(r.supportsMurattal || r.supportsMojawwad) ? 'استماع 📖' : 'النوادر 🎙️'}</button>
     </div>
   `).join('');
 }
