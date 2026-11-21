@@ -1582,6 +1582,16 @@ function getSheikhAvatarImage(name, isIbtehal = false) {
 }
 
 function showFloatingPlayerForRadio() {
+  STATE.modernPlayer.track = {
+    id: 'cairo_live_stream',
+    title: 'إذاعة القرآن الكريم من القاهرة',
+    reciter: 'بث مباشر من القاهرة',
+    url: CAIRO_RADIO_URLS[cairoRadioFallbackIndex] || CAIRO_RADIO_URLS[0],
+    category: 'radio',
+    sourceTag: 'إذاعة القرآن الكريم من القاهرة',
+    duration: 'بث مباشر'
+  };
+  updateCouncilExpandedPlayer();
   const sleek = document.getElementById('sleek-bottom-player');
   if (sleek) {
     sleek.style.display = 'flex';
@@ -1592,7 +1602,7 @@ function showFloatingPlayerForRadio() {
     const timeEl = document.getElementById('sleek-player-time');
     if (timeEl) timeEl.textContent = 'مباشر 🔴';
     const avatar = document.getElementById('sleek-player-avatar');
-    if (avatar) avatar.src = getSheikhAvatarSvg('إذاعة القاهرة', true);
+    if (avatar) avatar.src = getSheikhAvatarSvg('إذاعة القاهرة');
   }
 
   // دعم العناصر القديمة إن وُجدت
