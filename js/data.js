@@ -212,6 +212,26 @@ const ALL_RECITERS_DATA = [
     info: "نقيب قراء مصر الراحل وصاحب النبرة الشعبية المحبوبة المهيبة"
   },
 
+  {
+    id: "fashni_archive",
+    name: "طه الفشني",
+    category: "fashni",
+    supportsMurattal: false,
+    supportsMojawwad: false,
+    serverMurattal: "",
+    serverMojawwad: "",
+    info: "من كبار أعلام التواشيح والابتهالات المصرية، وتتوفر مختاراته في قسم النوادر"
+  },
+  {
+    id: "omran_archive",
+    name: "محمد عمران",
+    category: "omran_fayoumi",
+    supportsMurattal: false,
+    supportsMojawwad: false,
+    serverMurattal: "",
+    serverMojawwad: "",
+    info: "من أعلام الابتهال والإنشاد الديني، وتتوفر مختاراته في قسم النوادر"
+  },
   // ─── كوكبة أئمة المصحف المرتل المعتمدة ───
   {
     id: "sudais",
