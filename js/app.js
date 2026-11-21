@@ -1462,6 +1462,7 @@ function toggleCairoRadio() {
       }
       cairoRadioFallbackIndex = idx;
       STATE.globalAudio.src = CAIRO_RADIO_URLS[idx];
+      if (STATE.modernPlayer.track) STATE.modernPlayer.track.url = CAIRO_RADIO_URLS[idx];
       STATE.globalAudio.load();
       STATE.globalAudio.play().then(() => {
         updateCairoRadioUI(true);
@@ -1504,6 +1505,17 @@ function getSheikhAvatarImage(name, isIbtehal = false) {
   return getSheikhAvatarSvg(name, isIbtehal);
 }
 function showFloatingPlayerForRadio() {
+  STATE.modernPlayer.track = {
+    id: 'cairo_live_stream',
+    title: 'إذاعة القرآن الكريم من القاهرة',
+    reciter: 'بث مباشر من القاهرة',
+    url: CAIRO_RADIO_URLS[cairoRadioFallbackIndex] || CAIRO_RADIO_URLS[0],
+    category: 'radio',
+    sourceTag: 'إذاعة القرآن الكريم من القاهرة',
+    versionTag: 'بث مباشر 24 ساعة'
+  };
+  updateReferencePlayerDetails(STATE.modernPlayer.track);
+  updateCouncilMediaSession(STATE.modernPlayer.track);
   const sleek = document.getElementById('sleek-bottom-player');
   if (sleek) {
     sleek.style.display = 'flex';
@@ -1559,7 +1571,7 @@ function updateReferencePlayerDetails(track) {
   const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value||'';};
   put('reference-track-title',track.title||'تلاوة مباركة');
   put('reference-track-reciter',track.reciter||track.sheikh||'إذاعة القرآن الكريم');
-  put('reference-track-source',track.sourceTag||track.category==='radio'?'إذاعة القرآن الكريم من القاهرة':(track.sourceTag||'المجلس'));
+  put('reference-track-source',track.category==='radio'?'إذاعة القرآن الكريم من القاهرة':(track.sourceTag||'المجلس'));
   put('reference-track-duration',track.versionTag||track.duration||'تسجيل صوتي');
   const avatar=document.getElementById('reference-player-avatar');
   if(avatar) avatar.src=track.avatar||getSheikhAvatarImage(track.reciter||track.sheikh||'المجلس',!!track.lyricsQuote);
