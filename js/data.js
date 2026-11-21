@@ -232,6 +232,16 @@ const ALL_RECITERS_DATA = [
     serverMojawwad: "",
     info: "من أعلام الابتهال والإنشاد الديني، وتتوفر مختاراته في قسم النوادر"
   },
+  {
+    id: "fayoumi_archive",
+    name: "محمد الفيومي",
+    category: "omran_fayoumi",
+    supportsMurattal: false,
+    supportsMojawwad: false,
+    serverMurattal: "",
+    serverMojawwad: "",
+    info: "من كبار أعلام الإنشاد والتواشيح والابتهال بالإذاعة المصرية"
+  },
   // ─── كوكبة أئمة المصحف المرتل المعتمدة ───
   {
     id: "sudais",
@@ -1179,6 +1189,31 @@ const IBTEHALAT_DATA = [
     badge: "تراث الحسين",
     duration: "07:45"
   }
+,
+  {
+    id: "fayoumi_amdah_mukammal_source",
+    category: "omran_fayoumi",
+    kind: "tawshih",
+    title: "توشيح أمدح المكمل أحمد الرسول",
+    reciter: "الشيخ محمد الفيومي وبطانته",
+    desc: "توشيح موثق من تسجيلات الإذاعة المصرية في الستينات؛ يفتح المصدر للاستماع",
+    externalUrl: "https://m.soundcloud.com/menshawy1/fayomyamdhmokammal",
+    externalLabel: "SoundCloud",
+    badge: "توشيح تراثي",
+    duration: "07:31"
+  },
+  {
+    id: "fayoumi_nabi_huda_source",
+    category: "omran_fayoumi",
+    kind: "ibtihal",
+    title: "نبي الهدى ورسول السلام",
+    reciter: "الشيخ محمد الفيومي",
+    desc: "محفل ابتهال نادر مسجل من أمسيات السبعينات؛ يفتح المصدر للاستماع",
+    externalUrl: "https://www.youtube.com/watch?v=qP45fOu9d1k",
+    externalLabel: "YouTube",
+    badge: "ابتهال نادر",
+    duration: "تسجيل من السبعينات"
+  },
 ];
 
 // ═══════════════════════════════════════════════════════════════
