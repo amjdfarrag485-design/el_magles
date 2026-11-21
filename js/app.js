@@ -1508,18 +1508,15 @@ const SHEIKH_PORTRAITS = [
   { keys: ['النقشبندي','النقشبندى','سيد النقشبندي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Syed_Naqshbandi.jpg' },
   { keys: ['نصر الدين طوبار','نصرالدين طوبار'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Nasr_El-Din_Tobar.jpg' },
   { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/01/2071566_0.jpeg' },
-  { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2024/7/20/2024-638570759475598708-559.jpeg' },
+  { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2024/7/20/19_2024-638570758803144650-314.jpg' },
   { keys: ['السديس','عبد الرحمن السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
   { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://i0.wp.com/ahmalassaf.com/wp-content/uploads/2022/05/jaber.jpg?fit=784%2C578&ssl=1' },
-  { keys: ['محمد سلامة','محمد سلامه'], url: 'https://img.youm7.com/xlarge/202403201123302330.jpg' },
-  { keys: ['محمد الفيومي','محمد الفيومى'], url: 'https://cdn.al-ain.com/images/2017/6/03/78-181934-mohamed-alfayoumi-egypt-blind_700x400.jpeg' },
   { keys: ['محمد عمران','محمد أحمد عمران'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/10/2078766_0.jpeg' },
-  { keys: ['محمد الفيومي','محمد الفيومى','محمد الفيومي وبطانته','محمد الفيومي وسيد النقشبندي','الفيومي وبطانته'], url: 'https://cdn.al-ain.com/images/2017/6/03/78-181934-mohamed-alfayoumi-egypt-blind_700x400.jpeg' }
-  { keys: ['أبو العينين شعيشع','ابو العينين شعيشع'], url: 'https://gate.ahram.org.eg/Media/News/2023/8/12/2023-638274526916241866-616.jpg' },
-  { keys: ['محمد أيوب','محمد ايوب'], url: 'https://cdn.mp3quran.net/images/reciters/ayyub.jpg' },
+  { keys: ['أبو العينين شعيشع','ابو العينين شعيشع'], url: 'https://www.vetogate.com/Upload/libfiles/550/1/995.jpg' },
+  { keys: ['محمد أيوب','محمد ايوب'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2016/04/16/448289_0.jpeg' },
   { keys: ['صديق السيد المنشاوي','صديق المنشاوي','المنشاوي الكبير'], url: 'https://gate.ahram.org.eg/Media/News/2026/10/1/19_2026-639264662760749920-74.jpg' },
   { keys: ['محمود صديق المنشاوي'], url: 'https://www.livedhere.gov.eg/Upload/PhotoGallery/5203/11889/1.jpg' },
-  { keys: ['السيد متولي','السيد متولي عبد العال'], url: 'https://i.ytimg.com/vi/5YFh6gUlso8/hqdefault.jpg' },
+  { keys: ['السيد متولي','السيد متولي عبد العال'], url: 'https://gate.ahram.org.eg/Media/News/2024/7/16/2024-638567265781727837-172.jpg' },
   { keys: ['عبد العزيز محمود','عبدالعزيز محمود'], url: 'https://mediaaws-live.almasryalyoum.com/almasryalyoum/uploads/images/2026/08/26/1961122.webp' }
 ];
 function getSheikhAvatarImage(name, isIbtehal = false) {
