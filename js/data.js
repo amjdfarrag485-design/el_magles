@@ -504,10 +504,10 @@ const RARE_RECITATIONS_DATA = [
     title: "سورة الفاتحة",
     reciter: "الشيخ السيد متولي عبد العال",
     desc: "تلاوة برواية حفص عن عاصم بجودة MP3",
-    url: "https://media.way2quran.com/alsayed-metwally/hafs-an-asim/001.mp3",
+    url: "https://archive.org/download/20231106_20231106_1654/001%20s%201%20%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%20%D9%85%D8%AA%D9%88%D9%84%D9%89%20%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D8%8C%D8%B3%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D9%81%D8%A7%D8%AA%D8%AD%D8%A9.mp3",
     badge: "تلاوة نادرة",
     sourceTag: "أرشيف صوتي",
-    versionTag: "Way2Quran",
+    versionTag: "Archive.org",
     duration: "غير محدد"
   },
   {
@@ -516,10 +516,22 @@ const RARE_RECITATIONS_DATA = [
     title: "سورة يوسف",
     reciter: "الشيخ السيد متولي عبد العال",
     desc: "تلاوة برواية حفص عن عاصم بجودة MP3",
-    url: "https://media.way2quran.com/alsayed-metwally/hafs-an-asim/012.mp3",
+    url: "https://archive.org/download/20231106_20231106_1654/012%20s%2012%20%D8%A7%D9%84%D8%AA%D9%84%D8%A7%D9%88%D8%A9%20%D8%A7%D9%84%D8%B4%D9%87%D9%8A%D8%B1%D8%A9%20%20%D8%A7%D9%84%D9%85%D9%86%D8%AA%D8%B8%D8%B1%D8%A9%20%20%D8%B3%D9%88%D8%B1%D8%A9%20%D9%8A%D9%88%D8%B3%D9%81%20%20%D9%84%D9%84%D8%B5%D9%88%D8%AA%20%D8%A7%D9%84%D8%B1%D8%A8%D8%A7%D9%86%D9%8A%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%20%D9%85%D8%AA%D9%88%D9%84%D9%8A%20%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D8%B9%D8%A7%D9%84%20%20%D9%86%D8%B3%D8%AE%D8%A9%20%D9%86%D9%82%D9%8A%D8%A9%20%D8%AC%D8%AF%D8%A7%F0%9F%91%8C.mp3",
     badge: "تلاوة نادرة",
     sourceTag: "أرشيف صوتي",
     versionTag: "Way2Quran",
+    duration: "غير محدد"
+  },
+  {
+    id: "rare_sayed_metwally_baqara_hussein",
+    category: "sayed_metwally",
+    title: "سورة البقرة – قرآن الفجر من مسجد الإمام الحسين (2014)",
+    reciter: "الشيخ السيد متولي عبد العال",
+    desc: "تسجيل فجر من مسجد الإمام الحسين رضي الله عنه، 2 يوليو 2014",
+    url: "https://archive.org/download/20231106_20231106_1654/002%20s%202%20%20%D8%A7%D9%84%D8%A8%D9%82%D8%B1%D8%A9%20%20%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%20%D9%85%D8%AA%D9%88%D9%84%D9%8A%20%D9%82%D8%B1%D8%A2%D9%86%20%D8%A7%D9%84%D9%81%D8%AC%D8%B1%20%D9%85%D9%86%20%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A7%D9%85%D8%A7%D9%85%20%D8%A7%D9%84%D8%AD%D8%B3%D9%8A%D9%86%20%D8%B1%D8%B6%D9%8A%20%D8%A7%D9%84%D9%84%D9%87%20%D8%B9%D9%86%D9%87%202%3D7%3D2014.mp3",
+    badge: "تسجيل فجر",
+    sourceTag: "أرشيف أبو تيام على Archive.org",
+    versionTag: "Archive.org",
     duration: "غير محدد"
   },
 
