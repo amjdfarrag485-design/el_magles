@@ -24,6 +24,7 @@ const STATE = {
   quranAudio: null,
   audioFallbackChain: [],
   audioFallbackIndex: 0,
+  audioRequestId: 0,
   wordSegments: [],
   activeWordIndex: -1,
 
@@ -263,18 +264,18 @@ function initAudioElements() {
     updateHudPlayBtn(false);
     stopQuranSyncLoop();
   });
-  STATE.quranAudio.addEventListener('error', (e) => {
-    console.warn('[Smart Fallback] Audio error on:', STATE.quranAudio.src);
+  STATE.quranAudio.addEventListener('error', () => {
+    console.warn('[Quran Audio] Failed source:', STATE.quranAudio.src);
     if (STATE.audioFallbackChain && STATE.audioFallbackIndex < STATE.audioFallbackChain.length - 1) {
       STATE.audioFallbackIndex++;
       const nextSource = STATE.audioFallbackChain[STATE.audioFallbackIndex];
-      showToast('⚠️ جاري التبديل التلقائي إلى خادم بديل مباشر...');
+      showToast('تعذر هذا الخادم، بنجرّب خادماً آخر لنفس القارئ…');
       STATE.quranAudio.src = nextSource;
       STATE.quranAudio.load();
       STATE.quranAudio.play().catch(() => {});
     } else {
       updateHudPlayBtn(false);
-      showToast('تعذر تشغيل هذا المقطع حالياً ⚠️');
+      showToast('تعذر تشغيل تلاوة هذا الشيخ حالياً. جرّب قارئاً آخر أو أعد المحاولة لاحقاً.');
     }
   });
 
@@ -912,25 +913,74 @@ async function fallbackLoadSurahVerses(surahNumber) {
 // ═══════════════════════════════════════════════════════════════
 // 9. تشغيل صوت السور بنظام الترقيم الثلاثي وحل مشكلة 0:00
 // ═══════════════════════════════════════════════════════════════
-function loadSurahAudio(surahNumber) {
-  if (!STATE.quranAudio) {
-    initAudioElements();
-  } else {
-    STATE.quranAudio.pause();
+// كتالوج MP3Quran الرسمي: اختيار تسجيلات القارئ نفسه فقط ومنع تشغيل شيخ آخر كبديل.
+let mp3QuranRecitersPromise = null;
+function normalizeReciterName(value) {
+  return String(value || '')
+    .replace(/[\\u064B-\\u065F\\u0670]/g, '')
+    .replace(/[أإآٱ]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/الشيخ/g, '')
+    .replace(/[\\sـ]/g, '')
+    .toLowerCase();
+}
+
+async function getMp3QuranMoshafSources(reciter, mode, surahNumber) {
+  try {
+    if (!mp3QuranRecitersPromise) {
+      mp3QuranRecitersPromise = fetch('https://mp3quran.net/api/v3/reciters?language=ar', { cache: 'force-cache' })
+        .then(response => {
+          if (!response.ok) throw new Error('MP3Quran API response ' + response.status);
+          return response.json();
+        });
+    }
+    const payload = await mp3QuranRecitersPromise;
+    const aliases = {
+      rifaat: ['محمد رفعت'],
+      bahtimi: ['كامل يوسف البهتيمي', 'كامل يوسف البهتيمى'],
+      jaber: ['علي جابر'],
+      abdulbasit: ['عبدالباسط عبدالصمد'],
+      minshawi: ['محمد صديق المنشاوي'],
+      hussary: ['محمود خليل الحصري']
+    };
+    const wanted = [reciter.name, ...(aliases[reciter.id] || [])].map(normalizeReciterName);
+    const match = (payload.reciters || []).find(item => {
+      const name = normalizeReciterName(item.name);
+      return wanted.some(alias => alias && (name === alias || name.includes(alias) || alias.includes(name)));
+    });
+    if (!match) return [];
+    const moshafList = (match.moshaf || []).filter(item => item.server);
+    const isMojawwad = mode === 'mojawwad';
+    const preferred = moshafList.filter(item => {
+      const label = normalizeReciterName(item.name);
+      return isMojawwad ? /مجود|تجويد/.test(label) : !/مجود|تجويد/.test(label);
+    });
+    return preferred
+      .filter(item => {
+        if (!item.surah_list) return true;
+        return String(item.surah_list).split(',').includes(String(surahNumber));
+      })
+      .map(item => item.server.endsWith('/') ? item.server : item.server + '/')
+      .map(server => server + String(surahNumber).padStart(3, '0') + '.mp3');
+  } catch (error) {
+    console.warn('MP3Quran catalogue unavailable; using this reciter configured source only.', error);
+    return [];
   }
+}
 
+async function loadSurahAudio(surahNumber) {
+  if (!STATE.quranAudio) initAudioElements();
+  else STATE.quranAudio.pause();
+
+  const requestId = ++STATE.audioRequestId;
   const reciter = STATE.currentReciter || ALL_RECITERS_DATA[0];
-
-  // بيانات الوسائط الخاصة بتلاوات المصحف على شاشة القفل وأجهزة أندرويد
   if ('mediaSession' in navigator && typeof MediaMetadata !== 'undefined') {
     try {
-      const surah = (typeof SURAHS_LIST !== 'undefined')
-        ? SURAHS_LIST.find(item => item.number === surahNumber)
-        : null;
+      const surah = SURAHS_LIST.find(item => item.number === surahNumber);
       const artwork = new URL('icons/icon-512x512.png', window.location.href).href;
       navigator.mediaSession.metadata = new MediaMetadata({
         title: surah ? ('سورة ' + surah.name) : ('تلاوة القرآن - سورة ' + surahNumber),
-        artist: reciter.name || reciter.title || 'تلاوة من المجلس',
+        artist: reciter.name || 'تلاوة من المجلس',
         album: 'المجلس - القرآن الكريم',
         artwork: [{ src: artwork, sizes: '512x512', type: 'image/png' }]
       });
@@ -948,11 +998,7 @@ function loadSurahAudio(surahNumber) {
       console.warn('Quran media metadata unavailable:', error);
     }
   }
-  // الترقيم الثلاثي الصارم: 001.mp3 إلى 114.mp3
-  const paddedNum = surahNumber.toString().padStart(3, '0');
-  const mode = STATE.currentMode;
 
-  // إعادة ضبط مؤشرات وقت المشغل فوراً لتفادي التوقف الوهمي عند 0:00
   const curEl = document.getElementById('hud-time-current');
   if (curEl) curEl.textContent = '0:00';
   const totEl = document.getElementById('hud-time-total');
@@ -960,60 +1006,27 @@ function loadSurahAudio(surahNumber) {
   const progEl = document.getElementById('hud-progress');
   if (progEl) progEl.value = 0;
 
-  const chain = [];
+  const mode = STATE.currentMode;
+  const apiSources = await getMp3QuranMoshafSources(reciter, mode, surahNumber);
+  if (requestId !== STATE.audioRequestId) return;
 
-  if (mode === 'mojawwad') {
-    // ─── سيرفرات المجود الرسمية المباشرة ───
-    if (reciter.serverMojawwad) chain.push(`${reciter.serverMojawwad}${paddedNum}.mp3`);
+  const configuredServer = mode === 'mojawwad' ? reciter.serverMojawwad : reciter.serverMurattal;
+  const configuredSource = configuredServer
+    ? configuredServer.replace(/\\/$/, '/') + String(surahNumber).padStart(3, '0') + '.mp3'
+    : '';
+  const sources = [...new Set([...apiSources, configuredSource].filter(Boolean))];
 
-    if (reciter.id === 'abdulbasit') {
-      chain.push(`https://server7.mp3quran.net/basit_mjwd/${paddedNum}.mp3`);
-      chain.push(`https://cdn.mp3quran.net/audio/abdulbasit-abdulsamad/r1/${paddedNum}.mp3`);
-    } else if (reciter.id === 'minshawi') {
-      chain.push(`https://server10.mp3quran.net/minsh_mjwd/${paddedNum}.mp3`);
-      chain.push(`https://cdn.mp3quran.net/audio/muhammad-minshawi/r2/${paddedNum}.mp3`);
-    } else if (reciter.id === 'hussary') {
-      chain.push(`https://server13.mp3quran.net/husr_mjwd/${paddedNum}.mp3`);
-      chain.push(`https://cdn.mp3quran.net/audio/mahmoud-husary/r2/${paddedNum}.mp3`);
-    } else if (reciter.id === 'mustafa') {
-      chain.push(`https://server8.mp3quran.net/mustafa/${paddedNum}.mp3`);
-    } else if (reciter.id === 'rifaat') {
-      chain.push(`https://cdn.mp3quran.net/audio/muhammad-refaat/r1/${paddedNum}.mp3`);
-      chain.push(`https://server14.mp3quran.net/refat/${paddedNum}.mp3`);
-    } else if (reciter.id === 'bahtimi') {
-      chain.push(`https://server10.mp3quran.net/bahtimi/${paddedNum}.mp3`);
-    } else if (reciter.id === 'banna') {
-      chain.push(`https://server8.mp3quran.net/bna_mjwd/${paddedNum}.mp3`);
-    } else if (reciter.id === 'tablawi') {
-      chain.push(`https://server12.mp3quran.net/tblawi/${paddedNum}.mp3`);
-    }
-
-    chain.push(`https://server10.mp3quran.net/minsh_mjwd/${paddedNum}.mp3`);
-    chain.push(`https://server7.mp3quran.net/basit_mjwd/${paddedNum}.mp3`);
-  } else {
-    // ─── سيرفرات المرتل الرسمية المباشرة ───
-    if (reciter.serverMurattal) {
-      chain.push(`${reciter.serverMurattal}${paddedNum}.mp3`);
-    }
-    if (reciter.id === 'rifaat') {
-      chain.push(`https://cdn.mp3quran.net/audio/muhammad-refaat/r1/${paddedNum}.mp3`);
-      chain.push(`https://server14.mp3quran.net/refat/${paddedNum}.mp3`);
-    }
-
-    chain.push(`https://server13.mp3quran.net/husr/${paddedNum}.mp3`);
-    chain.push(`https://server10.mp3quran.net/minsh/${paddedNum}.mp3`);
-    chain.push(`https://server7.mp3quran.net/basit/${paddedNum}.mp3`);
-    chain.push(`https://server8.mp3quran.net/mustafa/${paddedNum}.mp3`);
-    chain.push(`https://server8.mp3quran.net/afs/${paddedNum}.mp3`);
+  if (!sources.length) {
+    updateHudPlayBtn(false);
+    showToast('ملقيناش تسجيل موثوق للسورة دي بصوت الشيخ المختار في الوضع ده.');
+    return;
   }
 
-  STATE.audioFallbackChain = [...new Set(chain.filter(Boolean))];
+  STATE.audioFallbackChain = sources;
   STATE.audioFallbackIndex = 0;
-
   STATE.quranAudio.preload = 'metadata';
-  STATE.quranAudio.src = STATE.audioFallbackChain[0];
+  STATE.quranAudio.src = sources[0];
   STATE.quranAudio.load();
-
   fetchWordTimings(surahNumber, reciter);
 }
 
