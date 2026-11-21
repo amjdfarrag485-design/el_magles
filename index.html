@@ -643,6 +643,41 @@
     </div>
   </section>
 
+  <!-- Expanded audio player based on the supplied reference -->
+  <div class="reference-player-overlay" id="reference-player-overlay" style="display:none" aria-hidden="true">
+    <div class="reference-player-sheet" role="dialog" aria-modal="true" aria-label="مشغل الصوت">
+      <button class="reference-player-collapse" onclick="minimizeModernPlayer()" aria-label="تصغير المشغل">⌄</button>
+      <div class="reference-player-top">
+        <div class="reference-vinyl"><div class="reference-vinyl-label"><img id="reference-player-avatar" src="" alt="صورة القارئ"></div></div>
+        <div class="reference-track-details">
+          <div class="reference-track-title" id="reference-track-title">عنوان التلاوة</div>
+          <div class="reference-track-reciter" id="reference-track-reciter">اسم القارئ</div>
+          <div class="reference-track-source"><span>المصدر:</span> <b id="reference-track-source">المجلس</b></div>
+          <div class="reference-track-source"><span>التوثيق:</span> <b id="reference-track-duration">تسجيل صوتي</b></div>
+        </div>
+      </div>
+      <div class="reference-player-progress-wrap">
+        <input id="reference-player-seek" type="range" min="0" max="100" value="0" oninput="onReferencePlayerSeek(this.value)" onchange="commitReferencePlayerSeek(this.value)" aria-label="موضع التشغيل">
+        <div class="reference-player-times"><span id="reference-player-current">00:00</span><span id="reference-player-remaining">-00:00</span></div>
+      </div>
+      <div class="reference-player-controls">
+        <button onclick="seekModernRelative(10)" aria-label="تقديم 10 ثوان">⏩</button>
+        <button class="reference-main-play" onclick="toggleModernPlayPause()" aria-label="تشغيل أو إيقاف"><span id="reference-main-play-icon">⏸</span></button>
+        <button onclick="seekModernRelative(-10)" aria-label="رجوع 10 ثوان">⏪</button>
+        <button id="reference-repeat-btn" onclick="toggleModernRepeat()" aria-label="تكرار">⇄</button>
+      </div>
+      <div class="reference-player-tools">
+        <button onclick="downloadCurrentTrack()"><span>⇩</span><small>تحميل</small></button>
+        <button onclick="toggleReferenceAutoSave()"><span id="reference-auto-save-icon">☁</span><small id="reference-auto-save-label">حفظ تلقائي</small></button>
+        <button onclick="addCurrentTrackToQueue()"><span>☷</span><small>إلى قائمة</small></button>
+        <button onclick="setReferenceSleepTimer()"><span>☾</span><small>مؤقت النوم</small></button>
+        <button onclick="shareCurrentTrack()"><span>♧</span><small>مشاركة</small></button>
+        <button onclick="showReferencePlayerSettings()"><span>☷</span><small>التخصيص</small></button>
+        <button onclick="showReferenceTadabbur()"><span>▤</span><small>التدبر</small></button>
+      </div>
+    </div>
+  </div>
+
   <!-- ========================================================================= -->
   <!-- 10. شريط الصوت النحيف المدمج للأندرويد والآيفون (Sleek Mini Audio Bar)     -->
   <!-- ========================================================================= -->
@@ -654,12 +689,12 @@
 
     <div class="sleek-player-main-content">
       <!-- صورة القارئ/المنشد الدائرية -->
-      <div class="sleek-player-avatar-wrap">
+      <div class="sleek-player-avatar-wrap" onclick="expandModernPlayer()" role="button" tabindex="0" aria-label="فتح المشغل الكامل">
         <img id="sleek-player-avatar" src="" alt="القارئ">
       </div>
 
       <!-- اسم التلاوة/الابتهال واسم الشيخ والوقت -->
-      <div class="sleek-player-info">
+      <div class="sleek-player-info" onclick="expandModernPlayer()" role="button" tabindex="0">
         <div class="sleek-player-title" id="sleek-player-title">عنوان المقطع المبارك</div>
         <div class="sleek-player-meta">
           <span class="sleek-player-sheikh" id="sleek-player-sheikh">الشيخ</span>
