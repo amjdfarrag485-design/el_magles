@@ -1492,7 +1492,7 @@ function updateCairoRadioUI(isPlaying) {
 // ═══════════════════════════════════════════════════════════════
 
 function getSheikhAvatarSvg(name, isIbtehal = false) {
-  const cleanName = String(name || 'المجلس').replace(/الشيخ\\s*/g, '').trim().split(' ').slice(0, 2).join(' ') || 'المجلس';
+  const cleanName = String(name || 'المجلس').replace('الشيخ', '').trim().split(' ').slice(0, 2).join(' ') || 'المجلس';
   const safeName = cleanName.replace(/[&<>]/g, '');
   const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="portraitBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#315e4d"/><stop offset="100%" stop-color="#10281f"/></linearGradient><linearGradient id="portraitGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5df9a"/><stop offset="100%" stop-color="#c59a2e"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#portraitBg)" stroke="url(#portraitGold)" stroke-width="3"/><circle cx="50" cy="35" r="15" fill="#d7c9a7"/><path d="M22 84c2-19 13-30 28-30s26 11 28 30" fill="#d7c9a7"/><path d="M34 25c3-10 28-12 33 1-10-5-23-5-33-1" fill="#f0e9d8"/><text x="50" y="95" font-size="8" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="#fff8e5">' + safeName + '</text></svg>';
   return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
