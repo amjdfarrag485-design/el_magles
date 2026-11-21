@@ -1511,6 +1511,7 @@ const SHEIKH_PORTRAITS = [
   { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2025/7/20/2025-638886459547910043-791.jpeg' },
   { keys: ['السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
   { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://i0.wp.com/ahmalassaf.com/wp-content/uploads/2022/05/jaber.jpg?fit=784%2C578&ssl=1' },
+  { keys: ['محمد الفيومي','محمد الفيومى'], url: 'https://cdn.al-ain.com/images/2017/6/03/78-181934-mohamed-alfayoumi-egypt-blind_700x400.jpeg' },
   { keys: ['محمد سلامة','محمد سلامه'], url: 'https://i1.sndcdn.com/artworks-000521364414-jkwft2-t500x500.jpg' }
 ];
 function getSheikhAvatarImage(name, isIbtehal = false) {
@@ -2136,8 +2137,8 @@ function renderRareAndIbtehalatList(filterCat, searchStr) {
             ${item.duration ? `<span>⏱ ${item.duration}</span>` : ''}
           </div>
         </div>
-        <button class="audio-card-play-btn" aria-label="تشغيل">
-          ${isCurPlaying ? '⏸' : '▶'}
+        <button class="audio-card-play-btn" aria-label="${item.externalUrl ? 'فتح مصدر التسجيل' : 'تشغيل'}">
+          ${item.externalUrl ? '↗' : (isCurPlaying ? '⏸' : '▶')}
         </button>
       </div>
     `;
@@ -2148,6 +2149,11 @@ function playAudioItem(itemId) {
   const allItems = getAllAudioItems();
   const track = allItems.find(t => t.id === itemId);
   if (track) {
+    if (track.externalUrl) {
+      window.open(track.externalUrl, '_blank', 'noopener,noreferrer');
+      showToast('تم فتح مصدر التسجيل الخارجي');
+      return;
+    }
     if (STATE.modernPlayer.track && STATE.modernPlayer.track.id === itemId && STATE.globalAudio && STATE.globalAudio.src) {
       toggleModernPlayPause();
     } else {
