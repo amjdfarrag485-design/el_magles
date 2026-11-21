@@ -16,9 +16,9 @@
 // 1. أسماء التخزين المؤقت (Cache Names)
 // ═══════════════════════════════════════════════════
 
-const CACHE_NAME = 'el-magles-v3';
-const STATIC_CACHE = 'el-magles-static-v3';
-const DYNAMIC_CACHE = 'el-magles-dynamic-v3';
+const CACHE_NAME = 'el-magles-v4';
+const STATIC_CACHE = 'el-magles-static-v4';
+const DYNAMIC_CACHE = 'el-magles-dynamic-v4';
 
 // ═══════════════════════════════════════════════════
 // 2. الملفات الثابتة المطلوب تخزينها عند التثبيت
@@ -31,7 +31,13 @@ const STATIC_ASSETS = [
   './js/app.js',
   './js/data.js',
   './manifest.json',
+  './icons/icon-72x72.png',
+  './icons/icon-96x96.png',
+  './icons/icon-128x128.png',
+  './icons/icon-144x144.png',
+  './icons/icon-152x152.png',
   './icons/icon-192x192.png',
+  './icons/icon-384x384.png',
   './icons/icon-512x512.png',
   './icons/icon.svg',
 ];
