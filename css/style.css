@@ -2256,3 +2256,117 @@ select:-webkit-autofill {
   font-size: 0.9rem;
 }
 
+
+
+/* ═══ المجلس: أخضر زيتوني وذهبي + وضع كريمي فاتح ═══ */
+:root {
+  --bg-primary:#07170f;
+  --bg-secondary:#0d2a1b;
+  --bg-tertiary:#153824;
+  --bg-input:#10251a;
+  --gold:#d2ad43;
+  --gold-light:#f0d987;
+  --gold-dark:#987523;
+  --gold-glow:rgba(210,173,67,.34);
+  --gold-glow-soft:rgba(210,173,67,.14);
+  --text-primary:#fff8e7;
+  --text-secondary:#d5cfb5;
+  --text-gold:#e8ca70;
+  --text-muted:#9b9b83;
+  --border-gold:rgba(210,173,67,.4);
+  --border-gold-strong:#d2ad43;
+  --border-dark:rgba(255,248,231,.1);
+  --shadow-gold:0 4px 20px rgba(210,173,67,.16);
+  color-scheme:dark;
+}
+body { background-color:var(--bg-primary); color:var(--text-primary); }
+.brand-top-banner,.home-prayer-hero {
+  background:linear-gradient(140deg,#123c28 0%,#092216 100%);
+  border-color:#c6a13c;
+}
+.brand-top-banner { position:relative; padding-left:58px; }
+.brand-main-title { background:linear-gradient(135deg,#fff9e9 15%,#f0d987 70%,#caa33a 100%); }
+.card,.audio-item-card,.azkar-item-card,.reader-bookmark-card,.quran-interactive-hud {
+  background:linear-gradient(145deg,#102b1d,#0a1e14);
+  border-color:var(--border-gold);
+}
+.audio-card-avatar { background:#102b1d; }
+.audio-card-title,.azkar-text-arabic { color:#fff8e7; }
+.page-header { border-bottom-color:rgba(210,173,67,.28); }
+.bottom-nav-bar { background:rgba(7,23,15,.97); border-top-color:rgba(210,173,67,.28); }
+.nav-tab-item.active { color:#e4c66c; }
+.theme-switch {
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  width:40px;height:40px;border:1px solid #c9a440;border-radius:13px;
+  background:#0c2a1b!important;color:#f1d780!important;
+  display:grid;place-items:center;font-size:1.35rem;cursor:pointer;
+}
+.audio-card-avatar img { display:block; }
+.audio-item-card .audio-card-avatar img { object-fit:cover; }
+body.light-theme {
+  --bg-primary:#fff9e8;
+  --bg-secondary:#fff3d3;
+  --bg-tertiary:#f3e6c3;
+  --bg-input:#fffdf5;
+  --gold:#bd962e;
+  --gold-light:#a78328;
+  --gold-dark:#80611e;
+  --gold-glow:rgba(189,150,46,.22);
+  --gold-glow-soft:rgba(189,150,46,.1);
+  --text-primary:#294633;
+  --text-secondary:#65745f;
+  --text-gold:#a98427;
+  --text-muted:#8c8b73;
+  --border-gold:rgba(189,150,46,.42);
+  --border-gold-strong:#bd962e;
+  --border-dark:rgba(68,85,55,.14);
+  --shadow-gold:0 4px 18px rgba(189,150,46,.12);
+  color-scheme:light;
+  background-color:#fff9e8;
+  color:#294633;
+}
+body.light-theme input,body.light-theme select,body.light-theme textarea,body.light-theme button:not(.audio-card-play-btn) {
+  color:#294633!important;
+  color-scheme:light;
+}
+body.light-theme .brand-top-banner,body.light-theme .home-prayer-hero {
+  background:linear-gradient(145deg,#fff4d1 0%,#f7e8bc 100%);
+  border-color:#c5a044;
+  box-shadow:0 5px 18px rgba(140,110,40,.1);
+}
+body.light-theme .brand-subtitle { color:#8c762f; }
+body.light-theme .brand-main-title {
+  background:linear-gradient(135deg,#31553b 15%,#94711f 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+body.light-theme .brand-bismillah,body.light-theme .home-section-title,
+body.light-theme .prayer-hero-name,body.light-theme .prayer-hero-time,
+body.light-theme .prayer-hero-countdown,body.light-theme .prayer-hero-location,
+body.light-theme .date-strip { color:#536b4d; }
+body.light-theme .card,body.light-theme .audio-item-card,body.light-theme .azkar-item-card,
+body.light-theme .reader-bookmark-card,body.light-theme .quran-interactive-hud {
+  background:linear-gradient(145deg,#fffdf6,#f6edcf);
+  color:#294633;
+  border-color:rgba(189,150,46,.45);
+  box-shadow:0 4px 14px rgba(128,100,36,.08);
+}
+body.light-theme .audio-card-title,body.light-theme .azkar-text-arabic,
+body.light-theme .home-grid-name,body.light-theme .home-grid-desc,
+body.light-theme .card h2,body.light-theme .card h3 { color:#294633; }
+body.light-theme .audio-card-artist,body.light-theme .audio-card-details { color:#8a702c; }
+body.light-theme .page-header { color:#31553b;border-bottom-color:rgba(189,150,46,.3); }
+body.light-theme .bottom-nav-bar { background:rgba(255,251,238,.97);border-top-color:rgba(189,150,46,.3); }
+body.light-theme .nav-tab-item { color:#7c846f; }
+body.light-theme .nav-tab-item.active { color:#a27b22; }
+body.light-theme .theme-switch { background:#fffdf5!important;color:#b18a2b!important;border-color:#dfc982; }
+body.light-theme .mini-prayer-item { background:#fff9e8;border-color:#e4d6aa;color:#526b4d; }
+body.light-theme .mini-p-name,body.light-theme .mini-p-time { color:#526b4d; }
+body.light-theme .chip-btn { background:#fff8e5!important;color:#6b603f!important;border-color:#ddca8d!important; }
+body.light-theme .chip-btn.active { background:#d4b452!important;color:#fffdf5!important; }
+body.light-theme .audio-card-avatar { background:#f1e5c1; }
+body.light-theme .audio-card-play-btn { background:#c7a13b!important;color:#fff!important; }
+body.light-theme .reader-bookmark-card * { color:#38533c; }
+@media(max-width:600px) {
+  .theme-switch { top:12px;transform:none;width:36px;height:36px; }
+}
