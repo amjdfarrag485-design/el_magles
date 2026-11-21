@@ -535,6 +535,45 @@ const RARE_RECITATIONS_DATA = [
     duration: "غير محدد"
   },
 
+  {
+    id: "rare_shishaa_kafala_zakariya",
+    category: "abu_alainain_shishaa",
+    title: "وَكَفَّلَهَا زَكَرِيَّا – سورة آل عمران",
+    reciter: "الشيخ أبو العينين شعيشع",
+    desc: "تلاوة نادرة؛ النسخة الأصلية المنشورة في شبكة تلاوة، 2:55",
+    url: "https://tilawah.net/audios/abo-alaaynyn-shaayshaa-okflha-zkrya-42145/download?original=1",
+    badge: "تلاوة نادرة",
+    sourceTag: "شبكة تلاوة",
+    versionTag: "MP3 مباشر",
+    duration: "02:55"
+  },
+
+  {
+    id: "rare_mahmoud_siddeeq_yom_hom_barizoon",
+    category: "mahmoud_siddeeq_minshawi",
+    title: "يوم هم بارزون لا يخفى على الله منهم شيء – سورة غافر",
+    reciter: "الشيخ محمود صديق المنشاوي",
+    desc: "تلاوة نادرة بصوت الشيخ محمود صديق المنشاوي، النسخة الأصلية، 3:08",
+    url: "https://tilawah.net/audios/mhmod-sdyk-almnshaoy-yom-hm-brzon-la-ykhf-aal-llh-mnhm-shaa-42131/download?original=1",
+    badge: "تلاوة نادرة",
+    sourceTag: "شبكة تلاوة",
+    versionTag: "MP3 مباشر",
+    duration: "03:08"
+  },
+
+  {
+    id: "rare_sayed_metwally_ya_maryam",
+    category: "sayed_metwally",
+    title: "قالوا يا مريم لقد جئت شيئًا فريًا – سورة مريم",
+    reciter: "الشيخ السيد متولي عبدالعال",
+    desc: "تلاوة نادرة برواية حفص عن عاصم، النسخة الأصلية، 3:13",
+    url: "https://tilawah.net/audios/alsyd-mtoly-aabdalaaal-kaloa-ymrym-lkd-gyt-shya-frya-42128/download?original=1",
+    badge: "تلاوة نادرة",
+    sourceTag: "شبكة تلاوة",
+    versionTag: "MP3 مباشر",
+    duration: "03:13"
+  },
+
   // ─── 1. الشيخ محمد صديق المنشاوي (تسجيلات ونوادر خارجية خاشعة) ───
   {
     id: "rare_minshawi_hashr",
