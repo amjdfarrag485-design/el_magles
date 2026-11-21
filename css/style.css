@@ -990,7 +990,7 @@ select:-webkit-autofill {
   right: 0;
   height: calc(64px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: rgba(14, 18, 14, 0.97);
+  background: rgba(24, 24, 24, 0.97);
   border-top: 1px solid var(--border-gold);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -1059,7 +1059,7 @@ select:-webkit-autofill {
   max-width: 580px;
   margin: 0 auto;
   height: 52px;
-  background: rgba(14, 20, 15, 0.97);
+  background: rgba(24, 24, 24, 0.97);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(212, 175, 55, 0.45);
@@ -1107,7 +1107,7 @@ select:-webkit-autofill {
   border: 1.5px solid var(--gold);
   overflow: hidden;
   flex-shrink: 0;
-  background: #0f140f;
+  background: #141414;
   box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
 }
 .sleek-player-avatar-wrap img {
@@ -1198,7 +1198,7 @@ select:-webkit-autofill {
   border-radius: 50%;
   background: linear-gradient(135deg, var(--gold-light), var(--gold)) !important;
   border: none !important;
-  color: #0c120c !important;
+  color: #101010 !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1500,7 +1500,7 @@ select:-webkit-autofill {
 
 /* بطاقة الكلمات المقتبسة */
 .player-lyrics-card {
-  background: rgba(10, 14, 10, 0.85);
+  background: rgba(14, 14, 14, 0.85);
   border: 1px dashed var(--border-gold);
   border-radius: var(--radius-md);
   padding: 8px 14px;
@@ -1656,7 +1656,7 @@ select:-webkit-autofill {
   right: 12px;
   max-width: 580px;
   margin: 0 auto;
-  background: rgba(18, 24, 18, 0.97);
+  background: rgba(24, 24, 24, 0.97);
   border: 1.5px solid var(--gold);
   border-radius: var(--radius-full);
   padding: 8px 14px;
@@ -1861,7 +1861,7 @@ select:-webkit-autofill {
   transition: all 0.2s ease;
 }
 .azkar-item-card.is-completed {
-  border-color: #27ae60;
+  border-color: #d4af37;
   background: rgba(39, 174, 96, 0.06);
 }
 .azkar-text-arabic {
@@ -1919,7 +1919,7 @@ select:-webkit-autofill {
   transform: scale(0.92);
 }
 .azkar-counter-btn.done {
-  background: #27ae60 !important;
+  background: #d4af37 !important;
   color: #ffffff !important;
   box-shadow: 0 0 12px rgba(39, 174, 96, 0.5);
 }
@@ -1977,7 +1977,7 @@ select:-webkit-autofill {
    19. بطاقة إذاعة القرآن الكريم من القاهرة الكبرى الحصرية
    ═══════════════════════════════════════════════════════════════ */
 .cairo-radio-hero-card {
-  background: linear-gradient(160deg, #242424 0%, #121612 100%);
+  background: linear-gradient(160deg, #242424 0%, #141414 100%);
   border: 1.5px solid var(--border-gold-strong);
   border-radius: var(--radius-lg);
   padding: 30px 20px;
@@ -1998,7 +1998,7 @@ select:-webkit-autofill {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background: radial-gradient(circle, #292929 0%, #101810 100%);
+  background: radial-gradient(circle, #292929 0%, #141414 100%);
   border: 3px solid var(--gold);
   display: flex;
   align-items: center;
