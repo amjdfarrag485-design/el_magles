@@ -1510,7 +1510,6 @@ const SHEIKH_PORTRAITS = [
   { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_كامل_يوسف.jpg' },
   { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2024/7/20/2024-638570759475598708-559.jpeg' },
   { keys: ['السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
-  { keys: ['محمد الفيومي','محمد الفيومى'], url: 'https://cdn.al-ain.com/images/2017/6/03/78-181934-mohamed-alfayoumi-egypt-blind_700x400.jpeg' },
 ];
 function getSheikhAvatarImage(name, isIbtehal = false) {
   const n = (name || '').replace(/الشيخ\s*/g, '').trim();
