@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=5">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -124,9 +124,11 @@
         </div>
         <span id="daily-renewal-day-badge" class="badge-gold">اليوم المبارك</span>
       </div>
+      <div id="daily-adhkar-title" style="font-weight:700;color:var(--gold-light);margin-bottom:6px;">ذكر اليوم</div>
       <div id="daily-dua-text" style="font-family: var(--font-uthmani); font-size: 1.3rem; line-height: 2.1; color: #ffffff; margin-bottom: 12px;">
         اللهم إنا نسألك زيادة في الدين وبركة في العمر وصحة في الجسد وسعة في الرزق وعفواً عند الحساب
       </div>
+      <div id="daily-adhkar-reward" style="font-size:.82rem;color:var(--text-secondary);line-height:1.7;margin-bottom:10px;"></div>
       <div style="border-top: 1px dashed var(--border-dark); padding-top: 10px; display: flex; align-items: center; justify-content: space-between;">
         <span style="font-size: 0.85rem; color: var(--gold-light);">📖 ورد اليوم القرآني:</span>
         <span id="daily-wird-text" style="font-size: 0.92rem; color: #ffffff; font-weight: 600;">قراءة سورة الفاتحة وأول ٥ آيات من سورة البقرة مع التدبر</span>
@@ -341,6 +343,7 @@
       <button class="chip-btn" data-filter="fashni" onclick="filterRareAndIbtehalat('fashni')">طه الفشني</button>
       <button class="chip-btn" data-filter="omran_fayoumi" onclick="filterRareAndIbtehalat('omran_fayoumi')">عمران والفيومي</button>
       <button class="chip-btn" data-filter="ramadan" onclick="filterRareAndIbtehalat('ramadan')">🌙 تراث رمضان</button>
+      <button class="chip-btn" data-filter="eid" onclick="filterRareAndIbtehalat('eid')">🎉 تواشيح وتكبيرات العيد</button>
     </div>
 
     <!-- عدد المقاطع المتاحة -->
@@ -735,8 +738,8 @@
   </nav>
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
-  <script src="js/data.js?v=3"></script>
-  <script src="js/app.js?v=3"></script>
+  <script src="js/data.js?v=4"></script>
+  <script src="js/app.js?v=4"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
