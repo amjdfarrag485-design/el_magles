@@ -1766,7 +1766,7 @@ function updateModernPlayBtn(isPlaying) {
   const fullIcon=document.getElementById('reference-main-play-icon');
   if(fullIcon)fullIcon.textContent=isPlaying?'Ⅱ':'▶';
   const repeatBtn=document.getElementById('reference-repeat-btn');
-  if(repeatBtn)repeatBtn.style.color=STATE.modernPlayer.isLooping?'#2e8067':'#172c27';
+  if(repeatBtn)repeatBtn.style.color=STATE.modernPlayer.isLooping?'#d4af37':'#f5d77f';
     // شريط الصوت النحيف
   const sleekPlayIcon = document.getElementById('sleek-play-icon');
   if (sleekPlayIcon) sleekPlayIcon.textContent = isPlaying ? '⏸' : '▶';
