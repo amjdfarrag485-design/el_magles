@@ -1497,10 +1497,25 @@ function getSheikhAvatarSvg(name, isIbtehal = false) {
   const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="avatarBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#173c2a"/><stop offset="100%" stop-color="#07190f"/></linearGradient><linearGradient id="avatarGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5df9a"/><stop offset="100%" stop-color="#c59a2e"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#avatarBg)" stroke="url(#avatarGold)" stroke-width="3"/><text x="50" y="43" font-size="27" text-anchor="middle">' + icon + '</text><text x="50" y="73" font-size="13" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="#fff8e5">' + cleanName + '</text></svg>';
   return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
 }
+// Authentic archival portraits for the reciters and munshids in the library.
+const SHEIKH_PORTRAITS = [
+  { keys: ['الحصري'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hussary.jpg' },
+  { keys: ['المنشاوي'], url: 'https://www.aljazeera.net/wp-content/uploads/2022/04/2_auto_x2.jpg?resize=900%2C900' },
+  { keys: ['عبد الباسط','عبدالباسط'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdel_Basit_Abdel_Samad_1955.png' },
+  { keys: ['رفعت'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Muhammad_Rif%27at.jpg' },
+  { keys: ['مصطفى إسماعيل','مصطفى اسماعيل'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_مصطفى_إسماعيل.jpg' },
+  { keys: ['طه الفشني','طه الفشنى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Taha_al-Fashni01.jpg' },
+  { keys: ['النقشبندي','النقشبندى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Syed_Naqshbandi.jpg' },
+  { keys: ['نصر الدين طوبار','نصرالدين طوبار'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Nasr_El-Din_Tobar.jpg' },
+  { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://www.aljazeera.net/wp-content/uploads/2022/04/2-29.jpg?resize=1800%2C1280' },
+  { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://images.akhbarelyom.com/images/images/large/20250605183400581.jpg' },
+  { keys: ['السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
+  { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ali_Jaber.jpg' }
+];
 function getSheikhAvatarImage(name, isIbtehal = false) {
   const n = (name || '').replace(/الشيخ\s*/g, '').trim();
-  if (n.includes('المنشاوي')) return 'https://www.aljazeera.net/wp-content/uploads/2022/04/2_auto_x2.jpg?resize=900%2C900';
-  if (n.includes('رفعت')) return 'https://newsroom.info/Upload/libfiles/8/7/351.jpg';
+  const match = SHEIKH_PORTRAITS.find(item => item.keys.some(key => n.includes(key)));
+  if (match) return match.url;
   if (n.includes('عمران')) return 'https://i1.sndcdn.com/artworks-000443025276-sni8sp-t500x500.jpg';
   return getSheikhAvatarSvg(name, isIbtehal);
 }
