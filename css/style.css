@@ -1810,9 +1810,11 @@ select:-webkit-autofill {
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 .audio-card-artist {
   font-size: 0.8rem;
