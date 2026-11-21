@@ -951,9 +951,13 @@ async function getMp3QuranMoshafSources(reciter, mode, surahNumber) {
       hussary: ['محمود خليل الحصري']
     };
     const wanted = [reciter.name, ...(aliases[reciter.id] || [])].map(normalizeReciterName);
-    const match = (payload.reciters || []).find(item => {
+    const catalogue = payload.reciters || [];
+    const exactMatch = catalogue.find(item => wanted.includes(normalizeReciterName(item.name)));
+    const match = exactMatch || catalogue.find(item => {
       const name = normalizeReciterName(item.name);
-      return wanted.some(alias => alias && (name === alias || name.includes(alias) || alias.includes(name)));
+      // مطابقة جزئية محافظة للأسماء المركبة فقط، لتجنب اختيار قارئ آخر بالخطأ.
+      return wanted.some(alias => alias.length >= 10 && name.length >= 10 &&
+        (name.startsWith(alias) || alias.startsWith(name)));
     });
     if (!match) return [];
     const moshafList = (match.moshaf || []).filter(item => item.server);
@@ -966,7 +970,7 @@ async function getMp3QuranMoshafSources(reciter, mode, surahNumber) {
     return preferred
       .filter(item => {
         if (!item.surah_list) return true;
-        return String(item.surah_list).split(',').includes(String(surahNumber));
+        return String(item.surah_list).split(',').map(value => value.trim()).includes(String(surahNumber));
       })
       .map(item => item.server.endsWith('/') ? item.server : item.server + '/')
       .map(server => server + String(surahNumber).padStart(3, '0') + '.mp3');
