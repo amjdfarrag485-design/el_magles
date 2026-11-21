@@ -2375,3 +2375,75 @@ input, select, textarea {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* ═══ Home dashboard inspired by the supplied app reference ═══ */
+:root {
+  --dash-cream: #f7f1df;
+  --dash-paper: #fffaf0;
+  --dash-gold: #c9a33b;
+  --dash-deep-gold: #8f6c1f;
+  --dash-ink: #44371f;
+}
+body:has(.home-dashboard.active) { background: #f6f0df; color: var(--dash-ink); }
+.home-dashboard { background: linear-gradient(180deg,#fbf7eb 0%,#f4ecd7 100%); color:var(--dash-ink); padding:18px 15px 110px; }
+.home-dashboard .dash-header { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:8px 2px 12px; }
+.dash-greeting .dash-kicker,.dash-kicker { display:block; color:#9a7b37; font-size:.78rem; font-weight:700; letter-spacing:.02em; }
+.dash-greeting h1 { margin:3px 0 2px; color:#9b792d; font-family:var(--font-uthmani,serif); font-size:2.05rem; line-height:1.3; }
+.dash-greeting p { margin:0; color:#887b61; font-size:.8rem; }
+.dash-brand-mark { width:54px;height:54px;display:grid;place-items:center;border:1.5px solid #c7a64d;border-radius:50%;color:#a9842d;font-size:2rem;font-weight:800;background:linear-gradient(145deg,#fffdf6,#eee1bb);box-shadow:0 4px 14px #a88b3b22; }
+.dash-date-row { display:flex; align-items:center; gap:9px; color:#95815a; font-size:.76rem; margin:0 2px 14px; }
+.dash-date-dot { color:#c5a34b; }
+.dash-prayer-card { border:1px solid #d5bd78; border-radius:22px; padding:16px 14px 12px; background:linear-gradient(135deg,#fffdf6 0%,#f2e5bf 100%); box-shadow:0 7px 20px #8d6e2417; color:#514323; }
+.dash-prayer-top,.dash-prayer-main { display:flex;justify-content:space-between;align-items:center;gap:8px; }
+.dash-pill { background:#efe2bd;color:#8a6926;padding:6px 11px;border-radius:30px;font-size:.75rem;font-weight:800; }
+.dash-location { color:#95815a;font-size:.7rem; }
+.dash-prayer-main { padding:15px 2px 13px; }
+.dash-muted { font-size:.73rem;color:#9b895e; }
+.dash-next-name { font-size:1.12rem;font-weight:800;color:#604b1e;margin-top:4px; }
+.dash-countdown { font-size:.73rem;color:#9a8350;margin-top:4px; }
+.dash-next-time { font-size:2rem;font-weight:800;color:#9d7828;direction:ltr;font-variant-numeric:tabular-nums; }
+.dash-prayer-times { display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;border-top:1px solid #dfcea0;padding-top:10px; }
+.dash-prayer-times .mini-prayer-item { display:flex;flex-direction:column;align-items:center;gap:3px;background:#fffaf0b8;border-radius:10px;padding:7px 1px;min-width:0; }
+.dash-prayer-times .mini-p-name { font-size:.61rem;color:#8c7950; }
+.dash-prayer-times .mini-p-time { font-size:.67rem;font-weight:800;color:#5f4b24;direction:ltr; }
+.dash-prayer-times .mini-prayer-item.active { background:#d7bd70;color:#fff; }
+.dash-adhan-toggle { width:100%;margin-top:10px;border:1px solid #d4bd7d;border-radius:12px;background:#fff9e9;color:#846526;padding:9px;font:inherit;font-size:.77rem;font-weight:800; }
+.dash-section { margin-top:22px; }
+.dash-section-heading { display:flex;justify-content:space-between;align-items:center;margin-bottom:11px; }
+.dash-section-heading h2 { margin:3px 0 0;font-size:1.08rem;color:#554322; }
+.dash-heading-icon { color:#c5a34b;font-size:1.35rem; }
+.dash-shortcuts { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px; }
+.dash-shortcut,.dash-feature-card { display:flex;flex-direction:column;align-items:flex-start;text-align:right;border:1px solid #e0d1a8;border-radius:16px;background:linear-gradient(145deg,#fffdf7,#f5ecd4);padding:12px 10px;min-height:104px;color:#5b4a2a;box-shadow:0 4px 12px #9173310d;font:inherit; }
+.dash-shortcut>span { font-size:1.45rem;margin-bottom:7px; }
+.dash-shortcut b,.dash-feature-card b { font-size:.79rem; }
+.dash-shortcut small,.dash-feature-card small { color:#9b8966;font-size:.65rem;margin-top:4px; }
+.dash-daily-card { margin-top:18px;padding:15px;border-radius:19px;border:1px solid #d8c38a;background:linear-gradient(145deg,#fffdf6,#f2e5c2);box-shadow:0 5px 16px #91733112;color:#584824; }
+.dash-daily-heading { display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.85rem;color:#8b6b28; }
+.dash-daily-heading span:last-child { font-size:.65rem;background:#ead9a8;border-radius:20px;padding:5px 8px; }
+.dash-daily-title { margin-top:13px;color:#9b792e;font-size:.82rem;font-weight:800; }
+.dash-dua-text { margin-top:6px;font-family:var(--font-uthmani,serif);font-size:1.15rem;line-height:1.9;color:#594a2e; }
+.dash-daily-reward { font-size:.72rem;color:#98845b;line-height:1.7;margin-top:5px; }
+.dash-wird-row { display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px dashed #d8c58f;margin-top:12px;padding-top:10px;font-size:.72rem;color:#97742e; }
+.dash-wird-row b { color:#66532d;text-align:left; }
+.dash-text-link { border:0;background:transparent;color:#a17d2c;font:inherit;font-size:.75rem;font-weight:800; }
+.dash-reciter-row { display:flex;gap:10px;overflow-x:auto;padding:2px 1px 9px;scroll-snap-type:x mandatory; }
+.dash-reciter { flex:0 0 116px;display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid #dfd0a8;border-radius:16px;background:linear-gradient(160deg,#fffdf7,#eee2c5);padding:10px 7px;color:#5b4a2a;font:inherit;scroll-snap-align:start; }
+.dash-reciter-art { width:62px;height:62px;border-radius:50%;display:grid;place-items:center;border:2px solid #c7a44c;background:linear-gradient(145deg,#e9d8a6,#fff9e8);font-size:1.65rem;box-shadow:0 3px 10px #9c7b3020; }
+.dash-reciter b { font-size:.68rem;text-align:center;line-height:1.5; }
+.dash-reciter small { color:#9a865d;font-size:.62rem; }
+.dash-feature-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:16px; }
+.dash-feature-card { min-height:100px; }
+.dash-feature-card>span { font-size:1.35rem;margin-bottom:6px; }
+.dash-bottom-nav { background:#fffaf0!important;border-top:1px solid #e4d5ad!important;box-shadow:0 -5px 18px #856b2812!important; }
+.dash-bottom-nav .nav-tab-item { color:#99845b!important; }
+.dash-bottom-nav .nav-tab-item.active { color:#a27c27!important; }
+.dash-bottom-nav .nav-tab-label { font-size:.67rem; }
+@media (max-width:390px) {
+ .home-dashboard {padding-inline:11px}
+ .dash-prayer-times {gap:2px}
+ .dash-prayer-times .mini-p-name {font-size:.56rem}
+ .dash-prayer-times .mini-p-time {font-size:.61rem}
+ .dash-shortcuts {gap:7px}
+ .dash-shortcut {padding:10px 8px;min-height:98px}
+}
