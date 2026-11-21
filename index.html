@@ -51,8 +51,8 @@
     </header>
 
     <div class="ref-top-actions">
-      <button class="ref-top-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all')"><span class="ref-top-icon">🎙️</span><b>الابتهالات</b></button>
       <button class="ref-top-card" onclick="navigateTo('stories')"><span class="ref-top-icon">▶</span><b>المرئيات</b></button>
+      <button class="ref-top-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all')"><span class="ref-top-icon">🎙️</span><b>الابتهالات</b></button>
     </div>
 
     <button class="ref-new-readers" onclick="navigateTo('reciters')">
@@ -64,14 +64,13 @@
     <section class="ref-home-section">
       <div class="ref-section-title"><h2>قُرّاء آخرون</h2><button onclick="navigateTo('reciters')" aria-label="بحث عن قارئ">⌕</button></div>
       <div class="ref-reader-strip">
-        <button class="ref-reader-card" onclick="openReciterInReader('minshawi')"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمد صديق المنشاوي</b></button>
-        <button class="ref-reader-card" onclick="openReciterInReader('abdulbasit')"><img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Abdel_Basit_Abdel_Samad_1955.png" alt="عبد الباسط عبد الصمد" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>عبد الباسط عبد الصمد</b></button>
         <button class="ref-reader-card" onclick="openReciterInReader('banna')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/President_Sadat_welcomes_Sheikh_Mahmoud_Ali_al-Banna_at_a_religious_celebration.jpg" alt="محمود علي البنا" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمود علي البنا</b></button>
+        <button class="ref-reader-card" onclick="openReciterInReader('abdulbasit')"><img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Abdel_Basit_Abdel_Samad_1955.png" alt="عبد الباسط عبد الصمد" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>عبد الباسط عبد الصمد</b></button>
+        <button class="ref-reader-card" onclick="openReciterInReader('bahtimi')"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kamil_Yusuf_Al-Bahtimi.jpg" alt="كامل يوسف البهتيمي" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>كامل يوسف البهتيمي</b></button>
+        <button class="ref-reader-card" onclick="openReciterInReader('minshawi')"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمد صديق المنشاوي</b></button>
         <button class="ref-reader-card" onclick="openReciterInReader('hussary')"><img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Hussary.jpg" alt="محمود خليل الحصري" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>محمود خليل الحصري</b></button>
         <button class="ref-reader-card" onclick="openReciterInReader('rifaat')"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Great_Rifat.jpg" alt="الشيخ محمد رفعت" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>الشيخ محمد رفعت</b></button>
-        <button class="ref-reader-card" onclick="openReciterInReader('bahtimi')"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kamil_Yusuf_Al-Bahtimi.jpg" alt="كامل يوسف البهتيمي" loading="lazy" onerror="this.src='icons/icon-192x192.png'"><b>كامل يوسف البهتيمي</b></button>
-      </div>
-    </section>
+      </div>    </section>
 
     <section class="ref-home-section ref-featured-audio">
       <div class="ref-section-title"><h2>تلاوات</h2><button onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('rare_all')">عرض الكل ←</button></div>
@@ -636,12 +635,12 @@
   <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الـ 5 الرئيسية)                     -->
   <!-- ========================================================================= -->
   <nav class="bottom-nav-bar ref-bottom-nav" id="bottom-nav">
-    <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')"><span class="nav-tab-icon">◉</span><span class="nav-tab-label">الإذاعات</span></button>
-    <button class="nav-tab-item" data-page="more" onclick="navigateTo('more')"><span class="nav-tab-icon">•••</span><span class="nav-tab-label">المزيد</span></button>
-    <button class="nav-tab-item" data-page="library" onclick="navigateTo('library')"><span class="nav-tab-icon">▤</span><span class="nav-tab-label">مكتبتي</span></button>
-    <button class="nav-tab-item" data-page="assistants" onclick="navigateTo('assistants')"><span class="nav-tab-icon">☏</span><span class="nav-tab-label">المساعدين</span></button>
-    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')"><span class="nav-tab-icon">♧</span><span class="nav-tab-label">الأرشيف</span></button>
     <button class="nav-tab-item active" data-page="home" onclick="navigateTo('home')"><span class="nav-tab-icon">⌂</span><span class="nav-tab-label">الرئيسية</span></button>
+    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')"><span class="nav-tab-icon">♧</span><span class="nav-tab-label">الأرشيف</span></button>
+    <button class="nav-tab-item" data-page="assistants" onclick="navigateTo('assistants')"><span class="nav-tab-icon">☏</span><span class="nav-tab-label">المساعدين</span></button>
+    <button class="nav-tab-item" data-page="library" onclick="navigateTo('library')"><span class="nav-tab-icon">▤</span><span class="nav-tab-label">مكتبتي</span></button>
+    <button class="nav-tab-item" data-page="more" onclick="navigateTo('more')"><span class="nav-tab-icon">•••</span><span class="nav-tab-label">المزيد</span></button>
+    <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')"><span class="nav-tab-icon">◉</span><span class="nav-tab-label">الإذاعات</span></button>
   </nav>
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
