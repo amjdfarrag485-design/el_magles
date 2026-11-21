@@ -497,6 +497,32 @@ const RARE_RECITATIONS_DATA = [
     duration: "00:45"
   },
 
+  // ─── الشيخ السيد متولي عبد العال: تسجيلات MP3 مباشرة ───
+  {
+    id: "rare_sayed_metwally_fatiha",
+    category: "sayed_metwally",
+    title: "سورة الفاتحة",
+    reciter: "الشيخ السيد متولي عبد العال",
+    desc: "تلاوة برواية حفص عن عاصم بجودة MP3",
+    url: "https://media.way2quran.com/alsayed-metwally/hafs-an-asim/001.mp3",
+    badge: "تلاوة نادرة",
+    sourceTag: "أرشيف صوتي",
+    versionTag: "Way2Quran",
+    duration: "غير محدد"
+  },
+  {
+    id: "rare_sayed_metwally_yusuf",
+    category: "sayed_metwally",
+    title: "سورة يوسف",
+    reciter: "الشيخ السيد متولي عبد العال",
+    desc: "تلاوة برواية حفص عن عاصم بجودة MP3",
+    url: "https://media.way2quran.com/alsayed-metwally/hafs-an-asim/012.mp3",
+    badge: "تلاوة نادرة",
+    sourceTag: "أرشيف صوتي",
+    versionTag: "Way2Quran",
+    duration: "غير محدد"
+  },
+
   // ─── 1. الشيخ محمد صديق المنشاوي (تسجيلات ونوادر خارجية خاشعة) ───
   {
     id: "rare_minshawi_hashr",
