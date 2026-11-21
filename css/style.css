@@ -2256,3 +2256,122 @@ select:-webkit-autofill {
   font-size: 0.9rem;
 }
 
+
+
+/* ═══════════════════════════════════════════════════════════════
+   تحسينات الواجهة - إصدار تجريبي مستقل
+   هوية المجلس: أسود ملكي + ذهبي هادئ
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --gold: #c9a84c;
+  --gold-light: #f0d98a;
+  --gold-dark: #8f7130;
+  --border-gold: rgba(201, 168, 76, .27);
+  --shadow-gold: 0 8px 28px rgba(201, 168, 76, .12);
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+body {
+  background:
+    radial-gradient(ellipse at 50% -12%, rgba(201,168,76,.10), transparent 42%),
+    var(--bg-primary);
+  letter-spacing: 0;
+}
+.brand-top-banner {
+  position: relative;
+  overflow: hidden;
+  padding: 28px 18px 22px;
+  margin: 0 -2px 18px;
+  border: 1px solid rgba(201,168,76,.22);
+  border-top: 0;
+  border-radius: 0 0 26px 26px;
+  background: linear-gradient(145deg, rgba(35,31,20,.96), rgba(17,17,17,.98) 68%);
+  box-shadow: 0 12px 32px rgba(0,0,0,.25);
+}
+.brand-top-banner::before,
+.brand-top-banner::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(201,168,76,.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.brand-top-banner::before { inset: -90px auto auto -45px; }
+.brand-top-banner::after { inset: auto -65px -112px auto; }
+.brand-title-box, .brand-bismillah { position: relative; z-index: 1; }
+.brand-main-title {
+  color: var(--gold-light);
+  text-shadow: 0 3px 24px rgba(201,168,76,.2);
+  letter-spacing: .04em;
+}
+.brand-subtitle {
+  color: #c7b98f;
+  letter-spacing: .04em;
+}
+.brand-bismillah {
+  margin-top: 12px;
+  color: rgba(240,217,138,.82);
+}
+.card {
+  border-color: rgba(201,168,76,.20);
+  background: linear-gradient(155deg, rgba(31,30,25,.98), rgba(24,24,24,.98) 65%);
+  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+}
+.home-grid { gap: 11px; }
+.home-grid-item {
+  min-height: 142px;
+  border-radius: 18px;
+  padding: 17px 15px;
+  background: linear-gradient(145deg, #222018, #191919 72%);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.home-grid-item:active {
+  transform: scale(.975);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201,168,76,.08);
+}
+.home-grid-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(201,168,76,.25);
+  border-radius: 14px;
+  background: rgba(201,168,76,.09);
+}
+.home-grid-name { color: #f4e6bd; font-weight: 800; }
+.home-grid-desc { color: #aaa49a; line-height: 1.55; }
+.home-section-title {
+  padding-inline-start: 10px;
+  border-right: 3px solid var(--gold);
+}
+button, .action-btn, .nav-tab-item { touch-action: manipulation; }
+button:focus-visible, .card:focus-visible, a:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
+input, select, textarea {
+  border-radius: 12px;
+}
+.page-header {
+  backdrop-filter: blur(12px);
+}
+@media (max-width: 360px) {
+  .home-grid { gap: 8px; }
+  .home-grid-item { min-height: 132px; padding: 13px 11px; }
+  .home-grid-desc { font-size: .78rem; }
+  .mini-prayer-grid { gap: 3px; }
+  .mini-p-name { font-size: .68rem; }
+  .mini-p-time { font-size: .76rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
