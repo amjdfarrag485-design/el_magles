@@ -1491,6 +1491,33 @@ function showFloatingPlayerForRadio() {
   updateModernPlayBtn(true);
 }
 
+function updateCouncilMediaSession(track) {
+  if (!('mediaSession' in navigator) || !track) return;
+  try {
+    const artwork = new URL('icons/icon-512x512.png', window.location.href).href;
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: track.title || 'المجلس',
+      artist: track.reciter || track.sheikh || 'الموسوعة القرآنية والابتهالات',
+      album: 'المجلس',
+      artwork: [
+        { src: artwork, sizes: '512x512', type: 'image/png' }
+      ]
+    });
+    navigator.mediaSession.setActionHandler('play', () => toggleModernPlayPause());
+    navigator.mediaSession.setActionHandler('pause', () => toggleModernPlayPause());
+    navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+      if (STATE.globalAudio) STATE.globalAudio.currentTime = Math.max(0, STATE.globalAudio.currentTime - (details.seekOffset || 10));
+    });
+    navigator.mediaSession.setActionHandler('seekforward', (details) => {
+      if (STATE.globalAudio && Number.isFinite(STATE.globalAudio.duration)) {
+        STATE.globalAudio.currentTime = Math.min(STATE.globalAudio.duration, STATE.globalAudio.currentTime + (details.seekOffset || 10));
+      }
+    });
+  } catch (error) {
+    console.warn('Media Session metadata unavailable:', error);
+  }
+}
+
 function playModernTrack(track) {
   if (!track || !track.url) return;
   if (!STATE.globalAudio) initAudioElements();
@@ -1508,6 +1535,7 @@ function playModernTrack(track) {
   }
 
   STATE.modernPlayer.track = track;
+  updateCouncilMediaSession(track);
 
   // تهيئة عنصر الصوت الرئيسي
   STATE.globalAudio.preload = 'metadata';
@@ -1603,6 +1631,9 @@ function toggleGlobalAudioPlay() {
 
 function updateModernPlayBtn(isPlaying) {
   STATE.isGlobalPlaying = isPlaying;
+  if ('mediaSession' in navigator) {
+    try { navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused'; } catch (_) {}
+  }
 
   // شريط الصوت النحيف
   const sleekPlayIcon = document.getElementById('sleek-play-icon');
