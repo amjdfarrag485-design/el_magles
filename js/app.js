@@ -1556,6 +1556,29 @@ function getSheikhAvatarSvg(name, isIbtehal = false) {
   return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%231c261c"/><stop offset="100%" stop-color="%230c120c"/></linearGradient><linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23f5d77f"/><stop offset="100%" stop-color="%23d4af37"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(%23bg)" stroke="url(%23gold)" stroke-width="3"/><text x="50" y="44" font-size="28" text-anchor="middle">${icon}</text><text x="50" y="74" font-size="14" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="%23ffffff">${cleanName}</text></svg>`;
 }
 
+// صور أرشيفية موثقة للقراء والمبتهلين؛ نستخدم الاسم الكامل لتفادي خلط أصحاب الأسماء المتشابهة.
+const SHEIKH_PORTRAITS = [
+  { keys: ['الحصري'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hussary.jpg' },
+  { keys: ['المنشاوي'], url: 'https://www.aljazeera.net/wp-content/uploads/2022/04/2_auto_x2.jpg?resize=900%2C900' },
+  { keys: ['عبد الباسط','عبدالباسط'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdel_Basit_Abdel_Samad_1955.png' },
+  { keys: ['محمد رفعت','رفعت'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Muhammad_Rif%27at.jpg' },
+  { keys: ['مصطفى إسماعيل','مصطفى اسماعيل'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_مصطفى_إسماعيل.jpg' },
+  { keys: ['طه الفشني','طه الفشنى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Taha_al-Fashni01.jpg' },
+  { keys: ['النقشبندي','النقشبندى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Syed_Naqshbandi.jpg' },
+  { keys: ['نصر الدين طوبار','نصرالدين طوبار'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Nasr_El-Din_Tobar.jpg' },
+  { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://www.aljazeera.net/wp-content/uploads/2022/04/2-29.jpg?resize=1800%2C1280' },
+  { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://images.akhbarelyom.com/images/images/large/20250605183400581.jpg' },
+  { keys: ['السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
+  { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ali_Jaber.jpg' },
+  { keys: ['محمد عمران','عمران'], url: 'https://i1.sndcdn.com/artworks-000443025276-sni8sp-t500x500.jpg' }
+];
+
+function getSheikhAvatarImage(name, isIbtehal = false) {
+  const normalized = (name || '').replace(/الشيخ\\s*/g, '').trim();
+  const match = SHEIKH_PORTRAITS.find(item => item.keys.some(key => normalized.includes(key)));
+  return match ? match.url : getSheikhAvatarSvg(name, isIbtehal);
+}
+
 function showFloatingPlayerForRadio() {
   const sleek = document.getElementById('sleek-bottom-player');
   if (sleek) {
@@ -1649,7 +1672,7 @@ function playModernTrack(track) {
     const timeEl = document.getElementById('sleek-player-time');
     if (timeEl) timeEl.textContent = `00:00 / ${track.duration || '--:--'}`;
 
-    const avatarSvg = track.avatar || getSheikhAvatarSvg(track.reciter || track.sheikh, !!track.lyricsQuote);
+    const avatarSvg = track.avatar || getSheikhAvatarImage(track.reciter || track.sheikh, !!track.lyricsQuote);
     const avatarEl = document.getElementById('sleek-player-avatar');
     if (avatarEl) avatarEl.src = avatarSvg;
 
@@ -2049,7 +2072,7 @@ function renderRareAndIbtehalatList(filterCat, searchStr) {
 
   container.innerHTML = filtered.map(item => {
     const isIbtehal = !!(item.lyricsQuote || item.category === 'tobour' || item.category === 'naqshbandi' || item.category === 'fashni' || item.category === 'omran_fayoumi' || item.category === 'ramadan');
-    const avatar = getSheikhAvatarSvg(item.reciter, isIbtehal);
+    const avatar = getSheikhAvatarImage(item.reciter, isIbtehal);
     const isCurPlaying = STATE.modernPlayer.track && STATE.modernPlayer.track.id === item.id && STATE.isGlobalPlaying;
 
     return `
