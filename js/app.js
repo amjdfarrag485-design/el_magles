@@ -1551,9 +1551,10 @@ function updateCairoRadioUI(isPlaying) {
 // ═══════════════════════════════════════════════════════════════
 
 function getSheikhAvatarSvg(name, isIbtehal = false) {
-  const icon = isIbtehal ? '🎙️' : '📖';
-  const cleanName = (name || '').replace(/الشيخ\s*/g, '').trim().split(' ')[0] || 'المجلس';
-  return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%231c261c"/><stop offset="100%" stop-color="%230c120c"/></linearGradient><linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23f5d77f"/><stop offset="100%" stop-color="%23d4af37"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(%23bg)" stroke="url(%23gold)" stroke-width="3"/><text x="50" y="44" font-size="28" text-anchor="middle">${icon}</text><text x="50" y="74" font-size="14" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="%23ffffff">${cleanName}</text></svg>`;
+  const cleanName = (name || '').replace('الشيخ', '').trim().split(' ').slice(0, 2).join(' ') || 'المجلس';
+  const safeName = cleanName.replace(/[&<>]/g, '');
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#244d40"/><stop offset="100%" stop-color="#0c211a"/></linearGradient><linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5df9a"/><stop offset="100%" stop-color="#c59a2e"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#bg)" stroke="url(#gold)" stroke-width="3"/><circle cx="50" cy="36" r="13" fill="#d9cda9"/><path d="M23 82c2-18 13-27 27-27s25 9 27 27" fill="#d9cda9"/><text x="50" y="94" font-size="8" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="#fff8e5">' + safeName + '</text></svg>';
+  return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
 }
 
 // صور أرشيفية موثقة للقراء والمبتهلين؛ نستخدم الاسم الكامل لتفادي خلط أصحاب الأسماء المتشابهة.
@@ -1630,6 +1631,41 @@ function updateCouncilMediaSession(track) {
   }
 }
 
+function updateCouncilExpandedPlayer() {
+  const track = STATE.modernPlayer.track;
+  if (!track) return;
+  const put = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value || ''; };
+  put('council-player-title', track.title || 'تسجيل من مكتبة المجلس');
+  put('council-player-reciter', track.reciter || track.sheikh || 'إذاعة القرآن الكريم');
+  put('council-player-source', track.sourceTag || track.badge || (track.category === 'radio' ? 'بث مباشر من القاهرة' : 'من مكتبة المجلس'));
+  put('council-player-track-number', track.category === 'radio' ? 'إذاعة القرآن الكريم' : 'استماع من مكتبة المجلس');
+  const art = document.getElementById('council-player-art');
+  if (art) {
+    art.src = track.avatar || getSheikhAvatarImage(track.reciter || track.sheikh || 'المجلس', !!track.lyricsQuote);
+    art.onerror = () => { art.onerror = null; art.src = getSheikhAvatarSvg(track.reciter || track.sheikh || 'المجلس'); };
+  }
+}
+function onCouncilPlayerSeekInput(value) {
+  const audio = STATE.globalAudio;
+  if (!audio || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+  const el = document.getElementById('council-player-current');
+  if (el) el.textContent = formatAudioTime((Number(value) / 100) * audio.duration);
+}
+function onCouncilPlayerSeekChange(value) {
+  const audio = STATE.globalAudio;
+  if (!audio || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+  audio.currentTime = (Number(value) / 100) * audio.duration;
+  onModernAudioTimeUpdate();
+}
+function playAdjacentAudioTrack(direction) {
+  const items = getAllAudioItems();
+  const current = STATE.modernPlayer.track;
+  if (!items.length || !current) return;
+  const index = items.findIndex(item => item.id === current.id);
+  if (index < 0) return;
+  playModernTrack(items[(index + direction + items.length) % items.length]);
+}
+
 function playModernTrack(track) {
   if (!track || !track.url) return;
   if (!STATE.globalAudio) initAudioElements();
@@ -1659,6 +1695,8 @@ function playModernTrack(track) {
     showToast('جاري بدء تشغيل التسجيل المبارك...');
   });
 
+  updateCouncilExpandedPlayer();
+
   // تحديث وإظهار شريط الصوت النحيف المدمج للأندرويد والآيفون
   const sleek = document.getElementById('sleek-bottom-player');
   if (sleek) {
@@ -1675,7 +1713,7 @@ function playModernTrack(track) {
 
     const avatarSvg = track.avatar || getSheikhAvatarImage(track.reciter || track.sheikh, !!track.lyricsQuote);
     const avatarEl = document.getElementById('sleek-player-avatar');
-    if (avatarEl) avatarEl.src = avatarSvg;
+    if (avatarEl) { avatarEl.src = avatarSvg; avatarEl.onerror = () => { avatarEl.onerror = null; avatarEl.src = getSheikhAvatarSvg(track.reciter || track.sheikh || 'المجلس'); }; }
 
     const fillEl = document.getElementById('sleek-player-progress-fill');
     if (fillEl) fillEl.style.width = '0%';
@@ -1750,6 +1788,8 @@ function updateModernPlayBtn(isPlaying) {
   // شريط الصوت النحيف
   const sleekPlayIcon = document.getElementById('sleek-play-icon');
   if (sleekPlayIcon) sleekPlayIcon.textContent = isPlaying ? '⏸' : '▶';
+  const expandedPlay = document.getElementById('council-player-play');
+  if (expandedPlay) expandedPlay.textContent = isPlaying ? 'Ⅱ' : '▶';
 
   // عناصر المشغل القديمة إن وُجدت
   const mainBtnIcon = document.getElementById('player-play-icon');
@@ -1864,6 +1904,13 @@ function onModernAudioTimeUpdate() {
     sleekFill.style.width = `${pct}%`;
   }
 
+  const expandedRange = document.getElementById('council-player-range');
+  const expandedCurrent = document.getElementById('council-player-current');
+  const expandedRemaining = document.getElementById('council-player-remaining');
+  if (expandedCurrent) expandedCurrent.textContent = formatAudioTime(cur);
+  if (expandedRemaining) expandedRemaining.textContent = (dur && Number.isFinite(dur)) ? '-' + formatAudioTime(Math.max(0, dur - cur)) : '-00:00';
+  if (expandedRange && dur && Number.isFinite(dur) && dur > 0 && !expandedRange.matches(':active')) expandedRange.value = (cur / dur) * 100;
+
   // دعم المشغل القديم إن وجد
   const curTimeEl = document.getElementById('player-current-time');
   if (curTimeEl) curTimeEl.textContent = formatAudioTime(cur);
@@ -1899,13 +1946,17 @@ function onModernAudioLoadedMetadata() {
 function minimizeModernPlayer() {
   const sleek = document.getElementById('sleek-bottom-player');
   if (sleek) sleek.style.display = 'flex';
+  const screen = document.getElementById('council-player-screen');
+  if (screen) { screen.classList.remove('is-open'); screen.setAttribute('aria-hidden', 'true'); }
   const full = document.getElementById('unified-modern-player');
   if (full) full.style.display = 'none';
 }
-
 function expandModernPlayer() {
-  const sleek = document.getElementById('sleek-bottom-player');
-  if (sleek) sleek.style.display = 'flex';
+  if (!STATE.modernPlayer.track) return;
+  updateCouncilExpandedPlayer();
+  onModernAudioTimeUpdate();
+  const screen = document.getElementById('council-player-screen');
+  if (screen) { screen.classList.add('is-open'); screen.setAttribute('aria-hidden', 'false'); }
 }
 
 function closeModernPlayer() {
@@ -1925,6 +1976,9 @@ function closeModernPlayer() {
   // إخفاء شريط الصوت النحيف فوراً
   const sleek = document.getElementById('sleek-bottom-player');
   if (sleek) sleek.style.display = 'none';
+
+  const screen = document.getElementById('council-player-screen');
+  if (screen) { screen.classList.remove('is-open'); screen.setAttribute('aria-hidden', 'true'); }
 
   const full = document.getElementById('unified-modern-player');
   if (full) full.style.display = 'none';
@@ -2079,7 +2133,7 @@ function renderRareAndIbtehalatList(filterCat, searchStr) {
     return `
       <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${item.id}" onclick="playAudioItem('${item.id}')">
         <div class="audio-card-avatar">
-          <img src="${avatar}" alt="${item.reciter}">
+          <img src="${avatar}" alt="${item.reciter}" loading="lazy" onerror="this.onerror=null;this.src=getSheikhAvatarSvg(this.alt)">
         </div>
         <div class="audio-card-meta">
           <div class="audio-card-title">${item.title}</div>
