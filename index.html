@@ -90,16 +90,16 @@
 
     <section class="ref-home-section ref-featured-audio">
       <div class="ref-section-title"><h2>تلاوات</h2><button onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('rare_all')">عرض الكل ←</button></div>
-      <button class="ref-recitation-card" onclick="playAudioItem('rare_minshawi_hashr')">
+      <div class="ref-recitation-card" onclick="playAudioItem('rare_minshawi_hashr')">
         <span class="ref-reciter-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="" loading="lazy"></span>
         <span class="ref-recitation-copy"><small>تلاوات</small><b>الشيخ محمد صديق المنشاوي</b><span>سورة الحشر والفجر • محفل الكويت</span></span>
-        <span class="ref-play">▶</span>
-      </button>
-      <button class="ref-recitation-card" onclick="playAudioItem('rare_minshawi_yusuf')">
+        <button class="ref-save" onclick="event.stopPropagation();toggleLibraryItem('rare_minshawi_hashr')" aria-label="حفظ في مكتبتي">☆</button><span class="ref-play">▶</span>
+      </div>
+      <div class="ref-recitation-card" onclick="playAudioItem('rare_minshawi_yusuf')">
         <span class="ref-reciter-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="" loading="lazy"></span>
         <span class="ref-recitation-copy"><small>تلاوات</small><b>الشيخ محمد صديق المنشاوي</b><span>سورة يوسف • تلاوة خاشعة</span></span>
-        <span class="ref-play">▶</span>
-      </button>
+        <button class="ref-save" onclick="event.stopPropagation();toggleLibraryItem('rare_minshawi_yusuf')" aria-label="حفظ في مكتبتي">☆</button><span class="ref-play">▶</span>
+      </div>
     </section>
 
     <section class="ref-home-section">
