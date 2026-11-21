@@ -2531,3 +2531,8 @@ body.ref-night .ref-bottom-nav { background:#1c201b!important;border-color:#6d60
  .ref-new-copy b { font-size:1.4rem; }
  .ref-bottom-nav .nav-tab-label { font-size:.57rem; }
 }
+
+
+.ref-recitation-card { cursor:pointer; }
+.ref-save { width:30px;height:30px;border:1px solid #d9c57f;border-radius:50%;background:#fff9e8;color:#b5943c;font-size:1.1rem;flex-shrink:0; }
+.ref-recitation-card .ref-play { border:0; }
