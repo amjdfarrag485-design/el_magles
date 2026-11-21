@@ -1492,12 +1492,12 @@ function updateCairoRadioUI(isPlaying) {
 
 function getSheikhAvatarSvg(name, isIbtehal = false) {
   const icon = isIbtehal ? '🎙️' : '📖';
-  const cleanName = (name || '').replace(/الشيخ\\s*/g, '').trim().split(' ')[0] || 'المجلس';
+  const cleanName = (name || '').replace(/الشيخ\s*/g, '').trim().split(' ')[0] || 'المجلس';
   const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="avatarBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#173c2a"/><stop offset="100%" stop-color="#07190f"/></linearGradient><linearGradient id="avatarGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5df9a"/><stop offset="100%" stop-color="#c59a2e"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#avatarBg)" stroke="url(#avatarGold)" stroke-width="3"/><text x="50" y="43" font-size="27" text-anchor="middle">' + icon + '</text><text x="50" y="73" font-size="13" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="#fff8e5">' + cleanName + '</text></svg>';
   return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
 }
 function getSheikhAvatarImage(name, isIbtehal = false) {
-  const n = (name || '').replace(/الشيخ\\s*/g, '').trim();
+  const n = (name || '').replace(/الشيخ\s*/g, '').trim();
   if (n.includes('المنشاوي')) return 'https://www.aljazeera.net/wp-content/uploads/2022/04/2_auto_x2.jpg?resize=900%2C900';
   if (n.includes('رفعت')) return 'https://newsroom.info/Upload/libfiles/8/7/351.jpg';
   if (n.includes('عمران')) return 'https://i1.sndcdn.com/artworks-000443025276-sni8sp-t500x500.jpg';
