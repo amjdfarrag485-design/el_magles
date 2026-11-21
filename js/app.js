@@ -1513,7 +1513,10 @@ const SHEIKH_PORTRAITS = [
   { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_علي_جابر.png' },
   { keys: ['محمد سلامة','محمد سلامه'], url: 'https://img.youm7.com/xlarge/202403201123302330.jpg' },
   { keys: ['محمد الفيومي','محمد الفيومى'], url: 'https://cdn.al-ain.com/images/2017/6/03/78-181934-mohamed-alfayoumi-egypt-blind_700x400.jpeg' },
-  { keys: ['محمد عمران','محمد أحمد عمران'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/10/2078766_0.jpeg' }
+  { keys: ['محمد عمران','محمد أحمد عمران'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/10/2078766_0.jpeg' },
+  { keys: ['محمد الفيومي','محمد الفيومى'], url: 'https://cdn.al-ain.com/images/2017/6/03/78-181934-mohamed-alfayoumi-egypt-blind_700x400.jpeg' },
+  { keys: ['عبد العزيز محمود','عبدالعزيز محمود'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdel_Aziz_Mahmoud.jpg' },
+  { keys: ['محمد الفيومي وسيد النقشبندي','الفيومي وبطانته'], url: 'https://cdn.al-ain.com/images/2017/6/03/78-181934-mohamed-alfayoumi-egypt-blind_700x400.jpeg' }
 ];
 function getSheikhAvatarImage(name, isIbtehal = false) {
   const n = (name || '').replace(/الشيخ\s*/g, '').trim();
