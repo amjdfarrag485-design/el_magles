@@ -16,7 +16,7 @@
 // 1. أسماء التخزين المؤقت (Cache Names)
 // ═══════════════════════════════════════════════════
 
-const CACHE_NAME = 'el-magles-v25';
+const CACHE_NAME = 'el-magles-v26';
 const STATIC_CACHE = 'el-magles-static-v12';
 const DYNAMIC_CACHE = 'el-magles-dynamic-v12';
 
