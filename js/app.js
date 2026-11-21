@@ -922,6 +922,7 @@ async function fallbackLoadSurahVerses(surahNumber) {
 // ═══════════════════════════════════════════════════════════════
 // كتالوج MP3Quran الرسمي: اختيار تسجيلات القارئ نفسه فقط ومنع تشغيل شيخ آخر كبديل.
 let mp3QuranRecitersPromise = null;
+let mp3QuranCatalogAvailable = false;
 function normalizeReciterName(value) {
   return String(value || '')
     .replace(/[\u064B-\u065F\u0670]/g, '')
@@ -942,6 +943,7 @@ async function getMp3QuranMoshafSources(reciter, mode, surahNumber) {
         });
     }
     const payload = await mp3QuranRecitersPromise;
+    mp3QuranCatalogAvailable = Array.isArray(payload.reciters);
     const aliases = {
       rifaat: ['محمد رفعت'],
       bahtimi: ['كامل يوسف البهتيمي', 'كامل يوسف البهتيمى'],
@@ -1023,7 +1025,11 @@ async function loadSurahAudio(surahNumber) {
   if (requestId !== STATE.audioRequestId) return;
 
   const modeSupported = mode === 'mojawwad' ? reciter.supportsMojawwad !== false : reciter.supportsMurattal !== false;
-  const configuredServer = modeSupported ? (mode === 'mojawwad' ? reciter.serverMojawwad : reciter.serverMurattal) : '';
+  // لا نستخدم السيرفر المحلي كبديل إذا أكد الكتالوج أن السورة غير متاحة؛
+  // نسمح به فقط عند تعذر الوصول للكتالوج الرسمي.
+  const configuredServer = modeSupported && !mp3QuranCatalogAvailable
+    ? (mode === 'mojawwad' ? reciter.serverMojawwad : reciter.serverMurattal)
+    : '';
   const configuredSource = configuredServer
     ? configuredServer.replace(/\/$/, '/') + String(surahNumber).padStart(3, '0') + '.mp3'
     : '';
