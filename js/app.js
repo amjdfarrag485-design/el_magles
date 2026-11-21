@@ -1462,6 +1462,7 @@ function toggleCairoRadio() {
       }
       cairoRadioFallbackIndex = idx;
       STATE.globalAudio.src = CAIRO_RADIO_URLS[idx];
+      if (STATE.modernPlayer.track) STATE.modernPlayer.track.url = CAIRO_RADIO_URLS[idx];
       STATE.globalAudio.load();
       STATE.globalAudio.play().then(() => {
         updateCairoRadioUI(true);
@@ -1496,14 +1497,40 @@ function getSheikhAvatarSvg(name, isIbtehal = false) {
   const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="avatarBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#173c2a"/><stop offset="100%" stop-color="#07190f"/></linearGradient><linearGradient id="avatarGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5df9a"/><stop offset="100%" stop-color="#c59a2e"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#avatarBg)" stroke="url(#avatarGold)" stroke-width="3"/><text x="50" y="43" font-size="27" text-anchor="middle">' + icon + '</text><text x="50" y="73" font-size="13" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="#fff8e5">' + cleanName + '</text></svg>';
   return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
 }
+// Authentic archival portraits for the reciters and munshids in the library.
+const SHEIKH_PORTRAITS = [
+  { keys: ['الحصري'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hussary.jpg' },
+  { keys: ['المنشاوي'], url: 'https://www.aljazeera.net/wp-content/uploads/2022/04/2_auto_x2.jpg?resize=900%2C900' },
+  { keys: ['عبد الباسط','عبدالباسط'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdel_Basit_Abdel_Samad_1955.png' },
+  { keys: ['رفعت'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Muhammad_Rif%27at.jpg' },
+  { keys: ['مصطفى إسماعيل','مصطفى اسماعيل'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_مصطفى_إسماعيل.jpg' },
+  { keys: ['طه الفشني','طه الفشنى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Taha_al-Fashni01.jpg' },
+  { keys: ['النقشبندي','النقشبندى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Syed_Naqshbandi.jpg' },
+  { keys: ['نصر الدين طوبار','نصرالدين طوبار'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Nasr_El-Din_Tobar.jpg' },
+  { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://www.aljazeera.net/wp-content/uploads/2022/04/2-29.jpg?resize=1800%2C1280' },
+  { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://images.akhbarelyom.com/images/images/large/20250605183400581.jpg' },
+  { keys: ['السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
+  { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ali_Jaber.jpg' }
+];
 function getSheikhAvatarImage(name, isIbtehal = false) {
   const n = (name || '').replace(/الشيخ\s*/g, '').trim();
-  if (n.includes('المنشاوي')) return 'https://www.aljazeera.net/wp-content/uploads/2022/04/2_auto_x2.jpg?resize=900%2C900';
-  if (n.includes('رفعت')) return 'https://newsroom.info/Upload/libfiles/8/7/351.jpg';
+  const match = SHEIKH_PORTRAITS.find(item => item.keys.some(key => n.includes(key)));
+  if (match) return match.url;
   if (n.includes('عمران')) return 'https://i1.sndcdn.com/artworks-000443025276-sni8sp-t500x500.jpg';
   return getSheikhAvatarSvg(name, isIbtehal);
 }
 function showFloatingPlayerForRadio() {
+  STATE.modernPlayer.track = {
+    id: 'cairo_live_stream',
+    title: 'إذاعة القرآن الكريم من القاهرة',
+    reciter: 'بث مباشر من القاهرة',
+    url: CAIRO_RADIO_URLS[cairoRadioFallbackIndex] || CAIRO_RADIO_URLS[0],
+    category: 'radio',
+    sourceTag: 'إذاعة القرآن الكريم من القاهرة',
+    versionTag: 'بث مباشر 24 ساعة'
+  };
+  updateReferencePlayerDetails(STATE.modernPlayer.track);
+  updateCouncilMediaSession(STATE.modernPlayer.track);
   const sleek = document.getElementById('sleek-bottom-player');
   if (sleek) {
     sleek.style.display = 'flex';
@@ -1553,6 +1580,71 @@ function updateCouncilMediaSession(track) {
   }
 }
 
+
+function updateReferencePlayerDetails(track) {
+  if (!track) return;
+  const put=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value||'';};
+  put('reference-track-title',track.title||'تلاوة مباركة');
+  put('reference-track-reciter',track.reciter||track.sheikh||'إذاعة القرآن الكريم');
+  put('reference-track-source',track.category==='radio'?'إذاعة القرآن الكريم من القاهرة':(track.sourceTag||'المجلس'));
+  put('reference-track-duration',track.versionTag||track.duration||'تسجيل صوتي');
+  const avatar=document.getElementById('reference-player-avatar');
+  if(avatar) avatar.src=track.avatar||getSheikhAvatarImage(track.reciter||track.sheikh||'المجلس',!!track.lyricsQuote);
+}
+function onReferencePlayerSeek(value) {
+  const audio=STATE.globalAudio, cur=document.getElementById('reference-player-current');
+  if(audio&&audio.duration&&cur) cur.textContent=formatAudioTime((Number(value)/100)*audio.duration);
+}
+function commitReferencePlayerSeek(value) {
+  if(STATE.globalAudio&&Number.isFinite(STATE.globalAudio.duration)&&STATE.globalAudio.duration>0){
+    STATE.globalAudio.currentTime=(Number(value)/100)*STATE.globalAudio.duration;
+    onModernAudioTimeUpdate();
+  }
+}
+function downloadCurrentTrack() {
+  const track=STATE.modernPlayer.track;
+  if(!track||!track.url){showToast('لا يوجد تسجيل لتحميله');return;}
+  const a=document.createElement('a');a.href=track.url;a.download=(track.title||'المجلس')+'.mp3';a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();
+}
+function toggleReferenceAutoSave() {
+  const track=STATE.modernPlayer.track;if(!track)return;
+  try{
+    const list=JSON.parse(localStorage.getItem('el-magles-saved-tracks')||'[]');
+    const exists=list.some(x=>x.id===track.id);
+    const next=exists?list.filter(x=>x.id!==track.id):[...list,{id:track.id,title:track.title,reciter:track.reciter,url:track.url}];
+    localStorage.setItem('el-magles-saved-tracks',JSON.stringify(next));
+    const label=document.getElementById('reference-auto-save-label');if(label)label.textContent=exists?'حفظ تلقائي':'تم الحفظ';
+    showToast(exists?'تمت إزالة التسجيل من المحفوظات':'تم حفظ التسجيل على جهازك');
+  }catch(e){showToast('تعذر الحفظ على هذا الجهاز');}
+}
+function addCurrentTrackToQueue() {
+  const track=STATE.modernPlayer.track;if(!track)return;
+  try{const q=JSON.parse(localStorage.getItem('el-magles-audio-queue')||'[]');if(!q.some(x=>x.id===track.id)){q.push({id:track.id,title:track.title,reciter:track.reciter,url:track.url});localStorage.setItem('el-magles-audio-queue',JSON.stringify(q));showToast('اتضافت لقائمة الاستماع');}else showToast('التسجيل موجود بالفعل في القائمة');}catch(e){showToast('تعذر إضافة التسجيل للقائمة');}
+}
+function setReferenceSleepTimer() {
+  const raw=prompt('مؤقت النوم بالدقائق (مثلاً 15 أو 30 أو 60):','30');
+  const mins=Number(raw);if(!Number.isFinite(mins)||mins<=0){if(raw!==null)showToast('اكتب عدد دقائق صحيح');return;}
+  if(window.referenceSleepTimer)clearTimeout(window.referenceSleepTimer);
+  window.referenceSleepTimer=setTimeout(()=>{if(STATE.globalAudio)STATE.globalAudio.pause();updateModernPlayBtn(false);showToast('انتهى مؤقت النوم');},mins*60000);
+  showToast('تم ضبط مؤقت النوم على '+mins+' دقيقة');
+}
+async function shareCurrentTrack() {
+  const track=STATE.modernPlayer.track;if(!track)return;
+  const data={title:track.title||'المجلس',text:(track.reciter||'')+' - من تطبيق المجلس',url:location.href};
+  try{if(navigator.share)await navigator.share(data);else if(navigator.clipboard){await navigator.clipboard.writeText(data.text+' '+data.url);showToast('تم نسخ رابط المشاركة');}}
+  catch(e){if(e.name!=='AbortError')showToast('تعذرت المشاركة حالياً');}
+}
+function showReferencePlayerSettings() {
+  if(!STATE.globalAudio)return;
+  const rates=[1,1.25,1.5,2];const current=STATE.globalAudio.playbackRate||1;
+  const next=rates[(rates.indexOf(current)+1)%rates.length];STATE.globalAudio.playbackRate=next;
+  showToast('سرعة التشغيل: '+next+'x');
+}
+function showReferenceTadabbur() {
+  const track=STATE.modernPlayer.track;
+  showToast(track&&track.title?'استمع بتدبر وخشوع، وراجع معنى الآيات من المصحف':'افتح تلاوة للاستماع والتدبر');
+}
+
 function playModernTrack(track) {
   if (!track || !track.url) return;
   if (!STATE.globalAudio) initAudioElements();
@@ -1570,6 +1662,7 @@ function playModernTrack(track) {
   }
 
   STATE.modernPlayer.track = track;
+  updateReferencePlayerDetails(track);
   updateCouncilMediaSession(track);
 
   // تهيئة عنصر الصوت الرئيسي
@@ -1670,7 +1763,11 @@ function updateModernPlayBtn(isPlaying) {
     try { navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused'; } catch (_) {}
   }
 
-  // شريط الصوت النحيف
+  const fullIcon=document.getElementById('reference-main-play-icon');
+  if(fullIcon)fullIcon.textContent=isPlaying?'Ⅱ':'▶';
+  const repeatBtn=document.getElementById('reference-repeat-btn');
+  if(repeatBtn)repeatBtn.style.color=STATE.modernPlayer.isLooping?'#2e8067':'#172c27';
+    // شريط الصوت النحيف
   const sleekPlayIcon = document.getElementById('sleek-play-icon');
   if (sleekPlayIcon) sleekPlayIcon.textContent = isPlaying ? '⏸' : '▶';
 
@@ -1787,6 +1884,13 @@ function onModernAudioTimeUpdate() {
     sleekFill.style.width = `${pct}%`;
   }
 
+  const refSeek=document.getElementById('reference-player-seek');
+  const refCurrent=document.getElementById('reference-player-current');
+  const refRemaining=document.getElementById('reference-player-remaining');
+  if(refCurrent)refCurrent.textContent=formatAudioTime(cur);
+  if(refRemaining)refRemaining.textContent=dur&&Number.isFinite(dur)?'-'+formatAudioTime(Math.max(0,dur-cur)):'-00:00';
+  if(refSeek&&dur&&Number.isFinite(dur)&&!refSeek.matches(':active'))refSeek.value=(cur/dur)*100;
+
   // دعم المشغل القديم إن وجد
   const curTimeEl = document.getElementById('player-current-time');
   if (curTimeEl) curTimeEl.textContent = formatAudioTime(cur);
@@ -1820,15 +1924,18 @@ function onModernAudioLoadedMetadata() {
 }
 
 function minimizeModernPlayer() {
+  const overlay = document.getElementById('reference-player-overlay');
+  if (overlay) { overlay.style.display = 'none'; overlay.setAttribute('aria-hidden', 'true'); }
   const sleek = document.getElementById('sleek-bottom-player');
   if (sleek) sleek.style.display = 'flex';
-  const full = document.getElementById('unified-modern-player');
-  if (full) full.style.display = 'none';
 }
-
 function expandModernPlayer() {
+  if (!STATE.modernPlayer.track) return;
+  const overlay = document.getElementById('reference-player-overlay');
+  if (overlay) { overlay.style.display = 'flex'; overlay.setAttribute('aria-hidden', 'false'); }
   const sleek = document.getElementById('sleek-bottom-player');
-  if (sleek) sleek.style.display = 'flex';
+  if (sleek) sleek.style.display = 'none';
+  updateReferencePlayerDetails(STATE.modernPlayer.track);
 }
 
 function closeModernPlayer() {
@@ -2053,6 +2160,16 @@ function initRecitersEncyclopedia() {
   renderRecitersGrid(ALL_RECITERS_DATA);
 }
 
+function openReciterDirectoryItem(id, category) {
+  const reciter = ALL_RECITERS_DATA.find(item => item.id === id);
+  if (reciter && (reciter.supportsMurattal || reciter.supportsMojawwad)) {
+    openReciterInReader(id);
+    return;
+  }
+  navigateTo('rare-ibtehalat');
+  filterRareAndIbtehalat(category || 'ibtehal_all');
+}
+
 function renderRecitersGrid(list) {
   const container = document.getElementById('reciters-list-container');
   if (!container) return;
@@ -2063,12 +2180,13 @@ function renderRecitersGrid(list) {
   }
 
   container.innerHTML = list.map(r => `
-    <div class="card reciter-card" onclick="openReciterInReader('${r.id}')">
-      <div>
+    <div class="card reciter-card" onclick="openReciterDirectoryItem('${r.id}', '${r.category}')">
+      <img class="reciter-list-avatar" src="${getSheikhAvatarImage(r.name)}" alt="${r.name}" loading="lazy" onerror="this.onerror=null;this.src=getSheikhAvatarSvg('${r.name}')">
+      <div class="reciter-list-copy">
         <div class="reciter-name-bold">${r.name}</div>
         <div class="reciter-subtitle">${r.info}</div>
       </div>
-      <button class="action-btn action-btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">استماع 📖</button>
+      <button class="action-btn action-btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">${(r.supportsMurattal || r.supportsMojawwad) ? 'استماع 📖' : 'النوادر 🎙️'}</button>
     </div>
   `).join('');
 }
