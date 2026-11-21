@@ -79,24 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initIslamicApp();
 });
 
-function applyCouncilTheme() {
-  let theme = 'dark';
-  try { theme = localStorage.getItem('el-magles-theme') || 'dark'; } catch (e) {}
-  document.body.classList.toggle('light-theme', theme === 'light');
-  const button = document.querySelector('.theme-switch');
-  if (button) button.textContent = theme === 'light' ? '☾' : '☼';
-}
-function toggleCouncilTheme() {
-  const next = document.body.classList.contains('light-theme') ? 'dark' : 'light';
-  document.body.classList.toggle('light-theme', next === 'light');
-  try { localStorage.setItem('el-magles-theme', next); } catch (e) {}
-  const button = document.querySelector('.theme-switch');
-  if (button) button.textContent = next === 'light' ? '☾' : '☼';
-}
-
 function initIslamicApp() {
   console.log('🕌 بدء تشغيل تطبيق المجلس - الموسوعة القرآنية والابتهالات...');
-  applyCouncilTheme();
 
   // استرجاع الإعدادات المحفوظة محلياً
   loadPersistedData();
