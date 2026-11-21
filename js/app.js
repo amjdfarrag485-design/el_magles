@@ -1492,9 +1492,9 @@ function updateCairoRadioUI(isPlaying) {
 // ═══════════════════════════════════════════════════════════════
 
 function getSheikhAvatarSvg(name, isIbtehal = false) {
-  const icon = isIbtehal ? '🎙️' : '📖';
-  const cleanName = (name || '').replace(/الشيخ\s*/g, '').trim().split(' ')[0] || 'المجلس';
-  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="avatarBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#173c2a"/><stop offset="100%" stop-color="#07190f"/></linearGradient><linearGradient id="avatarGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5df9a"/><stop offset="100%" stop-color="#c59a2e"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#avatarBg)" stroke="url(#avatarGold)" stroke-width="3"/><text x="50" y="43" font-size="27" text-anchor="middle">' + icon + '</text><text x="50" y="73" font-size="13" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="#fff8e5">' + cleanName + '</text></svg>';
+  const cleanName = String(name || 'المجلس').replace(/الشيخ\\s*/g, '').trim().split(' ').slice(0, 2).join(' ') || 'المجلس';
+  const safeName = cleanName.replace(/[&<>]/g, '');
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="portraitBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#315e4d"/><stop offset="100%" stop-color="#10281f"/></linearGradient><linearGradient id="portraitGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5df9a"/><stop offset="100%" stop-color="#c59a2e"/></linearGradient></defs><circle cx="50" cy="50" r="48" fill="url(#portraitBg)" stroke="url(#portraitGold)" stroke-width="3"/><circle cx="50" cy="35" r="15" fill="#d7c9a7"/><path d="M22 84c2-19 13-30 28-30s26 11 28 30" fill="#d7c9a7"/><path d="M34 25c3-10 28-12 33 1-10-5-23-5-33-1" fill="#f0e9d8"/><text x="50" y="95" font-size="8" font-weight="bold" font-family="sans-serif" text-anchor="middle" fill="#fff8e5">' + safeName + '</text></svg>';
   return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
 }
 // Authentic archival portraits for the reciters and munshids in the library.
@@ -1921,6 +1921,23 @@ function onModernAudioLoadedMetadata() {
     remTimeEl.textContent = '-' + formatAudioTime(dur);
   }
   onModernAudioTimeUpdate();
+}
+
+function playAdjacentAudioTrack(direction) {
+  const current = STATE.modernPlayer.track;
+  if (!current || current.category === 'radio' || current.id === 'cairo_live_stream') {
+    showToast('التنقل بين التسجيلات متاح من قائمة النوادر والابتهالات');
+    return;
+  }
+  const items = getAllAudioItems();
+  const index = items.findIndex(item => item.id === current.id);
+  if (index < 0 || !items.length) {
+    showToast('لم يتم العثور على التسجيل في القائمة');
+    return;
+  }
+  const nextIndex = (index + direction + items.length) % items.length;
+  playModernTrack(items[nextIndex]);
+  updateReferencePlayerDetails(items[nextIndex]);
 }
 
 function minimizeModernPlayer() {
