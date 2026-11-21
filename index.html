@@ -44,6 +44,34 @@
   <!-- 1. الصفحة الرئيسية (Home Page)                                            -->
   <!-- ========================================================================= -->
   <section class="page active" id="page-home">
+    <header class="ref-home-header">
+      <div class="ref-profile"><img src="icons/icon-192x192.png" alt="المجلس"></div>
+      <button class="ref-theme-btn" type="button" onclick="toggleReferenceTheme()" aria-label="تغيير المظهر">☾</button>
+      <div class="ref-welcome"><span>مرحباً بك في المجلس،</span><h1>زائرنا الكريم</h1></div>
+    </header>
+    <div class="ref-top-actions">
+      <button class="ref-top-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all')"><span class="ref-top-icon">🎙️</span><b>الابتهالات</b><span class="ref-egypt-mark">🇪🇬</span></button>
+      <button class="ref-top-card" onclick="navigateTo('stories')"><span class="ref-top-icon">▶</span><b>المرئيات</b><span class="ref-egypt-mark">🇪🇬</span></button>
+    </div>
+    <button class="ref-new-readers" onclick="navigateTo('reciters')">
+      <span class="ref-new-count">٦</span><span class="ref-new-copy"><b>قُرّاء جُدد</b><small>انضمّوا حديثاً إلى المجلس</small></span><span class="ref-new-arrow">‹</span>
+    </button>
+    <section class="ref-home-section">
+      <div class="ref-section-title"><h2>قُرّاء آخرون</h2><button onclick="navigateTo('reciters')" aria-label="عرض القراء">⌕</button></div>
+      <div class="ref-reader-strip">
+        <button class="ref-reader-card" onclick="openReciterInReader('banna')"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/President_Sadat_welcomes_Sheikh_Mahmoud_Ali_al-Banna_at_a_religious_celebration.jpg" alt="محمود علي البنا" loading="lazy" onerror="this.onerror=null;this.src='icons/icon-192x192.png'"><b>محمود علي البنا</b></button>
+        <button class="ref-reader-card" onclick="openReciterInReader('abdulbasit')"><img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Abdel_Basit_Abdel_Samad_1955.png" alt="عبد الباسط عبد الصمد" loading="lazy" onerror="this.onerror=null;this.src='icons/icon-192x192.png'"><b>عبد الباسط عبد الصمد</b></button>
+        <button class="ref-reader-card" onclick="openReciterInReader('minshawi')"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy" onerror="this.onerror=null;this.src='icons/icon-192x192.png'"><b>محمد صديق المنشاوي</b></button>
+      </div>
+    </section>
+    <section class="ref-home-section ref-featured-audio">
+      <div class="ref-section-title"><h2>تلاوات</h2><button onclick="navigateTo('rare-ibtehalat');filterRareAndIbtehalat('rare_all')">عرض الكل ←</button></div>
+      <div class="ref-recitation-card" onclick="playAudioItem('rare_minshawi_hashr')">
+        <span class="ref-reciter-thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Muhammad_Siddiq_Al-Minshawi.jpg" alt="محمد صديق المنشاوي" loading="lazy"></span>
+        <span class="ref-recitation-copy"><small>تلاوات مختارة</small><b>الشيخ محمد صديق المنشاوي</b><span>سورة الحشر والفجر • محفل الكويت</span></span><span class="ref-play">▶</span>
+      </div>
+    </section>
+
     <!-- ترويسة الهوية الرسمية لتطبيق المجلس -->
     <header class="brand-top-banner">
       <div class="brand-title-box">
@@ -204,7 +232,11 @@
   <!-- ========================================================================= -->
   <!-- 2. شاشة المصحف التفاعلي المتقدم وتزامن الكلمات (Quran Reader & HUD)       -->
   <!-- ========================================================================= -->
-  <section class="page" id="page-reader">
+  <section class="page" id="page-library">
+  <div class="page-header"><div class="page-header-title"><span>▥</span><span>مكتبتي</span></div><button class="back-btn" onclick="navigateTo('home')">✕</button></div>
+  <div id="ref-library-items" class="ref-library-items"><p>التلاوات المحفوظة هتظهر هنا.</p></div>
+</section>
+<section class="page" id="page-reader">
     <div class="page-header">
       <div class="page-header-title">
         <span>📖</span>
@@ -702,37 +734,14 @@
   <!-- ========================================================================= -->
   <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الـ 5 الرئيسية)                     -->
   <!-- ========================================================================= -->
-  <nav class="bottom-nav-bar" id="bottom-nav">
-    <!-- 1. الرئيسية -->
-    <button class="nav-tab-item active" data-page="home" onclick="navigateTo('home')">
-      <span class="nav-tab-icon">🏠</span>
-      <span class="nav-tab-label">الرئيسية</span>
-    </button>
-
-    <!-- 2. المصحف -->
-    <button class="nav-tab-item" data-page="reader" onclick="navigateTo('reader')">
-      <span class="nav-tab-icon">📖</span>
-      <span class="nav-tab-label">المصحف</span>
-    </button>
-
-    <!-- 3. النوادر والابتهالات -->
-    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')">
-      <span class="nav-tab-icon">🎙️</span>
-      <span class="nav-tab-label">النوادر والابتهالات</span>
-    </button>
-
-    <!-- 4. الإذاعة -->
-    <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')">
-      <span class="nav-tab-icon">📻</span>
-      <span class="nav-tab-label">الإذاعة</span>
-    </button>
-
-    <!-- 5. الأذكار -->
-    <button class="nav-tab-item" data-page="azkar" onclick="navigateTo('azkar')">
-      <span class="nav-tab-icon">📿</span>
-      <span class="nav-tab-label">الأذكار</span>
-    </button>
-  </nav>
+  <nav class="bottom-nav-bar ref-bottom-nav" id="bottom-nav">
+  <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')"><span class="nav-tab-icon">◉</span><span class="nav-tab-label">الإذاعات</span></button>
+  <button class="nav-tab-item" data-page="stories" onclick="navigateTo('stories')"><span class="nav-tab-icon">•••</span><span class="nav-tab-label">المزيد</span></button>
+  <button class="nav-tab-item" data-page="library" onclick="navigateTo('library')"><span class="nav-tab-icon">▥</span><span class="nav-tab-label">مكتبتي</span></button>
+  <button class="nav-tab-item" data-page="azkar" onclick="navigateTo('azkar')"><span class="nav-tab-icon">☏</span><span class="nav-tab-label">المساعدين</span></button>
+  <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')"><span class="nav-tab-icon">♧</span><span class="nav-tab-label">الأرشيف</span></button>
+  <button class="nav-tab-item active" data-page="home" onclick="navigateTo('home')"><span class="nav-tab-icon">⌂</span><span class="nav-tab-label">الرئيسية</span></button>
+</nav>
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=3"></script>
