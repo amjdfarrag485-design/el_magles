@@ -741,6 +741,78 @@ const RARE_RECITATIONS_DATA = [
     versionTag: "تسجيل أصلي نادر",
     duration: "11:50",
     lyricsQuote: "لَا أُقْسِمُ بِيَوْمِ الْقِيَامَةِ ۝ وَلَا أُقْسِمُ بِالنَّفْسِ اللَّوَّامَةِ ۝ أَيَحْسَبُ الْإِنسَانُ أَلَّن نَّجْمَعَ عِظَامَهُ"
+  },
+
+  // ─── إضافات أرشيفية موثقة: تسجيلات المنشاوي من إذاعة ليبيا ───
+  {
+    id: "rare_minshawi_libya_anaam",
+    category: "minshawi",
+    title: "سورة الأنعام (12–45) – تسجيل إذاعة ليبيا",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    desc: "تسجيل خارجي من مجموعة تلاوات المنشاوي المسجلة لإذاعة ليبيا للقرآن الكريم",
+    url: "https://archive.org/download/AlminshawiLibyaAlAnam1245/alminshawi-libya--al-ana'm-(12-45).mp3",
+    badge: "إذاعة ليبيا",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل خارجي أرشيفي"
+  },
+  {
+    id: "rare_minshawi_libya_anfal",
+    category: "minshawi",
+    title: "سورة الأنفال (1–28) – تسجيل إذاعة ليبيا",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    desc: "من التسجيلات الخارجية المحفوظة للشيخ بإذاعة ليبيا للقرآن الكريم",
+    url: "https://archive.org/download/AlminshawiLibyaAlAnam1245/alminshawi-libya--al-anfal-(1-28).mp3",
+    badge: "إذاعة ليبيا",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل خارجي أرشيفي"
+  },
+  {
+    id: "rare_minshawi_libya_imran",
+    category: "minshawi",
+    title: "سورة آل عمران (169–194) – تسجيل خارجي",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    desc: "تلاوة من أرشيف التسجيلات الخارجية للمنشاوي من إذاعة ليبيا",
+    url: "https://archive.org/download/AlminshawiLibyaAlAnam1245/alminshawi-libya--al-imran-(169-194).mp3",
+    badge: "تسجيل خارجي",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أرشيفي"
+  },
+  // ─── نوادر الابتهال للشيخ محمد عمران ───
+  {
+    id: "rare_omran_lotf",
+    category: "omran_fayoumi",
+    title: "فكم لله من لطف خفي",
+    reciter: "الشيخ محمد عمران",
+    desc: "ابتهال تراثي من التسجيلات الأرشيفية للشيخ محمد عمران",
+    url: "https://dn720700.ca.archive.org/0/items/3emran_20250909/17%20%D9%81%D9%83%D9%85%20%D9%84%D9%84%D9%87%20%D9%85%D9%86%20%D9%84%D8%B7%D9%81%20%D8%AE%D9%81%D9%8A.mp3",
+    badge: "نوادر الابتهال",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أرشيفي",
+    duration: "14:10"
+  },
+  {
+    id: "rare_omran_sayed_kawnayn",
+    category: "omran_fayoumi",
+    title: "يا سيد الكونين يا علم الهدى",
+    reciter: "الشيخ محمد عمران",
+    desc: "مديح نبوي نادر بصوت الشيخ محمد عمران",
+    url: "https://ia600506.us.archive.org/19/items/20230916_20230916_0318/008%20%20%D9%8A%D8%A7%20%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D9%86%D9%88%D8%A7%D8%AF%D8%B1%20%20%D9%81%D9%8A%D8%AF%D9%8A%D9%88%20%D9%84%D9%84%D8%B4%D9%8A%D8%AE%20%D9%85%D8%AD%D9%85%D8%AF%20%D8%B9%D9%85%D8%B1%D8%A7%D9%86%20%D8%A7%D8%A8%D8%AA%D9%87%D8%A7%D9%84%20%D9%86%D8%A7%D8%AF%D8%B1%20%D9%8A%D8%A7%D8%B3%D9%8A%D8%AF%20%D8%A7%D9%84%D9%83%D9%88%D9%86%D9%8A%D9%86%20%D8%B9%D8%A7%D9%85%201993%20%D8%B1%D9%88%D8%A7%D8%A6%D8%B9%20%D9%88%D9%86%D9%88%D8%A7%D8%AF%D8%B1.mp3",
+    badge: "مديح نبوي",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أرشيفي",
+    duration: "10:25"
+  },
+  {
+    id: "rare_omran_adrikna",
+    category: "omran_fayoumi",
+    title: "قصدت باب الرجا – أدركنا يا رسول الله",
+    reciter: "الشيخ محمد عمران",
+    desc: "ابتهال في الشوق والرجاء من تراث الشيخ",
+    url: "https://dn720700.ca.archive.org/0/items/3emran_20250909/21%20%D9%82%D8%B5%D8%AF%D8%AA%20%D8%A8%D8%A7%D8%A8%20%D8%A7%D9%84%D8%B1%D8%AC%D8%A7.mp3",
+    badge: "شوق ورجاء",
+    sourceTag: "نوادر التلاوات",
+    versionTag: "تسجيل أرشيفي",
+    duration: "09:40"
   }
 ];
 
