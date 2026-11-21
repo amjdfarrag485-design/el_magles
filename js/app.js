@@ -1499,15 +1499,15 @@ function getSheikhAvatarSvg(name, isIbtehal = false) {
 }
 // Authentic archival portraits for the reciters and munshids in the library.
 const SHEIKH_PORTRAITS = [
-  { keys: ['الحصري','محمود خليل الحصري'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hussary.jpg' },
-  { keys: ['المنشاوي','محمد صديق المنشاوي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Elminshwey.jpg' },
+  { keys: ['الحصري','محمود خليل الحصري'], url: 'https://mediaaws.almasryalyoum.com/news/verylarge/2023/03/27/2067586_0.jpg' },
+  { keys: ['المنشاوي','محمد صديق المنشاوي'], url: 'https://www.alwafd.news/Upload/libfiles/374/0/432.jpg' },
   { keys: ['عبد الباسط','عبدالباسط','عبد الباسط عبد الصمد'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdel_Basit_Abdel_Samad_1955.png' },
-  { keys: ['رفعت','محمد رفعت'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Muhammad_Rif%27at.jpg' },
-  { keys: ['مصطفى إسماعيل','مصطفى اسماعيل'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_مصطفى_إسماعيل1.jpg' },
+  { keys: ['رفعت','محمد رفعت'], url: 'https://static.majalla.com/styles/1200xauto/public/2019/05/31/177296-156158711.jpg?VersionId=PgXroftKa0gq9xnglH._i_VP6OkooAkt' },
+  { keys: ['مصطفى إسماعيل','مصطفى اسماعيل'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/03/29/2069055_0.jpg' },
   { keys: ['طه الفشني','طه الفشنى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Taha_al-Fashni01.jpg' },
   { keys: ['النقشبندي','النقشبندى','سيد النقشبندي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Syed_Naqshbandi.jpg' },
   { keys: ['نصر الدين طوبار','نصرالدين طوبار'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Nasr_El-Din_Tobar.jpg' },
-  { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_كامل_يوسف.jpg' },
+  { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/01/2071566_0.jpeg' },
   { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2024/7/20/2024-638570759475598708-559.jpeg' },
   { keys: ['السديس','عبد الرحمن السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
   { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_علي_جابر.png' },
