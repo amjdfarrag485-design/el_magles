@@ -574,6 +574,20 @@ const RARE_RECITATIONS_DATA = [
     duration: "03:13"
   },
 
+
+  {
+    id: "rare_siddiq_sayed_anfal_tawba_1954",
+    category: "siddiq_sayed_minshawi",
+    title: "سورة الأنفال (59) والتوبة (7) – قراءة أبي جعفر (تسجيل 1954)",
+    reciter: "الشيخ صديق السيد المنشاوي",
+    desc: "تلاوة إذاعية نادرة مسجلة يوم 23 مايو 1954، مدتها 27:56",
+    externalUrl: "https://eslami-platform.vercel.app/recordings",
+    badge: "تسجيل إذاعي نادر",
+    sourceTag: "مكتبة إذاعة القرآن الكريم المصرية",
+    versionTag: "رواية أبي جعفر",
+    duration: "27:56"
+  },
+
   // ─── 1. الشيخ محمد صديق المنشاوي (تسجيلات ونوادر خارجية خاشعة) ───
   {
     id: "rare_minshawi_hashr",
