@@ -519,6 +519,19 @@ select:-webkit-autofill {
 }
 
 /* ─── 9. المصحف التفاعلي ومشغل الفيديو (Video-Player Style Quran HUD) ─── */
+.last-read-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(212, 175, 55, 0.18);
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.last-read-status { color: var(--text-secondary); font-size: 0.82rem; line-height: 1.7; }
+.last-read-row .action-btn { min-height: 38px; font-size: 0.82rem; padding: 7px 12px; }
+
 .quran-interactive-hud {
   background: linear-gradient(180deg, #182218 0%, #101610 100%);
   border: 1.5px solid var(--gold);
