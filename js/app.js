@@ -897,6 +897,34 @@ function loadSurahAudio(surahNumber) {
   }
 
   const reciter = STATE.currentReciter || ALL_RECITERS_DATA[0];
+
+  // بيانات الوسائط الخاصة بتلاوات المصحف على شاشة القفل وأجهزة أندرويد
+  if ('mediaSession' in navigator && typeof MediaMetadata !== 'undefined') {
+    try {
+      const surah = (typeof SURAHS_LIST !== 'undefined')
+        ? SURAHS_LIST.find(item => item.number === surahNumber)
+        : null;
+      const artwork = new URL('icons/icon-512x512.png', window.location.href).href;
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: surah ? ('سورة ' + surah.name) : ('تلاوة القرآن - سورة ' + surahNumber),
+        artist: reciter.name || reciter.title || 'تلاوة من المجلس',
+        album: 'المجلس - القرآن الكريم',
+        artwork: [{ src: artwork, sizes: '512x512', type: 'image/png' }]
+      });
+      navigator.mediaSession.setActionHandler('play', () => toggleHudPlay());
+      navigator.mediaSession.setActionHandler('pause', () => toggleHudPlay());
+      navigator.mediaSession.setActionHandler('seekbackward', details => {
+        if (STATE.quranAudio) STATE.quranAudio.currentTime = Math.max(0, STATE.quranAudio.currentTime - (details.seekOffset || 10));
+      });
+      navigator.mediaSession.setActionHandler('seekforward', details => {
+        if (STATE.quranAudio && Number.isFinite(STATE.quranAudio.duration)) {
+          STATE.quranAudio.currentTime = Math.min(STATE.quranAudio.duration, STATE.quranAudio.currentTime + (details.seekOffset || 10));
+        }
+      });
+    } catch (error) {
+      console.warn('Quran media metadata unavailable:', error);
+    }
+  }
   // الترقيم الثلاثي الصارم: 001.mp3 إلى 114.mp3
   const paddedNum = surahNumber.toString().padStart(3, '0');
   const mode = STATE.currentMode;
