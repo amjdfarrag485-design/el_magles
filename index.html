@@ -231,6 +231,10 @@
           <span>🚀</span> انتقال للعلامة
         </button>
       </div>
+      <div class="last-read-row">
+        <span class="last-read-status" id="last-read-status">آخر قراءة: لم تبدأ بعد</span>
+        <button class="action-btn action-btn-secondary" id="btn-resume-last-read" onclick="resumeLastRead()" type="button">▶ متابعة آخر قراءة</button>
+      </div>
     </div>
 
     <!-- مشغل تفاعلي مطابق لواجهة مشغل الفيديو (Video-Player Style HUD) -->
@@ -775,7 +779,7 @@
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=14"></script>
-  <script src="js/app.js?v=20"></script>
+  <script src="js/app.js?v=21"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
