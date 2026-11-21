@@ -233,6 +233,8 @@ function navigateTo(pageId) {
     btn.classList.toggle('active', btn.dataset.page === pageId);
   });
 
+  if (pageId === 'library') renderReferenceLibrary();
+
   // التمرير لأعلى بسلاسة
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
