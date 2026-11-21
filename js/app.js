@@ -951,9 +951,10 @@ async function getMp3QuranMoshafSources(reciter, mode, surahNumber) {
     if (!match) return [];
     const moshafList = (match.moshaf || []).filter(item => item.server);
     const isMojawwad = mode === 'mojawwad';
+    const isMojawwadLabel = value => /مجود|تجويد|mojawwad|mujawwad|tajweed|tajwid/i.test(String(value || ''));
     const preferred = moshafList.filter(item => {
-      const label = normalizeReciterName(item.name);
-      return isMojawwad ? /مجود|تجويد/.test(label) : !/مجود|تجويد/.test(label);
+      const isMojawwadRead = isMojawwadLabel(item.name);
+      return isMojawwad ? isMojawwadRead : !isMojawwadRead;
     });
     return preferred
       .filter(item => {
@@ -1010,7 +1011,8 @@ async function loadSurahAudio(surahNumber) {
   const apiSources = await getMp3QuranMoshafSources(reciter, mode, surahNumber);
   if (requestId !== STATE.audioRequestId) return;
 
-  const configuredServer = mode === 'mojawwad' ? reciter.serverMojawwad : reciter.serverMurattal;
+  const modeSupported = mode === 'mojawwad' ? reciter.supportsMojawwad !== false : reciter.supportsMurattal !== false;
+  const configuredServer = modeSupported ? (mode === 'mojawwad' ? reciter.serverMojawwad : reciter.serverMurattal) : '';
   const configuredSource = configuredServer
     ? configuredServer.replace(/\/$/, '/') + String(surahNumber).padStart(3, '0') + '.mp3'
     : '';
