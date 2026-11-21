@@ -188,7 +188,7 @@ const ALL_RECITERS_DATA = [
     supportsMurattal: false,
     supportsMojawwad: true,
     serverMurattal: "",
-    serverMojawwad: "https://server10.mp3quran.net/minsh_mjwd/",
+    serverMojawwad: "",
     info: "سلطان التلاوة القرآنية وإمام روائع المحافل المجودة الخالدة"
   },
   {
