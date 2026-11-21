@@ -490,7 +490,7 @@ const RARE_RECITATIONS_DATA = [
     title: "سورة الفاتحة (تلاوة الشيخ محمد أيوب)",
     reciter: "الشيخ محمد أيوب",
     desc: "تلاوة مرتلة من المصحف المنشور على MP3Quran",
-    url: "https://cdn.mp3quran.net/download/audio/muhammad-ayyub/r1/001.mp3",
+    url: "https://cdn.mp3quran.net/audio/muhammad-ayyub/r1/001.mp3",
     badge: "تلاوة مرتلة",
     sourceTag: "تلاوات نادرة",
     versionTag: "MP3Quran",
