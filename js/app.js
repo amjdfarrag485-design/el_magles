@@ -141,10 +141,17 @@ function initIslamicApp() {
 // ═══════════════════════════════════════════════════════════════
 // 3. التخزين المحلي (LocalStorage)
 // ═══════════════════════════════════════════════════════════════
+function getLocalDateKey(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 function loadPersistedData() {
   try {
     // استرجاع بيانات السبحة والتسبيح اليومي
-    const todayStr = new Date().toISOString().slice(0, 10);
+    const todayStr = getLocalDateKey();
     const savedTasbeeh = localStorage.getItem('app_tasbeeh_data');
     if (savedTasbeeh) {
       STATE.tasbeeh = { ...STATE.tasbeeh, ...JSON.parse(savedTasbeeh) };
@@ -161,7 +168,7 @@ function loadPersistedData() {
     const savedPlayed = localStorage.getItem('app_adhan_played_today');
     if (savedPlayed) {
       const parsed = JSON.parse(savedPlayed);
-      STATE.adhanSettings.playedToday = parsed.date === new Date().toLocaleDateString('en-CA') ? (parsed.items || {}) : {};
+      STATE.adhanSettings.playedToday = parsed.date === getLocalDateKey() ? (parsed.items || {}) : {};
     }
 
     // استرجاع إعدادات كتم الأذان
@@ -484,7 +491,7 @@ function startPrayerCountdownLoop() {
       const prayerKey = `${now.toDateString()}_${STATE.nextPrayer.id}`;
       if (!STATE.adhanSettings.playedToday[prayerKey]) {
         STATE.adhanSettings.playedToday[prayerKey] = true;
-        savePersistedData('app_adhan_played_today', { date: now.toLocaleDateString('en-CA'), items: STATE.adhanSettings.playedToday });
+        savePersistedData('app_adhan_played_today', { date: getLocalDateKey(now), items: STATE.adhanSettings.playedToday });
         if (STATE.nextPrayer.id !== 'Sunrise' && STATE.adhanMuteSettings[STATE.nextPrayer.id] !== false) {
           playAdhanAudio(STATE.nextPrayer.name, STATE.nextPrayer.id);
         }
