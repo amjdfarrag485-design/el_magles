@@ -130,6 +130,57 @@ const SURAHS_LIST = [
 // 2. موسوعة كبار القراء المعتمدين (22 مرتل + 7 مجود حصراً)
 // ═══════════════════════════════════════════════════════════════
 const ALL_RECITERS_DATA = [
+  {
+    id: "abu_alainain_shishaa",
+    name: "أبو العينين شعيشع",
+    category: "golden",
+    supportsMurattal: false,
+    supportsMojawwad: false,
+    serverMurattal: "",
+    serverMojawwad: "",
+    info: "من أعلام الرعيل الأول ونقيب قراء مصر الأسبق"
+  },
+  {
+    id: "mohamed_ayyoub_archive",
+    name: "محمد أيوب",
+    category: "harameen",
+    supportsMurattal: true,
+    supportsMojawwad: false,
+    serverMurattal: "https://cdn.mp3quran.net/download/audio/muhammad-ayyub/r1/",
+    serverMojawwad: "",
+    info: "إمام المسجد النبوي وصاحب المدرسة الحجازية الخاشعة"
+  },
+  {
+    id: "siddeeq_minshawi",
+    name: "صديق السيد المنشاوي",
+    category: "golden",
+    supportsMurattal: false,
+    supportsMojawwad: false,
+    serverMurattal: "",
+    serverMojawwad: "",
+    info: "المنشاوي الكبير ووالد الشيخ محمد والشيخ محمود صديق المنشاوي"
+  },
+  {
+    id: "mahmoud_siddeeq_minshawi",
+    name: "محمود صديق المنشاوي",
+    category: "golden",
+    supportsMurattal: false,
+    supportsMojawwad: false,
+    serverMurattal: "",
+    serverMojawwad: "",
+    info: "من أبناء المدرسة المنشاوية"
+  },
+  {
+    id: "sayed_metwally",
+    name: "السيد متولي",
+    category: "golden",
+    supportsMurattal: false,
+    supportsMojawwad: false,
+    serverMurattal: "",
+    serverMojawwad: "",
+    info: "من أصحاب الأصوات المميزة في التلاوة المجودة"
+  },
+
   // ─── عمالقة المصحف المجود والمرتل (الرعيل الأول) ───
   {
     id: "hussary",
@@ -432,6 +483,20 @@ const RADIO_STATIONS = [
 // 4.1. نوادر التلاوات والتسجيلات القرآنية التاريخية الخالدة لكبار القراء
 // ═══════════════════════════════════════════════════════════════
 const RARE_RECITATIONS_DATA = [
+  // ─── إضافات موثقة من مكتبة MP3Quran ───
+  {
+    id: "rare_ayyub_fatiha",
+    category: "ayyub",
+    title: "سورة الفاتحة (تلاوة الشيخ محمد أيوب)",
+    reciter: "الشيخ محمد أيوب",
+    desc: "تلاوة مرتلة من المصحف المنشور على MP3Quran",
+    url: "https://cdn.mp3quran.net/download/audio/muhammad-ayyub/r1/001.mp3",
+    badge: "تلاوة مرتلة",
+    sourceTag: "تلاوات نادرة",
+    versionTag: "MP3Quran",
+    duration: "00:45"
+  },
+
   // ─── 1. الشيخ محمد صديق المنشاوي (تسجيلات ونوادر خارجية خاشعة) ───
   {
     id: "rare_minshawi_hashr",
@@ -1189,31 +1254,6 @@ const IBTEHALAT_DATA = [
     badge: "تراث الحسين",
     duration: "07:45"
   }
-,
-  {
-    id: "fayoumi_amdah_mukammal_source",
-    category: "omran_fayoumi",
-    kind: "tawshih",
-    title: "توشيح أمدح المكمل أحمد الرسول",
-    reciter: "الشيخ محمد الفيومي وبطانته",
-    desc: "توشيح موثق من تسجيلات الإذاعة المصرية في الستينات؛ يفتح المصدر للاستماع",
-    externalUrl: "https://m.soundcloud.com/menshawy1/fayomyamdhmokammal",
-    externalLabel: "SoundCloud",
-    badge: "توشيح تراثي",
-    duration: "07:31"
-  },
-  {
-    id: "fayoumi_nabi_huda_source",
-    category: "omran_fayoumi",
-    kind: "ibtihal",
-    title: "نبي الهدى ورسول السلام",
-    reciter: "الشيخ محمد الفيومي",
-    desc: "محفل ابتهال نادر مسجل من أمسيات السبعينات؛ يفتح المصدر للاستماع",
-    externalUrl: "https://www.youtube.com/watch?v=qP45fOu9d1k",
-    externalLabel: "YouTube",
-    badge: "ابتهال نادر",
-    duration: "تسجيل من السبعينات"
-  },
 ];
 
 // ═══════════════════════════════════════════════════════════════
