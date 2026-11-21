@@ -813,29 +813,6 @@ const RARE_RECITATIONS_DATA = [
     sourceTag: "نوادر التلاوات",
     versionTag: "تسجيل أرشيفي",
     duration: "09:40"
-  },
-  // ─── إضافة تلاوتين من تراث الشيخ محمد رفعت ───
-  {
-    id: "rare_refat_taha",
-    category: "refat",
-    title: "سورة طه – تلاوة تراثية",
-    reciter: "الشيخ محمد رفعت",
-    desc: "تلاوة من مكتبة الشيخ الصوتية",
-    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/020.mp3",
-    badge: "تراث الإذاعة",
-    sourceTag: "نوادر التلاوات",
-    versionTag: "تلاوة تراثية"
-  },
-  {
-    id: "rare_refat_yasin",
-    category: "refat",
-    title: "سورة يس – تلاوة تراثية",
-    reciter: "الشيخ محمد رفعت",
-    desc: "تلاوة من مكتبة الشيخ الصوتية",
-    url: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/036.mp3",
-    badge: "تراث الإذاعة",
-    sourceTag: "نوادر التلاوات",
-    versionTag: "تلاوة تراثية"
   }
 ];
 
