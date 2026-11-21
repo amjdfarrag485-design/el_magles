@@ -2312,3 +2312,17 @@ body.ref-night:has(.reference-home.active) .ref-bottom-nav{background:#171711!im
 @media(max-width:370px){.ref-reader-card{flex-basis:98px}.ref-reader-card img{width:94px;height:94px}.ref-home-header{grid-template-columns:46px 42px 1fr;gap:7px}}
 
 .ref-save{width:30px;height:30px;border:1px solid #dfc77d;border-radius:50%;background:#fff8e3;color:#b78b24;font-size:1.2rem;display:grid;place-items:center;flex:0 0 30px}.ref-recitation-card .ref-play{flex:0 0 31px}
+
+.reference-home .ref-quran-list{display:grid;gap:9px}
+.reference-home .ref-quran-list button{display:grid;grid-template-columns:34px 1fr 30px;grid-template-rows:auto auto;align-items:center;column-gap:9px;text-align:right;padding:11px 12px;border:1px solid #e2d19c;border-radius:15px;background:linear-gradient(110deg,#fffdf5,#f7edcf);color:#574722;font:inherit}
+.reference-home .ref-quran-list button>span{grid-row:1/3;font-size:1.3rem}
+.reference-home .ref-quran-list button>b{font-size:.76rem}
+.reference-home .ref-quran-list button>small{font-size:.65rem;color:#9b8757;margin-top:3px}
+.reference-home .ref-quran-list button>i{grid-column:3;grid-row:1/3;width:29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#d4b24d;color:#fff;font-style:normal;font-size:.7rem}
+.reference-home .brand-top-banner{display:none}
+.reference-home .home-prayer-hero{background:linear-gradient(135deg,#fff9e6,#f3e5bd)!important;border:1px solid #ddc77f!important;color:#5b4a27!important}
+.reference-home .card{background:linear-gradient(145deg,#fffdf6,#f5ebd0)!important;color:#594927!important;border-color:#e0ce99!important}
+.reference-home .home-grid-item{box-shadow:0 3px 10px #96772c12}
+.reference-home .home-section-title{color:#a98425}
+.reference-home .date-strip{color:#947b43}
+body.ref-night:has(.reference-home.active) .reference-home .ref-quran-list button,body.ref-night:has(.reference-home.active) .reference-home .card{background:linear-gradient(145deg,#302a1b,#211f17)!important;color:#ebdda9!important}
