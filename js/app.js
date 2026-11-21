@@ -88,6 +88,7 @@ function initIslamicApp() {
 
   // استرجاع الإعدادات المحفوظة محلياً
   loadPersistedData();
+  initCouncilHomeExtras();
 
   // تهيئة مشغلات الصوت
   initAudioElements();
@@ -136,6 +137,52 @@ function initIslamicApp() {
       setTimeout(() => { loadingScreen.style.display = 'none'; }, 400);
     }
   }, 450);
+}
+
+
+/* واجهة المجلس المرجعية: المظهر والمكتبة الشخصية */
+function toggleCouncilTheme() {
+  document.body.classList.toggle('ref-night');
+  const dark = document.body.classList.contains('ref-night');
+  try { localStorage.setItem('council_theme', dark ? 'dark' : 'light'); } catch (e) {}
+  const button = document.querySelector('.ref-theme-btn');
+  if (button) button.textContent = dark ? '☀' : '☾';
+}
+function initCouncilHomeExtras() {
+  try {
+    if (localStorage.getItem('council_theme') === 'dark') {
+      document.body.classList.add('ref-night');
+      const button = document.querySelector('.ref-theme-btn');
+      if (button) button.textContent = '☀';
+    }
+  } catch (e) {}
+}
+function getCouncilLibrary() {
+  try { return JSON.parse(localStorage.getItem('council_library') || '[]'); }
+  catch (e) { return []; }
+}
+function toggleLibraryItem(itemId) {
+  const saved = getCouncilLibrary();
+  const next = saved.includes(itemId) ? saved.filter(id => id !== itemId) : [...saved, itemId];
+  try { localStorage.setItem('council_library', JSON.stringify(next)); } catch (e) {}
+  showToast(next.includes(itemId) ? 'اتضافت التلاوة لمكتبتك' : 'اتشالت التلاوة من مكتبتك');
+  if (STATE.currentPage === 'library') renderLibraryPage();
+}
+function renderLibraryPage() {
+  const container = document.getElementById('ref-library-items');
+  if (!container) return;
+  const saved = getCouncilLibrary();
+  const all = getAllAudioItems();
+  const items = saved.map(id => all.find(item => item.id === id)).filter(Boolean);
+  if (!items.length) {
+    container.innerHTML = '<div class="ref-library-empty">مكتبتك لسه فاضية 🌿<br>احفظ أي تلاوة من الصفحة الرئيسية أو الأرشيف وهتلاقيها هنا.</div>';
+    return;
+  }
+  container.innerHTML = items.map(item => `
+    <div class="ref-library-item">
+      <div><b>${item.title}</b><div style="font-size:.72rem;color:#9a8d6b;margin-top:4px">${item.reciter}</div></div>
+      <div style="display:flex;gap:6px"><button onclick="playAudioItem('${item.id}')">▶ استماع</button><button onclick="toggleLibraryItem('${item.id}')">حذف</button></div>
+    </div>`).join('');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -225,6 +272,7 @@ function navigateTo(pageId) {
   // التمرير لأعلى بسلاسة
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
+  if (pageId === 'library') renderLibraryPage();
   // تحديث الرابط في المتصفح
   if (window.location.hash.replace('#', '') !== pageId) {
     window.location.hash = pageId;

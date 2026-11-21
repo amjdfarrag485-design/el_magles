@@ -2447,3 +2447,92 @@ body:has(.home-dashboard.active) { background: #f6f0df; color: var(--dash-ink); 
  .dash-shortcuts {gap:7px}
  .dash-shortcut {padding:10px 8px;min-height:98px}
 }
+
+
+/* Reference-matched council home: cream, sage and antique gold */
+body:has(.reference-home.active) { background:#f5efd9; color:#61583f; }
+.reference-home { min-height:100vh; padding:18px 15px 105px; background:linear-gradient(180deg,#f7f1dc 0%,#fff9e9 55%,#f5efd9 100%); color:#5d563e; }
+.ref-home-header { display:grid; grid-template-columns:58px 48px 1fr; align-items:center; gap:10px; direction:ltr; margin:4px 0 22px; }
+.ref-profile { width:54px;height:54px;border-radius:50%;border:3px solid #d4b65d;padding:3px;background:#fff8e6;overflow:hidden; }
+.ref-profile img { width:100%;height:100%;border-radius:50%;object-fit:cover; }
+.ref-theme-btn { width:48px;height:48px;border:0;border-radius:15px;background:#fffaf0;color:#c2a34d;font-size:1.5rem;box-shadow:0 3px 12px #a68b3b18; }
+.ref-welcome { direction:rtl;text-align:right; }
+.ref-welcome span { color:#b4a98a;font-size:.84rem; }
+.ref-welcome h1 { color:#71836a;font-size:1.38rem;margin:3px 0 0;font-weight:800; }
+.ref-top-actions { display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:22px; }
+.ref-top-card { min-height:100px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:13px 15px;border:2px solid #e1cf8d;border-radius:24px;background:linear-gradient(145deg,#fff9e8,#f0e6c8);box-shadow:0 7px 0 #c7ad61,0 10px 15px #8f77331a;color:#71684e;font:inherit;text-align:right; }
+.ref-top-card b { font-size:1.08rem; }
+.ref-top-icon { display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:#71816b;color:#fff0c5;border:3px solid #d7bd68;font-size:1.35rem;flex-shrink:0; }
+.ref-new-readers { width:100%;min-height:120px;display:flex;align-items:center;gap:15px;padding:17px 18px;border:2px solid #ddc978;border-radius:28px;background:linear-gradient(120deg,#fdf6df,#f3e7bd);box-shadow:0 8px 0 #b69a4e,0 12px 20px #8c74251a;color:#71613a;text-align:right;font:inherit;margin:3px 0 29px;position:relative;overflow:hidden; }
+.ref-new-readers:before { content:"";position:absolute;inset:7px;border:1px solid #ead99d;border-radius:22px;pointer-events:none; }
+.ref-new-count { width:66px;height:66px;display:grid;place-items:center;border-radius:50%;background:#61765d;color:#f8e7a8;border:8px solid #e3cf83;font-size:1.45rem;font-weight:900;flex-shrink:0;z-index:1; }
+.ref-new-copy { display:flex;flex-direction:column;gap:7px;flex:1;z-index:1; }
+.ref-new-copy b { font-family:var(--font-uthmani,serif);font-size:1.65rem;color:#665632; }
+.ref-new-copy small { color:#9c906f;font-size:.82rem; }
+.ref-new-arrow { font-size:2rem;color:#c4a54c;z-index:1; }
+.ref-home-section { margin:0 0 27px; }
+.ref-section-title { display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 2px 13px; }
+.ref-section-title h2 { margin:0;color:#c19d38;font-family:var(--font-uthmani,serif);font-size:1.35rem;font-weight:800; }
+.ref-section-title button { border:0;background:transparent;color:#b99a4a;font:inherit;font-size:.8rem;font-weight:700; }
+.ref-reader-strip { display:flex;gap:12px;overflow-x:auto;padding:2px 1px 12px;scroll-snap-type:x mandatory;direction:rtl; }
+.ref-reader-card { flex:0 0 132px;display:flex;flex-direction:column;align-items:center;gap:10px;padding:0;border:0;background:transparent;color:#66725a;font:inherit;scroll-snap-align:start; }
+.ref-reader-card img,.ref-reader-initial>span { width:132px;height:160px;object-fit:cover;border:3px solid #8eaa68;border-radius:26px 26px 22px 22px;box-shadow:0 7px 0 #66834c; }
+.ref-reader-card:nth-child(2n) img { border-color:#bda16a;box-shadow:0 7px 0 #94794d; }
+.ref-reader-card:nth-child(3n) img { border-color:#bb8278;box-shadow:0 7px 0 #8f5c59; }
+.ref-reader-card b { font-size:.78rem;text-align:center;line-height:1.5; }
+.ref-reader-initial>span { display:grid;place-items:center;background:linear-gradient(145deg,#e9dfbd,#a9b49a);color:#fffdf2;font-size:1.5rem;font-weight:900;text-shadow:0 2px 5px #4e503c; }
+.ref-featured-audio { margin-top:8px; }
+.ref-recitation-card { width:100%;display:flex;align-items:center;gap:12px;padding:12px;border:1.5px solid #ddc77e;border-radius:22px;background:linear-gradient(120deg,#fff9e7,#f5e8c2);color:#554a32;text-align:right;margin-bottom:10px;box-shadow:0 3px 10px #91772a12;font:inherit; }
+.ref-reciter-thumb { width:58px;height:58px;flex-shrink:0;border-radius:50%;border:3px solid #d4b45b;padding:2px;background:#fff7df;overflow:hidden; }
+.ref-reciter-thumb img { width:100%;height:100%;object-fit:cover;border-radius:50%; }
+.ref-recitation-copy { display:flex;flex-direction:column;gap:4px;flex:1;min-width:0; }
+.ref-recitation-copy small { color:#b18e37;font-size:.7rem; }
+.ref-recitation-copy b { font-family:var(--font-uthmani,serif);font-size:1rem; }
+.ref-recitation-copy span { color:#998d6e;font-size:.68rem; }
+.ref-play { width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#718366;color:#fff7df;flex-shrink:0; }
+.ref-quran-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px; }
+.ref-quran-grid button { min-height:135px;border:2px solid #dfc77d;border-radius:20px;background:linear-gradient(150deg,#fff9e6,#efe0b1);box-shadow:0 6px 0 #c4a85c;padding:12px 7px;color:#67542b;font:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px; }
+.ref-quran-grid button span { width:78px;height:72px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#c5d0a8,#eee5c8);font-size:2rem; }
+.ref-quran-grid button b { font-size:.7rem;text-align:center;line-height:1.5; }
+.ref-bottom-shortcuts { display:grid;grid-template-columns:1fr 1fr;gap:9px; }
+.ref-bottom-shortcuts button { border:1px solid #dec982;border-radius:15px;background:#fff8e5;padding:13px 9px;color:#76633b;font:inherit;font-size:.78rem;font-weight:700; }
+.ref-bottom-nav { direction:rtl;background:#fffdf5!important;border-top:1px solid #e5d9b5!important;box-shadow:0 -5px 18px #8e793018!important;display:flex!important;justify-content:space-around!important; }
+.ref-bottom-nav .nav-tab-item { flex:1;min-width:0;color:#a9a28d!important; }
+.ref-bottom-nav .nav-tab-item.active { color:#c6a33e!important; }
+.ref-bottom-nav .nav-tab-icon { font-size:1.35rem;line-height:1.25; }
+.ref-bottom-nav .nav-tab-label { font-size:.62rem;white-space:nowrap; }
+.ref-utility-page { min-height:100vh;background:linear-gradient(180deg,#f7f1dc,#fff9e9);color:#61583f;padding:22px 16px 110px; }
+.ref-utility-header { margin:10px 0 22px;text-align:right; }
+.ref-utility-header h1 { margin:0;color:#9c813d;font-size:1.55rem; }
+.ref-utility-header p { color:#9a8d6b;font-size:.85rem; }
+.ref-utility-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+.ref-utility-grid button,.ref-assistant-list button { display:flex;align-items:center;gap:12px;text-align:right;border:1px solid #deca89;border-radius:18px;background:#fff9e9;padding:17px;color:#75613a;font:inherit;font-weight:700; }
+.ref-utility-grid button b { font-size:.82rem; }
+.ref-library-list { display:flex;flex-direction:column;gap:10px; }
+.ref-library-empty { padding:24px;border:1px dashed #d6c17c;border-radius:18px;text-align:center;color:#95845c;line-height:1.9; }
+.ref-library-item { display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px;border:1px solid #dec982;border-radius:16px;background:#fff9e9;color:#675735; }
+.ref-library-item button { border:0;border-radius:12px;background:#718366;color:#fff;padding:9px 12px; }
+.ref-assistant-list { display:flex;flex-direction:column;gap:10px; }
+.ref-assistant-list button { display:grid;grid-template-columns:38px 1fr; }
+.ref-assistant-list button span { grid-row:span 2;font-size:1.5rem; }
+.ref-assistant-list button small { color:#9b8c68;font-size:.7rem; }
+body.ref-night:has(.reference-home.active),body.ref-night:has(.ref-utility-page.active) { background:#24271f;color:#eee5ce; }
+body.ref-night .reference-home,body.ref-night .ref-utility-page { background:linear-gradient(180deg,#272c25,#171a17);color:#eee5ce; }
+body.ref-night .ref-welcome h1,body.ref-night .ref-section-title h2 { color:#d5b75b; }
+body.ref-night .ref-top-card,body.ref-night .ref-new-readers,body.ref-night .ref-recitation-card,body.ref-night .ref-quran-grid button,body.ref-night .ref-bottom-shortcuts button,body.ref-night .ref-utility-grid button,body.ref-night .ref-assistant-list button,body.ref-night .ref-library-item { background:#30362d;color:#eee5ce;border-color:#87733c; }
+body.ref-night .ref-bottom-nav { background:#1c201b!important;border-color:#6d603c!important; }
+@media(max-width:390px) {
+ .reference-home { padding-inline:11px; }
+ .ref-top-card { min-height:88px;padding:10px 11px; }
+ .ref-top-card b { font-size:.95rem; }
+ .ref-reader-card { flex-basis:118px; }
+ .ref-reader-card img,.ref-reader-initial>span { width:118px;height:145px; }
+ .ref-new-readers { min-height:108px; }
+ .ref-new-copy b { font-size:1.4rem; }
+ .ref-bottom-nav .nav-tab-label { font-size:.57rem; }
+}
+
+
+.ref-recitation-card { cursor:pointer; }
+.ref-save { width:30px;height:30px;border:1px solid #d9c57f;border-radius:50%;background:#fff9e8;color:#b5943c;font-size:1.1rem;flex-shrink:0; }
+.ref-recitation-card .ref-play { border:0; }
