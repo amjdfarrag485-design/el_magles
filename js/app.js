@@ -1507,10 +1507,11 @@ const SHEIKH_PORTRAITS = [
   { keys: ['طه الفشني','طه الفشنى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Taha_al-Fashni01.jpg' },
   { keys: ['النقشبندي','النقشبندى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Syed_Naqshbandi.jpg' },
   { keys: ['نصر الدين طوبار','نصرالدين طوبار'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Nasr_El-Din_Tobar.jpg' },
-  { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://www.aljazeera.net/wp-content/uploads/2022/04/2-29.jpg?resize=1800%2C1280' },
-  { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://images.akhbarelyom.com/images/images/large/20250605183400581.jpg' },
+  { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://i1.sndcdn.com/artworks-X2YzWHKedJzslfV5-DnTRRw-t1080x1080.jpg' },
+  { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2025/7/20/2025-638886459547910043-791.jpeg' },
   { keys: ['السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
-  { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ali_Jaber.jpg' }
+  { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://i0.wp.com/ahmalassaf.com/wp-content/uploads/2022/05/jaber.jpg?fit=784%2C578&ssl=1' },
+  { keys: ['محمد سلامة','محمد سلامه'], url: 'https://i1.sndcdn.com/artworks-000521364414-jkwft2-t500x500.jpg' }
 ];
 function getSheikhAvatarImage(name, isIbtehal = false) {
   const n = (name || '').replace(/الشيخ\s*/g, '').trim();
