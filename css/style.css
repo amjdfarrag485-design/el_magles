@@ -2273,7 +2273,7 @@ select:-webkit-autofill {
 .reference-player-progress-wrap{margin:26px 0 22px}
 #reference-player-seek{width:100%;accent-color:#397762;direction:ltr}
 .reference-player-times{display:flex;justify-content:space-between;direction:ltr;color:#8b918b;font-weight:800;font-size:1.1rem;margin-top:8px}
-.reference-player-controls{display:flex;align-items:center;justify-content:center;gap:clamp(18px,7vw,46px);margin:26px 0 44px;direction:ltr}
+.reference-player-controls{display:flex;align-items:center;justify-content:center;gap:clamp(7px,2.5vw,18px);margin:26px 0 44px;direction:ltr;flex-wrap:wrap}
 .reference-player-controls button{width:74px;height:74px;border:2px solid #c7d9d0;border-radius:50%;background:transparent;color:#182c26;font-size:1.8rem;display:grid;place-items:center}
 .reference-player-controls .reference-main-play{width:92px;height:92px;border:0;font-size:3rem;border-radius:24px}
 .reference-player-tools{border-top:1px solid #c9d7ce;padding-top:24px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px 8px}
@@ -2282,7 +2282,7 @@ select:-webkit-autofill {
 .reference-player-tools button small{font-size:.82rem;color:#818a83;font-weight:700}
 .reference-player-overlay[aria-hidden="true"]{display:none!important}
 .sleek-player-info,.sleek-player-avatar-wrap{cursor:pointer}
-@media(max-width:430px){.reference-player-sheet{padding:18px 16px calc(22px + env(safe-area-inset-bottom));border-radius:28px 28px 0 0}.reference-player-top{gap:12px;min-height:150px}.reference-vinyl{width:112px;height:112px;flex-basis:112px}.reference-vinyl-label{width:58px;height:58px}.reference-track-title{font-size:.95rem}.reference-track-reciter{font-size:1.08rem}.reference-track-source{font-size:.72rem;padding:6px 8px}.reference-player-controls button{width:58px;height:58px;font-size:1.45rem}.reference-player-controls .reference-main-play{width:72px;height:72px;font-size:2.5rem}.reference-player-tools{grid-template-columns:repeat(4,1fr);gap:16px 4px}.reference-player-tools button span{width:56px;height:56px;font-size:1.4rem}.reference-player-tools button small{font-size:.7rem}}
+@media(max-width:430px){.reference-player-sheet{padding:18px 16px calc(22px + env(safe-area-inset-bottom));border-radius:28px 28px 0 0}.reference-player-top{gap:12px;min-height:150px}.reference-vinyl{width:112px;height:112px;flex-basis:112px}.reference-vinyl-label{width:58px;height:58px}.reference-track-title{font-size:.95rem}.reference-track-reciter{font-size:1.08rem}.reference-track-source{font-size:.72rem;padding:6px 8px}.reference-player-controls{gap:6px;margin:20px 0 30px}.reference-player-controls button{width:48px;height:48px;font-size:1.2rem}.reference-player-controls .reference-main-play{width:64px;height:64px;font-size:2.2rem}.reference-player-tools{grid-template-columns:repeat(4,1fr);gap:16px 4px}.reference-player-tools button span{width:56px;height:56px;font-size:1.4rem}.reference-player-tools button small{font-size:.7rem}}
 
 .cairo-official-link{display:inline-flex;align-items:center;justify-content:center;margin:14px auto 0;padding:10px 16px;border:1px solid var(--border-gold);border-radius:12px;color:var(--gold-light);text-decoration:none;font-weight:700}
 .reciter-list-avatar{width:58px;height:58px;flex:0 0 58px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);background:var(--bg-tertiary)}
