@@ -1500,7 +1500,9 @@ function getSheikhAvatarSvg(name, isIbtehal = false) {
 // Authentic archival portraits for the reciters and munshids in the library.
 const SHEIKH_PORTRAITS = [
   { keys: ['الحصري','محمود خليل الحصري'], url: 'https://mediaaws.almasryalyoum.com/news/verylarge/2023/03/27/2067586_0.jpg' },
-  { keys: ['المنشاوي','محمد صديق المنشاوي'], url: 'https://www.alwafd.news/Upload/libfiles/374/0/432.jpg' },
+  { keys: ['صديق السيد المنشاوي','صديق المنشاوي','المنشاوي الكبير'], url: 'https://gate.ahram.org.eg/Media/News/2026/10/1/19_2026-639264662760749920-74.jpg' },
+  { keys: ['محمود صديق المنشاوي'], url: 'https://eu2.contabostorage.com/018496f096a743d69d0dde1ba7d2c739%3Atilawah/01KZYFCFF6S82HK3W8N2YZ4BET.webp' },
+  { keys: ['محمد صديق المنشاوي'], url: 'https://www.alwafd.news/Upload/libfiles/374/0/432.jpg' },
   { keys: ['عبد الباسط','عبدالباسط','عبد الباسط عبد الصمد'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdel_Basit_Abdel_Samad_1955.png' },
   { keys: ['رفعت','محمد رفعت'], url: 'https://static.majalla.com/styles/1200xauto/public/2019/05/31/177296-156158711.jpg?VersionId=PgXroftKa0gq9xnglH._i_VP6OkooAkt' },
   { keys: ['مصطفى إسماعيل','مصطفى اسماعيل'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/03/29/2069055_0.jpg' },
@@ -1514,8 +1516,7 @@ const SHEIKH_PORTRAITS = [
   { keys: ['محمد عمران','محمد أحمد عمران'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/10/2078766_0.jpeg' },
   { keys: ['أبو العينين شعيشع','ابو العينين شعيشع'], url: 'https://www.vetogate.com/Upload/libfiles/550/1/995.jpg' },
   { keys: ['محمد أيوب','محمد ايوب'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2016/04/16/448289_0.jpeg' },
-  { keys: ['صديق السيد المنشاوي','صديق المنشاوي','المنشاوي الكبير'], url: 'https://gate.ahram.org.eg/Media/News/2026/10/1/19_2026-639264662760749920-74.jpg' },
-  { keys: ['محمود صديق المنشاوي'], url: 'https://www.livedhere.gov.eg/Upload/PhotoGallery/5203/11889/1.jpg' },
+
   { keys: ['السيد متولي','السيد متولي عبد العال'], url: 'https://gate.ahram.org.eg/Media/News/2024/7/16/2024-638567265781727837-172.jpg' },
   { keys: ['عبد العزيز محمود','عبدالعزيز محمود'], url: 'https://mediaaws-live.almasryalyoum.com/almasryalyoum/uploads/images/2026/08/26/1961122.webp' }
 ];
