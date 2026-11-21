@@ -312,6 +312,7 @@ function initAudioElements() {
       }
       console.warn('Audio playback error on source:', STATE.globalAudio.src);
       updateModernPlayBtn(false);
+      if (!STATE.isCairoRadioPlaying) showToast('تعذر تحميل التسجيل الصوتي. قد يكون الرابط متوقفًا.');
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(false);
         STATE.isCairoRadioPlaying = false;
@@ -1510,7 +1511,7 @@ const SHEIKH_PORTRAITS = [
   { keys: ['النقشبندي','النقشبندى','سيد النقشبندي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Syed_Naqshbandi.jpg' },
   { keys: ['نصر الدين طوبار','نصرالدين طوبار'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Nasr_El-Din_Tobar.jpg' },
   { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/01/2071566_0.jpeg' },
-  { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2024/7/20/19_2024-638570758803144650-314.jpg' },
+  { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2025/7/20/2025-638886459547910043-791.jpeg' },
   { keys: ['السديس','عبد الرحمن السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
   { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://i0.wp.com/ahmalassaf.com/wp-content/uploads/2022/05/jaber.jpg?fit=784%2C578&ssl=1' },
   { keys: ['محمد عمران','محمد أحمد عمران'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/10/2078766_0.jpeg' },
@@ -1518,12 +1519,24 @@ const SHEIKH_PORTRAITS = [
   { keys: ['محمد أيوب','محمد ايوب'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2016/04/16/448289_0.jpeg' },
 
   { keys: ['السيد متولي','السيد متولي عبد العال'], url: 'https://gate.ahram.org.eg/Media/News/2024/7/16/2024-638567265781727837-172.jpg' },
+  { keys: ['محمد سلامة','محمد سلامه'], url: 'https://i1.sndcdn.com/artworks-000521364414-jkwft2-t500x500.jpg' },
   { keys: ['عبد العزيز محمود','عبدالعزيز محمود'], url: 'https://mediaaws-live.almasryalyoum.com/almasryalyoum/uploads/images/2026/08/26/1961122.webp' }
 ];
 function getSheikhAvatarImage(name, isIbtehal = false) {
-  const n = (name || '').replace(/الشيخ\s*/g, '').trim();
-  const match = SHEIKH_PORTRAITS.find(item => item.keys.some(key => n.includes(key)));
-  if (match) return match.url;
+  const normalize = value => String(value || '')
+    .replace(/الشيخ\s*/g, '')
+    .replace(/[ًٌٍَُِّْـ]/g, '')
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const n = normalize(name);
+  // أطول اسم مطابق أولاً حتى لا تتداخل أسماء أفراد عائلة المنشاوي.
+  const matches = SHEIKH_PORTRAITS
+    .flatMap(item => item.keys.map(key => ({ item, key: normalize(key) })))
+    .filter(entry => n.includes(entry.key))
+    .sort((a, b) => b.key.length - a.key.length);
+  if (matches.length) return matches[0].item.url;
   if (n.includes('عمران')) return 'https://i1.sndcdn.com/artworks-000443025276-sni8sp-t500x500.jpg';
   return getSheikhAvatarSvg(name, isIbtehal);
 }
@@ -1678,9 +1691,12 @@ function playModernTrack(track) {
   STATE.globalAudio.src = track.url;
   STATE.globalAudio.loop = !!STATE.modernPlayer.isLooping;
   STATE.globalAudio.load();
-  STATE.globalAudio.play().catch(err => {
-    console.warn('Modern audio playback notice:', err);
-    showToast('جاري بدء تشغيل التسجيل المبارك...');
+  STATE.globalAudio.play().then(() => {
+    updateModernPlayBtn(true);
+  }).catch(err => {
+    console.warn('Modern audio playback failed:', err, track.url);
+    updateModernPlayBtn(false);
+    showToast('التسجيل ده مش متاح حاليًا أو الرابط لا يسمح بالتشغيل. جرّب مقطعًا آخر.');
   });
 
   // تحديث وإظهار شريط الصوت النحيف المدمج للأندرويد والآيفون
