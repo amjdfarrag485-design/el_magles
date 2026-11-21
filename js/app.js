@@ -2156,7 +2156,8 @@ function renderRecitersGrid(list) {
 
   container.innerHTML = list.map(r => `
     <div class="card reciter-card" onclick="openReciterInReader('${r.id}')">
-      <div>
+      <img class="reciter-list-avatar" src="${getSheikhAvatarImage(r.name)}" alt="${r.name}" loading="lazy" onerror="this.onerror=null;this.src=getSheikhAvatarSvg('${r.name}')">
+      <div class="reciter-list-copy">
         <div class="reciter-name-bold">${r.name}</div>
         <div class="reciter-subtitle">${r.info}</div>
       </div>
