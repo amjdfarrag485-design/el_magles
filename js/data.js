@@ -186,9 +186,9 @@ const ALL_RECITERS_DATA = [
     name: "كامل يوسف البهتيمي",
     category: "golden",
     supportsMurattal: false,
-    supportsMojawwad: true,
+    supportsMojawwad: false,
     serverMurattal: "",
-    serverMojawwad: "https://server10.mp3quran.net/minsh_mjwd/",
+    serverMojawwad: "",
     info: "سلطان التلاوة القرآنية وإمام روائع المحافل المجودة الخالدة"
   },
   {
