@@ -1499,17 +1499,21 @@ function getSheikhAvatarSvg(name, isIbtehal = false) {
 }
 // Authentic archival portraits for the reciters and munshids in the library.
 const SHEIKH_PORTRAITS = [
-  { keys: ['الحصري'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hussary.jpg' },
-  { keys: ['المنشاوي'], url: 'https://www.aljazeera.net/wp-content/uploads/2022/04/2_auto_x2.jpg?resize=900%2C900' },
-  { keys: ['عبد الباسط','عبدالباسط'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdel_Basit_Abdel_Samad_1955.png' },
-  { keys: ['رفعت'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Muhammad_Rif%27at.jpg' },
-  { keys: ['مصطفى إسماعيل','مصطفى اسماعيل'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_مصطفى_إسماعيل.jpg' },
+  { keys: ['الحصري','محمود خليل الحصري'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hussary.jpg' },
+  { keys: ['المنشاوي','محمد صديق المنشاوي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Elminshwey.jpg' },
+  { keys: ['عبد الباسط','عبدالباسط','عبد الباسط عبد الصمد'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdel_Basit_Abdel_Samad_1955.png' },
+  { keys: ['رفعت','محمد رفعت'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Muhammad_Rif%27at.jpg' },
+  { keys: ['مصطفى إسماعيل','مصطفى اسماعيل'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_مصطفى_إسماعيل1.jpg' },
   { keys: ['طه الفشني','طه الفشنى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Taha_al-Fashni01.jpg' },
-  { keys: ['النقشبندي','النقشبندى'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Syed_Naqshbandi.jpg' },
+  { keys: ['النقشبندي','النقشبندى','سيد النقشبندي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Syed_Naqshbandi.jpg' },
   { keys: ['نصر الدين طوبار','نصرالدين طوبار'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Nasr_El-Din_Tobar.jpg' },
   { keys: ['كامل يوسف البهتيمي','البهتيمي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_كامل_يوسف.jpg' },
   { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2024/7/20/2024-638570759475598708-559.jpeg' },
-  { keys: ['السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
+  { keys: ['السديس','عبد الرحمن السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
+  { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/الشيخ_علي_جابر.png' },
+  { keys: ['محمد سلامة','محمد سلامه'], url: 'https://img.youm7.com/xlarge/202403201123302330.jpg' },
+  { keys: ['محمد الفيومي','محمد الفيومى'], url: 'https://cdn.al-ain.com/images/2017/6/03/78-181934-mohamed-alfayoumi-egypt-blind_700x400.jpeg' },
+  { keys: ['محمد عمران','محمد أحمد عمران'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/10/2078766_0.jpeg' }
 ];
 function getSheikhAvatarImage(name, isIbtehal = false) {
   const n = (name || '').replace(/الشيخ\s*/g, '').trim();
