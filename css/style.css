@@ -2375,3 +2375,33 @@ input, select, textarea {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* مشغل المجلس الموسّع: واجهة أسطوانة كلاسيكية بلون عاجي وأخضر */
+.council-player-screen{position:fixed;inset:0;z-index:1200;display:none;direction:rtl;color:#18352e;background:rgba(8,18,15,.48);overscroll-behavior:contain}
+.council-player-screen.is-open{display:flex;align-items:stretch;justify-content:center}
+.council-player-sheet{position:relative;width:100%;max-width:720px;min-height:100%;overflow-y:auto;padding:max(18px,env(safe-area-inset-top)) 22px max(24px,env(safe-area-inset-bottom));background:#f4f0e4;color:#19372f;display:flex;flex-direction:column;box-shadow:0 0 45px rgba(0,0,0,.24)}
+.council-player-grabber{width:68px;height:6px;border-radius:99px;background:#b7c9bd;margin:0 auto 28px}
+.council-player-minimize{position:absolute;top:max(52px,calc(env(safe-area-inset-top) + 32px));left:22px;width:48px;height:48px;border-radius:50%;border:1px solid #cbd8cf;background:#e8ece4;color:#28715d;font-size:30px;line-height:1;cursor:pointer}
+.council-player-topline{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#73827b;font-size:.82rem;margin:4px 2px 18px}
+.council-player-live{color:#27745f;font-weight:700}
+.council-player-art-wrap{display:flex;justify-content:center;margin:8px auto 24px;width:min(54vw,230px)}
+.council-player-vinyl{width:100%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:repeating-radial-gradient(circle at center,#07110f 0 8px,#14251f 9px 12px,#050b09 13px 17px);box-shadow:0 15px 30px rgba(20,42,34,.22),inset 0 0 0 5px #07110f}
+.council-player-vinyl-hole{width:48%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:7px solid #276b58;background:#dce2d7;box-shadow:0 0 0 3px #a8c2b5}
+.council-player-vinyl-hole img{width:100%;height:100%;object-fit:cover;display:block}
+.council-player-heading{text-align:center;margin:0 auto 22px;width:100%}
+.council-player-heading h2{font-size:clamp(1.2rem,4.8vw,1.75rem);line-height:1.5;margin:0 0 7px;color:#18372f}
+.council-player-heading p{margin:0 0 12px;color:#2e8069;font-size:clamp(1.05rem,4vw,1.45rem);font-weight:800}
+.council-player-source{display:inline-block;max-width:100%;padding:8px 14px;border:1px solid #c1d2c8;border-radius:16px;background:#e9ede4;color:#68766f;font-size:.9rem}
+.council-player-seek{margin:12px 0 28px}
+.council-player-seek input{width:100%;accent-color:#2c7963;direction:ltr;cursor:pointer}
+.council-player-times{display:flex;justify-content:space-between;direction:ltr;color:#89918c;font-weight:700;font-variant-numeric:tabular-nums;margin-top:8px}
+.council-player-controls{display:flex;align-items:center;justify-content:center;gap:clamp(8px,3vw,24px);margin:0 auto 34px}
+.council-player-controls button{position:relative;width:clamp(44px,13vw,72px);height:clamp(44px,13vw,72px);border-radius:50%;border:1.5px solid #c6d6cd;background:transparent;color:#1b302a;font-size:1.35rem;cursor:pointer;display:grid;place-items:center}
+.council-player-controls button small{position:absolute;font-size:.55rem;bottom:9px}
+.council-player-controls .council-player-main-play{width:clamp(62px,17vw,92px);height:clamp(62px,17vw,92px);border:0;border-radius:18px;font-size:2.8rem;font-weight:800;background:transparent}
+.council-player-tools{border-top:1px solid #cbd8cf;padding-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px 8px;margin:auto -8px 0}
+.council-player-tools button{border:0;background:transparent;color:#77827c;font-weight:700;font-size:.78rem;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
+.council-player-tools button span{width:58px;height:58px;display:grid;place-items:center;border:1.5px solid #c6d6cd;border-radius:50%;color:#1c332c;font-size:1.55rem}
+@media(min-width:600px){.council-player-sheet{border-radius:24px;min-height:min(900px,100%);margin:18px}}
+@media(max-height:700px){.council-player-art-wrap{width:min(34vw,150px);margin:0 auto 12px}.council-player-heading{margin-bottom:10px}.council-player-seek{margin:6px 0 16px}.council-player-controls{margin-bottom:18px}.council-player-tools{gap:10px 6px;padding-top:14px}}
