@@ -966,8 +966,7 @@ function loadSurahAudio(surahNumber) {
       chain.push(`https://server12.mp3quran.net/tblawi/${paddedNum}.mp3`);
     }
 
-    chain.push(`https://server10.mp3quran.net/minsh_mjwd/${paddedNum}.mp3`);
-    chain.push(`https://server7.mp3quran.net/basit_mjwd/${paddedNum}.mp3`);
+    // لا ننتقل إلى قارئ آخر عند تعطل رابط القارئ المختار.
   } else {
     // ─── سيرفرات المرتل الرسمية المباشرة ───
     if (reciter.serverMurattal) {
@@ -978,17 +977,20 @@ function loadSurahAudio(surahNumber) {
       chain.push(`https://server14.mp3quran.net/refat/${paddedNum}.mp3`);
     }
 
-    chain.push(`https://server13.mp3quran.net/husr/${paddedNum}.mp3`);
-    chain.push(`https://server10.mp3quran.net/minsh/${paddedNum}.mp3`);
-    chain.push(`https://server7.mp3quran.net/basit/${paddedNum}.mp3`);
-    chain.push(`https://server8.mp3quran.net/mustafa/${paddedNum}.mp3`);
-    chain.push(`https://server8.mp3quran.net/afs/${paddedNum}.mp3`);
+    // روابط احتياطية لنفس القارئ فقط، ولا نخلط أصوات القراء.
   }
 
   STATE.audioFallbackChain = [...new Set(chain.filter(Boolean))];
   STATE.audioFallbackIndex = 0;
 
   STATE.quranAudio.preload = 'metadata';
+  if (!STATE.audioFallbackChain.length) {
+    STATE.quranAudio.removeAttribute('src');
+    STATE.quranAudio.load();
+    updateHudPlayBtn(false);
+    showToast('لا يوجد رابط صوتي مضبوط لهذا القارئ في هذا النمط حاليًا.');
+    return;
+  }
   STATE.quranAudio.src = STATE.audioFallbackChain[0];
   STATE.quranAudio.load();
 
@@ -1074,7 +1076,11 @@ function toggleHudPlay() {
         const totEl = document.getElementById('hud-time-total');
         if (totEl) totEl.textContent = formatAudioTime(STATE.quranAudio.duration);
       }
-    }).catch(console.warn);
+    }).catch(err => {
+      console.warn('Quran playback failed:', err, STATE.quranAudio?.src);
+      updateHudPlayBtn(false);
+      showToast('تعذر تشغيل تلاوة هذا القارئ. جرّب إعادة المحاولة أو اختر قارئًا آخر.');
+    });
   } else {
     STATE.quranAudio.pause();
   }
