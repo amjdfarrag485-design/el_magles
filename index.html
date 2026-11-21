@@ -43,164 +43,84 @@
   <!-- ========================================================================= -->
   <!-- 1. الصفحة الرئيسية (Home Page)                                            -->
   <!-- ========================================================================= -->
-  <section class="page active" id="page-home">
-    <!-- ترويسة الهوية الرسمية لتطبيق المجلس -->
-    <header class="brand-top-banner">
-      <div class="brand-title-box">
-        <span class="brand-subtitle">الموسوعة القرآنية والابتهالات</span>
-        <h1 class="brand-main-title">المَجْلِس</h1>
+  <section class="page active home-dashboard" id="page-home">
+    <header class="dash-header">
+      <div class="dash-greeting">
+        <span class="dash-kicker">أهلاً بيك في</span>
+        <h1>المَجْلِس</h1>
+        <p>رفيق يومك للقرآن والذكر والسكينة</p>
       </div>
-      <div class="brand-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div class="dash-brand-mark" aria-label="المجلس">م</div>
     </header>
 
-    <!-- كارت مواقيت الصلاة في صدارة الصفحة الرئيسية فور فتح التطبيق -->
-    <div class="home-prayer-hero" id="home-prayer-hero">
-      <div class="prayer-hero-top">
-        <div class="prayer-hero-badge">
-          <span>🕌</span>
-          <span id="hero-prayer-badge-title">الصلاة القادمة</span>
-        </div>
-        <div class="prayer-hero-location" id="hero-prayer-location">
-          <span>📍</span>
-          <span id="hero-location-text">القاهرة، مصر</span>
-        </div>
-      </div>
-
-      <div class="prayer-hero-main">
-        <div class="prayer-hero-name" id="hero-next-prayer-name">صلاة الظهر</div>
-        <div class="prayer-hero-time" id="hero-next-prayer-time">11:45</div>
-        <div class="prayer-hero-countdown" id="hero-prayer-countdown">متبقي: 01 س و 24 د</div>
-      </div>
-
-      <!-- شبكة مصغرة لجميع الصلوات الخمس والشروق -->
-      <div class="mini-prayer-grid" id="hero-mini-prayers">
-        <div class="mini-prayer-item" id="mini-p-fajr">
-          <span class="mini-p-name">الفجر</span>
-          <span class="mini-p-time">--:--</span>
-        </div>
-        <div class="mini-prayer-item" id="mini-p-sunrise">
-          <span class="mini-p-name">الشروق</span>
-          <span class="mini-p-time">--:--</span>
-        </div>
-        <div class="mini-prayer-item" id="mini-p-dhuhr">
-          <span class="mini-p-name">الظهر</span>
-          <span class="mini-p-time">--:--</span>
-        </div>
-        <div class="mini-prayer-item" id="mini-p-asr">
-          <span class="mini-p-name">العصر</span>
-          <span class="mini-p-time">--:--</span>
-        </div>
-        <div class="mini-prayer-item" id="mini-p-maghrib">
-          <span class="mini-p-name">المغرب</span>
-          <span class="mini-p-time">--:--</span>
-        </div>
-        <div class="mini-prayer-item" id="mini-p-isha">
-          <span class="mini-p-name">العشاء</span>
-          <span class="mini-p-time">--:--</span>
-        </div>
-      </div>
-
-      <!-- زر تفعيل وسماح الأذان التلقائي في المتصفح -->
-      <div style="margin-top: 14px; text-align: center;">
-        <button class="adhan-master-toggle-btn" id="adhan-master-toggle-btn" onclick="toggleMasterAdhan()">
-          <span id="adhan-toggle-icon">🔊</span>
-          <span id="adhan-toggle-text">الأذان التلقائي: مفعّل (انقر للتجربة / كتم)</span>
-        </button>
-      </div>
+    <div class="dash-date-row">
+      <span id="home-hijri-date">-- هـ</span>
+      <span class="dash-date-dot">•</span>
+      <span id="home-gregorian-date">--</span>
     </div>
 
-    <!-- شريط التاريخ الهجري والميلادي -->
-    <div class="date-strip">
-      <div id="home-hijri-date">-- هـ</div>
-      <div id="home-gregorian-date">--</div>
-    </div>
-
-    <!-- بطاقة نفحات اليوم المتجددة تلقائياً (دعاء اليوم وورد اليوم) -->
-    <div class="card" style="margin-bottom: 16px; border: 1px solid var(--border-gold); background: linear-gradient(145deg, #181c18, #101410);">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--border-dark); padding-bottom: 8px;">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="font-size: 1.3rem;">🌟</span>
-          <span style="font-weight: 700; color: #ffffff; font-size: 1rem;">دعاء وورد اليوم المتجدد</span>
+    <div class="dash-prayer-card" id="home-prayer-hero">
+      <div class="dash-prayer-top">
+        <span class="dash-pill">🕌 مواقيت الصلاة</span>
+        <span class="dash-location" id="hero-prayer-location">📍 <span id="hero-location-text">الإسكندرية، مصر</span></span>
+      </div>
+      <div class="dash-prayer-main">
+        <div>
+          <div class="dash-muted" id="hero-prayer-badge-title">الصلاة القادمة</div>
+          <div class="dash-next-name" id="hero-next-prayer-name">صلاة الظهر</div>
+          <div class="dash-countdown" id="hero-prayer-countdown">جاري حساب الوقت المتبقي</div>
         </div>
-        <span id="daily-renewal-day-badge" class="badge-gold">اليوم المبارك</span>
+        <div class="dash-next-time" id="hero-next-prayer-time">--:--</div>
       </div>
-      <div id="daily-adhkar-title" style="font-weight:700;color:var(--gold-light);margin-bottom:6px;">ذكر اليوم</div>
-      <div id="daily-dua-text" style="font-family: var(--font-uthmani); font-size: 1.3rem; line-height: 2.1; color: #ffffff; margin-bottom: 12px;">
-        اللهم إنا نسألك زيادة في الدين وبركة في العمر وصحة في الجسد وسعة في الرزق وعفواً عند الحساب
+      <div class="dash-prayer-times" id="hero-mini-prayers">
+        <div class="mini-prayer-item" id="mini-p-fajr"><span class="mini-p-name">الفجر</span><span class="mini-p-time">--:--</span></div>
+        <div class="mini-prayer-item" id="mini-p-sunrise"><span class="mini-p-name">الشروق</span><span class="mini-p-time">--:--</span></div>
+        <div class="mini-prayer-item" id="mini-p-dhuhr"><span class="mini-p-name">الظهر</span><span class="mini-p-time">--:--</span></div>
+        <div class="mini-prayer-item" id="mini-p-asr"><span class="mini-p-name">العصر</span><span class="mini-p-time">--:--</span></div>
+        <div class="mini-prayer-item" id="mini-p-maghrib"><span class="mini-p-name">المغرب</span><span class="mini-p-time">--:--</span></div>
+        <div class="mini-prayer-item" id="mini-p-isha"><span class="mini-p-name">العشاء</span><span class="mini-p-time">--:--</span></div>
       </div>
-      <div id="daily-adhkar-reward" style="font-size:.82rem;color:var(--text-secondary);line-height:1.7;margin-bottom:10px;"></div>
-      <div style="border-top: 1px dashed var(--border-dark); padding-top: 10px; display: flex; align-items: center; justify-content: space-between;">
-        <span style="font-size: 0.85rem; color: var(--gold-light);">📖 ورد اليوم القرآني:</span>
-        <span id="daily-wird-text" style="font-size: 0.92rem; color: #ffffff; font-weight: 600;">قراءة سورة الفاتحة وأول ٥ آيات من سورة البقرة مع التدبر</span>
-      </div>
+      <button class="dash-adhan-toggle" id="adhan-master-toggle-btn" onclick="toggleMasterAdhan()">
+        <span id="adhan-toggle-icon">🔔</span>
+        <span id="adhan-toggle-text">تفعيل الأذان</span>
+      </button>
     </div>
 
-    <!-- شبكة الأقسام الرئيسية للوصول السريع الشامل -->
-    <h3 class="home-section-title">✨ أبواب الخير والقرآن</h3>
-    <div class="home-grid">
-      <!-- المصحف الشريف والتلاوة -->
-      <div class="card home-grid-item" onclick="navigateTo('reader')">
-        <span class="home-grid-icon">📖</span>
-        <span class="home-grid-name">المصحف التفاعلي</span>
-        <span class="home-grid-desc">مرتل ومجود وتزامن الكلمات وعلامة الختمة</span>
+    <section class="dash-section">
+      <div class="dash-section-heading"><div><span class="dash-kicker">ابدأ يومك بالقرب من الله</span><h2>أبواب المجلس</h2></div><span class="dash-heading-icon">✦</span></div>
+      <div class="dash-shortcuts">
+        <button class="dash-shortcut" onclick="navigateTo('azkar')"><span>📿</span><b>الأذكار</b><small>حصن المسلم</small></button>
+        <button class="dash-shortcut" onclick="navigateTo('radio')"><span>📻</span><b>إذاعة القرآن</b><small>بث مباشر</small></button>
+        <button class="dash-shortcut" onclick="navigateTo('reader')"><span>📖</span><b>المصحف</b><small>مرتل ومجود</small></button>
+        <button class="dash-shortcut" onclick="navigateTo('prayer')"><span>🕌</span><b>الصلاة</b><small>المواقيت والأذان</small></button>
+        <button class="dash-shortcut" onclick="navigateTo('tasbeeh')"><span>🤲</span><b>المسبحة</b><small>وردك اليومي</small></button>
+        <button class="dash-shortcut" onclick="navigateTo('stories')"><span>📚</span><b>قصص وعِبر</b><small>قصص الأنبياء</small></button>
       </div>
+    </section>
 
-      <!-- نوادر التلاوات القرآنية النادرة -->
-      <div class="card home-grid-item" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('rare_all');">
-        <span class="home-grid-icon">✨</span>
-        <span class="home-grid-name">نوادر التلاوات القرآنية</span>
-        <span class="home-grid-desc">المنشاوي، عبد الباسط، رفعت، مصطفى إسماعيل، البهتيمي</span>
-      </div>
+    <section class="dash-daily-card">
+      <div class="dash-daily-heading"><span>🌙 نفحات اليوم</span><span id="daily-renewal-day-badge">يتجدد يومياً</span></div>
+      <div id="daily-adhkar-title" class="dash-daily-title">ذكر اليوم</div>
+      <div id="daily-dua-text" class="dash-dua-text">اللهم أعنّا على ذكرك وشكرك وحسن عبادتك</div>
+      <div id="daily-adhkar-reward" class="dash-daily-reward"></div>
+      <div class="dash-wird-row"><span>📖 ورد اليوم</span><b id="daily-wird-text">قراءة ما تيسر من القرآن الكريم</b></div>
+    </section>
 
-      <!-- التواشيح والابتهالات الدينية -->
-      <div class="card home-grid-item" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all');">
-        <span class="home-grid-icon">🎙️</span>
-        <span class="home-grid-name">التواشيح والابتهالات</span>
-        <span class="home-grid-desc">نصر الدين طوبار، سيد النقشبندي، الفشني، عمران، رمضان</span>
+    <section class="dash-section">
+      <div class="dash-section-heading"><div><span class="dash-kicker">أصوات من الزمن الجميل</span><h2>كبار القراء</h2></div><button class="dash-text-link" onclick="navigateTo('reciters')">عرض الكل ←</button></div>
+      <div class="dash-reciter-row">
+        <button class="dash-reciter" onclick="openReciterInReader('hussary')"><span class="dash-reciter-art">🎙️</span><b>محمود خليل الحصري</b><small>المرتل والمجود</small></button>
+        <button class="dash-reciter" onclick="openReciterInReader('minshawi')"><span class="dash-reciter-art">🎙️</span><b>محمد صديق المنشاوي</b><small>صوت الخشوع</small></button>
+        <button class="dash-reciter" onclick="openReciterInReader('rifaat')"><span class="dash-reciter-art">🎙️</span><b>الشيخ محمد رفعت</b><small>قيثارة السماء</small></button>
+        <button class="dash-reciter" onclick="openReciterInReader('bahtimi')"><span class="dash-reciter-art">🎙️</span><b>كامل يوسف البهتيمي</b><small>روائع المجود</small></button>
+        <button class="dash-reciter" onclick="openReciterInReader('banna')"><span class="dash-reciter-art">🎙️</span><b>محمود علي البنا</b><small>صوت رخيم</small></button>
       </div>
+    </section>
 
-      <!-- إذاعة القرآن الكريم من القاهرة -->
-      <div class="card home-grid-item" onclick="navigateTo('radio')">
-        <span class="home-grid-icon">📻</span>
-        <span class="home-grid-name">إذاعة القرآن من القاهرة</span>
-        <span class="home-grid-desc">البث المباشر الرسمي 24 ساعة بدون انقطاع</span>
-      </div>
-
-      <!-- حصن المسلم والأذكار -->
-      <div class="card home-grid-item" onclick="navigateTo('azkar')">
-        <span class="home-grid-icon">📿</span>
-        <span class="home-grid-name">حصن المسلم</span>
-        <span class="home-grid-desc">أذكار الصباح والمساء والعدادات</span>
-      </div>
-
-      <!-- موسوعة كبار القراء -->
-      <div class="card home-grid-item" onclick="navigateTo('reciters')">
-        <span class="home-grid-icon">🎙️</span>
-        <span class="home-grid-name">موسوعة كبار القراء</span>
-        <span class="home-grid-desc">عمالقة التلاوة وأئمة الحرمين</span>
-      </div>
-
-      <!-- قصص الأنبياء وقصص الأطفال -->
-      <div class="card home-grid-item" onclick="navigateTo('stories')">
-        <span class="home-grid-icon">📚</span>
-        <span class="home-grid-name">قصص الأنبياء</span>
-        <span class="home-grid-desc">قراءة واستماع صوتي مباشر</span>
-      </div>
-
-      <!-- المسبحة الإلكترونية الذكية -->
-      <div class="card home-grid-item" onclick="navigateTo('tasbeeh')">
-        <span class="home-grid-icon">🤲</span>
-        <span class="home-grid-name">المسبحة الذكية</span>
-        <span class="home-grid-desc">تسبيح واهتزاز وإجمالي يومي</span>
-      </div>
-
-      <!-- مواقيت الصلاة والأذان الكاملة -->
-      <div class="card home-grid-item" onclick="navigateTo('prayer')">
-        <span class="home-grid-icon">🕌</span>
-        <span class="home-grid-name">مواقيت الصلاة والأذان</span>
-        <span class="home-grid-desc">كتم وتفعيل صوت الأذان</span>
-      </div>
-    </div>
+    <section class="dash-feature-grid">
+      <button class="dash-feature-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('rare_all')"><span>✨</span><b>نوادر التلاوات</b><small>تسجيلات نادرة لكبار القراء</small></button>
+      <button class="dash-feature-card" onclick="navigateTo('rare-ibtehalat'); filterRareAndIbtehalat('ibtehal_all')"><span>🎙️</span><b>التواشيح والابتهالات</b><small>نفحات روحانية وأصوات خاشعة</small></button>
+    </section>
   </section>
 
   <!-- ========================================================================= -->
@@ -705,41 +625,17 @@
   <!-- ========================================================================= -->
   <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الـ 5 الرئيسية)                     -->
   <!-- ========================================================================= -->
-  <nav class="bottom-nav-bar" id="bottom-nav">
-    <!-- 1. الرئيسية -->
-    <button class="nav-tab-item active" data-page="home" onclick="navigateTo('home')">
-      <span class="nav-tab-icon">🏠</span>
-      <span class="nav-tab-label">الرئيسية</span>
-    </button>
-
-    <!-- 2. المصحف -->
-    <button class="nav-tab-item" data-page="reader" onclick="navigateTo('reader')">
-      <span class="nav-tab-icon">📖</span>
-      <span class="nav-tab-label">المصحف</span>
-    </button>
-
-    <!-- 3. النوادر والابتهالات -->
-    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')">
-      <span class="nav-tab-icon">🎙️</span>
-      <span class="nav-tab-label">النوادر والابتهالات</span>
-    </button>
-
-    <!-- 4. الإذاعة -->
-    <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')">
-      <span class="nav-tab-icon">📻</span>
-      <span class="nav-tab-label">الإذاعة</span>
-    </button>
-
-    <!-- 5. الأذكار -->
-    <button class="nav-tab-item" data-page="azkar" onclick="navigateTo('azkar')">
-      <span class="nav-tab-icon">📿</span>
-      <span class="nav-tab-label">الأذكار</span>
-    </button>
+  <nav class="bottom-nav-bar dash-bottom-nav" id="bottom-nav">
+    <button class="nav-tab-item active" data-page="home" onclick="navigateTo('home')"><span class="nav-tab-icon">⌂</span><span class="nav-tab-label">الرئيسية</span></button>
+    <button class="nav-tab-item" data-page="reciters" onclick="navigateTo('reciters')"><span class="nav-tab-icon">🎙️</span><span class="nav-tab-label">القراء</span></button>
+    <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')"><span class="nav-tab-icon">📻</span><span class="nav-tab-label">الإذاعة</span></button>
+    <button class="nav-tab-item" data-page="azkar" onclick="navigateTo('azkar')"><span class="nav-tab-icon">📿</span><span class="nav-tab-label">الأذكار</span></button>
+    <button class="nav-tab-item" data-page="prayer" onclick="navigateTo('prayer')"><span class="nav-tab-icon">🕌</span><span class="nav-tab-label">الصلاة</span></button>
   </nav>
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=5"></script>
-  <script src="js/app.js?v=6"></script>
+  <script src="js/app.js?v=7"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
