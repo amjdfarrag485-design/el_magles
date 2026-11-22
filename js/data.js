@@ -1457,6 +1457,449 @@ const IBTEHALAT_DATA = [
     day: 31,
     dua: "اللَّهُمَّ اخْتِمْ لَنَا بِالْبَاقِيَاتِ الصَّالِحَاتِ أَعْمَالَنَا، وَاجْعَلْ خَيْرَ أَيَّامِنَا يَوْمَ نَلْقَاكَ",
     wird: "قراءة المعوذتين والإخلاص ثلاث مرات مع استشعار الحفظ والتحصين التام"
+  },
+
+  // مجموعة أرشيفية من 49 ابتهالاً نادراً للشيخ محمد عمران
+  {
+    id: "omran_archive_01",
+    category: "omran_fayoumi",
+    title: "نستغفر الله العظيم",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://d.top4top.io/m_2271ljk1m1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_02",
+    category: "omran_fayoumi",
+    title: "يا ربنا التيسير واليسر في رضاك",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://h.top4top.io/m_22712chfw1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_03",
+    category: "omran_fayoumi",
+    title: "إلهي إن دينك ما رضينا",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://c.top4top.io/m_22719htoe1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_04",
+    category: "omran_fayoumi",
+    title: "إلهي عبدك الجاني أتاك",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://i.top4top.io/m_22719pmby1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_05",
+    category: "omran_fayoumi",
+    title: "إلهي وميزانك العدل والاعتدال",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://b.top4top.io/m_2271jy49p1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_06",
+    category: "omran_fayoumi",
+    title: "في الليل يا ربي وفي الأسحار",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://a.top4top.io/m_2271fd2aq1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_07",
+    category: "omran_fayoumi",
+    title: "أسلمت وجهي للذي أحياني",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://l.top4top.io/m_2271ggvk91.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_08",
+    category: "omran_fayoumi",
+    title: "الحلم في القلب الكبير ترفع",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://k.top4top.io/m_2271vdh141.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_09",
+    category: "omran_fayoumi",
+    title: "صلوا على خير الأنام شفيعنا يوم الزحام",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://i.top4top.io/m_2271qxqqe1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_10",
+    category: "omran_fayoumi",
+    title: "فكم لله من لطف خفي",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://h.top4top.io/m_2271pyih51.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_11",
+    category: "omran_fayoumi",
+    title: "الله وفقنا لنيل هباته",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://g.top4top.io/m_22719dedu1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_12",
+    category: "omran_fayoumi",
+    title: "أنا يا إلهي ما عبدت سواك",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://e.top4top.io/m_2271t3jha1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_13",
+    category: "omran_fayoumi",
+    title: "يا رب عفوك أرتجيه ورحمة",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://d.top4top.io/m_2271ama831.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_14",
+    category: "omran_fayoumi",
+    title: "في ليلة هزت الدنيا عجائبها",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://c.top4top.io/m_2271cn01u1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_15",
+    category: "omran_fayoumi",
+    title: "قد حل حبك في قلبي بمنزلة",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://b.top4top.io/m_2271kngr21.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_16",
+    category: "omran_fayoumi",
+    title: "كلنا أحفاد من من طينة الأرض تخلق",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://a.top4top.io/m_2271emw9a1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_17",
+    category: "omran_fayoumi",
+    title: "تسبح لله كل الخلائق",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://k.top4top.io/m_2271zsy691.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_18",
+    category: "omran_fayoumi",
+    title: "الخير في الأعمال دوما",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://j.top4top.io/m_2271jq4lq1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_19",
+    category: "omran_fayoumi",
+    title: "قيوم يا رب الورى",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://i.top4top.io/m_2271rp5fy1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_20",
+    category: "omran_fayoumi",
+    title: "إله الكون أنت لنا معين",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://g.top4top.io/m_2271wxe1p1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_21",
+    category: "omran_fayoumi",
+    title: "إلهي أعنا نجاهد أنفسنا",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://f.top4top.io/m_2271mjv251.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_22",
+    category: "omran_fayoumi",
+    title: "في خوفنا ورجائنا نحيا بالأمل",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://e.top4top.io/m_2271ru03z1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_23",
+    category: "omran_fayoumi",
+    title: "بالرحمة المهداة يا رب تولنا",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://c.top4top.io/m_2271fuhd91.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_24",
+    category: "omran_fayoumi",
+    title: "النور أشرق في الوجود جميل",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://b.top4top.io/m_2271clrkd1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_25",
+    category: "omran_fayoumi",
+    title: "آمنت بالله ربي خالق الأكوان",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://a.top4top.io/m_2271tx0fi1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_26",
+    category: "omran_fayoumi",
+    title: "يا رب أنت رجاء من لاذوا ببابك خائفين",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://l.top4top.io/m_2271av9w81.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_27",
+    category: "omran_fayoumi",
+    title: "الليل أقبل والوجود سكون",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://j.top4top.io/m_22719ep581.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_28",
+    category: "omran_fayoumi",
+    title: "سمعنا للهدى صوت المنادي (تسجيل مختلف)",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://i.top4top.io/m_2271rg63h1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_29",
+    category: "omran_fayoumi",
+    title: "العزم مفتاح التقرب للذي يبغي الوصول",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://h.top4top.io/m_2271nwxjm1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_30",
+    category: "omran_fayoumi",
+    title: "إلهي إن يكن ذنبي عظيما",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://g.top4top.io/m_2271jiuib1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_31",
+    category: "omran_fayoumi",
+    title: "سبحان من في لوحه المحفوظ قد خط القلم",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://e.top4top.io/m_2271ud5fs1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_32",
+    category: "omran_fayoumi",
+    title: "من للعصاة يردهم لرشادهم",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://d.top4top.io/m_22713p3i01.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_33",
+    category: "omran_fayoumi",
+    title: "الله ربي للهدى يهديني",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://b.top4top.io/m_227153xqu1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_34",
+    category: "omran_fayoumi",
+    title: "سبحان من عنت الوجوه لوجهه فهو الكريم",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://a.top4top.io/m_22714royq1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_35",
+    category: "omran_fayoumi",
+    title: "يا مؤمنون تسابقوا",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://l.top4top.io/m_227186kv71.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_36",
+    category: "omran_fayoumi",
+    title: "سمعنا للهدى صوت المنادي",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://i.top4top.io/m_227100ryx1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_37",
+    category: "omran_fayoumi",
+    title: "إله الكون يأمركم بعدل",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://h.top4top.io/m_2271ytp1j1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_38",
+    category: "omran_fayoumi",
+    title: "من ذا سواك أيا إلهي رجاء",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://g.top4top.io/m_2271xp6x41.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_39",
+    category: "omran_fayoumi",
+    title: "لك لا لغيرك يا إلهي أخشع",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://f.top4top.io/m_22712ckvp1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_40",
+    category: "omran_fayoumi",
+    title: "يا رب فيض من ثنائك",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://e.top4top.io/m_2271ecgg91.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_41",
+    category: "omran_fayoumi",
+    title: "كونوا على الله الكريم حياتكم متوكلين",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://d.top4top.io/m_2271y2fj51.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_42",
+    category: "omran_fayoumi",
+    title: "عباد الله في الدنيا كرام",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://c.top4top.io/m_227146thn1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_43",
+    category: "omran_fayoumi",
+    title: "من يكشف الضر غير الواحد الأحد",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://a.top4top.io/m_2271dux6u1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_44",
+    category: "omran_fayoumi",
+    title: "يا رحيما يا كريما",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://l.top4top.io/m_22717nlro1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_45",
+    category: "omran_fayoumi",
+    title: "من ذا الذي يحيي العباد سواه",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://k.top4top.io/m_22716exbo1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_46",
+    category: "omran_fayoumi",
+    title: "يا مؤمنون تفكروا",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://j.top4top.io/m_2271adm661.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_47",
+    category: "omran_fayoumi",
+    title: "يا رب القدرة أدركنا",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://g.top4top.io/m_227166x201.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_48",
+    category: "omran_fayoumi",
+    title: "الخير في الأعمال دوما (تسجيل مختلف)",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://f.top4top.io/m_2271rfyni1.mp3",
+    badge: "ابتهال نادر"
+  },
+  {
+    id: "omran_archive_49",
+    category: "omran_fayoumi",
+    title: "يا إلهي على الوفاء أعنا",
+    reciter: "الشيخ محمد عمران",
+    desc: "من مجموعة الـ49 ابتهالاً النادرة المنسوبة للشيخ محمد عمران؛ تسجيل أرشيفي",
+    url: "https://e.top4top.io/m_2271sjxlu1.mp3",
+    badge: "ابتهال نادر"
   }
 ];
 
