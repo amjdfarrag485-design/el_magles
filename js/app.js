@@ -1562,6 +1562,16 @@ function getSheikhAvatarSvg(name, isIbtehal = false) {
 }
 // Authentic archival portraits for the reciters and munshids in the library.
 const SHEIKH_PORTRAITS = [
+  // صور إضافية موثقة؛ ملفات Commons مباشرة لتقليل أعطال روابط الصور.
+  { keys: ['ماهر المعيقلي','ماهر'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Maher_Al_Mueaqly.jpg' },
+  { keys: ['ناصر القطامي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/%D8%B5%D9%88%D8%B1%D8%A9_%D8%B4%D8%AE%D8%B5%D9%8A%D8%A9_%D9%86%D8%A7%D8%B5%D8%B1_%D8%A7%D9%84%D9%82%D8%B7%D8%A7%D9%85%D9%8A.jpg' },
+  { keys: ['ياسر الدوسري'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Yasser_Al-Dosari.png' },
+  { keys: ['سعود الشريم'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Saud_Shuraim_doing_the_Khutbah.png' },
+  { keys: ['مشاري راشد العفاسي','مشاري العفاسي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/%D0%9C%D0%B8%D1%88%D0%B0%D1%80%D0%B8_%D0%A0%D0%B0%D1%88%D0%B8%D0%B4.jpg' },
+  { keys: ['علي بن عبد الرحمن الحذيفي','علي الحذيفي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ali_al-Hudhayfi.jpg' },
+  { keys: ['رعد محمد الكردي','رعد الكردي'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Raad_al_Kurdi.jpg' },
+  { keys: ['سعد الغامدي'], url: 'https://www.thehandbook.com/cdn-cgi/image/width%3D600%2Cheight%3D600%2Cfit%3Dcover%2Cq%3D80%2Cformat%3Dwebp/https%3A/files.thehandbook.com/uploads/2021/04/aauvwnggxg4g1xf522bqarncicuhroiaqrrqczjju2xiwas800-c-k-c0x00ffffff-no-rj.jpg' },
+
   { keys: ['الحصري','محمود خليل الحصري'], url: 'https://mediaaws.almasryalyoum.com/news/verylarge/2023/03/27/2067586_0.jpg' },
   { keys: ['صديق السيد المنشاوي','صديق المنشاوي','المنشاوي الكبير'], url: 'https://quoranmediastg.blob.core.windows.net/quraanradio/RadioPionnerMainImage/ad83ca6f-cc65-4067-b629-ea75d0c98685/ad83ca6f-cc65-4067-b629-ea75d0c98685-%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B5%D8%AF%D9%8A%D9%82%20%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D8%A7%D9%88%D9%8A2.webp' },
   { keys: ['محمود صديق المنشاوي'], url: 'https://quoranmediastg.blob.core.windows.net/quraanradio/RadioPionnerMainImage/29a11fd6-1575-4210-a61f-797f7451e195/29a11fd6-1575-4210-a61f-797f7451e195-%D8%A7%D9%84%D9%82%D8%A7%D8%B1%D9%8A%D8%A1%20%D9%85%D8%AD%D9%85%D9%88%D8%AF%20%D8%B5%D8%AF%D9%8A%D9%82%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D8%A7%D9%88%D9%8A1.jpg' },
