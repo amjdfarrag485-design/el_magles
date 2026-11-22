@@ -1594,7 +1594,7 @@ const SHEIKH_PORTRAITS = [
   { keys: ['الحصري','محمود خليل الحصري'], url: 'https://mediaaws.almasryalyoum.com/news/verylarge/2023/03/27/2067586_0.jpg' },
   { keys: ['صديق السيد المنشاوي','صديق المنشاوي','المنشاوي الكبير'], url: 'https://quoranmediastg.blob.core.windows.net/quraanradio/RadioPionnerMainImage/ad83ca6f-cc65-4067-b629-ea75d0c98685/ad83ca6f-cc65-4067-b629-ea75d0c98685-%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B5%D8%AF%D9%8A%D9%82%20%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D8%A7%D9%88%D9%8A2.webp' },
   { keys: ['محمود صديق المنشاوي'], url: 'https://quoranmediastg.blob.core.windows.net/quraanradio/RadioPionnerMainImage/29a11fd6-1575-4210-a61f-797f7451e195/29a11fd6-1575-4210-a61f-797f7451e195-%D8%A7%D9%84%D9%82%D8%A7%D8%B1%D9%8A%D8%A1%20%D9%85%D8%AD%D9%85%D9%88%D8%AF%20%D8%B5%D8%AF%D9%8A%D9%82%20%D8%A7%D9%84%D9%85%D9%86%D8%B4%D8%A7%D9%88%D9%8A1.jpg' },
-  { keys: ['محمد صديق المنشاوي'], url: 'https://www.alwafd.news/Upload/libfiles/374/0/432.jpg' },
+  { keys: ['محمد صديق المنشاوي'], url: 'https://www.aljazeera.net/wp-content/uploads/2022/04/2_auto_x2.jpg?resize=1800%2C1800' },
   { keys: ['عبد الباسط','عبدالباسط','عبد الباسط عبد الصمد'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdel_Basit_Abdel_Samad_1955.png' },
   { keys: ['رفعت','محمد رفعت'], url: 'https://static.majalla.com/styles/1200xauto/public/2019/05/31/177296-156158711.jpg?VersionId=PgXroftKa0gq9xnglH._i_VP6OkooAkt' },
   { keys: ['مصطفى إسماعيل','مصطفى اسماعيل'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/03/29/2069055_0.jpg' },
