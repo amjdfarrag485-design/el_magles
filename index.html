@@ -698,25 +698,12 @@
 
       <!-- أزرار التحكم اللمسية المضبوطة للأندرويد والآيفون -->
       <div class="sleek-player-actions">
-        <!-- تأخير 10 ثوان -->
-        <button class="sleek-player-btn sleek-seek-btn" onclick="seekModernRelative(-10)" title="تأخير 10 ثوانٍ" aria-label="تأخير 10 ثوانٍ">
-          <span class="sleek-btn-label">10-</span>
-        </button>
-
-        <!-- زر التشغيل / الإيقاف المؤقت -->
+        <button class="sleek-player-btn" onclick="playAdjacentAudioTrack(1)" title="التالي" aria-label="التسجيل التالي">⏭</button>
         <button class="sleek-player-play-btn" id="sleek-play-btn" onclick="toggleModernPlayPause()" title="تشغيل / إيقاف مؤقت" aria-label="تشغيل / إيقاف مؤقت">
           <span id="sleek-play-icon">▶</span>
         </button>
-
-        <!-- تقديم 10 ثوان -->
-        <button class="sleek-player-btn sleek-seek-btn" onclick="seekModernRelative(10)" title="تقديم 10 ثوانٍ" aria-label="تقديم 10 ثوانٍ">
-          <span class="sleek-btn-label">+10</span>
-        </button>
-
-        <!-- زر إغلاق صريح ونهائي للمشغل -->
-        <button class="sleek-player-close-btn" onclick="closeModernPlayer()" title="إغلاق المشغل نهائياً" aria-label="إغلاق المشغل">
-          ✕
-        </button>
+        <button class="sleek-player-btn" onclick="playAdjacentAudioTrack(-1)" title="السابق" aria-label="التسجيل السابق">⏮</button>
+        <button class="sleek-player-close-btn" onclick="closeModernPlayer()" title="إغلاق المشغل" aria-label="إغلاق المشغل">✕</button>
       </div>
     </div>
   </div>
