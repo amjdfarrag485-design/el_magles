@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=11">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -227,22 +227,12 @@
       </div>
     </div>
 
-    <div class="reader-bookmark-card" id="reader-bookmark-card">
-      <div class="bookmark-info-col">
-        <span class="bookmark-icon">🔖</span>
-        <div class="bookmark-text-wrap">
-          <div class="bookmark-title">موضع ختمتك</div>
-          <div class="bookmark-status" id="bookmark-status-text">لا توجد علامة محفوظة بعد</div>
-        </div>
-      </div>
-      <div class="bookmark-actions-col">
-        <button class="action-btn action-btn-secondary" id="btn-save-bookmark" onclick="saveCurrentBookmark()" title="حفظ موضع التلاوة الحالي"><span>📌</span> حفظ الموضع</button>
-        <button class="action-btn action-btn-primary" id="btn-jump-bookmark" onclick="jumpToSavedBookmark()" title="الانتقال إلى موضع التوقف المحفوظ"><span>↗</span> انتقال للعلامة</button>
-      </div>
-      <div class="last-read-row">
-        <span class="last-read-status" id="last-read-status">آخر قراءة: لم تبدأ بعد</span>
-        <button class="action-btn action-btn-secondary" id="btn-resume-last-read" onclick="resumeLastRead()" type="button">▶ متابعة آخر قراءة</button>
-      </div>
+    <div class="reader-quick-actions" aria-label="أدوات موضع القراءة">
+      <button class="reader-quick-btn" id="btn-save-bookmark" onclick="saveCurrentBookmark()" title="حفظ موضع التلاوة الحالي" aria-label="حفظ موضع القراءة">🔖 <span>حفظ الموضع</span></button>
+      <button class="reader-quick-btn reader-quick-resume" id="btn-resume-last-read" onclick="resumeLastRead()" type="button" title="متابعة آخر قراءة">▶ <span>متابعة آخر قراءة</span></button>
+      <button class="reader-quick-btn reader-quick-jump" id="btn-jump-bookmark" onclick="jumpToSavedBookmark()" title="الانتقال إلى العلامة المحفوظة" aria-label="الانتقال إلى العلامة">↗</button>
+      <span class="reader-quick-status" id="bookmark-status-text">لا توجد علامة محفوظة</span>
+      <span class="reader-quick-last-read" id="last-read-status">آخر قراءة: لم تبدأ بعد</span>
     </div>
 
     <div class="quran-interactive-hud reader-player-card">
