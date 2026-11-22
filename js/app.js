@@ -323,6 +323,8 @@ function initAudioElements() {
       }
       console.warn('Audio playback error on source:', STATE.globalAudio.src);
       updateModernPlayBtn(false);
+      if (!STATE.isCairoRadioPlaying && STATE.modernPlayer.track &&
+          markIbtehalTrackUnavailable(STATE.modernPlayer.track, STATE.globalAudio.error && STATE.globalAudio.error.code)) return;
       if (!STATE.isCairoRadioPlaying) showToast('تعذر تحميل التسجيل الصوتي. قد يكون الرابط متوقفًا.');
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(false);
@@ -2252,9 +2254,33 @@ function shareCurrentModernTrack() {
 let currentRareIbtehalFilter = 'all';
 let currentRareIbtehalSearchQuery = '';
 
+// حفظ الابتهالات التي ثبت فشل تشغيلها على هذا الجهاز حتى لا تظهر مجدداً.
+const UNAVAILABLE_IBTEHAL_STORAGE_KEY = 'elmagles_unavailable_ibtehalat_v1';
+function getUnavailableIbtehalIds() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(UNAVAILABLE_IBTEHAL_STORAGE_KEY) || '[]');
+    return new Set(Array.isArray(saved) ? saved : []);
+  } catch (_) { return new Set(); }
+}
+function markIbtehalTrackUnavailable(track, reason) {
+  if (!track || typeof IBTEHALAT_DATA === 'undefined' ||
+      !IBTEHALAT_DATA.some(item => item.id === track.id)) return false;
+  const unavailable = getUnavailableIbtehalIds();
+  if (unavailable.has(track.id)) return true;
+  unavailable.add(track.id);
+  try { localStorage.setItem(UNAVAILABLE_IBTEHAL_STORAGE_KEY, JSON.stringify([...unavailable])); } catch (_) {}
+  console.warn('[المجلس] تم إخفاء ابتهال تعذر تشغيله:', track.title, reason || '');
+  renderRareAndIbtehalatList(currentRareIbtehalFilter, currentRareIbtehalSearchQuery);
+  showToast('تم إخفاء الابتهال لأن رابط الصوت لا يعمل. جرّب مقطعاً آخر.');
+  return true;
+}
+
 function getAllAudioItems() {
   const rare = (typeof RARE_RECITATIONS_DATA !== 'undefined') ? RARE_RECITATIONS_DATA : [];
-  const ibtehalat = (typeof IBTEHALAT_DATA !== 'undefined') ? IBTEHALAT_DATA : [];
+  const unavailable = getUnavailableIbtehalIds();
+  const ibtehalat = (typeof IBTEHALAT_DATA !== 'undefined')
+    ? IBTEHALAT_DATA.filter(item => !unavailable.has(item.id))
+    : [];
   return [...rare, ...ibtehalat];
 }
 
