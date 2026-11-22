@@ -2033,20 +2033,34 @@ function expandModernPlayer() {
 }
 
 function closeModernPlayer() {
-  // زر X يغلق واجهة المشغل فقط؛ لا يمسح التلاوة ولا يوقف الصوت أو يصفر موضعه.
-  const overlay = document.getElementById('reference-player-overlay');
-  if (overlay) {
-    overlay.style.display = 'none';
-    overlay.setAttribute('aria-hidden', 'true');
+  // X means stop this recitation and close the player; the library item itself remains untouched.
+  const audio = STATE.globalAudio;
+  if (audio) {
+    try { audio.pause(); } catch (e) {}
+    try { audio.currentTime = 0; } catch (e) {}
+    audio.removeAttribute('src');
+    try { audio.load(); } catch (e) {}
   }
-  const sleek = document.getElementById('sleek-bottom-player');
-  if (sleek) sleek.style.display = 'none';
-  const full = document.getElementById('unified-modern-player');
-  if (full) full.style.display = 'none';
-  const min = document.getElementById('minimized-floating-bar');
-  if (min) min.style.display = 'none';
-  // احتفظ بـ STATE.modernPlayer.track وبمصدر الصوت ووقت التشغيل كما هي.
-  // يظل الصوت مستمراً ويمكن فتح المشغل مجدداً من بطاقة التلاوة.
+
+  STATE.isGlobalPlaying = false;
+  STATE.modernPlayer.track = null;
+  if (typeof updateModernPlayBtn === 'function') updateModernPlayBtn(false);
+  if (typeof updateSleekPlayerUI === 'function') updateSleekPlayerUI();
+  if (typeof updateReferencePlayerDetails === 'function') updateReferencePlayerDetails(null);
+
+  const ids = ['reference-player-overlay', 'sleek-bottom-player', 'unified-modern-player', 'minimized-floating-bar'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = 'none';
+    if (id === 'reference-player-overlay') el.setAttribute('aria-hidden', 'true');
+  });
+
+  // Remove only the playing highlight; do not remove the recording card or its data.
+  document.querySelectorAll('.audio-item-card.is-playing').forEach(card => card.classList.remove('is-playing'));
+  if ('mediaSession' in navigator) {
+    try { navigator.mediaSession.playbackState = 'none'; } catch (e) {}
+  }
 }
 
 function closeGlobalAudioPlayer() {
