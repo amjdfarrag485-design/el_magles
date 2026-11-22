@@ -2551,26 +2551,3 @@ select:-webkit-autofill {
 }
 @media(prefers-reduced-motion:reduce){.reference-player-controls button,.reference-player-tools button span{transition:none}}
 
-
-/* آيات التلاوة - هوية زمردية وذهبية مستوحاة من المرجع */
-.reference-player-sheet{background:radial-gradient(ellipse at 50% 0%,rgba(28,74,48,.35),transparent 42%),linear-gradient(155deg,#101b15 0%,#0c120e 62%,#090d0a 100%)!important;border-color:rgba(205,174,91,.72)!important}
-.reference-verse-panel{position:relative;margin:17px 2px 18px;padding:19px 17px 14px;border:1px solid rgba(201,171,91,.32);border-radius:20px;background:linear-gradient(145deg,rgba(26,48,34,.88),rgba(14,24,18,.94));box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 9px 25px rgba(0,0,0,.18);text-align:center;overflow:hidden}
-.reference-verse-panel:before,.reference-verse-panel:after{content:"";position:absolute;width:70px;height:70px;border:1px solid rgba(207,178,103,.1);transform:rotate(45deg);pointer-events:none}
-.reference-verse-panel:before{top:-48px;right:-35px}.reference-verse-panel:after{bottom:-48px;left:-35px}
-.reference-verse-kicker{display:flex;align-items:center;justify-content:center;gap:12px;color:#c8aa61;font-size:.7rem;font-weight:800;letter-spacing:.04em}
-.reference-verse-ornament{font-size:1rem;color:#e0c477}
-.reference-verse-text{position:relative;z-index:1;margin:13px auto 12px;color:#f1dfaa;font-family:'Amiri','Noto Naskh Arabic',serif;font-size:clamp(1.25rem,5vw,1.75rem);font-weight:700;line-height:1.95;text-wrap:pretty}
-.reference-verse-meta{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:7px 13px;padding-top:9px;border-top:1px solid rgba(201,171,91,.13);color:#a9a58f;font-size:.68rem}
-.reference-verse-meta span+span{color:#c9ae6a}
-.reference-verse-panel.is-synced{border-color:rgba(221,190,111,.55);box-shadow:0 0 20px rgba(191,155,65,.08),inset 0 1px 0 rgba(255,255,255,.04)}
-.reference-verse-panel[hidden]{display:none!important}
-.reference-player-top{align-items:center!important}
-.reference-track-title{color:#f5e6bd!important}
-.reference-track-reciter{color:#dfc16f!important}
-.reference-track-source{border-color:rgba(201,171,91,.27)!important;background:rgba(201,171,91,.055)!important}
-.reference-player-progress-wrap input{accent-color:#d8b75f!important}
-.reference-player-controls button{border-color:rgba(201,171,91,.52)!important;background:linear-gradient(145deg,#1c3023,#101912)!important;color:#e8d18a!important}
-.reference-player-controls .reference-main-play{background:linear-gradient(145deg,#f4dc91,#c59a3b)!important;color:#17140b!important}
-.reference-player-tools button span{background:linear-gradient(145deg,rgba(36,76,49,.48),rgba(15,29,20,.7))!important;border-color:rgba(201,171,91,.42)!important}
-@media(max-width:430px){.reference-verse-panel{margin:13px 0;padding:15px 12px 11px;border-radius:17px}.reference-verse-text{font-size:1.24rem;line-height:1.85}.reference-verse-meta{font-size:.62rem}}
-
