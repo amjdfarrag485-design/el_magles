@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=13">
+  <link rel="stylesheet" href="css/style.css?v=14">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -652,12 +652,12 @@
         <div class="reference-player-times"><span id="reference-player-current">00:00</span><span id="reference-player-remaining">-00:00</span></div>
       </div>
       <div class="reference-player-controls">
-        <button onclick="playAdjacentAudioTrack(1)" aria-label="التسجيل التالي" title="التالي">⏭</button>
-        <button onclick="seekModernRelative(10)" aria-label="تقديم 10 ثوان">⏩</button>
-        <button class="reference-main-play" onclick="toggleModernPlayPause()" aria-label="تشغيل أو إيقاف"><span id="reference-main-play-icon">⏸</span></button>
-        <button onclick="seekModernRelative(-10)" aria-label="رجوع 10 ثوان">⏪</button>
-        <button onclick="playAdjacentAudioTrack(-1)" aria-label="التسجيل السابق" title="السابق">⏮</button>
-        <button id="reference-repeat-btn" onclick="toggleModernRepeat()" aria-label="تكرار">⇄</button>
+        <button class="player-skip-track" onclick="playAdjacentAudioTrack(1)" aria-label="التسجيل التالي" title="التالي"><span class="skip-mark">››</span><small>التالي</small></button>
+        <button class="player-seek-control" onclick="seekModernRelative(10)" aria-label="تقديم 10 ثوان"><span class="seek-symbol">+10</span></button>
+        <button class="reference-main-play" onclick="toggleModernPlayPause()" aria-label="تشغيل أو إيقاف"><span id="reference-main-play-icon">Ⅱ</span></button>
+        <button class="player-seek-control" onclick="seekModernRelative(-10)" aria-label="رجوع 10 ثوان"><span class="seek-symbol">−10</span></button>
+        <button class="player-skip-track" onclick="playAdjacentAudioTrack(-1)" aria-label="التسجيل السابق" title="السابق"><span class="skip-mark">‹‹</span><small>السابق</small></button>
+        <button id="reference-repeat-btn" class="player-repeat-control" onclick="toggleModernRepeat()" aria-label="تكرار" title="تكرار">↻</button>
       </div>
       <div class="reference-player-tools">
         <button onclick="downloadCurrentTrack()" aria-label="تحميل التسجيل"><span>⇩</span><small>تحميل</small></button>
