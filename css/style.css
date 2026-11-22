@@ -2304,3 +2304,58 @@ select:-webkit-autofill {
 .reciter-list-avatar{width:58px;height:58px;flex:0 0 58px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);background:var(--bg-tertiary)}
 .reciter-list-copy{flex:1;min-width:0}
 .reciter-card{display:flex;align-items:center;gap:12px}
+
+
+/* ═══ المصحف: واجهة القراءة الملكية الجديدة ═══ */
+.quran-reader-page{padding-bottom:34px}
+.reader-luxe-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 16px;padding:8px 2px}
+.reader-luxe-heading .back-btn{order:0;flex:0 0 40px}
+.reader-heading-copy{flex:1;text-align:center}
+.reader-kicker{display:block;color:var(--gold);font-size:.72rem;font-weight:800;letter-spacing:1.4px;margin-bottom:3px}
+.reader-heading-copy h2{margin:0;color:#fff;font-size:1.35rem;font-weight:900}
+.reader-heading-subtitle{display:block;color:var(--text-secondary);font-size:.78rem;margin-top:3px}
+.reader-heading-mark{color:var(--gold);font-size:2rem;opacity:.85}
+.reader-surah-showcase{position:relative;overflow:hidden;text-align:center;margin:0 0 14px;padding:25px 16px 20px;border:1px solid rgba(212,175,55,.55);border-radius:18px;background:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,.13),transparent 68%),linear-gradient(145deg,#202019,#11110f 72%);box-shadow:inset 0 0 0 4px rgba(212,175,55,.035),0 10px 28px rgba(0,0,0,.28)}
+.reader-surah-showcase:before,.reader-surah-showcase:after{content:"";position:absolute;width:90px;height:90px;border:1px solid rgba(212,175,55,.13);transform:rotate(45deg);top:-54px}
+.reader-surah-showcase:before{right:-48px}.reader-surah-showcase:after{left:-48px}
+.showcase-ornament{position:absolute;top:50%;transform:translateY(-50%);font-size:2rem;color:rgba(212,175,55,.16)}
+.showcase-ornament-right{right:12px}.showcase-ornament-left{left:12px}
+.showcase-eyebrow{color:var(--gold-light);font-size:.78rem;font-weight:700}
+.reader-surah-showcase h3{font-family:var(--font-uthmani);font-size:2rem;color:#f5d77f;margin:8px 0 5px;text-shadow:0 2px 14px rgba(212,175,55,.15)}
+.showcase-divider{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--gold);font-size:.8rem;margin:7px auto}
+.showcase-divider:before,.showcase-divider:after{content:"";width:54px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.showcase-meta{display:flex;justify-content:center;align-items:center;gap:9px;color:#aaa;font-size:.72rem}
+.showcase-meta i{width:3px;height:3px;border-radius:50%;background:var(--gold)}
+.reader-bookmark-card{background:linear-gradient(120deg,#1c1b16,#111);border-color:rgba(212,175,55,.3);border-radius:14px;padding:12px;margin-bottom:14px}
+.reader-bookmark-card .last-read-row{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px solid rgba(212,175,55,.14);padding-top:9px}
+.last-read-status{font-size:.76rem;color:#b9ad8d}
+.reader-player-card{position:relative;top:auto!important;margin:0 0 14px;padding:17px 14px 13px;border:1px solid rgba(212,175,55,.4);border-radius:18px;background:linear-gradient(155deg,#1d1c17,#101010 70%);box-shadow:0 12px 30px rgba(0,0,0,.28)}
+.reader-player-heading{display:flex;align-items:center;gap:11px;margin-bottom:15px}
+.reader-player-icon{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(145deg,#f5d77f,#a77d1b);color:#17140c;font-size:1.45rem}
+.reader-player-heading .hud-surah-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.reader-player-label{font-size:.7rem;color:var(--gold);font-weight:700}
+.reader-player-heading .hud-surah-title{font-size:1rem;color:#fff}
+.reader-player-heading .hud-reciter-name{font-size:.75rem;color:#b9b2a0}
+.reader-live-mark{margin-right:auto;white-space:nowrap;color:#c8b77d;font-size:.65rem;border:1px solid rgba(212,175,55,.22);border-radius:20px;padding:5px 7px}
+.reader-select-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.reader-field{display:flex;flex-direction:column;gap:6px;color:#c9bd9a;font-size:.73rem;font-weight:700}
+.reader-field select,.reader-sleep-row select{width:100%;min-width:0;padding:10px 9px;border:1px solid rgba(212,175,55,.28)!important;border-radius:10px;background:#111!important;color:#fff!important;font-family:inherit;font-size:.82rem}
+.reader-mode-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0 12px;border-top:1px solid rgba(212,175,55,.13);color:#c9bd9a;font-size:.78rem}
+.reader-mode-row .quran-mode-switch{display:flex;gap:4px;margin:0;padding:3px;background:#090909;border:1px solid rgba(212,175,55,.18);border-radius:30px}
+.reader-mode-row .mode-toggle-btn{min-width:66px;padding:7px 13px;border-radius:22px;font-size:.78rem}
+.reader-player-card .hud-controls-row{margin:7px 0 12px;gap:10px}
+.reader-player-card .hud-ctrl-btn{width:40px;height:40px;font-size:1rem;border-color:rgba(212,175,55,.24);background:#171612!important}
+.reader-player-card .hud-ctrl-btn.play-main{width:56px;height:56px;font-size:1.55rem;background:linear-gradient(145deg,#f5d77f,#b68b1e)!important;color:#15120a!important}
+.reader-player-card .hud-progress-container{margin:8px 0 4px}
+.reader-player-card .hud-progress-container span{font-size:.7rem;color:#b9ad8d}
+.reader-sleep-row{margin-top:12px;padding:9px 10px}
+.reader-sleep-row .sleep-timer-info{font-size:.73rem}
+.reader-sleep-row .sleep-timer-select-wrap{width:116px}
+.reader-sleep-row select{padding:6px 8px;font-size:.72rem}
+#reader-bismillah-banner{margin:14px 0 0!important;border:1px solid rgba(212,175,55,.28);border-bottom:0;border-radius:18px 18px 0 0;background:linear-gradient(180deg,#1a1913,#12110e)}
+.reader-verses-container{margin-top:0!important;padding:22px 18px!important;border:1px solid rgba(212,175,55,.28);border-radius:0 0 18px 18px;background:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,.055),transparent 48%),#11110f;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.reader-verses-container .verse{padding:13px 7px;border-bottom:1px solid rgba(212,175,55,.11);line-height:2.6}
+.reader-verses-container .verse:last-child{border-bottom:0}
+.reader-verses-container .verse-text{font-size:1.48rem;line-height:2.45}
+.reader-verses-container .verse.active{background:rgba(212,175,55,.075);border-radius:12px;box-shadow:inset 3px 0 0 var(--gold)}
+@media(max-width:390px){.reader-live-mark{display:none}.reader-select-grid{gap:7px}.reader-verses-container{padding:16px 11px!important}.reader-verses-container .verse-text{font-size:1.32rem}.reader-player-card .hud-ctrl-btn{width:34px;height:34px}.reader-player-card .hud-ctrl-btn.play-main{width:50px;height:50px}}
