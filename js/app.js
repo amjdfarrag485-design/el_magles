@@ -646,7 +646,8 @@ function toggleAdhanMute(prayerId) {
 // ═══════════════════════════════════════════════════════════════
 function initDailyRenewalSystem() {
   const today = new Date();
-  const dayOfMonth = today.getDate(); // 1 - 31
+  const dailyItem = getDailyAdhkarItem(today);
+  const dayOfMonth = dailyItem ? dailyItem.day : today.getDate();
   const badgeEl = document.getElementById('daily-renewal-day-badge');
   const duaEl = document.getElementById('daily-dua-text');
   const wirdEl = document.getElementById('daily-wird-text');
@@ -657,8 +658,7 @@ function initDailyRenewalSystem() {
 
   // التجديد التلقائي لذكر ودعاء اليوم من مصفوفة الـ 31 يوماً الشاملة
   if (typeof DAILY_ROTATING_ADHKAR !== 'undefined' && DAILY_ROTATING_ADHKAR.length > 0) {
-    const itemIndex = (dayOfMonth - 1) % DAILY_ROTATING_ADHKAR.length;
-    const item = DAILY_ROTATING_ADHKAR[itemIndex];
+    const item = dailyItem || DAILY_ROTATING_ADHKAR[(dayOfMonth - 1) % DAILY_ROTATING_ADHKAR.length];
     if (duaEl && item.text) {
       duaEl.textContent = item.text;
     }
@@ -2543,7 +2543,59 @@ function openReciterInReader(reciterId) {
 // ═══════════════════════════════════════════════════════════════
 // 16. حصن المسلم: الأذكار والعدادات التفاعلية المتقدمة
 // ═══════════════════════════════════════════════════════════════
-function initAzkarSection() {}
+// اختيار ذكر ثابت طوال اليوم، ويتغير تلقائياً مع بداية كل يوم جديد.
+function getLocalDateKey(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+function getDailyAdhkarItem(date = new Date()) {
+  if (typeof DAILY_ROTATING_ADHKAR === 'undefined' || !DAILY_ROTATING_ADHKAR.length) return null;
+  const start = new Date(date.getFullYear(), 0, 1);
+  const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const dayNumber = Math.floor((Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())) / 86400000);
+  return DAILY_ROTATING_ADHKAR[dayNumber % DAILY_ROTATING_ADHKAR.length];
+}
+function getDailyAdhkarProgress(item, date = new Date()) {
+  const key = `daily_adhkar_progress_${getLocalDateKey(date)}`;
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || '{}');
+    return saved && saved.id === String(item.day) ? Math.max(0, Number(saved.count) || 0) : 0;
+  } catch (_) { return 0; }
+}
+function renderDailyAdhkar() {
+  const item = getDailyAdhkarItem();
+  const title = document.getElementById('daily-azkar-title');
+  const text = document.getElementById('daily-azkar-text');
+  const reward = document.getElementById('daily-azkar-reward');
+  const count = document.getElementById('daily-azkar-count');
+  const badge = document.getElementById('daily-azkar-date');
+  const button = document.getElementById('daily-azkar-counter');
+  if (!item || !title || !text || !count || !button) return;
+  const current = Math.min(item.count, getDailyAdhkarProgress(item));
+  title.textContent = item.title;
+  text.textContent = item.text;
+  if (reward) reward.textContent = item.reward || '';
+  if (badge) badge.textContent = `ذكر اليوم • ${toArabicDigits(new Date().getDate())}`;
+  count.textContent = `${toArabicDigits(current)} / ${toArabicDigits(item.count)}`;
+  button.textContent = current >= item.count ? '✓ أتممت الذكر' : `سبّح • ${toArabicDigits(item.count - current)} متبقية`;
+  button.disabled = current >= item.count;
+  button.classList.toggle('done', current >= item.count);
+}
+function tapDailyAdhkar() {
+  const item = getDailyAdhkarItem();
+  if (!item) return;
+  const current = getDailyAdhkarProgress(item);
+  if (current >= item.count) return;
+  const next = current + 1;
+  const key = `daily_adhkar_progress_${getLocalDateKey()}`;
+  try { localStorage.setItem(key, JSON.stringify({ id: String(item.day), count: next })); } catch (_) {}
+  renderDailyAdhkar();
+  if (navigator.vibrate) navigator.vibrate(25);
+  if (next >= item.count) showToast('أحسن الله إليك، تقبّل الله ذكرك 🤲');
+}
+function initAzkarSection() { renderDailyAdhkar(); }
 
 function openAzkarCategory(catKey) {
   if (catKey === 'sleep') catKey = 'sleep_wake';
