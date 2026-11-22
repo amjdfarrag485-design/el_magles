@@ -2497,3 +2497,28 @@ select:-webkit-autofill {
  .reference-player-tools button small{font-size:.62rem!important}
 }
 @media(prefers-reduced-motion:reduce){.reference-vinyl.is-spinning{animation:none!important}}
+
+
+/* نافذة مؤقت النوم المتناسقة مع هوية المجلس */
+.council-sleep-backdrop{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.76);backdrop-filter:blur(9px);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease;direction:rtl}
+.council-sleep-backdrop.show{opacity:1;visibility:visible}
+.council-sleep-dialog{position:relative;width:min(100%,390px);padding:25px 22px 20px;border:1px solid rgba(220,185,78,.65);border-radius:25px;background:radial-gradient(ellipse at 50% 0%,rgba(193,155,54,.14),transparent 48%),linear-gradient(145deg,#201e17,#10100e 75%);color:#f7edcf;box-shadow:0 22px 70px rgba(0,0,0,.72),0 0 28px rgba(212,175,55,.1);text-align:center;transform:translateY(12px) scale(.98);transition:transform .2s ease}
+.council-sleep-backdrop.show .council-sleep-dialog{transform:translateY(0) scale(1)}
+.council-sleep-handle{width:58px;height:5px;border-radius:9px;background:linear-gradient(90deg,#9c7621,#f4d879,#9c7621);margin:0 auto 17px}
+.council-sleep-close{position:absolute;top:13px;left:15px;width:32px;height:32px;border:1px solid rgba(212,175,55,.35);border-radius:50%;background:transparent;color:#e8cf82;font-size:22px;line-height:1}
+.council-sleep-icon{width:52px;height:52px;margin:0 auto 10px;display:grid;place-items:center;border:1px solid rgba(212,175,55,.45);border-radius:17px;background:rgba(212,175,55,.08);color:#f0d477;font-size:27px}
+.council-sleep-dialog h3{margin:0 0 7px;font-size:1.22rem;color:#f2d67e}
+.council-sleep-dialog p{margin:0 0 19px;color:#bcb39b;font-size:.86rem;line-height:1.7}
+.council-sleep-presets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.council-sleep-presets button{padding:11px 4px;border:1px solid rgba(212,175,55,.35);border-radius:12px;background:#171611;color:#d8c99c;font-weight:800}
+.council-sleep-presets button.active{background:linear-gradient(135deg,#f2d77e,#bd922b);border-color:#f2d77e;color:#17130a;box-shadow:0 4px 15px rgba(212,175,55,.18)}
+.council-sleep-dialog label{display:block;text-align:right;margin-bottom:7px;color:#d4c9a7;font-size:.82rem}
+.council-sleep-input-wrap{display:flex;align-items:center;gap:10px;border:1px solid rgba(212,175,55,.32);border-radius:12px;background:#0b0b09;padding:0 13px}
+.council-sleep-input-wrap input{width:100%;min-width:0;padding:12px 0;border:0;outline:0;background:transparent;color:#fff;font-size:1.15rem;text-align:center}
+.council-sleep-input-wrap span{white-space:nowrap;color:#c4ad64;font-size:.83rem}
+.council-sleep-actions{display:grid;grid-template-columns:1fr 1.4fr;gap:9px;margin-top:18px}
+.council-sleep-actions button{padding:12px 8px;border-radius:12px;font-weight:800}
+.council-sleep-cancel{border:1px solid rgba(212,175,55,.35);background:transparent;color:#d7c99f}
+.council-sleep-confirm{border:1px solid #e4c45c;background:linear-gradient(135deg,#f3dc8b,#c69b32);color:#17130a;box-shadow:0 5px 16px rgba(212,175,55,.17)}
+.council-sleep-clear{margin-top:13px;padding:8px 12px;border:0;background:transparent;color:#b7a36b;font-size:.78rem}
+@media(max-width:430px){.council-sleep-dialog{padding:22px 17px 16px;border-radius:22px}.council-sleep-presets{gap:6px}.council-sleep-presets button{font-size:.83rem}}
