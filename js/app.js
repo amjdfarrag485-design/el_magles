@@ -1913,6 +1913,8 @@ function updateModernPlayBtn(isPlaying) {
   if(fullIcon)fullIcon.textContent=isPlaying?'Ⅱ':'▶';
   const repeatBtn=document.getElementById('reference-repeat-btn');
   if(repeatBtn)repeatBtn.style.color=STATE.modernPlayer.isLooping?'#d4af37':'#f5d77f';
+  const vinyl=document.querySelector('.reference-vinyl');
+  if(vinyl) vinyl.classList.toggle('is-spinning', !!isPlaying);
     // شريط الصوت النحيف
   const sleekPlayIcon = document.getElementById('sleek-play-icon');
   if (sleekPlayIcon) sleekPlayIcon.textContent = isPlaying ? '⏸' : '▶';
