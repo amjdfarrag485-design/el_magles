@@ -2401,3 +2401,64 @@ select:-webkit-autofill {
 .reader-quick-status{margin-right:auto}
 .reader-quick-last-read{width:100%;padding-top:7px;border-top:1px solid rgba(212,175,55,.12)}
 @media(max-width:390px){.reader-quick-actions{gap:6px;padding:9px}.reader-quick-btn{padding:7px 8px;font-size:.72rem}.reader-quick-status{font-size:.66rem}}
+
+
+/* ═══ مشغل المجلس — تجربة لوحة صوتية مثل المرجع المرئي ═══ */
+.reference-player-overlay{align-items:flex-end;justify-content:center;background:transparent!important;backdrop-filter:none!important;pointer-events:none;inset:0;z-index:1190}
+.reference-player-sheet{pointer-events:auto;width:min(100%,720px);max-height:min(68dvh,620px);margin:0 auto calc(68px + env(safe-area-inset-bottom));overflow-y:auto;border:1px solid rgba(212,175,55,.5);border-bottom:1px solid rgba(212,175,55,.32);border-radius:24px 24px 18px 18px;padding:12px 15px 14px;background:linear-gradient(155deg,rgba(30,28,21,.99),rgba(12,12,11,.99));box-shadow:0 0 0 1px rgba(212,175,55,.07),0 14px 42px rgba(0,0,0,.72);animation:playerDockIn .24s ease-out}
+@keyframes playerDockIn{from{transform:translateY(24px);opacity:.5}to{transform:translateY(0);opacity:1}}
+.reference-player-collapse{width:44px;height:5px;margin:0 auto 11px;border-radius:10px;background:linear-gradient(90deg,#8f6d1d,#f2d77d,#8f6d1d)!important;cursor:pointer}
+.reference-player-top{min-height:74px;gap:12px;align-items:center;padding:3px 2px 10px}
+.reference-vinyl{width:68px;height:68px;flex:0 0 68px}
+.reference-vinyl-label{width:43px;height:43px;border-width:2px}
+.reference-track-title{font-size:.9rem;line-height:1.4;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reference-track-reciter{font-size:.92rem;margin:0 0 5px}
+.reference-track-source{font-size:.64rem;padding:4px 7px;margin:2px 3px 0 0;border-radius:9px}
+.reference-player-progress-wrap{margin:8px 2px 10px}
+#reference-player-seek{height:5px;cursor:pointer}
+.reference-player-times{font-size:.72rem;margin-top:3px}
+.reference-player-controls{gap:clamp(8px,3vw,22px);margin:9px 0 14px;flex-wrap:nowrap}
+.reference-player-controls button{width:42px;height:42px;font-size:1.05rem;border-width:1px}
+.reference-player-controls .reference-main-play{width:54px;height:54px;border-radius:50%;font-size:1.8rem}
+.reference-player-tools{display:flex;align-items:flex-start;justify-content:space-between;gap:3px;border-top:1px solid rgba(212,175,55,.2);padding:11px 0 2px}
+.reference-player-tools button{flex:1;gap:5px}
+.reference-player-tools button span{width:39px;height:39px;border-width:1px;font-size:1.15rem}
+.reference-player-tools button small{font-size:.61rem;white-space:nowrap}
+.sleek-bottom-player{left:8px!important;right:8px!important;bottom:calc(72px + env(safe-area-inset-bottom))!important;height:auto!important;min-height:68px!important;padding:5px 8px 7px!important;border:1px solid rgba(212,175,55,.48)!important;border-radius:17px!important;background:linear-gradient(110deg,rgba(27,26,21,.98),rgba(10,10,10,.98))!important;box-shadow:0 8px 28px rgba(0,0,0,.58),0 0 16px rgba(212,175,55,.1)!important;z-index:1180!important}
+.sleek-player-progress-bar{top:0!important;height:3px!important;border-radius:17px 17px 0 0!important}
+.sleek-player-main-content{min-height:54px!important;padding:0 3px!important;gap:9px!important;direction:rtl}
+.sleek-player-avatar-wrap{width:46px!important;height:46px!important;flex:0 0 46px!important;border:2px solid #d4af37!important;box-shadow:0 0 12px rgba(212,175,55,.16)!important}
+.sleek-player-info{flex:1!important;min-width:0!important;text-align:right!important}
+.sleek-player-title{font-size:.79rem!important;line-height:1.35!important;color:#fff!important;max-width:100%!important}
+.sleek-player-meta{font-size:.69rem!important;gap:4px!important;flex-wrap:wrap!important}
+.sleek-player-sheikh{max-width:110px!important;color:#e7c65f!important}
+.sleek-player-time{color:#aaa!important}
+.sleek-player-actions{gap:5px!important;flex:0 0 auto!important}
+.sleek-player-actions .sleek-player-btn{width:32px!important;height:32px!important;min-width:32px!important;border:1px solid rgba(212,175,55,.3)!important;border-radius:50%!important;background:#17150f!important;color:#f4d779!important;font-size:.9rem!important}
+.sleek-player-actions .sleek-player-play-btn{width:40px!important;height:40px!important;min-width:40px!important;border-radius:50%!important;background:linear-gradient(145deg,#f4d779,#b58a22)!important;color:#15120a!important;font-size:1.15rem!important}
+.sleek-player-close-btn{width:29px!important;height:29px!important;min-width:29px!important;border-radius:50%!important;border:1px solid rgba(220,90,80,.4)!important;background:rgba(120,30,25,.16)!important;color:#d98a7e!important;font-size:.78rem!important}
+@media(max-width:430px){
+ .reference-player-sheet{max-height:64dvh;margin-bottom:calc(64px + env(safe-area-inset-bottom));padding:10px 11px 12px;border-radius:20px 20px 14px 14px}
+ .reference-player-top{min-height:65px;gap:9px}
+ .reference-vinyl{width:58px;height:58px;flex-basis:58px}
+ .reference-vinyl-label{width:37px;height:37px}
+ .reference-track-title{font-size:.8rem}
+ .reference-track-reciter{font-size:.84rem}
+ .reference-track-source{font-size:.58rem;padding:3px 5px}
+ .reference-player-controls{gap:7px;margin:7px 0 11px}
+ .reference-player-controls button{width:36px;height:36px;font-size:.95rem}
+ .reference-player-controls .reference-main-play{width:48px;height:48px;font-size:1.55rem}
+ .reference-player-tools{gap:0;padding-top:9px}
+ .reference-player-tools button span{width:34px;height:34px;font-size:1rem}
+ .reference-player-tools button small{font-size:.55rem}
+ .sleek-bottom-player{left:5px!important;right:5px!important;bottom:calc(66px + env(safe-area-inset-bottom))!important;min-height:61px!important;padding:5px 6px!important}
+ .sleek-player-main-content{gap:6px!important}
+ .sleek-player-avatar-wrap{width:39px!important;height:39px!important;flex-basis:39px!important}
+ .sleek-player-title{font-size:.7rem!important}
+ .sleek-player-meta{font-size:.61rem!important}
+ .sleek-player-sheikh{max-width:82px!important}
+ .sleek-player-actions{gap:3px!important}
+ .sleek-player-actions .sleek-player-btn{width:27px!important;height:27px!important;min-width:27px!important;font-size:.76rem!important}
+ .sleek-player-actions .sleek-player-play-btn{width:34px!important;height:34px!important;min-width:34px!important;font-size:1rem!important}
+ .sleek-player-close-btn{width:25px!important;height:25px!important;min-width:25px!important;font-size:.68rem!important}
+}
