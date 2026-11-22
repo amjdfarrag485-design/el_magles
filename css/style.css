@@ -2359,3 +2359,33 @@ select:-webkit-autofill {
 .reader-verses-container .verse-text{font-size:1.48rem;line-height:2.45}
 .reader-verses-container .verse.active{background:rgba(212,175,55,.075);border-radius:12px;box-shadow:inset 3px 0 0 var(--gold)}
 @media(max-width:390px){.reader-live-mark{display:none}.reader-select-grid{gap:7px}.reader-verses-container{padding:16px 11px!important}.reader-verses-container .verse-text{font-size:1.32rem}.reader-player-card .hud-ctrl-btn{width:34px;height:34px}.reader-player-card .hud-ctrl-btn.play-main{width:50px;height:50px}}
+
+
+/* ═══ اللمسات النهائية للمصحف — توازن ومساحة قراءة ═══ */
+.reader-bookmark-card{padding:10px 13px;gap:8px}
+.reader-bookmark-card .bookmark-info-col{min-width:145px;gap:8px}
+.reader-bookmark-card .bookmark-icon{font-size:1.25rem}
+.reader-bookmark-card .bookmark-title{font-size:.8rem}
+.reader-bookmark-card .bookmark-status{font-size:.73rem}
+.reader-bookmark-card .bookmark-actions-col{gap:6px;flex-wrap:wrap}
+.reader-bookmark-card .bookmark-actions-col .action-btn{padding:7px 10px;font-size:.75rem}
+.reader-bookmark-card .last-read-row{padding-top:7px}
+.reader-bookmark-card .last-read-row .action-btn{padding:6px 10px;font-size:.74rem}
+.reader-surah-showcase{min-height:132px;display:flex;flex-direction:column;justify-content:center}
+.reader-player-card{border-color:rgba(224,190,82,.58);box-shadow:0 14px 34px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.035)}
+.reader-player-icon{box-shadow:0 4px 14px rgba(212,175,55,.2)}
+.reader-field select:focus,.reader-sleep-row select:focus{outline:2px solid rgba(212,175,55,.38);outline-offset:2px}
+.reader-player-card .hud-ctrl-btn{transition:transform .16s ease,background .16s ease,border-color .16s ease}
+.reader-player-card .hud-ctrl-btn:active{transform:scale(.92)}
+.reader-player-card .hud-progress-bar{accent-color:#e4c24f}
+#reader-bismillah-banner{position:relative;padding:19px 10px 15px!important}
+#reader-bismillah-banner:before,#reader-bismillah-banner:after{content:"۞";position:absolute;top:50%;transform:translateY(-50%);color:rgba(212,175,55,.35);font-size:1.2rem}
+#reader-bismillah-banner:before{right:14px}#reader-bismillah-banner:after{left:14px}
+#reader-bismillah-banner .bismillah-art{font-size:clamp(1.65rem,6vw,2.15rem);line-height:1.9}
+.reader-verses-container{position:relative;overflow:hidden;background-image:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,.075),transparent 48%),linear-gradient(rgba(212,175,55,.018) 1px,transparent 1px),#11110f;background-size:auto,100% 42px,auto}
+.reader-verses-container:before{content:"";position:absolute;inset:7px;border:1px solid rgba(212,175,55,.12);border-radius:12px;pointer-events:none}
+.reader-verses-container .verse{position:relative;z-index:1;padding:14px 8px}
+.reader-verses-container .verse-text{font-size:clamp(1.38rem,5vw,1.62rem);line-height:2.55;text-align:justify;text-align-last:center}
+.reader-verses-container .verse-number-badge{display:inline-flex;vertical-align:middle;min-width:30px;height:30px;padding:0 4px;margin:0 5px;border:1px solid rgba(212,175,55,.58);border-radius:50%;font-size:.92rem;color:#f5d77f;background:radial-gradient(circle,#302817,#15130e);box-shadow:0 0 10px rgba(212,175,55,.08)}
+.reader-verses-container .verse.active{outline:1px solid rgba(212,175,55,.25);outline-offset:-2px}
+@media(max-width:430px){.reader-bookmark-card .bookmark-info-col{min-width:100%;}.reader-bookmark-card .bookmark-actions-col{width:100%;}.reader-bookmark-card .bookmark-actions-col .action-btn{flex:1}.reader-bookmark-card .last-read-row{align-items:flex-start}.reader-bookmark-card .last-read-row .action-btn{white-space:nowrap}.reader-surah-showcase{padding:20px 12px 17px}.reader-player-heading{margin-bottom:12px}.reader-verses-container .verse{padding:12px 5px}}
