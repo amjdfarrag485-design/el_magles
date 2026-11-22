@@ -963,8 +963,12 @@ function loadSurahAudio(surahNumber) {
   const chain = [];
 
   if (mode === 'mojawwad') {
-    // ─── سيرفرات المجود الرسمية المباشرة ───
-    if (reciter.serverMojawwad) chain.push(`${reciter.serverMojawwad}${paddedNum}.mp3`);
+    // الشيخ محمد رفعت له مجلد مستقل؛ لا نستخدم أي رابط بديل قد يسبب خلطاً في الصوت.
+    if (reciter.id === 'rifaat') {
+      chain.push(`https://server14.mp3quran.net/refat/${paddedNum}.mp3?reciter=rifaat`);
+    } else if (reciter.serverMojawwad) {
+      chain.push(`${reciter.serverMojawwad}${paddedNum}.mp3`);
+    }
 
     if (reciter.id === 'abdulbasit') {
       chain.push(`https://server7.mp3quran.net/basit_mjwd/${paddedNum}.mp3`);
@@ -977,9 +981,6 @@ function loadSurahAudio(surahNumber) {
       chain.push(`https://cdn.mp3quran.net/audio/mahmoud-husary/r2/${paddedNum}.mp3`);
     } else if (reciter.id === 'mustafa') {
       chain.push(`https://server8.mp3quran.net/mustafa/${paddedNum}.mp3`);
-    } else if (reciter.id === 'rifaat') {
-      chain.push(`https://cdn.mp3quran.net/audio/muhammad-refaat/r1/${paddedNum}.mp3`);
-      chain.push(`https://server14.mp3quran.net/refat/${paddedNum}.mp3`);
     } else if (reciter.id === 'bahtimi') {
       chain.push(`https://server10.mp3quran.net/bahtimi/${paddedNum}.mp3`);
     } else if (reciter.id === 'banna') {
@@ -991,12 +992,10 @@ function loadSurahAudio(surahNumber) {
     // لا ننتقل إلى قارئ آخر عند تعطل رابط القارئ المختار.
   } else {
     // ─── سيرفرات المرتل الرسمية المباشرة ───
-    if (reciter.serverMurattal) {
-      chain.push(`${reciter.serverMurattal}${paddedNum}.mp3`);
-    }
     if (reciter.id === 'rifaat') {
-      chain.push(`https://cdn.mp3quran.net/audio/muhammad-refaat/r1/${paddedNum}.mp3`);
-      chain.push(`https://server14.mp3quran.net/refat/${paddedNum}.mp3`);
+      chain.push(`https://server14.mp3quran.net/refat/${paddedNum}.mp3?reciter=rifaat`);
+    } else if (reciter.serverMurattal) {
+      chain.push(`${reciter.serverMurattal}${paddedNum}.mp3`);
     }
 
     // روابط احتياطية لنفس القارئ فقط، ولا نخلط أصوات القراء.
