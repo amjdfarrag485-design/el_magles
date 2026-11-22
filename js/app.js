@@ -644,6 +644,20 @@ function toggleAdhanMute(prayerId) {
   showToast(STATE.adhanMuteSettings[prayerId] ? `تم تفعيل تنبيه ${prayerId} 🔔` : `تم كتم تنبيه ${prayerId} 🔕`);
 }
 
+function getLocalDateKey(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+function getDailyAdhkarItem(date = new Date()) {
+  if (typeof DAILY_ROTATING_ADHKAR === 'undefined' || !DAILY_ROTATING_ADHKAR.length) return null;
+  const start = new Date(date.getFullYear(), 0, 1);
+  const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const dayNumber = Math.floor((Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())) / 86400000);
+  return DAILY_ROTATING_ADHKAR[dayNumber % DAILY_ROTATING_ADHKAR.length];
+}
+
 // ═══════════════════════════════════════════════════════════════
 // 7. نظام التجدد التلقائي اليومي (دعاء وورد اليوم)
 // ═══════════════════════════════════════════════════════════════
@@ -2548,6 +2562,86 @@ function openReciterInReader(reciterId) {
 // ═══════════════════════════════════════════════════════════════
 // اختيار ذكر ثابت طوال اليوم، ويتغير تلقائياً مع بداية كل يوم جديد.
 function initAzkarSection() {}
+
+function openAzkarCategory(catKey) {
+  if (catKey === 'sleep') catKey = 'sleep_wake';
+  if (catKey === 'afterPrayer') catKey = 'post_prayer';
+  if (catKey === 'general') catKey = 'quranic_duas';
+  if (catKey === 'prophetic') catKey = 'prophetic_duas';
+  if (catKey === 'mosque_wudhu') catKey = 'masjid_wudhu';
+
+  const cat = (typeof AZKAR_DATA !== 'undefined') ? AZKAR_DATA[catKey] : null;
+  if (!cat || !cat.items) return;
+
+  navigateTo('azkar-detail');
+
+  const titleEl = document.getElementById('azkar-detail-title');
+  if (titleEl) titleEl.textContent = cat.title;
+
+  const iconEl = document.getElementById('azkar-detail-icon');
+  if (iconEl) iconEl.textContent = cat.icon || '📿';
+
+  const container = document.getElementById('azkar-items-container');
+  if (!container) return;
+
+  const saved = JSON.parse(localStorage.getItem(`zikr_progress_${catKey}`) || '{}');
+
+  container.innerHTML = cat.items.map((item, idx) => {
+    const current = saved[idx] || 0;
+    const remaining = Math.max(0, item.count - current);
+    const isDone = remaining === 0;
+    const virtue = item.fadl || item.reward;
+
+    return `
+      <div class="azkar-item-card ${isDone ? 'is-completed' : ''}" id="zikr-card-${catKey}-${idx}">
+        <div class="azkar-text-arabic">${item.text}</div>
+        ${virtue ? `<div class="azkar-virtue-box">⭐ ${virtue}</div>` : ''}
+        <div class="azkar-actions-footer">
+          <span class="azkar-target-badge">العدد المطلوب: ${toArabicDigits(item.count)} ${item.count === 1 ? 'مرة' : 'مرات'}</span>
+          <button class="azkar-counter-btn ${isDone ? 'done' : ''}" id="zikr-btn-${catKey}-${idx}" onclick="tapZikrItem('${catKey}', ${idx}, ${item.count})" ${isDone ? 'disabled' : ''}>
+            ${isDone ? '✓ تَمّ بحمد الله' : toArabicDigits(remaining)}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('') + `
+    <div style="text-align: center; margin: 24px 0 40px;">
+      <button class="action-btn action-btn-secondary" onclick="resetZikrCategory('${catKey}')">🔄 إعادة تعيين عدادات هذا القسم</button>
+    </div>
+  `;
+}
+
+function tapZikrItem(catKey, idx, target) {
+  const saved = JSON.parse(localStorage.getItem(`zikr_progress_${catKey}`) || '{}');
+  const current = (saved[idx] || 0) + 1;
+  saved[idx] = current;
+  localStorage.setItem(`zikr_progress_${catKey}`, JSON.stringify(saved));
+
+  const remaining = Math.max(0, target - current);
+  const btn = document.getElementById(`zikr-btn-${catKey}-${idx}`);
+  const card = document.getElementById(`zikr-card-${catKey}-${idx}`);
+
+  if (remaining === 0) {
+    if (btn) {
+      btn.textContent = '✓ تَمّ بحمد الله';
+      btn.classList.add('done');
+      btn.disabled = true;
+    }
+    if (card) card.classList.add('is-completed');
+
+    if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
+    showToast('تقبل الله طاعتكم وجزاكم خيراً 🤲');
+  } else {
+    if (btn) btn.textContent = toArabicDigits(remaining);
+    if (navigator.vibrate) navigator.vibrate(35);
+  }
+}
+
+function resetZikrCategory(catKey) {
+  localStorage.removeItem(`zikr_progress_${catKey}`);
+  openAzkarCategory(catKey);
+  showToast('تمت إعادة ضبط العدادات لهذا القسم 🔄');
+}
 
 // ═══════════════════════════════════════════════════════════════
 // 17. قصص الأنبياء وقصص الأطفال وقارئ الصوت الآلي (Speech Synthesis)
