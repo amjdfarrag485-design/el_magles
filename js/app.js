@@ -1675,10 +1675,26 @@ function commitReferencePlayerSeek(value) {
     onModernAudioTimeUpdate();
   }
 }
-function downloadCurrentTrack() {
+async function downloadCurrentTrack() {
   const track=STATE.modernPlayer.track;
   if(!track||!track.url){showToast('لا يوجد تسجيل لتحميله');return;}
-  const a=document.createElement('a');a.href=track.url;a.download=(track.title||'المجلس')+'.mp3';a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();
+  showToast('جاري تجهيز ملف التحميل…');
+  try {
+    const response=await fetch(track.url,{mode:'cors'});
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    const blob=await response.blob();
+    if(!blob.size) throw new Error('empty audio');
+    const objectUrl=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=objectUrl;
+    a.download=(track.title||'تسجيل من المجلس')+'.mp3';
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(objectUrl),30000);
+    showToast('بدأ تحميل التسجيل');
+  } catch(error) {
+    const opened=window.open(track.url,'_blank','noopener');
+    showToast(opened?'المصدر لا يسمح بالتنزيل المباشر؛ فتحنا ملف الصوت للاستماع أو الحفظ':'تعذر فتح رابط الصوت. جرّب من مصدر التسجيل');
+  }
 }
 function toggleReferenceAutoSave() {
   const track=STATE.modernPlayer.track;if(!track)return;
@@ -1694,6 +1710,49 @@ function toggleReferenceAutoSave() {
 function addCurrentTrackToQueue() {
   const track=STATE.modernPlayer.track;if(!track)return;
   try{const q=JSON.parse(localStorage.getItem('el-magles-audio-queue')||'[]');if(!q.some(x=>x.id===track.id)){q.push({id:track.id,title:track.title,reciter:track.reciter,url:track.url});localStorage.setItem('el-magles-audio-queue',JSON.stringify(q));showToast('اتضافت لقائمة الاستماع');}else showToast('التسجيل موجود بالفعل في القائمة');}catch(e){showToast('تعذر إضافة التسجيل للقائمة');}
+}
+
+function readAudioQueue() {
+  try { return JSON.parse(localStorage.getItem('el-magles-audio-queue') || '[]').filter(x=>x&&x.id&&x.url); }
+  catch(e) { return []; }
+}
+function writeAudioQueue(queue) {
+  try { localStorage.setItem('el-magles-audio-queue',JSON.stringify(queue)); return true; }
+  catch(e) { showToast('تعذر حفظ قائمة الاستماع على الجهاز'); return false; }
+}
+function showAudioQueue() {
+  const queue=readAudioQueue();
+  let panel=document.getElementById('council-audio-queue-panel');
+  if(!panel) {
+    panel=document.createElement('div');
+    panel.id='council-audio-queue-panel';
+    panel.style.cssText='position:fixed;inset:0;z-index:1500;background:rgba(0,0,0,.72);display:flex;align-items:flex-end;justify-content:center;direction:rtl';
+    panel.innerHTML='<section style="width:min(100%,620px);max-height:72dvh;overflow:auto;background:#14130f;color:#f6e5ae;border:1px solid #b89437;border-radius:22px 22px 0 0;padding:18px 16px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px #000"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px"><strong style="font-size:1.1rem">قائمة الاستماع</strong><button type="button" data-queue-close style="border:1px solid #b89437;border-radius:10px;background:#211d12;color:#f6e5ae;padding:7px 12px">إغلاق ✕</button></div><p data-queue-count style="color:#bcae87;font-size:.85rem;margin:8px 0 12px"></p><div data-queue-items></div><button type="button" data-queue-clear style="margin-top:12px;width:100%;padding:10px;border:1px solid #765e27;border-radius:10px;background:#211d12;color:#e8ce7d">مسح القائمة</button></section>';
+    document.body.appendChild(panel);
+    panel.addEventListener('click',e=>{if(e.target===panel||e.target.closest('[data-queue-close]'))panel.remove();});
+    panel.querySelector('[data-queue-clear]').addEventListener('click',()=>{writeAudioQueue([]);showAudioQueue();});
+  }
+  const count=panel.querySelector('[data-queue-count]');
+  const list=panel.querySelector('[data-queue-items]');
+  count.textContent='عدد التسجيلات: '+queue.length;
+  list.replaceChildren();
+  if(!queue.length) {
+    const empty=document.createElement('p');empty.textContent='قائمة الاستماع فارغة. أضف إليها أي تلاوة من المشغل.';empty.style.cssText='padding:22px 8px;text-align:center;color:#bcae87';list.appendChild(empty);return;
+  }
+  queue.forEach((track,index)=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid rgba(212,175,55,.16)';
+    const play=document.createElement('button');play.type='button';play.textContent='▶';
+    play.style.cssText='border:1px solid #b89437;border-radius:50%;width:38px;height:38px;background:#211d12;color:#f6e5ae;flex:0 0 38px';
+    play.addEventListener('click',()=>{playModernTrack(track);panel.remove();});
+    const info=document.createElement('div');info.style.cssText='flex:1;min-width:0';
+    const title=document.createElement('div');title.textContent=track.title||'تسجيل صوتي';title.style.cssText='font-weight:800;white-space:normal';
+    const reciter=document.createElement('small');reciter.textContent=track.reciter||'قارئ';reciter.style.color='#bcae87';
+    info.append(title,reciter);
+    const remove=document.createElement('button');remove.type='button';remove.textContent='حذف';remove.style.cssText='border:1px solid #765e27;border-radius:9px;background:transparent;color:#e8ce7d;padding:7px 9px';
+    remove.addEventListener('click',()=>{const next=readAudioQueue();next.splice(index,1);writeAudioQueue(next);showAudioQueue();});
+    row.append(play,info,remove);list.appendChild(row);
+  });
 }
 function setReferenceSleepTimer() {
   const raw=prompt('مؤقت النوم بالدقائق (مثلاً 15 أو 30 أو 60):','30');
