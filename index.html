@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=9">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -205,31 +205,39 @@
   <!-- ========================================================================= -->
   <!-- 2. شاشة المصحف التفاعلي المتقدم وتزامن الكلمات (Quran Reader & HUD)       -->
   <!-- ========================================================================= -->
-  <section class="page" id="page-reader">
-    <div class="page-header">
-      <div class="page-header-title">
-        <span>📖</span>
-        <span id="reader-header-surah-title">سورة الفاتحة</span>
-      </div>
+  <section class="page quran-reader-page" id="page-reader">
+    <div class="reader-luxe-heading">
       <button class="back-btn" onclick="navigateTo('home')" aria-label="رجوع">✕</button>
+      <div class="reader-heading-copy">
+        <span class="reader-kicker">رِحَابُ القُرْآنِ الكَرِيم</span>
+        <h2>المصحف الشريف</h2>
+        <span class="reader-heading-subtitle">تلاوةٌ وتدبّرٌ وطمأنينة</span>
+      </div>
+      <span class="reader-heading-mark" aria-hidden="true">۞</span>
     </div>
 
-    <!-- بطاقة علامة الختمة (Bookmark) لحفظ واسترجاع موضع التوقف -->
+    <div class="reader-surah-showcase">
+      <div class="showcase-ornament showcase-ornament-right">۞</div>
+      <div class="showcase-ornament showcase-ornament-left">۞</div>
+      <span class="showcase-eyebrow">أنت الآن تقرأ</span>
+      <h3 id="reader-header-surah-title">سورة الفاتحة</h3>
+      <div class="showcase-divider"><span>✦</span></div>
+      <div class="showcase-meta">
+        <span>المصحف الشريف</span><i></i><span>رواية حفص عن عاصم</span>
+      </div>
+    </div>
+
     <div class="reader-bookmark-card" id="reader-bookmark-card">
       <div class="bookmark-info-col">
         <span class="bookmark-icon">🔖</span>
         <div class="bookmark-text-wrap">
-          <div class="bookmark-title">علامة الختمة والتوقف</div>
+          <div class="bookmark-title">موضع ختمتك</div>
           <div class="bookmark-status" id="bookmark-status-text">لا توجد علامة محفوظة بعد</div>
         </div>
       </div>
       <div class="bookmark-actions-col">
-        <button class="action-btn action-btn-secondary" id="btn-save-bookmark" onclick="saveCurrentBookmark()" title="حفظ موضع التلاوة الحالي">
-          <span>📌</span> حفظ الموضع
-        </button>
-        <button class="action-btn action-btn-primary" id="btn-jump-bookmark" onclick="jumpToSavedBookmark()" title="الانتقال إلى موضع التوقف المحفوظ">
-          <span>🚀</span> انتقال للعلامة
-        </button>
+        <button class="action-btn action-btn-secondary" id="btn-save-bookmark" onclick="saveCurrentBookmark()" title="حفظ موضع التلاوة الحالي"><span>📌</span> حفظ الموضع</button>
+        <button class="action-btn action-btn-primary" id="btn-jump-bookmark" onclick="jumpToSavedBookmark()" title="الانتقال إلى موضع التوقف المحفوظ"><span>↗</span> انتقال للعلامة</button>
       </div>
       <div class="last-read-row">
         <span class="last-read-status" id="last-read-status">آخر قراءة: لم تبدأ بعد</span>
@@ -237,55 +245,34 @@
       </div>
     </div>
 
-    <!-- مشغل تفاعلي مطابق لواجهة مشغل الفيديو (Video-Player Style HUD) -->
-    <div class="quran-interactive-hud">
-      <!-- الشريط العلوي للمشغل: السورة، القارئ، الوضع، الوقت -->
-      <div class="hud-top-bar">
+    <div class="quran-interactive-hud reader-player-card">
+      <div class="reader-player-heading">
+        <div class="reader-player-icon">♫</div>
         <div class="hud-surah-info">
+          <span class="reader-player-label">التلاوة الحالية</span>
           <span class="hud-surah-title" id="hud-surah-name">سورة الفاتحة</span>
           <span class="hud-reciter-name" id="hud-reciter-display">محمود خليل الحصري (المصحف المرتل)</span>
         </div>
+        <span class="reader-live-mark">● صوت القرآن</span>
       </div>
 
-      <!-- زر التبديل التفاعلي الثنائي المعتمد: [مرتل] | [مجود] حصراً -->
-      <div class="quran-mode-switch" role="tablist">
-        <button class="mode-toggle-btn active" id="btn-mode-murattal" onclick="switchQuranMode('murattal')">مرتل</button>
-        <button class="mode-toggle-btn" id="btn-mode-mojawwad" onclick="switchQuranMode('mojawwad')">مجود</button>
+      <div class="reader-select-grid">
+        <label class="reader-field"><span>اختيار السورة</span>
+          <select id="reader-surah-select" onchange="loadSurah(parseInt(this.value))"></select>
+        </label>
+        <label class="reader-field"><span>القارئ</span>
+          <select id="reader-reciter-select" onchange="onReaderReciterChange(this.value)"></select>
+        </label>
       </div>
 
-      <!-- خيارات التحديد: السورة والقارئ بتصميم داكن فاخر -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0;">
-        <div>
-          <select id="reader-surah-select" style="width: 100%; padding: 8px 10px; border-radius: var(--radius-sm); font-size: 0.85rem;" onchange="loadSurah(parseInt(this.value))">
-            <!-- تتولد السور الـ 114 ديناميكياً -->
-          </select>
-        </div>
-        <div>
-          <select id="reader-reciter-select" style="width: 100%; padding: 8px 10px; border-radius: var(--radius-sm); font-size: 0.85rem;" onchange="onReaderReciterChange(this.value)">
-            <!-- تتولد القوائم حسب المرتل أو المجود -->
-          </select>
+      <div class="reader-mode-row">
+        <span>نوع التلاوة</span>
+        <div class="quran-mode-switch" role="tablist">
+          <button class="mode-toggle-btn active" id="btn-mode-murattal" onclick="switchQuranMode('murattal')">مرتل</button>
+          <button class="mode-toggle-btn" id="btn-mode-mojawwad" onclick="switchQuranMode('mojawwad')">مجود</button>
         </div>
       </div>
 
-      <!-- مؤقت النوم والإيقاف التلقائي للمصحف -->
-      <div class="sleep-timer-bar">
-        <div class="sleep-timer-info">
-          <span>⏱️</span>
-          <span>مؤقت النوم:</span>
-          <span class="sleep-timer-badge" id="reader-sleep-timer-badge">متوقف</span>
-        </div>
-        <div class="sleep-timer-select-wrap">
-          <select id="reader-sleep-timer-select" onchange="setSleepTimer(parseInt(this.value))">
-            <option value="0">معطل</option>
-            <option value="15">بعد 15 دقيقة</option>
-            <option value="30">بعد 30 دقيقة</option>
-            <option value="45">بعد 45 دقيقة</option>
-            <option value="60">بعد 60 دقيقة</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- أزرار التحكم بالمشغل -->
       <div class="hud-controls-row">
         <button class="hud-ctrl-btn" onclick="playPrevAyah()" aria-label="الآية السابقة">⏮</button>
         <button class="hud-ctrl-btn" onclick="seekAudioRelative(-10)" aria-label="تأخير 10 ثوان">↺ 10</button>
@@ -294,11 +281,19 @@
         <button class="hud-ctrl-btn" onclick="playNextAyah()" aria-label="الآية التالية">⏭</button>
       </div>
 
-      <!-- شريط التقدم الانسيابي والوقت -->
       <div class="hud-progress-container">
         <span id="hud-time-current">0:00</span>
         <input type="range" class="hud-progress-bar" id="hud-progress" min="0" max="100" value="0" step="0.1" oninput="onHudSeek(this.value)">
         <span id="hud-time-total">0:00</span>
+      </div>
+
+      <div class="sleep-timer-bar reader-sleep-row">
+        <div class="sleep-timer-info"><span>⏱</span><span>مؤقت إيقاف التلاوة</span><span class="sleep-timer-badge" id="reader-sleep-timer-badge">متوقف</span></div>
+        <div class="sleep-timer-select-wrap">
+          <select id="reader-sleep-timer-select" onchange="setSleepTimer(parseInt(this.value))">
+            <option value="0">معطل</option><option value="15">15 دقيقة</option><option value="30">30 دقيقة</option><option value="45">45 دقيقة</option><option value="60">60 دقيقة</option>
+          </select>
+        </div>
       </div>
     </div>
 
