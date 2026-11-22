@@ -2166,6 +2166,16 @@ function renderRareAndIbtehalatList(filterCat, searchStr) {
     }
   }
 
+  // Hide malformed archive cards instead of displaying undefined / placeholder entries.
+  filtered = filtered.filter(item =>
+    item &&
+    typeof item.title === 'string' && item.title.trim() &&
+    typeof item.reciter === 'string' && item.reciter.trim() &&
+    (typeof item.url === 'string' && item.url.trim() ||
+     typeof item.audioUrl === 'string' && item.audioUrl.trim() ||
+     typeof item.externalUrl === 'string' && item.externalUrl.trim())
+  );
+
   // 2. فلترة بالبحث الفوري
   if (searchStr) {
     filtered = filtered.filter(item => {
