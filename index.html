@@ -414,6 +414,22 @@
       <button class="back-btn" onclick="navigateTo('home')">✕</button>
     </div>
 
+    <!-- ذكر متجدد يومياً مع عداد مستقل يُصفّر تلقائياً كل يوم -->
+    <div class="card" id="daily-azkar-card" style="margin: 14px 0 20px; padding: 20px; border: 1px solid var(--gold); background: linear-gradient(145deg, rgba(20,43,32,.98), rgba(10,19,15,.98));">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px;">
+        <div style="font-weight:800; color:var(--gold-light); font-size:1.05rem;">✨ ذكر اليوم المتجدد</div>
+        <span id="daily-azkar-date" class="badge-gold">ذكر اليوم</span>
+      </div>
+      <div id="daily-azkar-title" style="color:var(--gold-light); font-weight:800; margin-bottom:12px;">ذكر اليوم</div>
+      <div id="daily-azkar-text" class="azkar-text-arabic" style="font-size:1.35rem; line-height:2.1; text-align:center; padding:12px 4px;">جاري تحميل ذكر اليوم...</div>
+      <div id="daily-azkar-reward" class="azkar-virtue-box" style="margin:12px 0;"></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:14px;">
+        <span id="daily-azkar-count" style="color:var(--gold-light); font-weight:700;">٠ / ٠</span>
+        <button id="daily-azkar-counter" class="azkar-counter-btn" onclick="tapDailyAdhkar()">سبّح</button>
+      </div>
+      <div style="font-size:.78rem; color:var(--text-secondary); text-align:center; margin-top:10px;">يتجدد الذكر والعداد تلقائياً مع بداية كل يوم</div>
+    </div>
+
     <!-- شبكة فئات الأذكار الشاملة (7 أقسام كاملة) -->
     <div class="azkar-grid">
       <div class="card azkar-category-card" onclick="openAzkarCategory('morning')">
@@ -749,7 +765,7 @@
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=18"></script>
-  <script src="js/app.js?v=33"></script>
+  <script src="js/app.js?v=34"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
