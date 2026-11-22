@@ -195,6 +195,10 @@ function navigateTo(pageId) {
 
   STATE.currentPage = pageId;
 
+  // تحديث محتوى اليوم عند العودة للرئيسية أو حصن المسلم، حتى لو ظل التطبيق مفتوحاً بعد منتصف الليل.
+  if (pageId === 'azkar' && typeof renderDailyAdhkar === 'function') renderDailyAdhkar();
+  if (pageId === 'home' && typeof initDailyRenewalSystem === 'function') initDailyRenewalSystem();
+
   // إخفاء كافة الصفحات وتفعيل الصفحة المطلوبة
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   targetPage.classList.add('active');
