@@ -1674,6 +1674,34 @@ function updateReferencePlayerDetails(track) {
   put('reference-track-duration',track.versionTag||track.duration||'تسجيل صوتي');
   const avatar=document.getElementById('reference-player-avatar');
   if(avatar) avatar.src=track.avatar||getSheikhAvatarImage(track.reciter||track.sheikh||'المجلس',!!track.lyricsQuote);
+  updateReferenceVerseDisplay(track, 0);
+}
+
+function updateReferenceVerseDisplay(track, currentTime) {
+  const panel=document.getElementById('reference-verse-panel');
+  const textEl=document.getElementById('reference-verse-text');
+  const labelEl=document.getElementById('reference-verse-label');
+  const refEl=document.getElementById('reference-verse-reference');
+  const syncEl=document.getElementById('reference-verse-sync-state');
+  if(!panel||!textEl) return;
+  if(!track) { panel.hidden=true; return; }
+  panel.hidden=false;
+  const segments=Array.isArray(track.verseTimings)?track.verseTimings.filter(x=>x&&Number.isFinite(Number(x.start))&&Number.isFinite(Number(x.end))&&x.text):[];
+  if(segments.length) {
+    const active=segments.find(x=>currentTime>=Number(x.start)&&currentTime<Number(x.end))||segments[0];
+    textEl.textContent=active.text;
+    if(labelEl) labelEl.textContent='الآية الحالية';
+    if(refEl) refEl.textContent=[active.surahName||track.surahName,active.ayahNumber?('الآية '+active.ayahNumber):''].filter(Boolean).join(' • ')||track.title||'التلاوة الحالية';
+    if(syncEl) syncEl.textContent='متزامن مع التسجيل';
+    panel.classList.add('is-synced');
+    return;
+  }
+  const quote=(typeof track.lyricsQuote==='string'&&track.lyricsQuote.trim())?track.lyricsQuote.trim():'';
+  textEl.textContent=quote||'استمع بتدبر وخشوع';
+  if(labelEl) labelEl.textContent=quote?'مقتطف من الآيات':'رفيق التلاوة';
+  if(refEl) refEl.textContent=track.surahName||track.title||'تلاوة مباركة';
+  if(syncEl) syncEl.textContent=quote?'نص مختار • التوقيت غير متاح':'لا تتوفر بيانات آيات لهذا التسجيل';
+  panel.classList.remove('is-synced');
 }
 function onReferencePlayerSeek(value) {
   const audio=STATE.globalAudio, cur=document.getElementById('reference-player-current');
@@ -1978,6 +2006,7 @@ function seekModernRelative(seconds) {
   if (!STATE.globalAudio || !STATE.globalAudio.src) return;
   const cur = STATE.globalAudio.currentTime || 0;
   const dur = STATE.globalAudio.duration;
+  if (STATE.modernPlayer && STATE.modernPlayer.track) updateReferenceVerseDisplay(STATE.modernPlayer.track, cur);
   let target = cur + seconds;
   if (target < 0) target = 0;
   if (dur && target > dur) target = dur;
