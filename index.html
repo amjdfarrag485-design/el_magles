@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="stylesheet" href="css/style.css?v=12">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -660,13 +660,10 @@
         <button id="reference-repeat-btn" onclick="toggleModernRepeat()" aria-label="تكرار">⇄</button>
       </div>
       <div class="reference-player-tools">
-        <button onclick="downloadCurrentTrack()"><span>⇩</span><small>تحميل</small></button>
-        <button onclick="toggleReferenceAutoSave()"><span id="reference-auto-save-icon">☁</span><small id="reference-auto-save-label">حفظ تلقائي</small></button>
-        <button onclick="addCurrentTrackToQueue();showAudioQueue()"><span>☷</span><small>قائمة الاستماع</small></button>
-        <button onclick="setReferenceSleepTimer()"><span>☾</span><small>مؤقت النوم</small></button>
-        <button onclick="shareCurrentTrack()"><span>♧</span><small>مشاركة</small></button>
-        <button onclick="showReferencePlayerSettings()"><span>☷</span><small>التخصيص</small></button>
-        <button onclick="showReferenceTadabbur()"><span>▤</span><small>التدبر</small></button>
+        <button onclick="downloadCurrentTrack()" aria-label="تحميل التسجيل"><span>⇩</span><small>تحميل</small></button>
+        <button onclick="addCurrentTrackToQueue();showAudioQueue()" aria-label="قائمة الاستماع"><span>☷</span><small>القائمة</small></button>
+        <button onclick="setReferenceSleepTimer()" aria-label="مؤقت النوم"><span>☾</span><small>مؤقت النوم</small></button>
+        <button onclick="shareCurrentTrack()" aria-label="مشاركة التسجيل"><span>↗</span><small>مشاركة</small></button>
       </div>
     </div>
   </div>
@@ -751,7 +748,7 @@
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=15"></script>
-  <script src="js/app.js?v=26"></script>
+  <script src="js/app.js?v=27"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
