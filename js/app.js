@@ -2104,20 +2104,36 @@ function expandModernPlayer() {
 }
 
 function closeModernPlayer() {
-  // X means stop this recitation and close the player; the library item itself remains untouched.
+  // X stops playback and closes the player, but never deletes the library recording.
+  const track = STATE.modernPlayer.track;
   const audio = STATE.globalAudio;
+
   if (audio) {
-    try { audio.pause(); } catch (e) {}
-    try { audio.currentTime = 0; } catch (e) {}
-    audio.removeAttribute('src');
-    try { audio.load(); } catch (e) {}
+    try { audio.pause(); } catch (_) {}
+    try { audio.currentTime = 0; } catch (_) {}
+    try { audio.removeAttribute('src'); } catch (_) {}
+    try { audio.load(); } catch (_) {}
   }
 
+  // Reset the exact source card explicitly before clearing the active track.
+  if (track && track.id) {
+    const card = document.getElementById('track-card-' + track.id);
+    if (card) {
+      card.classList.remove('is-playing');
+      const button = card.querySelector('.audio-card-play-btn');
+      if (button) button.textContent = '▶';
+    }
+  }
+  document.querySelectorAll('.audio-item-card.is-playing, .media-audio-card.is-playing').forEach(card => {
+    card.classList.remove('is-playing');
+    const button = card.querySelector('.audio-card-play-btn');
+    if (button) button.textContent = '▶';
+  });
+
   STATE.isGlobalPlaying = false;
-  STATE.modernPlayer.track = null;
   if (typeof updateModernPlayBtn === 'function') updateModernPlayBtn(false);
+  STATE.modernPlayer.track = null;
   if (typeof updateSleekPlayerUI === 'function') updateSleekPlayerUI();
-  if (typeof updateReferencePlayerDetails === 'function') updateReferencePlayerDetails(null);
 
   const ids = ['reference-player-overlay', 'sleek-bottom-player', 'unified-modern-player', 'minimized-floating-bar'];
   ids.forEach(id => {
@@ -2127,10 +2143,11 @@ function closeModernPlayer() {
     if (id === 'reference-player-overlay') el.setAttribute('aria-hidden', 'true');
   });
 
-  // Remove only the playing highlight; do not remove the recording card or its data.
-  document.querySelectorAll('.audio-item-card.is-playing').forEach(card => card.classList.remove('is-playing'));
   if ('mediaSession' in navigator) {
-    try { navigator.mediaSession.playbackState = 'none'; } catch (e) {}
+    try {
+      navigator.mediaSession.playbackState = 'none';
+      navigator.mediaSession.metadata = null;
+    } catch (_) {}
   }
 }
 
