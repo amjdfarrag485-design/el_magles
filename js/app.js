@@ -2035,35 +2035,20 @@ function expandModernPlayer() {
 }
 
 function closeModernPlayer() {
-  if (STATE.globalAudio) {
-    try {
-      STATE.globalAudio.pause();
-      STATE.globalAudio.currentTime = 0;
-      STATE.globalAudio.removeAttribute('src');
-      STATE.globalAudio.src = '';
-    } catch(e) {}
+  // زر X يغلق واجهة المشغل فقط؛ لا يمسح التلاوة ولا يوقف الصوت أو يصفر موضعه.
+  const overlay = document.getElementById('reference-player-overlay');
+  if (overlay) {
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden', 'true');
   }
-  STATE.isCairoRadioPlaying = false;
-  STATE.isGlobalPlaying = false;
-  updateCairoRadioUI(false);
-  updateModernPlayBtn(false);
-
-  // إخفاء شريط الصوت النحيف فوراً
   const sleek = document.getElementById('sleek-bottom-player');
   if (sleek) sleek.style.display = 'none';
-
   const full = document.getElementById('unified-modern-player');
   if (full) full.style.display = 'none';
-
   const min = document.getElementById('minimized-floating-bar');
   if (min) min.style.display = 'none';
-
-  // إعادة حالة كافة البطاقات إلى إيقاف
-  document.querySelectorAll('.audio-item-card, .media-audio-card').forEach(c => {
-    c.classList.remove('is-playing');
-    const b = c.querySelector('.audio-card-play-btn');
-    if (b) b.textContent = '▶';
-  });
+  // احتفظ بـ STATE.modernPlayer.track وبمصدر الصوت ووقت التشغيل كما هي.
+  // يظل الصوت مستمراً ويمكن فتح المشغل مجدداً من بطاقة التلاوة.
 }
 
 function closeGlobalAudioPlayer() {
