@@ -2618,3 +2618,34 @@ select:-webkit-autofill {
 @media(prefers-reduced-motion:reduce){
   #page-home .home-grid-item{transition:none}
 }
+
+
+/* ─── تنسيق صفحة إذاعة القرآن ─── */
+#page-radio .page-header{align-items:center;gap:12px;padding-bottom:14px;margin-bottom:20px}
+#page-radio .page-header-title{min-width:0;font-size:clamp(1.08rem,4.8vw,1.4rem);line-height:1.55}
+#page-radio .page-header-title span:last-child{min-width:0}
+#page-radio .cairo-radio-hero-card{
+ display:flex;flex-direction:column;align-items:center;padding:30px clamp(16px,4vw,28px) 24px;
+ border-radius:28px;background:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,.09),transparent 38%),linear-gradient(160deg,#192019 0%,#101510 100%);
+ border-color:rgba(224,190,83,.82);box-shadow:0 14px 36px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.035)
+}
+#page-radio .cairo-radio-emblem-wrap{order:0;display:block;margin:2px auto 18px}
+#page-radio .cairo-radio-emblem{width:112px;height:112px;border-width:2px;background:radial-gradient(circle,#293629 0%,#111811 72%);box-shadow:0 0 0 8px rgba(212,175,55,.07),0 0 28px rgba(212,175,55,.16)}
+#page-radio .radio-large-icon{font-size:3.15rem}
+#page-radio .cairo-live-tag{order:1;margin:0 0 15px;padding:7px 16px;font-size:.88rem;background:rgba(56,176,0,.1)}
+#page-radio .cairo-radio-title{order:2;max-width:560px;font-size:clamp(1.35rem,5.4vw,1.75rem);line-height:1.65;margin:0 0 8px}
+#page-radio .cairo-radio-desc{order:3;max-width:520px;font-size:.96rem;line-height:2;margin:0 auto 20px}
+#page-radio .audio-equalizer{order:4;margin:0 auto 12px}
+#page-radio .cairo-main-play-btn{order:5;width:min(100%,430px);min-height:68px;padding:15px 22px;margin:8px 0 18px;border:1px solid rgba(255,255,255,.8);font-size:clamp(1.05rem,4.5vw,1.25rem);box-shadow:0 8px 24px rgba(212,175,55,.2),inset 0 1px 0 rgba(255,255,255,.35)}
+#page-radio .radio-sleep-timer-box{order:6;width:100%;max-width:560px;box-sizing:border-box;justify-content:space-between;gap:10px 14px;padding:14px 16px;margin-top:0;border-radius:18px;background:rgba(5,7,5,.55);border-color:rgba(212,175,55,.16)}
+#page-radio .radio-timer-select{min-width:112px;min-height:42px}
+#page-radio .radio-timer-countdown{width:100%;text-align:center}
+@media(max-width:430px){
+ #page-radio .cairo-radio-hero-card{padding:24px 15px 18px;border-radius:24px}
+ #page-radio .cairo-radio-emblem{width:100px;height:100px}
+ #page-radio .cairo-radio-desc{font-size:.9rem;line-height:1.9}
+ #page-radio .radio-sleep-timer-box{padding:12px;gap:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ #page-radio .live-pulse-ring,#page-radio .live-dot-pulse,#page-radio .audio-equalizer .bar{animation:none!important}
+}
