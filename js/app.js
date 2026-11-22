@@ -2178,27 +2178,32 @@ function renderRareAndIbtehalatList(filterCat, searchStr) {
     return;
   }
 
-  container.innerHTML = filtered.map(item => {
+  container.innerHTML = filtered.map((item, index) => {
+    // Normalize older archive records and protect the UI from missing metadata.
+    const trackId = item.id || ('archive-track-' + index);
+    const trackTitle = item.title || item.name || item.trackName || 'تسجيل أرشيفي';
+    const trackReciter = item.reciter || item.artist || item.sheikh || 'قارئ من أرشيف المجلس';
+    const trackUrl = item.url || item.audioUrl || item.audio || item.externalUrl || '';
     const isIbtehal = ['tobour', 'tobar', 'naqshbandi', 'fashni', 'omran_fayoumi', 'ramadan'].includes(item.category);
-    const avatar = getSheikhAvatarImage(item.reciter, isIbtehal);
-    const avatarFallback = getSheikhAvatarSvg(item.reciter, isIbtehal);
-    const isCurPlaying = STATE.modernPlayer.track && STATE.modernPlayer.track.id === item.id && STATE.isGlobalPlaying;
+    const avatar = getSheikhAvatarImage(trackReciter, isIbtehal);
+    const avatarFallback = getSheikhAvatarSvg(trackReciter, isIbtehal);
+    const isCurPlaying = STATE.modernPlayer.track && STATE.modernPlayer.track.id === trackId && STATE.isGlobalPlaying;
 
     return `
-      <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${item.id}" onclick="playAudioItem('${item.id}')">
+      <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${trackId}" onclick="playAudioItem('${trackId}')">
         <div class="audio-card-avatar">
-          <img src="${avatar}" alt="${item.reciter}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallback}'">
+          <img src="${avatar}" alt="${trackReciter}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallback}'">
         </div>
         <div class="audio-card-meta">
-          <div class="audio-card-title">${item.title}</div>
-          <div class="audio-card-artist">${item.reciter}</div>
+          <div class="audio-card-title">${trackTitle}</div>
+          <div class="audio-card-artist">${trackReciter}</div>
           <div class="audio-card-details">
             <span class="rare-badge">${item.badge || (isIbtehal ? 'ابتهال' : 'تسجيل نادر')}</span>
             ${item.duration ? `<span>⏱ ${item.duration}</span>` : ''}
           </div>
         </div>
-        <button class="audio-card-play-btn" aria-label="${item.externalUrl ? 'فتح مصدر التسجيل' : 'تشغيل'}">
-          ${item.externalUrl ? '↗' : (isCurPlaying ? '⏸' : '▶')}
+        <button class="audio-card-play-btn" aria-label="${item.externalUrl || !trackUrl ? 'فتح مصدر التسجيل' : 'تشغيل'}">
+          ${item.externalUrl || !trackUrl ? '↗' : (isCurPlaying ? '⏸' : '▶')}
         </button>
       </div>
     `;
