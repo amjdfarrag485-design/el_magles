@@ -2462,3 +2462,38 @@ select:-webkit-autofill {
  .sleek-player-actions .sleek-player-play-btn{width:34px!important;height:34px!important;min-width:34px!important;font-size:1rem!important}
  .sleek-player-close-btn{width:25px!important;height:25px!important;min-width:25px!important;font-size:.68rem!important}
 }
+
+
+/* مشغل المجلس: واجهة مختصرة وحركة قرص القارئ */
+.reference-player-sheet{max-height:min(72dvh,590px)!important;padding:13px 16px calc(16px + env(safe-area-inset-bottom))!important;background:linear-gradient(155deg,#1d1b14 0%,#11110f 68%,#090909 100%)!important;border-color:rgba(222,188,83,.62)!important}
+.reference-player-collapse{margin-bottom:9px!important}
+.reference-player-top{min-height:78px!important;padding:4px 3px 9px!important}
+.reference-vinyl{position:relative;border:1px solid rgba(218,183,76,.62);box-shadow:0 0 0 5px rgba(212,175,55,.055),0 8px 22px rgba(0,0,0,.55),0 0 20px rgba(212,175,55,.13)!important;will-change:transform}
+.reference-vinyl.is-spinning{animation:councilVinylSpin 5.5s linear infinite}
+.reference-vinyl-label{box-shadow:0 0 0 2px rgba(0,0,0,.75),0 0 0 3px rgba(212,175,55,.45)}
+@keyframes councilVinylSpin{to{transform:rotate(360deg)}}
+.reference-track-title{font-size:clamp(.9rem,3.5vw,1.04rem)!important;line-height:1.45!important;margin-bottom:5px!important}
+.reference-track-reciter{font-size:clamp(.9rem,3.8vw,1.08rem)!important;margin-bottom:6px!important}
+.reference-track-source{font-size:.65rem!important;padding:4px 8px!important;margin:2px 3px 0 0!important}
+.reference-player-progress-wrap{margin:10px 3px 11px!important}
+#reference-player-seek{height:6px!important}
+.reference-player-times{font-size:.76rem!important}
+.reference-player-controls{gap:clamp(7px,2.7vw,16px)!important;margin:12px 0 15px!important;flex-wrap:nowrap!important}
+.reference-player-controls button{width:43px!important;height:43px!important;font-size:1.12rem!important;border-radius:50%!important}
+.reference-player-controls .reference-main-play{width:58px!important;height:58px!important;font-size:1.85rem!important}
+.reference-player-tools{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important;justify-content:stretch!important;padding:12px 0 2px!important;border-top:1px solid rgba(212,175,55,.22)!important}
+.reference-player-tools button{min-width:0!important;flex:initial!important;gap:6px!important}
+.reference-player-tools button span{width:42px!important;height:42px!important;border:1px solid rgba(212,175,55,.42)!important;background:rgba(212,175,55,.055)!important;font-size:1.15rem!important}
+.reference-player-tools button small{font-size:.68rem!important;white-space:nowrap!important;color:#d4c9a7!important}
+@media(max-width:430px){
+ .reference-player-sheet{max-height:66dvh!important;padding:11px 12px calc(13px + env(safe-area-inset-bottom))!important}
+ .reference-player-top{min-height:68px!important;gap:10px!important}
+ .reference-vinyl{width:64px!important;height:64px!important;flex-basis:64px!important}
+ .reference-vinyl-label{width:39px!important;height:39px!important}
+ .reference-player-controls{gap:clamp(5px,2vw,9px)!important;margin:9px 0 12px!important}
+ .reference-player-controls button{width:38px!important;height:38px!important;font-size:1rem!important}
+ .reference-player-controls .reference-main-play{width:51px!important;height:51px!important;font-size:1.65rem!important}
+ .reference-player-tools button span{width:37px!important;height:37px!important}
+ .reference-player-tools button small{font-size:.62rem!important}
+}
+@media(prefers-reduced-motion:reduce){.reference-vinyl.is-spinning{animation:none!important}}
