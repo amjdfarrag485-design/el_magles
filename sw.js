@@ -17,8 +17,8 @@
 // ═══════════════════════════════════════════════════
 
 const CACHE_NAME = 'el-magles-v32';
-const STATIC_CACHE = 'el-magles-static-v18';
-const DYNAMIC_CACHE = 'el-magles-dynamic-v18';
+const STATIC_CACHE = 'el-magles-static-v19';
+const DYNAMIC_CACHE = 'el-magles-dynamic-v19';
 
 // ═══════════════════════════════════════════════════
 // 2. الملفات الثابتة المطلوب تخزينها عند التثبيت
