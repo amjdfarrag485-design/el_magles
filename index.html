@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=14">
+  <link rel="stylesheet" href="css/style.css?v=15">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -647,6 +647,11 @@
           <div class="reference-track-source"><span>التوثيق:</span> <b id="reference-track-duration">تسجيل صوتي</b></div>
         </div>
       </div>
+      <section class="reference-verse-panel" id="reference-verse-panel" aria-live="polite">
+        <div class="reference-verse-kicker"><span class="reference-verse-ornament">۞</span><span id="reference-verse-label">آيات من التلاوة</span><span class="reference-verse-ornament">۞</span></div>
+        <div class="reference-verse-text" id="reference-verse-text">استمع بتدبر وخشوع</div>
+        <div class="reference-verse-meta"><span id="reference-verse-reference">المجلس • تلاوة مباركة</span><span id="reference-verse-sync-state">مقتطف من التسجيل</span></div>
+      </section>
       <div class="reference-player-progress-wrap">
         <input id="reference-player-seek" type="range" min="0" max="100" value="0" oninput="onReferencePlayerSeek(this.value)" onchange="commitReferencePlayerSeek(this.value)" aria-label="موضع التشغيل">
         <div class="reference-player-times"><span id="reference-player-current">00:00</span><span id="reference-player-remaining">-00:00</span></div>
@@ -748,7 +753,7 @@
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=15"></script>
-  <script src="js/app.js?v=29"></script>
+  <script src="js/app.js?v=30"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
