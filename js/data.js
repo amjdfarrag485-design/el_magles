@@ -454,6 +454,64 @@ const ALL_RECITERS_DATA = [
     serverMojawwad: "",
     info: "تلاوات هادئة مطمئنة للقلوب بأداء عصري خاشع"
   }
+
+// ─── قراء إضافيون: تُحمّل روابط المصحف المرتل مباشرة من API الرسمي ───
+// نضيف فقط القراء المختارين الذين لديهم مصحف حفص مرتل كامل (114 سورة).
+(async function loadAdditionalMurattalReciters() {
+  const preferredNames = [
+    "محمد جبريل",
+    "خالد الجليل",
+    "بندر بليله",
+    "صلاح البدير",
+    "عبدالله بصفر",
+    "هاني الرفاعي",
+    "فارس عباد",
+    "أحمد نعينع",
+    "توفيق الصايغ",
+    "أحمد النفيس"
+  ];
+
+  try {
+    const response = await fetch("https://mp3quran.net/api/v3/reciters?language=ar", {
+      headers: { "Accept": "application/json" }
+    });
+    if (!response.ok) throw new Error("MP3Quran API unavailable");
+    const payload = await response.json();
+    const normalize = value => String(value || "").replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/[\sـ]/g, "").toLowerCase();
+    const existing = new Set(ALL_RECITERS_DATA.map(r => normalize(r.name)));
+
+    preferredNames.forEach(preferredName => {
+      const wanted = normalize(preferredName);
+      const match = (payload.reciters || []).find(item => normalize(item.name).includes(wanted));
+      if (!match || existing.has(normalize(match.name))) return;
+
+      const moshaf = (match.moshaf || []).find(item =>
+        Number(item.surah_total) === 114 &&
+        /مرتل|حفص.*عاصم/i.test(item.name || "") &&
+        !/مجود/i.test(item.name || "") &&
+        /^https:\/\//i.test(item.server || "")
+      );
+      if (!moshaf) return;
+
+      ALL_RECITERS_DATA.push({
+        id: `mp3quran_${match.id}_${moshaf.id}`,
+        name: match.name,
+        category: "contemporary",
+        supportsMurattal: true,
+        supportsMojawwad: false,
+        serverMurattal: moshaf.server.endsWith("/") ? moshaf.server : moshaf.server + "/",
+        serverMojawwad: "",
+        info: "المصحف المرتل الكامل برواية حفص عن عاصم من مكتبة MP3Quran الرسمية"
+      });
+      existing.add(normalize(match.name));
+    });
+
+    if (typeof populateReaderReciters === "function") populateReaderReciters();
+    if (typeof renderRecitersGrid === "function") renderRecitersGrid(ALL_RECITERS_DATA);
+  } catch (error) {
+    console.warn("تعذر تحميل القراء الإضافيين حالياً:", error);
+  }
+})();
 ];
 
 // ═══════════════════════════════════════════════════════════════
