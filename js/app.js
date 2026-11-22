@@ -1605,6 +1605,7 @@ const SHEIKH_PORTRAITS = [
   { keys: ['محمود علي البنا','محمود على البنا'], url: 'https://gate.ahram.org.eg/Media/News/2025/7/20/2025-638886459547910043-791.jpeg' },
   { keys: ['السديس','عبد الرحمن السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
   { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://i0.wp.com/ahmalassaf.com/wp-content/uploads/2022/05/jaber.jpg?fit=784%2C578&ssl=1' },
+  { keys: ['محمد الفيومي'], url: 'https://media.elbalad.news/2024/10/large/814/9/335.jpg' },
   { keys: ['محمد عمران','محمد أحمد عمران'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/10/2078766_0.jpeg' },
   { keys: ['أبو العينين شعيشع','ابو العينين شعيشع'], url: 'https://www.vetogate.com/Upload/libfiles/550/1/995.jpg' },
   { keys: ['محمد أيوب','محمد ايوب'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2016/04/16/448289_0.jpeg' },
