@@ -515,6 +515,59 @@ const ALL_RECITERS_DATA = [
   }
 })();
 
+
+// ─── توسيع قائمة المصحف المجود من مكتبة MP3Quran الرسمية ───
+// لا نعرض إلا المصاحف المجودة الكاملة (114 سورة) ذات الروابط المباشرة.
+(async function loadAdditionalMojawwadReciters() {
+  try {
+    const response = await fetch("https://mp3quran.net/api/v3/reciters?language=ar", {
+      headers: { "Accept": "application/json" }
+    });
+    if (!response.ok) throw new Error("MP3Quran API unavailable");
+    const payload = await response.json();
+    const normalize = value => String(value || "")
+      .replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/[\sـ]/g, "").toLowerCase();
+
+    (payload.reciters || []).forEach(reciter => {
+      const moshaf = (reciter.moshaf || []).find(item =>
+        Number(item.surah_total) === 114 &&
+        (Number(item.moshaf_type) === 12 || /المصحف المجود|mojawwad/i.test(item.name || "")) &&
+        /^https:\/\//i.test(item.server || "")
+      );
+      if (!moshaf) return;
+
+      const existing = ALL_RECITERS_DATA.find(item => normalize(item.name) === normalize(reciter.name));
+      const server = moshaf.server.endsWith("/") ? moshaf.server : moshaf.server + "/";
+
+      if (existing) {
+        if (existing.supportsMojawwad !== true) {
+          existing.supportsMojawwad = true;
+          existing.serverMojawwad = server;
+          existing.info = (existing.info || "") + " • المصحف المجود الكامل";
+        } else if (!existing.serverMojawwad) {
+          existing.serverMojawwad = server;
+        }
+        return;
+      }
+
+      ALL_RECITERS_DATA.push({
+        id: `mp3quran_mjwd_${reciter.id}_${moshaf.id}`,
+        name: reciter.name,
+        category: "golden",
+        supportsMurattal: false,
+        supportsMojawwad: true,
+        serverMurattal: "",
+        serverMojawwad: server,
+        info: "المصحف المجود الكامل برواية حفص عن عاصم من مكتبة MP3Quran الرسمية"
+      });
+    });
+
+    if (typeof populateReaderReciters === "function") populateReaderReciters();
+    if (typeof renderRecitersGrid === "function") renderRecitersGrid(ALL_RECITERS_DATA);
+  } catch (error) {
+    console.warn("تعذر تحميل القراء الإضافيين للمصحف المجود حالياً:", error);
+  }
+})();
 // ═══════════════════════════════════════════════════════════════
 // 3. البث المباشر لإذاعة القرآن الكريم من القاهرة حصرياً
 // ═══════════════════════════════════════════════════════════════
