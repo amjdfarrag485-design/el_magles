@@ -947,7 +947,45 @@ const RARE_RECITATIONS_DATA = [
     sourceTag: "نوادر التلاوات",
     versionTag: "تسجيل أرشيفي",
     duration: "09:40"
-  }
+  },
+
+  // استعادة تلاوات السيد متولي والمنشاوي من سجل Git السابق
+    {
+      id: "rare_sayed_metwally_ya_maryam",
+      category: "sayed_metwally",
+      title: "قالوا يا مريم لقد جئت شيئًا فريًا – سورة مريم",
+      reciter: "الشيخ السيد متولي عبدالعال",
+      desc: "تلاوة نادرة برواية حفص عن عاصم، النسخة الأصلية، 3:13",
+      url: "https://tilawah.net/audios/alsyd-mtoly-aabdalaaal-kaloa-ymrym-lkd-gyt-shya-frya-42128/download?original=1",
+      badge: "تلاوة نادرة",
+      sourceTag: "شبكة تلاوة",
+      versionTag: "MP3 مباشر",
+      duration: "03:13"
+    },
+    {
+      id: "rare_mahmoud_siddeeq_yom_hom_barizoon",
+      category: "mahmoud_siddeeq_minshawi",
+      title: "يوم هم بارزون لا يخفى على الله منهم شيء – سورة غافر",
+      reciter: "الشيخ محمود صديق المنشاوي",
+      desc: "تلاوة نادرة بصوت الشيخ محمود صديق المنشاوي، النسخة الأصلية، 3:08",
+      url: "https://tilawah.net/audios/mhmod-sdyk-almnshaoy-yom-hm-brzon-la-ykhf-aal-llh-mnhm-shaa-42131/download?original=1",
+      badge: "تلاوة نادرة",
+      sourceTag: "شبكة تلاوة",
+      versionTag: "MP3 مباشر",
+      duration: "03:08"
+    },
+    {
+      id: "rare_siddiq_sayed_anfal_tawba_1954",
+      category: "siddiq_sayed_minshawi",
+      title: "سورة الأنفال (59) والتوبة (7) – قراءة أبي جعفر (تسجيل 1954)",
+      reciter: "الشيخ صديق السيد المنشاوي",
+      desc: "تلاوة إذاعية نادرة مسجلة يوم 23 مايو 1954، مدتها 27:56",
+      externalUrl: "https://eslami-platform.vercel.app/recordings",
+      badge: "تسجيل إذاعي نادر",
+      sourceTag: "مكتبة إذاعة القرآن الكريم المصرية",
+      versionTag: "رواية أبي جعفر",
+      duration: "27:56"
+    }
 ];
 
 // ═══════════════════════════════════════════════════════════════
