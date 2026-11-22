@@ -229,7 +229,7 @@ const ALL_RECITERS_DATA = [
     supportsMurattal: true,
     supportsMojawwad: true,
     serverMurattal: "https://server14.mp3quran.net/refat/",
-    serverMojawwad: "https://cdn.mp3quran.net/audio/muhammad-refaat/r1/",
+    serverMojawwad: "https://server14.mp3quran.net/refat/",
     info: "قيثارة السماء والصوت الملائكي الخاشع ورمز التلاوة التاريخي في مصر والعالم الإسلامي"
   },
   {
