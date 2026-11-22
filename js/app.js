@@ -312,7 +312,6 @@ function initAudioElements() {
         }
       }
       console.warn('Audio playback error on source:', STATE.globalAudio.src);
-      markAudioTrackUnavailable(STATE.modernPlayer.track, 'media error');
       updateModernPlayBtn(false);
       if (!STATE.isCairoRadioPlaying) showToast('تعذر تحميل التسجيل الصوتي. قد يكون الرابط متوقفًا.');
       if (STATE.isCairoRadioPlaying) {
@@ -1750,7 +1749,6 @@ function playModernTrack(track) {
   }).catch(err => {
     console.warn('Modern audio playback failed:', err, track.url);
     updateModernPlayBtn(false);
-    markAudioTrackUnavailable(track, err && err.message);
     showToast('تم إخفاء التسجيل لتعذر تشغيله. جرّب مقطعًا آخر.');
   });
 
@@ -2118,8 +2116,7 @@ function renderRareAndIbtehalatList(filterCat, searchStr) {
   const counterEl = document.getElementById('rare-ibtehalat-counter');
   if (!container) return;
 
-  const unavailableIds = getUnavailableAudioTrackIds();
-  const allItems = getAllAudioItems().filter(item => !unavailableIds.has(item.id));
+  const allItems = getAllAudioItems();
   let filtered = allItems;
 
   // 1. فلترة حسب التصنيف
@@ -2206,30 +2203,6 @@ function renderRareAndIbtehalatList(filterCat, searchStr) {
       </div>
     `;
   }).join('');
-}
-
-function getUnavailableAudioTrackIds() {
-  try {
-    return new Set(JSON.parse(localStorage.getItem('el_magles_unavailable_audio') || '[]'));
-  } catch (e) {
-    return new Set();
-  }
-}
-
-function markAudioTrackUnavailable(track, reason) {
-  if (!track || !track.id || track.category === 'radio' || track.id === 'cairo_live_stream') return;
-  const unavailable = getUnavailableAudioTrackIds();
-  if (unavailable.has(track.id)) return;
-  unavailable.add(track.id);
-  try { localStorage.setItem('el_magles_unavailable_audio', JSON.stringify([...unavailable])); } catch (e) {}
-  const card = document.getElementById('track-card-' + track.id);
-  if (card) card.remove();
-  const count = document.getElementById('rare-ibtehalat-counter');
-  if (count) {
-    const visible = document.querySelectorAll('#rare-ibtehalat-list .audio-item-card').length;
-    count.textContent = 'المقاطع المتاحة: ' + visible;
-  }
-  console.warn('تم إخفاء تسجيل تعذر تشغيله:', track.title, reason || '');
 }
 
 function playAudioItem(itemId) {
