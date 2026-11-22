@@ -290,9 +290,19 @@ function initAudioElements() {
       }
     });
     STATE.globalAudio.addEventListener('ended', () => {
+      // انتهى الملف: أعد كل مؤشرات التشغيل إلى ▶ ولا تترك بطاقة عالقة على إيقاف مؤقت.
       updateModernPlayBtn(false);
+      document.querySelectorAll('.audio-item-card.is-playing, .media-audio-card.is-playing').forEach(card => {
+        card.classList.remove('is-playing');
+        const button = card.querySelector('.audio-card-play-btn');
+        if (button) button.textContent = '▶';
+      });
       if (STATE.isCairoRadioPlaying) {
         updateCairoRadioUI(false);
+        STATE.isCairoRadioPlaying = false;
+      }
+      if ('mediaSession' in navigator) {
+        try { navigator.mediaSession.playbackState = 'none'; } catch (_) {}
       }
     });
     STATE.globalAudio.addEventListener('timeupdate', onModernAudioTimeUpdate);
