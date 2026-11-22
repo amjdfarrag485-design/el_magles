@@ -1765,11 +1765,41 @@ function showAudioQueue() {
   });
 }
 function setReferenceSleepTimer() {
-  const raw=prompt('مؤقت النوم بالدقائق (مثلاً 15 أو 30 أو 60):','30');
-  const mins=Number(raw);if(!Number.isFinite(mins)||mins<=0){if(raw!==null)showToast('اكتب عدد دقائق صحيح');return;}
-  if(window.referenceSleepTimer)clearTimeout(window.referenceSleepTimer);
-  window.referenceSleepTimer=setTimeout(()=>{if(STATE.globalAudio)STATE.globalAudio.pause();updateModernPlayBtn(false);showToast('انتهى مؤقت النوم');},mins*60000);
-  showToast('تم ضبط مؤقت النوم على '+mins+' دقيقة');
+  let modal=document.getElementById('council-sleep-modal');
+  if(!modal) {
+    modal=document.createElement('div');
+    modal.id='council-sleep-modal';
+    modal.className='council-sleep-backdrop';
+    modal.innerHTML='<section class="council-sleep-dialog" role="dialog" aria-modal="true" aria-labelledby="council-sleep-title"><div class="council-sleep-handle"></div><button type="button" class="council-sleep-close" aria-label="إغلاق">×</button><div class="council-sleep-icon">☾</div><h3 id="council-sleep-title">مؤقت النوم</h3><p>حدد المدة وبعدها المجلس هيوقف التلاوة تلقائيًا</p><div class="council-sleep-presets"><button type="button" data-mins="15">15 دقيقة</button><button type="button" data-mins="30" class="active">30 دقيقة</button><button type="button" data-mins="60">60 دقيقة</button></div><label for="council-sleep-minutes">أو اكتب المدة بالدقائق</label><div class="council-sleep-input-wrap"><input id="council-sleep-minutes" type="number" inputmode="numeric" min="1" max="600" value="30"><span>دقيقة</span></div><div class="council-sleep-actions"><button type="button" class="council-sleep-cancel">إلغاء</button><button type="button" class="council-sleep-confirm">تفعيل المؤقت</button></div><button type="button" class="council-sleep-clear">إلغاء المؤقت الحالي</button></section>';
+    document.body.appendChild(modal);
+    const close=()=>modal.classList.remove('show');
+    modal.addEventListener('click',e=>{if(e.target===modal||e.target.closest('.council-sleep-close,.council-sleep-cancel'))close();});
+    const input=modal.querySelector('#council-sleep-minutes');
+    modal.querySelectorAll('[data-mins]').forEach(btn=>btn.addEventListener('click',()=>{input.value=btn.dataset.mins;modal.querySelectorAll('[data-mins]').forEach(b=>b.classList.toggle('active',b===btn));}));
+    input.addEventListener('input',()=>modal.querySelectorAll('[data-mins]').forEach(b=>b.classList.toggle('active',Number(b.dataset.mins)===Number(input.value))));
+    modal.querySelector('.council-sleep-confirm').addEventListener('click',()=>{
+      const mins=Number(input.value);
+      if(!Number.isInteger(mins)||mins<1||mins>600){showToast('اختار مدة من دقيقة إلى 600 دقيقة');input.focus();return;}
+      if(window.referenceSleepTimer)clearTimeout(window.referenceSleepTimer);
+      window.referenceSleepTimer=setTimeout(()=>{
+        if(STATE.globalAudio){STATE.globalAudio.pause();STATE.globalAudio.currentTime=0;}
+        updateModernPlayBtn(false);
+        if(typeof updateSleekPlayerUI==='function')updateSleekPlayerUI();
+        showToast('انتهى مؤقت النوم، تم إيقاف التلاوة');
+        window.referenceSleepTimer=null;
+      },mins*60000);
+      close();showToast('تم ضبط مؤقت النوم على '+mins+' دقيقة');
+    });
+    modal.querySelector('.council-sleep-clear').addEventListener('click',()=>{
+      if(window.referenceSleepTimer){clearTimeout(window.referenceSleepTimer);window.referenceSleepTimer=null;showToast('تم إلغاء مؤقت النوم');}
+      else showToast('لا يوجد مؤقت نشط');
+      close();
+    });
+  }
+  const input=modal.querySelector('#council-sleep-minutes');
+  input.value='30';
+  modal.classList.add('show');
+  setTimeout(()=>input.focus(),80);
 }
 async function shareCurrentTrack() {
   const track=STATE.modernPlayer.track;if(!track)return;
