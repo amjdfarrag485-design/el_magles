@@ -662,7 +662,7 @@
       <div class="reference-player-tools">
         <button onclick="downloadCurrentTrack()"><span>⇩</span><small>تحميل</small></button>
         <button onclick="toggleReferenceAutoSave()"><span id="reference-auto-save-icon">☁</span><small id="reference-auto-save-label">حفظ تلقائي</small></button>
-        <button onclick="addCurrentTrackToQueue()"><span>☷</span><small>إلى قائمة</small></button>
+        <button onclick="addCurrentTrackToQueue();showAudioQueue()"><span>☷</span><small>قائمة الاستماع</small></button>
         <button onclick="setReferenceSleepTimer()"><span>☾</span><small>مؤقت النوم</small></button>
         <button onclick="shareCurrentTrack()"><span>♧</span><small>مشاركة</small></button>
         <button onclick="showReferencePlayerSettings()"><span>☷</span><small>التخصيص</small></button>
@@ -751,7 +751,7 @@
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=15"></script>
-  <script src="js/app.js?v=24"></script>
+  <script src="js/app.js?v=25"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
