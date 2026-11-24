@@ -2324,7 +2324,7 @@ function getRareLibraryGroups(items){
 function initRareAndIbtehalatSection(){rareLibraryState={view:'sheikhs',reciter:'',group:'',search:''};renderRareLibrary();}
 function openRareLibraryHome(){rareLibraryState={view:'sheikhs',reciter:'',group:'',search:''};renderRareLibrary();}
 function rareLibraryBack(){if(rareLibraryState.view==='tracks')rareLibraryState.view='groups';else if(rareLibraryState.view==='groups')rareLibraryState.view='sheikhs';else{navigateTo('home');return;}rareLibraryState.search='';renderRareLibrary();}
-function rareLibrarySearch(v){rareLibraryState.search=normalizeRareLibraryName(v).toLowerCase();renderRareLibrary();}
+function rareLibrarySearch(v){rareLibraryState.search=normalizeRareLibraryName(v).toLowerCase();renderRareLibrary();const input=document.getElementById('rare-library-search');if(input){input.focus();input.setSelectionRange(input.value.length,input.value.length);}}
 function openRareLibraryReciter(k){rareLibraryState.reciter=k;rareLibraryState.view='groups';rareLibraryState.search='';renderRareLibrary();}
 function openRareLibraryGroup(k){rareLibraryState.group=k;rareLibraryState.view='tracks';rareLibraryState.search='';renderRareLibrary();}
 function onRareIbtehalatSearch(v){rareLibrarySearch(v);}
