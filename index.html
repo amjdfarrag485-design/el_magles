@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=20">
+  <link rel="stylesheet" href="css/style.css?v=21">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -310,36 +310,7 @@
       <button class="back-btn" onclick="navigateTo('home')">✕</button>
     </div>
 
-    <!-- شريط البحث الفوري في النوادر والابتهالات -->
-    <div class="search-input-wrap" style="margin-bottom: 12px;">
-      <input type="text" class="search-input" id="rare-ibtehalat-search" placeholder="ابحث باسم الشيخ، التلاوة، أو الابتهال..." oninput="onRareIbtehalatSearch(this.value)">
-    </div>
-
-    <!-- فلاتر التبويب السريعة للنوادر والابتهالات -->
-    <div class="filter-chips" id="rare-ibtehalat-filter-chips" style="margin-bottom: 14px;">
-      <button class="chip-btn active" data-filter="all" onclick="filterRareAndIbtehalat('all')">الكل</button>
-      <button class="chip-btn" data-filter="rare_all" onclick="filterRareAndIbtehalat('rare_all')">📜 نوادر التلاوات</button>
-      <button class="chip-btn" data-filter="ibtehal_all" onclick="filterRareAndIbtehalat('ibtehal_all')">🎙️ الابتهالات</button>
-      <button class="chip-btn" data-filter="minshawi" onclick="filterRareAndIbtehalat('minshawi')">محمد صديق المنشاوي</button>
-      <button class="chip-btn" data-filter="bahtimi" onclick="filterRareAndIbtehalat('bahtimi')">كامل يوسف البهتيمي</button>
-      <button class="chip-btn" data-filter="basit" onclick="filterRareAndIbtehalat('basit')">عبد الباسط عبد الصمد</button>
-      <button class="chip-btn" data-filter="mustafa" onclick="filterRareAndIbtehalat('mustafa')">مصطفى إسماعيل</button>
-      <button class="chip-btn" data-filter="refat" onclick="filterRareAndIbtehalat('refat')">محمد رفعت</button>
-      <button class="chip-btn" data-filter="banna" onclick="filterRareAndIbtehalat('banna')">محمود علي البنا</button>
-      <button class="chip-btn" data-filter="tobour" onclick="filterRareAndIbtehalat('tobour')">نصر الدين طوبار</button>
-      <button class="chip-btn" data-filter="naqshbandi" onclick="filterRareAndIbtehalat('naqshbandi')">سيد النقشبندي</button>
-      <button class="chip-btn" data-filter="fashni" onclick="filterRareAndIbtehalat('fashni')">طه الفشني</button>
-      <button class="chip-btn" data-filter="omran_fayoumi" onclick="filterRareAndIbtehalat('omran_fayoumi')">عمران والفيومي</button>
-      <button class="chip-btn" data-filter="ramadan" onclick="filterRareAndIbtehalat('ramadan')">🌙 تراث رمضان</button>
-    </div>
-
-    <!-- عدد المقاطع المتاحة -->
-    <div id="rare-ibtehalat-counter" style="font-size: 0.82rem; color: var(--gold-light); margin-bottom: 12px; font-weight: 600; padding: 0 4px;"></div>
-
-    <!-- قائمة نوادر التلاوات والابتهالات المباشرة -->
-    <div id="rare-ibtehalat-list">
-      <!-- تتولد ديناميكياً عبر JavaScript -->
-    </div>
+    <div id="rare-library-app"></div>
   </section>
 
   <!-- ========================================================================= -->
