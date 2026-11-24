@@ -2735,3 +2735,131 @@ select:-webkit-autofill {
 .rare-verse-full-play{padding:15px;font-size:1rem;background:linear-gradient(110deg,#d8b84d,#a98422);color:#17140b}
 @media(min-width:700px){.rare-library-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}}
 @media(max-width:360px){.rare-library-grid{gap:10px}.rare-sheikh-card{padding:9px 7px}.rare-sheikh-name{font-size:.82rem}}
+
+
+/* ==========================================================================
+   هوية المجلس الجديدة: أوف وايت + تركواز + لمسات ذهبية
+   إعادة تلوين شاملة مع الحفاظ على بنية الصفحات وسلوكها
+   ========================================================================== */
+:root {
+  --bg-primary: #f4f7f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e8f2ef;
+  --bg-input: #ffffff;
+  --gold: #c9a64b;
+  --gold-light: #b58d2f;
+  --gold-dark: #927126;
+  --gold-glow: rgba(201,166,75,.18);
+  --gold-glow-soft: rgba(201,166,75,.10);
+  --text-primary: #253b3b;
+  --text-secondary: #637776;
+  --text-gold: #98782d;
+  --text-muted: #879694;
+  --border-gold: rgba(22,137,132,.22);
+  --border-gold-strong: #168984;
+  --border-dark: rgba(35,75,72,.10);
+  --shadow-gold: 0 5px 18px rgba(22,137,132,.10);
+  --shadow-card: 0 5px 18px rgba(34,76,70,.07);
+  color-scheme: light;
+}
+html { color-scheme: light; background:#f4f7f5; }
+body { background:#f4f7f5 !important; color:#253b3b !important; }
+input,select,textarea,button {
+  color-scheme:light;
+  background-color:#fff !important;
+  color:#294443 !important;
+}
+input::placeholder,textarea::placeholder { color:#91a19e !important; }
+select option { background:#fff !important; color:#294443 !important; }
+input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,select:-webkit-autofill {
+  -webkit-text-fill-color:#294443 !important;
+  -webkit-box-shadow:0 0 0 1000px #fff inset !important;
+  box-shadow:0 0 0 1000px #fff inset !important;
+}
+.page { color:#294443; }
+.card,.date-strip,.verse,.surah-item,.reader-quick-btn,.reader-player-card,
+.quran-interactive-hud,.rare-sheikh-card,.rare-library-group,.rare-library-track,
+.rare-library-empty,.rare-verse-card,.rare-verse-source,.rare-library-search-wrap,
+.azkar-category-card,.azkar-item,.story-card,.reciter-card,.prayer-time-card,
+.tasbeeh-card,.radio-card,.settings-card {
+  background:#fff !important;
+  color:#294443 !important;
+  border:1px solid rgba(22,137,132,.17) !important;
+  box-shadow:0 5px 18px rgba(34,76,70,.065) !important;
+}
+.brand-top-banner,.home-prayer-hero,.quran-interactive-hud,
+.reader-surah-showcase,.reader-player-card,.cairo-radio-hero-card {
+  background:linear-gradient(145deg,#e6f3ef 0%,#ffffff 85%) !important;
+  border:1px solid rgba(22,137,132,.25) !important;
+  box-shadow:0 8px 24px rgba(33,92,82,.08) !important;
+}
+.brand-main-title {
+  background:linear-gradient(135deg,#147e79 10%,#16958e 65%,#c29b43 100%) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+}
+.brand-subtitle,.brand-bismillah,.page-header-title,.home-section-title,
+.hud-surah-title,.reader-heading-copy h2,.reader-kicker,.rare-library-heading h2 {
+  color:#147e79 !important;
+  text-shadow:none !important;
+}
+.home-prayer-hero { background:linear-gradient(135deg,#e4f2ee,#f9fcfa) !important; }
+.prayer-hero-name,.prayer-hero-location,.hud-reciter-name,.surah-meta,
+.home-grid-desc,.last-read-status,.rare-library-summary,.rare-track-copy span,
+.rare-track-copy small,.rare-sheikh-count,.rare-verse-card small {
+  color:#718481 !important;
+}
+.prayer-hero-time,.mini-p-time,.surah-name,.home-grid-name,.verse-text,
+.rare-track-copy strong,.rare-verse-card p { color:#294443 !important; text-shadow:none !important; }
+.prayer-hero-badge,.rare-badge,.rare-verse-label {
+  background:#e4f2ee !important; color:#147e79 !important; border-color:#c8e3dc !important;
+}
+.prayer-hero-countdown,.mini-prayer-item,.quran-mode-switch,.hud-progress-bar {
+  background:#e8f2ef !important; color:#315d59 !important; border-color:#d5e6e1 !important;
+}
+.mini-prayer-item.active,.verse.active,.rare-library-track.is-playing {
+  background:#e3f2ee !important; border-color:#168984 !important;
+}
+.home-grid-item::after,.search-icon-inside,.rare-group-arrow,.rare-library-mark { color:#168984 !important; }
+.action-btn-primary,.hud-ctrl-btn.play-main,.rare-verse-full-play,.cairo-main-play-btn {
+  background:linear-gradient(135deg,#1b9991,#147d78) !important;
+  color:#fff !important; border:0 !important;
+  box-shadow:0 5px 14px rgba(22,137,132,.20) !important;
+}
+.action-btn-secondary,.chip-btn,.mode-toggle-btn.active,.rare-track-play,
+.rare-verse-card button,.rare-verse-full-play {
+  background:#e5f2ef !important; color:#147e79 !important; border:1px solid #bcded6 !important;
+}
+.back-btn,.hud-ctrl-btn,.rare-library-back,.reader-quick-btn {
+  background:#fff !important; color:#168984 !important; border:1px solid #c9e2dc !important;
+}
+.search-input,.rare-library-search-wrap,.radio-timer-select {
+  background:#fff !important; color:#294443 !important; border-color:#c9e2dc !important;
+}
+.quran-word.active-word {
+  background:rgba(22,137,132,.16) !important; color:#087a74 !important;
+  text-shadow:none !important; border-bottom-color:#168984 !important;
+}
+.surah-num-circle,.verse-number-badge { color:#168984 !important; border-color:#c9e2dc !important; }
+.rare-sheikh-photo { border-color:#d0b15f !important; background:#edf5f2 !important; box-shadow:0 4px 0 rgba(22,137,132,.10) !important; }
+.rare-group-icon,.rare-track-index { background:#e4f2ee !important; color:#147e79 !important; }
+.rare-library-group { background:linear-gradient(100deg,#fff,#f0f7f4) !important; }
+.rare-verse-card { background:linear-gradient(145deg,#fff,#f2f8f6) !important; }
+.rare-verse-source { background:#f0f7f4 !important; color:#147e79 !important; }
+::-webkit-scrollbar-track { background:#edf3f1 !important; }
+::-webkit-scrollbar-thumb,::-webkit-scrollbar-thumb:hover { background:#72aaa2 !important; }
+#bottom-nav,.bottom-nav,.app-bottom-nav,.nav-bar,.player-bar,.mini-player,
+#global-audio-player,.global-audio-player {
+  background:rgba(255,255,255,.97) !important;
+  color:#294443 !important;
+  border-color:rgba(22,137,132,.16) !important;
+  box-shadow:0 -5px 20px rgba(34,76,70,.08) !important;
+}
+#bottom-nav *, .bottom-nav *, .app-bottom-nav *, .nav-bar * { color:inherit; }
+#bottom-nav .active,.bottom-nav .active,.app-bottom-nav .active,.nav-bar .active { color:#168984 !important; }
+.loading-screen { background:#f4f7f5 !important; }
+.loading-screen p { color:#168984 !important; }
+.toast-alert { background:#fff !important; color:#294443 !important; border:1px solid #c9e2dc !important; }
+@media (prefers-reduced-motion: no-preference) {
+  .card,.home-grid-item,.rare-sheikh-card,.rare-library-group,.rare-library-track { transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease; }
+}
