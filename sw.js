@@ -16,9 +16,9 @@
 // 1. أسماء التخزين المؤقت (Cache Names)
 // ═══════════════════════════════════════════════════
 
-const CACHE_NAME = 'el-magles-v45';
-const STATIC_CACHE = 'el-magles-static-v45';
-const DYNAMIC_CACHE = 'el-magles-dynamic-v45';
+const CACHE_NAME = 'el-magles-v46';
+const STATIC_CACHE = 'el-magles-static-v46';
+const DYNAMIC_CACHE = 'el-magles-dynamic-v46';
 
 // ═══════════════════════════════════════════════════
 // 2. الملفات الثابتة المطلوب تخزينها عند التثبيت
