@@ -2317,7 +2317,7 @@ function getRareLibraryGroups(items){
  const used=new Set([...mushaf,...radio,...concert].map(x=>x.id));
  const other=items.filter(x=>!used.has(x.id));
  return [
-  {id:'mushaf',title:'المصحف المرتل',icon:'📖',items:mushaf},
+  {id:'mushaf',title:'تلاوات من المصحف',icon:'📖',items:mushaf},
   {id:'radio',title:'التلاوات الإذاعية المتفرقة',icon:'📻',items:radio},
   {id:'concert',title:'محافل خارجية وحفلات',icon:'🎙️',items:concert},
   {id:'other',title:'نوادر وتسجيلات متنوعة',icon:'✨',items:other}
