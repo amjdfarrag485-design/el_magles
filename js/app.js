@@ -2308,8 +2308,18 @@ function normalizeRareLibraryName(v){return String(v||'').replace(/الشيخ\s*
 function escapeRareLibraryText(v){return String(v==null?'':v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
 function getRareLibraryItems(){return getAllAudioItems().filter(x=>x&&x.id&&x.title&&x.reciter&&(x.url||x.audioUrl||x.externalUrl));}
 function getRareLibraryGroups(items){
- const defs=[{id:'radio',title:'التلاوات الإذاعية المتفرقة',icon:'📻',re:/إذاع|اذاع|مصحف الإذاع/},{id:'concert',title:'محافل خارجية وحفلات',icon:'🎙️',re:/محفل|خارجي|حفلة|حفل|الكويت|الحسين|الإسكندرية|ليبيا/},{id:'rare',title:'نوادر وتسجيلات أخرى',icon:'✨',re:null}];
- return defs.map(g=>({...g,items:items.filter(x=>g.re?g.re.test([x.sourceTag,x.badge,x.desc,x.title].join(' ')):true)})).filter(g=>g.items.length);
+ const radio=/إذاع|اذاع|مصحف الإذاع/;
+ const concert=/محفل|خارجي|حفلة|حفل|الكويت|الحسين|الإسكندرية|ليبيا/;
+ const radioItems=items.filter(x=>radio.test([x.sourceTag,x.badge,x.desc,x.title].join(' ')));
+ const radioIds=new Set(radioItems.map(x=>x.id));
+ const concertItems=items.filter(x=>!radioIds.has(x.id)&&concert.test([x.sourceTag,x.badge,x.desc,x.title].join(' ')));
+ const used=new Set([...radioItems,...concertItems].map(x=>x.id));
+ const otherItems=items.filter(x=>!used.has(x.id));
+ return [
+  {id:'radio',title:'التلاوات الإذاعية المتفرقة',icon:'📻',items:radioItems},
+  {id:'concert',title:'محافل خارجية وحفلات',icon:'🎙️',items:concertItems},
+  {id:'rare',title:'نوادر وتسجيلات أخرى',icon:'✨',items:otherItems}
+ ].filter(g=>g.items.length);
 }
 function initRareAndIbtehalatSection(){rareLibraryState={view:'sheikhs',reciter:'',group:'',search:''};renderRareLibrary();}
 function openRareLibraryHome(){rareLibraryState={view:'sheikhs',reciter:'',group:'',search:''};renderRareLibrary();}
@@ -2339,6 +2349,7 @@ function renderRareLibrary(){
  const count=rareLibraryState.view==='sheikhs'?reciters.length+' قارئ':rareLibraryState.view==='groups'?(selected?selected.items.length:0)+' تسجيل':(group?group.items.length:0)+' تسجيل';
  root.innerHTML='<div class="rare-library-heading">'+back+'<div><h2>'+heading+'</h2><p>'+subtitle+'</p></div><span class="rare-library-mark">المجلس</span></div><label class="rare-library-search-wrap"><span>⌕</span><input id="rare-library-search" type="search" value="'+escapeRareLibraryText(q)+'" placeholder="'+(rareLibraryState.view==='tracks'?'ابحث في التسجيلات...':'ابحث عن شيخ...')+'" oninput="rareLibrarySearch(this.value)"></label><div class="rare-library-summary">'+count+' متاح</div>'+body;
 }
+function renderRareAndIbtehalatList(){renderRareLibrary();}
 function playRareQuranTrack(id){playAudioItem(id);}
 function playIbtehalTrack(id){playAudioItem(id);}
 
