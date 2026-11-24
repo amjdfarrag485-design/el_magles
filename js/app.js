@@ -2302,137 +2302,45 @@ function getAllAudioItems() {
   return [...rare, ...ibtehalat];
 }
 
-function initRareAndIbtehalatSection() {
-  currentRareIbtehalFilter = 'all';
-  currentRareIbtehalSearchQuery = '';
-  renderRareAndIbtehalatList('all', '');
+
+let rareLibraryState={view:'sheikhs',reciter:'',group:'',search:''};
+function normalizeRareLibraryName(v){return String(v||'').replace(/الشيخ\s*/g,'').replace(/[ًٌٍَُِّْـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/\s+/g,' ').trim();}
+function escapeRareLibraryText(v){return String(v==null?'':v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+function getRareLibraryItems(){return getAllAudioItems().filter(x=>x&&x.id&&x.title&&x.reciter&&(x.url||x.audioUrl||x.externalUrl));}
+function getRareLibraryGroups(items){
+ const defs=[{id:'radio',title:'التلاوات الإذاعية المتفرقة',icon:'📻',re:/إذاع|اذاع|مصحف الإذاع/},{id:'concert',title:'محافل خارجية وحفلات',icon:'🎙️',re:/محفل|خارجي|حفلة|حفل|الكويت|الحسين|الإسكندرية|ليبيا/},{id:'rare',title:'نوادر وتسجيلات أخرى',icon:'✨',re:null}];
+ return defs.map(g=>({...g,items:items.filter(x=>g.re?g.re.test([x.sourceTag,x.badge,x.desc,x.title].join(' ')):true)})).filter(g=>g.items.length);
 }
-
-function onRareIbtehalatSearch(query) {
-  currentRareIbtehalSearchQuery = (query || '').trim().toLowerCase();
-  renderRareAndIbtehalatList(currentRareIbtehalFilter, currentRareIbtehalSearchQuery);
+function initRareAndIbtehalatSection(){rareLibraryState={view:'sheikhs',reciter:'',group:'',search:''};renderRareLibrary();}
+function openRareLibraryHome(){rareLibraryState={view:'sheikhs',reciter:'',group:'',search:''};renderRareLibrary();}
+function rareLibraryBack(){if(rareLibraryState.view==='tracks')rareLibraryState.view='groups';else if(rareLibraryState.view==='groups')rareLibraryState.view='sheikhs';else{navigateTo('home');return;}rareLibraryState.search='';renderRareLibrary();}
+function rareLibrarySearch(v){rareLibraryState.search=normalizeRareLibraryName(v).toLowerCase();renderRareLibrary();}
+function openRareLibraryReciter(k){rareLibraryState.reciter=k;rareLibraryState.view='groups';rareLibraryState.search='';renderRareLibrary();}
+function openRareLibraryGroup(k){rareLibraryState.group=k;rareLibraryState.view='tracks';rareLibraryState.search='';renderRareLibrary();}
+function onRareIbtehalatSearch(v){rareLibrarySearch(v);}
+function filterRareAndIbtehalat(cat){if(['all','rare_all','ibtehal_all'].includes(cat)){openRareLibraryHome();return;}const x=getRareLibraryItems().find(i=>i.category===cat||normalizeRareLibraryName(i.reciter).includes(normalizeRareLibraryName(cat)));if(x)openRareLibraryReciter(normalizeRareLibraryName(x.reciter));else openRareLibraryHome();}
+function renderRareLibrary(){
+ const page=document.getElementById('page-rare-ibtehalat');if(!page)return;let root=document.getElementById('rare-library-app');if(!root){root=document.createElement('div');root.id='rare-library-app';page.appendChild(root);}
+ const all=getRareLibraryItems(),map=new Map();all.forEach(x=>{const k=normalizeRareLibraryName(x.reciter);if(!map.has(k))map.set(k,{key:k,name:k,items:[]});map.get(k).items.push(x);});
+ const reciters=[...map.values()].sort((a,b)=>a.name.localeCompare(b.name,'ar')),selected=map.get(rareLibraryState.reciter),groups=selected?getRareLibraryGroups(selected.items):[],group=groups.find(x=>x.id===rareLibraryState.group),q=rareLibraryState.search;
+ let heading='مكتبة النوادر والابتهالات',subtitle='اختر الشيخ للاستماع إلى تراثه الصوتي',body='';
+ const back=rareLibraryState.view==='sheikhs'?'<button class="rare-library-back" onclick="navigateTo(\'home\')">×</button>':'<button class="rare-library-back" onclick="rareLibraryBack()">‹</button>';
+ if(rareLibraryState.view==='sheikhs'){
+  const list=reciters.filter(x=>!q||x.name.toLowerCase().includes(q));
+  body='<div class="rare-library-grid">'+list.map(r=>{const img=escapeRareLibraryText(getSheikhAvatarImage(r.name,false)),fallback=escapeRareLibraryText(getSheikhAvatarSvg(r.name,false));return '<button class="rare-sheikh-card" onclick="openRareLibraryReciter(\''+escapeRareLibraryText(r.key)+'\')"><span class="rare-sheikh-photo"><img src="'+img+'" alt="'+escapeRareLibraryText(r.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\''+fallback+'\'"></span><span class="rare-sheikh-name">'+escapeRareLibraryText(r.name)+'</span><span class="rare-sheikh-count">'+r.items.length+' تسجيل</span></button>';}).join('')+'</div>';
+ }else if(rareLibraryState.view==='groups'&&selected){
+  heading=selected.name;subtitle='اختر نوع التسجيل';const list=groups.filter(x=>!q||x.title.toLowerCase().includes(q));
+  body='<div class="rare-library-groups">'+list.map(g=>'<button class="rare-library-group" onclick="openRareLibraryGroup(\''+g.id+'\')"><span class="rare-group-icon">'+g.icon+'</span><span class="rare-group-copy"><strong>'+g.title+'</strong><small>'+g.items.length+' تسجيل</small></span><span class="rare-group-arrow">‹</span></button>').join('')+'</div>';
+ }else if(rareLibraryState.view==='tracks'&&selected&&group){
+  heading=group.title;subtitle=selected.name;const list=group.items.filter(x=>!q||(x.title+' '+(x.desc||'')).toLowerCase().includes(q));
+  body='<div class="rare-library-tracks">'+list.map((x,i)=>{const playing=STATE.modernPlayer.track&&STATE.modernPlayer.track.id===x.id&&STATE.isGlobalPlaying;return '<article class="rare-library-track '+(playing?'is-playing':'')+'"><span class="rare-track-index">'+(i+1)+'</span><span class="rare-track-copy"><strong>'+escapeRareLibraryText(x.title)+'</strong><span>'+escapeRareLibraryText(x.badge||x.sourceTag||'تسجيل أرشيفي')+'</span><small>'+escapeRareLibraryText(x.duration||'المدة غير محددة')+'</small></span><button class="rare-track-play" onclick="playAudioItem(\''+escapeRareLibraryText(x.id)+'\')">'+(playing?'Ⅱ':'▶')+'</button></article>';}).join('')+'</div>';
+  if(!list.length)body='<div class="rare-library-empty">لا توجد تسجيلات مطابقة في هذا القسم.</div>';
+ }
+ const count=rareLibraryState.view==='sheikhs'?reciters.length+' قارئ':rareLibraryState.view==='groups'?(selected?selected.items.length:0)+' تسجيل':(group?group.items.length:0)+' تسجيل';
+ root.innerHTML='<div class="rare-library-heading">'+back+'<div><h2>'+heading+'</h2><p>'+subtitle+'</p></div><span class="rare-library-mark">المجلس</span></div><label class="rare-library-search-wrap"><span>⌕</span><input id="rare-library-search" type="search" value="'+escapeRareLibraryText(q)+'" placeholder="'+(rareLibraryState.view==='tracks'?'ابحث في التسجيلات...':'ابحث عن شيخ...')+'" oninput="rareLibrarySearch(this.value)"></label><div class="rare-library-summary">'+count+' متاح</div>'+body;
 }
-
-function filterRareAndIbtehalat(category) {
-  currentRareIbtehalFilter = category || 'all';
-
-  // تحديث حالة أزرار الفلتر
-  document.querySelectorAll('#rare-ibtehalat-filter-chips .chip-btn').forEach(btn => {
-    const f = btn.dataset.filter || '';
-    btn.classList.toggle('active', f === currentRareIbtehalFilter);
-  });
-
-  renderRareAndIbtehalatList(currentRareIbtehalFilter, currentRareIbtehalSearchQuery);
-}
-
-function renderRareAndIbtehalatList(filterCat, searchStr) {
-  const container = document.getElementById('rare-ibtehalat-list');
-  const counterEl = document.getElementById('rare-ibtehalat-counter');
-  if (!container) return;
-
-  const allItems = getAllAudioItems();
-  let filtered = allItems;
-
-  // 1. فلترة حسب التصنيف
-  if (filterCat && filterCat !== 'all') {
-    if (filterCat === 'rare_all') {
-      filtered = (typeof RARE_RECITATIONS_DATA !== 'undefined') ? RARE_RECITATIONS_DATA : [];
-    } else if (filterCat === 'ibtehal_all') {
-      filtered = (typeof IBTEHALAT_DATA !== 'undefined') ? IBTEHALAT_DATA : [];
-    } else if (filterCat === 'tobour' || filterCat === 'tobar') {
-      filtered = allItems.filter(item => item.category === 'tobour' || item.category === 'tobar' || (item.reciter && item.reciter.includes('طوبار')));
-    } else if (filterCat === 'naqshbandi') {
-      filtered = allItems.filter(item => item.category === 'naqshbandi' || (item.reciter && item.reciter.includes('النقشبندي')));
-    } else if (filterCat === 'minshawi') {
-      filtered = allItems.filter(item => item.category === 'minshawi' || (item.reciter && item.reciter.includes('المنشاوي')));
-    } else if (filterCat === 'bahtimi') {
-      filtered = allItems.filter(item => item.category === 'bahtimi' || (item.reciter && item.reciter.includes('البهتيمي')));
-    } else if (filterCat === 'basit') {
-      filtered = allItems.filter(item => item.category === 'basit' || (item.reciter && item.reciter.includes('عبد الباسط')));
-    } else if (filterCat === 'mustafa') {
-      filtered = allItems.filter(item => item.category === 'mustafa' || (item.reciter && item.reciter.includes('مصطفى إسماعيل')));
-    } else if (filterCat === 'refat') {
-      filtered = allItems.filter(item => item.category === 'refat' || (item.reciter && item.reciter.includes('رفعت')));
-    } else if (filterCat === 'banna') {
-      filtered = allItems.filter(item => item.category === 'banna' || (item.reciter && item.reciter.includes('البنا')));
-    } else if (filterCat === 'fashni') {
-      filtered = allItems.filter(item => item.category === 'fashni' || (item.reciter && item.reciter.includes('الفشني')));
-    } else if (filterCat === 'omran_fayoumi') {
-      filtered = allItems.filter(item => item.category === 'omran_fayoumi' || (item.reciter && (item.reciter.includes('عمران') || item.reciter.includes('الفيومي'))));
-    } else if (filterCat === 'ramadan') {
-      filtered = allItems.filter(item => item.category === 'ramadan');
-    } else {
-      filtered = allItems.filter(item => item.category === filterCat);
-    }
-  }
-
-  // Hide malformed archive cards instead of displaying undefined / placeholder entries.
-  filtered = filtered.filter(item =>
-    item &&
-    typeof item.title === 'string' && item.title.trim() &&
-    typeof item.reciter === 'string' && item.reciter.trim() &&
-    (typeof item.url === 'string' && item.url.trim() ||
-     typeof item.audioUrl === 'string' && item.audioUrl.trim() ||
-     typeof item.externalUrl === 'string' && item.externalUrl.trim())
-  );
-
-  // 2. فلترة بالبحث الفوري
-  if (searchStr) {
-    filtered = filtered.filter(item => {
-      const t = (item.title || '').toLowerCase();
-      const r = (item.reciter || '').toLowerCase();
-      const d = (item.desc || '').toLowerCase();
-      const b = (item.badge || '').toLowerCase();
-      return t.includes(searchStr) || r.includes(searchStr) || d.includes(searchStr) || b.includes(searchStr);
-    });
-  }
-
-  // تحديث عداد المقاطع المتاحة
-  if (counterEl) {
-    counterEl.textContent = `المتاح: ${filtered.length} مقطعاً مباركاً`;
-  }
-
-  if (filtered.length === 0) {
-    container.innerHTML = `
-      <div class="card" style="text-align: center; color: var(--text-secondary); padding: 28px;">
-        <span style="font-size: 2rem; display: block; margin-bottom: 8px;">🔍</span>
-        <div>لم يتم العثور على أي مقطع مطابق في هذا الاختيار.</div>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = filtered.map((item, index) => {
-    // Normalize older archive records and protect the UI from missing metadata.
-    const trackId = item.id || ('archive-track-' + index);
-    const trackTitle = item.title || item.name || item.trackName || 'تسجيل أرشيفي';
-    const trackReciter = item.reciter || item.artist || item.sheikh || 'قارئ من أرشيف المجلس';
-    const trackUrl = item.url || item.audioUrl || item.audio || item.externalUrl || '';
-    const isIbtehal = ['tobour', 'tobar', 'naqshbandi', 'fashni', 'omran_fayoumi', 'ramadan'].includes(item.category);
-    const avatar = getSheikhAvatarImage(trackReciter, isIbtehal);
-    const avatarFallback = getSheikhAvatarSvg(trackReciter, isIbtehal);
-    const isCurPlaying = STATE.modernPlayer.track && STATE.modernPlayer.track.id === trackId && STATE.isGlobalPlaying;
-
-    return `
-      <div class="audio-item-card ${isCurPlaying ? 'is-playing' : ''}" id="track-card-${trackId}" onclick="playAudioItem('${trackId}')">
-        <div class="audio-card-avatar">
-          <img src="${avatar}" alt="${trackReciter}" loading="lazy" onerror="this.onerror=null;this.src='${avatarFallback}'">
-        </div>
-        <div class="audio-card-meta">
-          <div class="audio-card-title">${trackTitle}</div>
-          <div class="audio-card-artist">${trackReciter}</div>
-          <div class="audio-card-details">
-            <span class="rare-badge">${item.badge || (isIbtehal ? 'ابتهال' : 'تسجيل نادر')}</span>
-            ${item.duration ? `<span>⏱ ${item.duration}</span>` : ''}
-          </div>
-        </div>
-        <button class="audio-card-play-btn" aria-label="${item.externalUrl || !trackUrl ? 'فتح مصدر التسجيل' : 'تشغيل'}">
-          ${item.externalUrl || !trackUrl ? '↗' : (isCurPlaying ? '⏸' : '▶')}
-        </button>
-      </div>
-    `;
-  }).join('');
-}
+function playRareQuranTrack(id){playAudioItem(id);}
+function playIbtehalTrack(id){playAudioItem(id);}
 
 function playAudioItem(itemId) {
   const allItems = getAllAudioItems();
