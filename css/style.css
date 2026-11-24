@@ -2735,3 +2735,7 @@ select:-webkit-autofill {
 .rare-verse-full-play{padding:15px;font-size:1rem;background:linear-gradient(110deg,#d8b84d,#a98422);color:#17140b}
 @media(min-width:700px){.rare-library-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}}
 @media(max-width:360px){.rare-library-grid{gap:10px}.rare-sheikh-card{padding:9px 7px}.rare-sheikh-name{font-size:.82rem}}
+
+/* Restore the archive library's single original heading; avoid duplicate page title and close control. */
+#page-rare-ibtehalat > .page-header{display:none!important}
+#page-rare-ibtehalat{padding-bottom:calc(var(--nav-height,84px) + 28px)}
