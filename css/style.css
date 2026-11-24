@@ -2710,3 +2710,28 @@ select:-webkit-autofill {
 .rare-track-play{width:44px;height:44px;flex:0 0 44px;border:1px solid var(--gold);border-radius:50%;background:rgba(212,175,55,.12);color:var(--gold-light);font-size:1.1rem}
 .rare-library-empty{padding:18px;border:1px solid var(--border-gold);border-radius:16px;color:var(--text-secondary);text-align:center;background:#191916}
 @media(max-width:360px){.rare-library-grid{gap:10px}.rare-sheikh-card{padding:9px 7px}.rare-sheikh-name{font-size:.82rem}}
+
+
+/* مكتبة النوادر والابتهالات: بطاقات الشيوخ ثم الأقسام ثم التسجيلات ثم النصوص المتاحة */
+.rare-library-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.rare-sheikh-card{position:relative;overflow:hidden;padding:12px 10px 15px;border-radius:23px;background:linear-gradient(150deg,#24231d,#12120f);border:1px solid rgba(212,175,55,.52);transition:transform .18s ease,border-color .18s ease}
+.rare-sheikh-card:active{transform:scale(.975);border-color:var(--gold-light)}
+.rare-sheikh-photo{width:100%;max-width:none;aspect-ratio:1/1;border-radius:19px;border:2px solid var(--gold);box-shadow:0 5px 0 rgba(118,83,28,.48)}
+.rare-sheikh-photo img{object-fit:cover}
+.rare-sheikh-name{font-size:.94rem;min-height:2.7em;display:flex;align-items:center;justify-content:center}
+.rare-library-group{min-height:94px;border-radius:19px;background:linear-gradient(110deg,#242219,#151510);border-color:rgba(212,175,55,.5)}
+.rare-library-track{gap:10px;padding:13px 11px}
+.rare-track-open{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;text-align:right;background:transparent;border:0;color:var(--text-primary);padding:0;cursor:pointer}
+.rare-track-open strong{font-size:.91rem;line-height:1.55}
+.rare-track-open span,.rare-track-open small{font-size:.73rem;color:var(--text-secondary)}
+.rare-track-play{background:rgba(212,175,55,.13)}
+.rare-verse-source{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:4px 0 14px;padding:11px 13px;border:1px solid rgba(212,175,55,.3);border-radius:14px;background:#191916;color:var(--gold-light);font-size:.78rem}
+.rare-verses-list{display:grid;gap:12px}
+.rare-verse-card{padding:16px 15px;border:1px solid rgba(212,175,55,.42);border-radius:18px;background:linear-gradient(145deg,#202019,#151511);color:var(--text-primary)}
+.rare-verse-label{display:inline-block;padding:5px 10px;border:1px solid rgba(212,175,55,.35);border-radius:20px;color:var(--gold-light);font-size:.75rem}
+.rare-verse-card p{font-family:var(--font-uthmani);font-size:1.28rem;line-height:2.05;text-align:center;margin:13px 0}
+.rare-verse-card small{display:block;text-align:center;color:var(--text-secondary);font-size:.72rem}
+.rare-verse-card button,.rare-verse-full-play{display:block;width:100%;margin-top:13px;padding:11px 14px;border:1px solid var(--gold);border-radius:14px;background:rgba(212,175,55,.12);color:var(--gold-light);font-weight:800}
+.rare-verse-full-play{padding:15px;font-size:1rem;background:linear-gradient(110deg,#d8b84d,#a98422);color:#17140b}
+@media(min-width:700px){.rare-library-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}}
+@media(max-width:360px){.rare-library-grid{gap:10px}.rare-sheikh-card{padding:9px 7px}.rare-sheikh-name{font-size:.82rem}}
