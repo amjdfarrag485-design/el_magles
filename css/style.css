@@ -2863,3 +2863,55 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
 @media (prefers-reduced-motion: no-preference) {
   .card,.home-grid-item,.rare-sheikh-card,.rare-library-group,.rare-library-track { transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease; }
 }
+
+
+/* === Sheikh profile pages: archival olive & royal-gold identity === */
+#page-rare-ibtehalat:has(.rare-library-profile-view){background:#f8f7ef;color:#242719}
+#page-rare-ibtehalat .rare-library-profile-view{margin:-16px -16px 0;padding:0 16px 24px;background:#f8f7ef;color:#242719;min-height:calc(100vh - 120px)}
+.rare-profile-hero{position:relative;margin:0 -16px 16px;padding:0 18px 24px;text-align:center;overflow:hidden;background:linear-gradient(180deg,#d7d1b7 0%,#8c9879 38%,#e9e6d5 72%,#f8f7ef 100%);isolation:isolate}
+.rare-profile-scenery{height:clamp(190px,34vh,300px);position:relative;margin:0 -18px 0;overflow:hidden;background:linear-gradient(180deg,#aeb8bd 0%,#d8d9cb 54%,#a7b18b 55%,#778a5d 78%,#e4dfc9 79%);border-bottom:7px solid #555333;box-shadow:inset 0 -8px 0 rgba(35,40,22,.18)}
+.rare-profile-scenery:before{content:"";position:absolute;inset:52% 0 0;background:repeating-linear-gradient(0deg,rgba(42,79,40,.18) 0 7px,transparent 8px 18px),linear-gradient(180deg,#b4bd91,#5f7848)}
+.rare-profile-scenery:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(34,42,25,.12),transparent 22%,transparent 78%,rgba(34,42,25,.14)),linear-gradient(180deg,transparent 60%,rgba(45,54,29,.25))}
+.rare-profile-sun{position:absolute;z-index:1;width:62px;height:62px;border-radius:50%;background:#e6d9a0;right:18%;top:38%;box-shadow:0 0 35px rgba(244,222,151,.7)}
+.rare-profile-palm{position:absolute;z-index:2;bottom:16%;width:5px;height:125px;background:#665f3e;transform-origin:bottom;border-radius:5px}
+.rare-profile-palm:before{content:"";position:absolute;left:-43px;top:-14px;width:90px;height:44px;border-top:5px solid #536c48;border-radius:50%;transform:rotate(-8deg);box-shadow:0 -13px 0 -2px #536c48,0 12px 0 -2px #536c48}
+.palm-one{left:17%;transform:rotate(-5deg)}.palm-two{right:18%;height:100px;transform:rotate(7deg)}
+.rare-profile-radio{position:absolute;z-index:3;bottom:8px;left:20px;padding:5px 13px;border:2px solid #665d38;border-radius:8px;background:#4d4a32;color:#e5d59a;font-size:25px}
+.rare-profile-portrait{position:relative;z-index:4;width:clamp(156px,40vw,218px);height:clamp(156px,40vw,218px);margin:-125px auto 14px;border:6px solid #77743e;border-radius:31%;padding:5px;background:#eee9d5;box-shadow:0 0 0 7px rgba(201,185,112,.26),0 12px 24px rgba(44,42,23,.2)}
+.rare-profile-portrait img{width:100%;height:100%;display:block;object-fit:cover;border-radius:25%;background:#d8d2b9}
+.rare-profile-hero h1{position:relative;z-index:4;margin:12px 0 8px;color:#242719;font-family:var(--font-uthmani);font-size:clamp(1.8rem,7vw,2.35rem);font-weight:900}
+.rare-profile-tag{display:inline-flex;align-items:center;padding:8px 22px;border:1px solid #c9c9a8;border-radius:30px;background:#eeeedf;color:#686c3c;font-weight:800}
+.rare-profile-divider{display:flex;align-items:center;justify-content:center;gap:18px;margin:32px auto 16px;max-width:520px;color:#777542}
+.rare-profile-divider i{height:1px;flex:1;background:linear-gradient(90deg,transparent,#777542)}
+.rare-profile-divider i:last-child{background:linear-gradient(90deg,#777542,transparent)}
+.rare-profile-back{position:absolute;z-index:8;top:14px;right:14px}
+.rare-profile-back .rare-library-back{width:48px;height:48px;border-radius:18px;background:#f2f0df!important;color:#666b38!important;border:1px solid #c7c5a1!important}
+.rare-library-profile-view .rare-library-search-wrap{background:#fffdf4!important;border:1px solid #d4cfaa!important;color:#65683a!important;border-radius:18px}
+.rare-library-profile-view .rare-library-summary{color:#727044!important}
+.rare-library-profile-view .rare-library-groups{display:grid;gap:16px}
+.rare-library-profile-view .rare-library-group{min-height:112px;padding:18px 20px;border:2px solid #8f8d51!important;border-left-color:#b7a75d!important;border-radius:35px!important;background:linear-gradient(110deg,#f2f0df,#e7e5d2)!important;box-shadow:0 7px 0 #444523,0 10px 18px rgba(42,43,20,.1)!important;color:#292b1b!important}
+.rare-library-profile-view .rare-group-icon{width:48px;height:48px;border-radius:50%;background:#efeedf!important;border:1px solid #a8a67b;color:#686a3e!important}
+.rare-library-profile-view .rare-group-copy strong{font-family:var(--font-uthmani);font-size:1.42rem;color:#292b1b!important}
+.rare-library-profile-view .rare-group-copy small{color:#777442!important;font-weight:800}
+.rare-library-profile-view .rare-group-arrow{width:42px;height:42px;display:grid;place-items:center;border:1px solid #aaa980;border-radius:50%;color:#62663a!important}
+.rare-library-profile-view .rare-library-empty{background:#f1efdf!important;color:#343522!important;border-color:#d1c99d!important}
+.rare-library-profile-view .rare-library-heading{display:none}
+.rare-library-profile-view .rare-library-search-wrap{margin-top:0}
+.rare-library-profile-view .rare-library-groups{padding-bottom:16px}
+/* Keep both audio player sizes in the same olive, antique-gold and warm-ivory palette. */
+.sleek-bottom-player{background:linear-gradient(110deg,#292b1d,#42432a)!important;border:1px solid rgba(202,184,105,.65)!important;box-shadow:0 -5px 24px rgba(35,36,19,.3)!important;color:#f4efd9!important}
+.sleek-player-title,.sleek-player-sheikh,.sleek-player-time{color:#f2edda!important}
+.sleek-player-btn,.sleek-player-close-btn{color:#e2d18a!important}
+.sleek-player-play-btn{background:linear-gradient(145deg,#e5d48e,#b49a45)!important;color:#292a1b!important;border-color:#e1d18c!important}
+.sleek-player-progress-bar{background:rgba(239,231,194,.25)!important}
+.sleek-player-progress-fill{background:linear-gradient(90deg,#a69a52,#e4d48c)!important}
+.reference-player-sheet{background:linear-gradient(155deg,#343625,#17190f)!important;color:#f5f0dc!important;border-color:rgba(205,188,111,.65)!important}
+.reference-track-title{color:#f8f3df!important}
+.reference-track-reciter{color:#e0d18c!important}
+.reference-track-source{background:#555638!important;color:#f1e8bd!important;border-color:#a59a5a!important}
+.reference-player-collapse{background:#c9b96c!important}
+#reference-player-seek{accent-color:#cbbb70!important}
+.reference-player-controls button{background:#343625!important;color:#e7d797!important;border-color:rgba(205,188,111,.55)!important}
+.reference-player-controls .reference-main-play{background:linear-gradient(145deg,#e6d58e,#b59a45)!important;color:#28291b!important}
+.reference-player-tools button span{color:#e4d48e!important;border-color:rgba(205,188,111,.5)!important}
+.reference-player-tools button small{color:#d0c9a9!important}
