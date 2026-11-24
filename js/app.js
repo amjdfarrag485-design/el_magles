@@ -2317,10 +2317,10 @@ function getRareLibraryGroups(items){
  const used=new Set([...mushaf,...radio,...concert].map(x=>x.id));
  const other=items.filter(x=>!used.has(x.id));
  return [
-  {id:'mushaf',title:'سور وتلاوات قرآنية',icon:'📖',items:mushaf},
-  {id:'radio',title:'تلاوات إذاعية وقرآن الفجر',icon:'📻',items:radio},
-  {id:'concert',title:'محافل وتسجيلات من المساجد',icon:'🎙️',items:concert},
-  {id:'other',title:'تسجيلات متنوعة',icon:'✨',items:other}
+  {id:'mushaf',title:'المصحف المرتل',icon:'📖',items:mushaf},
+  {id:'radio',title:'التلاوات الإذاعية المتفرقة',icon:'📻',items:radio},
+  {id:'concert',title:'محافل خارجية وحفلات',icon:'🎙️',items:concert},
+  {id:'other',title:'نوادر وتسجيلات متنوعة',icon:'✨',items:other}
  ].filter(g=>g.items.length);
 }
 function initRareAndIbtehalatSection(){rareLibraryState={view:'sheikhs',reciter:'',group:'',track:'',search:''};renderRareLibrary();}
