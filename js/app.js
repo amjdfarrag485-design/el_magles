@@ -2323,11 +2323,11 @@ function getRareLibraryGroups(items){
   {id:'other',title:'نوادر وتسجيلات متنوعة',icon:'✨',items:other}
  ].filter(g=>g.items.length);
 }
-function initRareAndIbtehalatSection(){rareLibraryState={view:'sheikhs',reciter:'',group:'',track:'',search:''};renderRareLibrary();}
-function openRareLibraryHome(){rareLibraryState={view:'sheikhs',reciter:'',group:'',track:'',search:''};renderRareLibrary();}
+function initRareAndIbtehalatSection(){rareLibraryState={view:'all',reciter:'',group:'all',track:'',search:''};renderRareLibrary();}
+function openRareLibraryHome(){rareLibraryState={view:'all',reciter:'',group:'all',track:'',search:''};renderRareLibrary();}
 function rareLibraryBack(){
- if(rareLibraryState.view==='verses')rareLibraryState.view='tracks';
- else if(rareLibraryState.view==='tracks'&&rareLibraryState.group==='all')rareLibraryState.view='sheikhs';
+ if(rareLibraryState.view==='verses')rareLibraryState.view='all';
+ else if(rareLibraryState.view==='tracks'&&rareLibraryState.group==='all')rareLibraryState.view='all';
  else if(rareLibraryState.view==='tracks')rareLibraryState.view='groups';
  else if(rareLibraryState.view==='groups')rareLibraryState.view='sheikhs';
  else{navigateTo('home');return;}
@@ -2386,7 +2386,17 @@ function renderRareLibrary(){
  const back=rareLibraryState.view==='sheikhs'
   ?'<button class="rare-library-back" onclick="navigateTo(\'home\')" aria-label="العودة للرئيسية">×</button>'
   :'<button class="rare-library-back" onclick="rareLibraryBack()" aria-label="رجوع">‹</button>';
- if(rareLibraryState.view==='sheikhs'){
+ if(rareLibraryState.view==='all'){
+  heading='مكتبة النوادر والابتهالات';subtitle='تسجيلات نادرة من تراث كبار القراء';
+  const list=all.filter(x=>!q||(x.title+' '+x.reciter+' '+(x.desc||'')+' '+(x.badge||'')).toLowerCase().includes(q));
+  body='<div class="rare-library-tracks">'+list.map(x=>{
+   const playing=STATE.modernPlayer.track&&STATE.modernPlayer.track.id===x.id&&STATE.isGlobalPlaying;
+   const avatar=escapeRareLibraryText(getSheikhAvatarImage(x.reciter,false));
+   const fallback=escapeRareLibraryText(getSheikhAvatarSvg(x.reciter,false));
+   return '<article class="rare-library-track rare-library-track-classic '+(playing?'is-playing':'')+'"><span class="rare-track-avatar"><img src="'+avatar+'" alt="'+escapeRareLibraryText(x.reciter)+'" loading="lazy" onerror="this.onerror=null;this.src=\\''+fallback+'\\'"></span><div class="rare-track-copy"><strong>'+escapeRareLibraryText(x.title)+'</strong><span>'+escapeRareLibraryText(x.reciter)+'</span><div class="rare-track-meta"><span>'+escapeRareLibraryText(x.badge||x.sourceTag||'تسجيل نادر')+'</span><small>'+escapeRareLibraryText(x.duration||'المدة غير محددة')+'</small></div></div><button class="rare-track-play" aria-label="تشغيل التسجيل" onclick="playAudioItem(\\''+escapeRareLibraryText(x.id)+'\\')">'+(playing?'Ⅱ':'▶')+'</button></article>';
+  }).join('')+'</div>';
+  if(!list.length)body='<div class="rare-library-empty">لا توجد تسجيلات مطابقة للبحث.</div>';
+ }else if(rareLibraryState.view==='sheikhs'){
   const list=reciters.filter(x=>!q||x.name.toLowerCase().includes(q));
   body='<div class="rare-library-grid">'+list.map(r=>{
    const img=escapeRareLibraryText(getSheikhAvatarImage(r.name,false));
@@ -2422,8 +2432,8 @@ function renderRareLibrary(){
    body=source+'<div class="rare-library-empty"><strong>النص القرآني غير متاح لهذا التسجيل حاليًا.</strong><br>نقدر نشغّل التسجيل كاملًا، ولن نعرض آيات غير موثقة.</div>'+play;
   }
  }
- const count=rareLibraryState.view==='sheikhs'?reciters.length+' قارئ':rareLibraryState.view==='groups'?(selected?selected.items.length:0)+' تسجيل':rareLibraryState.view==='tracks'?(rareLibraryState.group==='all'?(selected?selected.items.length:0):(group?group.items.length:0))+' تسجيل':(track?getRareTrackTextSegments(track).length:0)+' مقتطف متاح';
- const placeholder=rareLibraryState.view==='tracks'?'ابحث في التسجيلات...':rareLibraryState.view==='verses'?'ابحث في النص المتاح...':'ابحث عن شيخ...';
+ const count=rareLibraryState.view==='all'?all.length+' تسجيل':rareLibraryState.view==='sheikhs'?reciters.length+' قارئ':rareLibraryState.view==='groups'?(selected?selected.items.length:0)+' تسجيل':rareLibraryState.view==='tracks'?(rareLibraryState.group==='all'?(selected?selected.items.length:0):(group?group.items.length:0))+' تسجيل':(track?getRareTrackTextSegments(track).length:0)+' مقتطف متاح';
+ const placeholder=(rareLibraryState.view==='tracks'||rareLibraryState.view==='all')?'ابحث في التسجيلات...':rareLibraryState.view==='verses'?'ابحث في النص المتاح...':'ابحث عن شيخ...';
  root.innerHTML='<div class="rare-library-heading">'+back+'<div><h2>'+heading+'</h2><p>'+subtitle+'</p></div><span class="rare-library-mark">المجلس</span></div><label class="rare-library-search-wrap"><span>⌕</span><input id="rare-library-search" type="search" value="'+escapeRareLibraryText(q)+'" placeholder="'+placeholder+'" oninput="rareLibrarySearch(this.value)"></label><div class="rare-library-summary">'+count+' متاح</div>'+body;
 }
 function renderRareAndIbtehalatList(){renderRareLibrary();}
