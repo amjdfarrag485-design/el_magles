@@ -2327,6 +2327,7 @@ function initRareAndIbtehalatSection(){rareLibraryState={view:'sheikhs',reciter:
 function openRareLibraryHome(){rareLibraryState={view:'sheikhs',reciter:'',group:'',track:'',search:''};renderRareLibrary();}
 function rareLibraryBack(){
  if(rareLibraryState.view==='verses')rareLibraryState.view='tracks';
+ else if(rareLibraryState.view==='tracks'&&rareLibraryState.group==='all')rareLibraryState.view='sheikhs';
  else if(rareLibraryState.view==='tracks')rareLibraryState.view='groups';
  else if(rareLibraryState.view==='groups')rareLibraryState.view='sheikhs';
  else{navigateTo('home');return;}
@@ -2339,7 +2340,7 @@ function rareLibrarySearch(v){
  const input=document.getElementById('rare-library-search');
  if(input){input.focus();input.setSelectionRange(input.value.length,input.value.length);}
 }
-function openRareLibraryReciter(k){rareLibraryState.reciter=k;rareLibraryState.view='groups';rareLibraryState.group='';rareLibraryState.track='';rareLibraryState.search='';renderRareLibrary();}
+function openRareLibraryReciter(k){rareLibraryState.reciter=k;rareLibraryState.view='tracks';rareLibraryState.group='all';rareLibraryState.track='';rareLibraryState.search='';renderRareLibrary();}
 function openRareLibraryGroup(k){rareLibraryState.group=k;rareLibraryState.view='tracks';rareLibraryState.track='';rareLibraryState.search='';renderRareLibrary();}
 function openRareLibraryTrack(id){rareLibraryState.track=id;rareLibraryState.view='verses';rareLibraryState.search='';renderRareLibrary();}
 function getRareTrackTextSegments(track){
@@ -2397,14 +2398,17 @@ function renderRareLibrary(){
   const list=groups.filter(x=>!q||x.title.toLowerCase().includes(q));
   body='<div class="rare-library-groups">'+list.map(g=>'<button class="rare-library-group" onclick="openRareLibraryGroup(\''+g.id+'\')"><span class="rare-group-icon">'+g.icon+'</span><span class="rare-group-copy"><strong>'+g.title+'</strong><small>'+g.items.length+' تسجيل</small></span><span class="rare-group-arrow">‹</span></button>').join('')+'</div>';
   if(!list.length)body='<div class="rare-library-empty">لا توجد أقسام مسجلة لهذا الشيخ حتى الآن.</div>';
- }else if(rareLibraryState.view==='tracks'&&selected&&group){
-  heading=group.title;subtitle=selected.name;
-  const list=group.items.filter(x=>!q||(x.title+' '+(x.desc||'')).toLowerCase().includes(q));
-  body='<div class="rare-library-tracks">'+list.map((x,i)=>{
+ }else if(rareLibraryState.view==='tracks'&&selected&&(rareLibraryState.group==='all'||group)){
+  heading=rareLibraryState.group==='all'?selected.name:group.title;subtitle='التسجيلات المتاحة للشيخ';
+  const sourceItems=rareLibraryState.group==='all'?selected.items:group.items;
+  const list=sourceItems.filter(x=>!q||(x.title+' '+(x.desc||'')+' '+(x.badge||'')).toLowerCase().includes(q));
+  const avatar=escapeRareLibraryText(getSheikhAvatarImage(selected.name,false));
+  const fallback=escapeRareLibraryText(getSheikhAvatarSvg(selected.name,false));
+  body='<div class="rare-library-tracks">'+list.map(x=>{
    const playing=STATE.modernPlayer.track&&STATE.modernPlayer.track.id===x.id&&STATE.isGlobalPlaying;
-   return '<article class="rare-library-track '+(playing?'is-playing':'')+'"><span class="rare-track-index">'+(i+1)+'</span><button class="rare-track-open" onclick="openRareLibraryTrack(\''+escapeRareLibraryText(x.id)+'\')"><strong>'+escapeRareLibraryText(x.title)+'</strong><span>'+escapeRareLibraryText(x.badge||x.sourceTag||'تسجيل أرشيفي')+'</span><small>'+escapeRareLibraryText(x.duration||'المدة غير محددة')+'</small></button><button class="rare-track-play" aria-label="تشغيل التسجيل" onclick="playAudioItem(\''+escapeRareLibraryText(x.id)+'\')">'+(playing?'Ⅱ':'▶')+'</button></article>';
+   return '<article class="rare-library-track rare-library-track-classic '+(playing?'is-playing':'')+'"><span class="rare-track-avatar"><img src="'+avatar+'" alt="'+escapeRareLibraryText(selected.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\''+fallback+'\'"></span><div class="rare-track-copy"><strong>'+escapeRareLibraryText(x.title)+'</strong><span>'+escapeRareLibraryText(selected.name)+'</span><div class="rare-track-meta"><span>'+escapeRareLibraryText(x.badge||x.sourceTag||'تسجيل نادر')+'</span><small>'+escapeRareLibraryText(x.duration||'المدة غير محددة')+'</small></div></div><button class="rare-track-play" aria-label="تشغيل التسجيل" onclick="playAudioItem(\''+escapeRareLibraryText(x.id)+'\')">'+(playing?'Ⅱ':'▶')+'</button></article>';
   }).join('')+'</div>';
-  if(!list.length)body='<div class="rare-library-empty">لا توجد تسجيلات مطابقة في هذا القسم.</div>';
+  if(!list.length)body='<div class="rare-library-empty">لا توجد تسجيلات متاحة لهذا الشيخ.</div>';
  }else if(rareLibraryState.view==='verses'&&selected&&track){
   heading=track.title;subtitle=selected.name;
   const segments=getRareTrackTextSegments(track);
