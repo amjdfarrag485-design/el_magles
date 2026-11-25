@@ -2422,7 +2422,7 @@ function renderRareLibrary(){
    body=source+'<div class="rare-library-empty"><strong>النص القرآني غير متاح لهذا التسجيل حاليًا.</strong><br>نقدر نشغّل التسجيل كاملًا، ولن نعرض آيات غير موثقة.</div>'+play;
   }
  }
- const count=rareLibraryState.view==='sheikhs'?reciters.length+' قارئ':rareLibraryState.view==='groups'?(selected?selected.items.length:0)+' تسجيل':rareLibraryState.view==='tracks'?(group?group.items.length:0)+' تسجيل':(track?getRareTrackTextSegments(track).length:0)+' مقتطف متاح';
+ const count=rareLibraryState.view==='sheikhs'?reciters.length+' قارئ':rareLibraryState.view==='groups'?(selected?selected.items.length:0)+' تسجيل':rareLibraryState.view==='tracks'?(rareLibraryState.group==='all'?(selected?selected.items.length:0):(group?group.items.length:0))+' تسجيل':(track?getRareTrackTextSegments(track).length:0)+' مقتطف متاح';
  const placeholder=rareLibraryState.view==='tracks'?'ابحث في التسجيلات...':rareLibraryState.view==='verses'?'ابحث في النص المتاح...':'ابحث عن شيخ...';
  root.innerHTML='<div class="rare-library-heading">'+back+'<div><h2>'+heading+'</h2><p>'+subtitle+'</p></div><span class="rare-library-mark">المجلس</span></div><label class="rare-library-search-wrap"><span>⌕</span><input id="rare-library-search" type="search" value="'+escapeRareLibraryText(q)+'" placeholder="'+placeholder+'" oninput="rareLibrarySearch(this.value)"></label><div class="rare-library-summary">'+count+' متاح</div>'+body;
 }
