@@ -2750,3 +2750,14 @@ select:-webkit-autofill {
 .rare-library-track-classic .rare-track-play{width:54px;height:54px;flex:0 0 54px;border:2px solid var(--gold);border-radius:50%;background:rgba(212,175,55,.13);color:var(--gold-light);font-size:1.35rem;}
 .rare-library-track-classic .rare-track-play:active{background:var(--gold);color:#17140b;}
 @media(max-width:380px){.rare-library-track-classic{gap:8px;padding:11px 9px}.rare-track-avatar{width:58px;height:58px;flex-basis:58px}.rare-library-track-classic .rare-track-copy strong{font-size:.9rem}.rare-library-track-classic .rare-track-play{width:46px;height:46px;flex-basis:46px}}
+
+
+/* منع قائمة Chrome عند الضغط المطوّل على صور شيوخ مكتبة النوادر */
+#rare-library-app .rare-track-avatar,
+#rare-library-app .rare-track-avatar img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: manipulation;
+}
