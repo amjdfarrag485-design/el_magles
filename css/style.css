@@ -2850,3 +2850,35 @@ select:-webkit-autofill {
   .reciter-open-btn { padding: 6px 8px !important; font-size: .7rem !important; }
   .reciter-favorite-btn { flex-basis: 30px; width: 30px; height: 30px; }
 }
+
+
+/* ─── لمسة زمردية مساعدة مع هوية الأسود والذهبي ─── */
+:root {
+  --council-emerald: #2f8f70;
+  --council-emerald-soft: rgba(47, 143, 112, .14);
+}
+.bottom-nav-bar {
+  background: rgba(10, 19, 16, .98);
+  border-top-color: rgba(47, 143, 112, .34);
+}
+.nav-tab-item.active::after {
+  background: linear-gradient(90deg, transparent, var(--council-emerald), var(--gold), transparent);
+}
+.nav-tab-item.active .nav-tab-icon {
+  filter: drop-shadow(0 0 8px rgba(47, 143, 112, .55));
+}
+.sleek-bottom-player {
+  border-color: rgba(47, 143, 112, .5);
+  box-shadow: 0 6px 20px rgba(0,0,0,.75), 0 0 14px rgba(47,143,112,.12);
+}
+.sleek-player-progress-fill {
+  background: linear-gradient(90deg, var(--council-emerald), var(--gold-light));
+}
+.reciter-capability-tag {
+  border-color: rgba(47,143,112,.45);
+  background: linear-gradient(110deg, rgba(47,143,112,.13), rgba(212,175,55,.08));
+}
+@media (max-width: 390px) {
+  .nav-tab-label { font-size: .62rem; }
+  .nav-tab-icon { font-size: 1.12rem; }
+}
