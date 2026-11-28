@@ -2830,3 +2830,23 @@ select:-webkit-autofill {
   background: rgba(212,175,55,.25) !important;
   transform: scale(.97);
 }
+
+
+/* ─── موسوعة القراء: أدوات المكتبة والمفضلة ─── */
+.reciters-directory-tools { margin: 4px 0 14px; }
+.reciters-directory-count { color: var(--gold-light); font-size: .82rem; font-weight: 700; margin: 0 2px 10px; }
+.reciters-filter-chips { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; padding: 2px 1px 10px; scrollbar-width: thin; }
+.reciters-filter-chips .chip-btn { flex: 0 0 auto; white-space: nowrap; }
+.reciter-card { position: relative; display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 12px; }
+.reciter-list-copy { flex: 1; min-width: 0; }
+.reciter-capability-tag { display: inline-block; margin-top: 6px; padding: 3px 8px; border: 1px solid var(--border-gold); border-radius: 20px; color: var(--gold-light); background: rgba(212,175,55,.08); font-size: .7rem; }
+.reciter-favorite-btn { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border-gold) !important; color: var(--gold-light) !important; background: rgba(212,175,55,.08) !important; font-size: 1.25rem; cursor: pointer; }
+.reciter-favorite-btn.is-favorite { color: #ff6b83 !important; border-color: rgba(255,107,131,.55) !important; background: rgba(255,107,131,.1) !important; }
+.reciter-open-btn { flex: 0 0 auto; padding: 7px 10px !important; font-size: .76rem !important; }
+.reciters-empty-state { grid-column: 1 / -1; text-align: center; color: var(--text-secondary); padding: 24px 16px; line-height: 1.9; }
+@media (max-width: 390px) {
+  .reciter-card { gap: 7px; padding: 10px; }
+  .reciter-list-avatar { width: 48px; height: 48px; }
+  .reciter-open-btn { padding: 6px 8px !important; font-size: .7rem !important; }
+  .reciter-favorite-btn { flex-basis: 30px; width: 30px; height: 30px; }
+}
