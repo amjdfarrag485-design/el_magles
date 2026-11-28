@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=27">
+  <link rel="stylesheet" href="css/style.css?v=28">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -701,6 +701,22 @@
   <!-- عنصر صوت الأذان التلقائي المستقل (أذان الشيخ محمد رفعت التاريخي الخالد) -->
   <audio id="adhan-audio-element" preload="auto" src="https://www.islamcan.com/audio/adhan/azan1.mp3"></audio>
 
+  <!-- دخول موثّق بحساب Google عبر Supabase Auth -->
+  <button type="button" id="council-account-trigger" class="council-account-trigger" aria-label="تسجيل الدخول">♙</button>
+  <section id="council-auth-modal" class="council-auth-backdrop" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="council-auth-title">
+    <div class="council-auth-dialog">
+      <button type="button" id="council-auth-close" class="council-auth-close" aria-label="إغلاق">×</button>
+      <div class="council-auth-mark">۞</div>
+      <h2 id="council-auth-title">حسابك في المجلس</h2>
+      <p>سجّل الدخول بحساب Google حقيقي. لن يتم إنشاء حساب بمجرد كتابة اسم أو بريد غير موثّق.</p>
+      <div id="council-auth-status" class="council-auth-status">جارٍ التحقق من حالة الحساب…</div>
+      <div id="council-auth-email" class="council-auth-email"></div>
+      <button type="button" id="council-google-signin" class="council-google-button">G&nbsp; المتابعة باستخدام Google</button>
+      <button type="button" id="council-signout" class="council-signout-button" hidden>تسجيل الخروج</button>
+      <div id="council-auth-message" class="council-auth-message" role="status" hidden></div>
+    </div>
+  </section>
+
   <!-- ========================================================================= -->
   <!-- 11. شريط التنقل السفلي الفاخر (الأقسام الـ 5 الرئيسية)                     -->
   <!-- ========================================================================= -->
@@ -745,6 +761,8 @@
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=28"></script>
   <script src="js/app.js?v=66"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/auth.js?v=1"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
