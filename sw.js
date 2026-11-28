@@ -16,9 +16,9 @@
 // 1. أسماء التخزين المؤقت (Cache Names)
 // ═══════════════════════════════════════════════════
 
-const CACHE_NAME = 'el-magles-v62';
-const STATIC_CACHE = 'el-magles-static-v62';
-const DYNAMIC_CACHE = 'el-magles-dynamic-v62';
+const CACHE_NAME = 'el-magles-v63';
+const STATIC_CACHE = 'el-magles-static-v63';
+const DYNAMIC_CACHE = 'el-magles-dynamic-v63';
 
 // ═══════════════════════════════════════════════════
 // 2. الملفات الثابتة المطلوب تخزينها عند التثبيت
@@ -72,38 +72,20 @@ const NO_CACHE_PATTERNS = [
  * - يتم تخطي الانتظار للتفعيل الفوري
  */
 self.addEventListener('install', (event) => {
-  console.log('[SW] 📦 جاري التثبيت...');
-
-  event.waitUntil(
-    Promise.all([
-      // تخزين الملفات الثابتة
-      caches.open(STATIC_CACHE).then((cache) => {
-        console.log('[SW] ✅ تخزين الملفات الثابتة');
-        return cache.addAll(STATIC_ASSETS);
-      }),
-
-      // تخزين خطوط Google
-      caches.open(CACHE_NAME).then((cache) => {
-        console.log('[SW] ✅ تخزين خطوط Google');
-        // نحاول تخزين الخطوط ولكن لا نفشل إذا لم نستطع
-        return Promise.allSettled(
-          GOOGLE_FONTS.map((font) =>
-            cache.add(font).catch((err) => {
-              console.warn(`[SW] ⚠️ تعذر تخزين الخط: ${font}`, err);
-            })
-          )
-        );
-      }),
-    ])
-      .then(() => {
-        console.log('[SW] ✅ اكتمل التثبيت بنجاح');
-        // تخطي الانتظار والتفعيل فوراً
-        return self.skipWaiting();
-      })
-      .catch((err) => {
-        console.error('[SW] ❌ خطأ أثناء التثبيت:', err);
-      })
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(STATIC_CACHE);
+    // خزّن كل ملف بصورة مستقلة؛ تعذر ملف واحد لا يمنع تحديث بقية التطبيق.
+    await Promise.allSettled(STATIC_ASSETS.map(async (asset) => {
+      const response = await fetch(asset, { cache: 'reload' });
+      if (response.ok) await cache.put(asset, response);
+    }));
+    const fontCache = await caches.open(CACHE_NAME);
+    await Promise.allSettled(GOOGLE_FONTS.map(async (font) => {
+      const response = await fetch(font);
+      if (response.ok) await fontCache.put(font, response);
+    }));
+    await self.skipWaiting();
+  })());
 });
 
 // ═══════════════════════════════════════════════════
@@ -178,13 +160,21 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // ملفات التطبيق الأساسية يجب أن تتحدث من الشبكة أولاً حتى لا تظهر نسخة قديمة.
+  const isAppShellFile = url.origin === self.location.origin &&
+    (url.pathname.endsWith('.html') || url.pathname.endsWith('.js') || url.pathname.endsWith('.css'));
+  if (isAppShellFile) {
+    event.respondWith(networkFirstStrategy(request));
+    return;
+  }
+
   // ─── خطوط Google (Cache-First مع تحديث في الخلفية) ───
   if (isGoogleFontsRequest(url)) {
     event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
-  // ─── الملفات الثابتة (Cache-First) ───
+  // ─── بقية الملفات الثابتة ───
   event.respondWith(cacheFirstStrategy(request));
 });
 
