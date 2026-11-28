@@ -83,56 +83,43 @@ document.addEventListener('DOMContentLoaded', () => {
 function initIslamicApp() {
   console.log('🕌 بدء تشغيل تطبيق المجلس - الموسوعة القرآنية والابتهالات...');
 
-  // استرجاع الإعدادات المحفوظة محلياً
-  loadPersistedData();
-
-  // تهيئة مشغلات الصوت
-  initAudioElements();
-
-  // تهيئة مواقيت الصلاة في صدارة التطبيق
-  initPrayerSystem();
-
-  // تهيئة نظام التجدد التلقائي اليومي
-  initDailyRenewalSystem();
-
-  // تهيئة المصحف التفاعلي وتزامن الكلمات
-  initQuranReader();
-
-  // تهيئة علامة الختمة
-  initBookmarkSystem();
-
-  // تهيئة إذاعة القرآن الكريم من القاهرة
-  initRadioSection();
-
-  // تهيئة قسم النوادر والابتهالات الموحد
-  initRareAndIbtehalatSection();
-
-  // تهيئة موسوعة كبار القراء
-  initRecitersEncyclopedia();
-
-  // تهيئة حصن المسلم
-  initAzkarSection();
-
-  // تهيئة قصص الأنبياء وقارئ الصوت الآلي
-  initStoriesSection();
-
-  // تهيئة السبحة الإلكترونية الذكية
-  initTasbeehSection();
-
-  // نظام التذكير بالصلاة على النبي ﷺ كل ساعتين
-  setupSalawatReminder();
-
-  // معالجة التنقل الداخلي (Hash routing)
-  handleInitialRoute();
-
-  // إخفاء شاشة البداية بسلاسة
-  setTimeout(() => {
-    const loadingScreen = document.getElementById('loading');
-    if (loadingScreen) {
-      loadingScreen.style.opacity = '0';
-      setTimeout(() => { loadingScreen.style.display = 'none'; }, 400);
+  // لا نسمح بتعطل قسم واحد بإيقاف التطبيق بالكامل.
+  const runInitStep = (label, task) => {
+    try {
+      task();
+    } catch (error) {
+      console.error(`[المجلس] تعذر تهيئة قسم: ${label}`, error);
     }
-  }, 450);
+  };
+
+  try {
+    runInitStep('التخزين المحلي', loadPersistedData);
+    runInitStep('مشغلات الصوت', initAudioElements);
+    runInitStep('مواقيت الصلاة', initPrayerSystem);
+    runInitStep('ورد اليوم', initDailyRenewalSystem);
+    runInitStep('المصحف التفاعلي', initQuranReader);
+    runInitStep('علامة الختمة', initBookmarkSystem);
+    runInitStep('إذاعة القرآن', initRadioSection);
+    runInitStep('النوادر والابتهالات', initRareAndIbtehalatSection);
+    runInitStep('موسوعة القراء', initRecitersEncyclopedia);
+    runInitStep('حصن المسلم', initAzkarSection);
+    runInitStep('قصص الأنبياء', initStoriesSection);
+    runInitStep('المسبحة', initTasbeehSection);
+    runInitStep('التذكير بالصلاة على النبي', setupSalawatReminder);
+    runInitStep('التنقل الداخلي', handleInitialRoute);
+  } finally {
+    // إخفاء شاشة البداية حتى لو حدث خطأ أثناء تهيئة أحد الأقسام.
+    const hideLoadingScreen = () => {
+      const loadingScreen = document.getElementById('loading');
+      if (loadingScreen) {
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => { loadingScreen.style.display = 'none'; }, 400);
+      }
+    };
+    hideLoadingScreen();
+    // شبكة الأمان: لا تترك شاشة البداية ظاهرة بسبب أي خطأ غير متوقع.
+    setTimeout(hideLoadingScreen, 1800);
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
