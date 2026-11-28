@@ -2419,7 +2419,14 @@ function renderRareLibrary(){
  const all=getRareLibraryItems(),map=new Map();
  all.forEach(x=>{const k=normalizeRareLibraryName(x.reciter);if(!map.has(k))map.set(k,{key:k,name:k,items:[]});map.get(k).items.push(x);});
  const reciters=[...map.values()].sort((a,b)=>a.name.localeCompare(b.name,'ar'));
- const selected=map.get(rareLibraryState.reciter);
+ const selected=map.get(rareLibraryState.reciter) || (rareLibraryState.directoryId ? (() => {
+  const reciter = ALL_RECITERS_DATA.find(x => x.id === rareLibraryState.directoryId);
+  const matches = all.filter(x =>
+    x.category === rareLibraryState.directoryId ||
+    normalizeRareLibraryName(x.reciter) === normalizeRareLibraryName(reciter && reciter.name)
+  );
+  return matches.length ? { key: rareLibraryState.reciter, name: reciter ? reciter.name : rareLibraryState.reciter, items: matches } : null;
+ })() : null);
  const groups=selected?getRareLibraryGroups(selected.items):[];
  const group=groups.find(x=>x.id===rareLibraryState.group);
  const track=selected&&selected.items.find(x=>x.id===rareLibraryState.track);
@@ -2577,7 +2584,15 @@ function openReciterDirectoryItem(id, category) {
     return;
   }
   navigateTo('rare-ibtehalat');
-  openRareLibraryReciter(normalizeRareLibraryName(reciter.name));
+  rareLibraryState = {
+    view: 'tracks',
+    reciter: normalizeRareLibraryName(reciter.name),
+    group: 'all',
+    track: '',
+    search: '',
+    directoryId: reciter.id
+  };
+  renderRareLibrary();
 }
 
 function renderRecitersGrid(list) {
@@ -2608,7 +2623,7 @@ function renderRecitersGrid(list) {
           <span class="reciter-capability-tag">${hasFullQuran ? 'مصحف كامل • ' + modes : 'تسجيلات تراثية / نوادر'}</span>
         </div>
         <button class="reciter-favorite-btn ${favorite ? 'is-favorite' : ''}" type="button" aria-label="${favorite ? 'إزالة من المفضلة' : 'إضافة للمفضلة'}" onclick="toggleFavoriteReciter('${r.id}', event)">${favorite ? '♥' : '♡'}</button>
-        <button class="action-btn action-btn-primary reciter-open-btn" type="button">${hasFullQuran ? 'استماع 📖' : 'استكشف 🎙️'}</button>
+        <button class="action-btn action-btn-primary reciter-open-btn" type="button" onclick="event.stopPropagation();openReciterDirectoryItem('${r.id}', '${r.category}')">${hasFullQuran ? 'استماع 📖' : 'استكشف 🎙️'}</button>
       </div>`;
   }).join('');
 }
