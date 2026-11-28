@@ -2483,8 +2483,52 @@ function playIbtehalTrack(trackId){playAudioItem(trackId);}
 // ═══════════════════════════════════════════════════════════════
 // 15. موسوعة كبار القراء ومحرك البحث الفوري
 // ═══════════════════════════════════════════════════════════════
+const RECITER_DIRECTORY_STATE = { filter: 'all' };
+
+function getFavoriteReciterIds() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('el_magles_favorite_reciters') || '[]');
+    return Array.isArray(saved) ? saved : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function toggleFavoriteReciter(reciterId, event) {
+  if (event) event.stopPropagation();
+  const favorites = getFavoriteReciterIds();
+  const isFavorite = favorites.includes(reciterId);
+  const next = isFavorite ? favorites.filter(id => id !== reciterId) : [...favorites, reciterId];
+  try {
+    localStorage.setItem('el_magles_favorite_reciters', JSON.stringify(next));
+  } catch (error) {
+    showToast('تعذر حفظ المفضلة على هذا الجهاز');
+    return;
+  }
+  renderRecitersGrid(getFilteredReciters());
+  showToast(isFavorite ? 'تمت إزالة القارئ من المفضلة' : 'تمت إضافة القارئ إلى المفضلة ♥');
+}
+
+function getFilteredReciters() {
+  const query = (document.getElementById('reciters-search-input')?.value || '').toLowerCase().trim();
+  const filter = RECITER_DIRECTORY_STATE.filter;
+  const favorites = getFavoriteReciterIds();
+  return ALL_RECITERS_DATA.filter(reciter => {
+    const hasFullQuran = !!(reciter.supportsMurattal || reciter.supportsMojawwad);
+    const matchesFilter =
+      filter === 'all' ||
+      filter === 'archives' && !hasFullQuran ||
+      filter === 'available' && hasFullQuran ||
+      filter === 'favorites' && favorites.includes(reciter.id) ||
+      reciter.category === filter;
+    const searchable = (reciter.name + ' ' + (reciter.info || '')).toLowerCase();
+    return matchesFilter && (!query || searchable.includes(query));
+  });
+}
+
 function initRecitersEncyclopedia() {
-  renderRecitersGrid(ALL_RECITERS_DATA);
+  RECITER_DIRECTORY_STATE.filter = 'all';
+  renderRecitersGrid(getFilteredReciters());
 }
 
 function openReciterDirectoryItem(id, category) {
@@ -2494,82 +2538,53 @@ function openReciterDirectoryItem(id, category) {
     return;
   }
   navigateTo('rare-ibtehalat');
-  filterRareAndIbtehalat(category || 'ibtehal_all');
+  filterRareAndIbtehalat(category || 'rare_all');
+  if (reciter) showToast('تصفّح قسم النوادر للعثور على التسجيلات المتاحة لهذا الصوت');
 }
 
 function renderRecitersGrid(list) {
   const container = document.getElementById('reciters-list-container');
   if (!container) return;
+  const count = document.getElementById('reciters-directory-count');
+  if (count) count.textContent = `يعرض ${list.length} من ${ALL_RECITERS_DATA.length} قارئاً • ${getFavoriteReciterIds().length} في المفضلة`;
 
   if (list.length === 0) {
-    container.innerHTML = `<div class="card" style="text-align: center; color: var(--text-muted); padding: 20px;">لم يتم العثور على قراء بهذا الاسم</div>`;
+    const filter = RECITER_DIRECTORY_STATE.filter;
+    const message = filter === 'favorites'
+      ? 'لم تضف قراء إلى المفضلة بعد — اضغط ♥ على بطاقة أي قارئ.'
+      : 'لم يتم العثور على نتائج مطابقة. جرّب اسماً آخر أو غيّر التصنيف.';
+    container.innerHTML = `<div class="card reciters-empty-state">${message}</div>`;
     return;
   }
 
-  container.innerHTML = list.map(r => `
-    <div class="card reciter-card" onclick="openReciterDirectoryItem('${r.id}', '${r.category}')">
-      <img class="reciter-list-avatar" src="${getSheikhAvatarImage(r.name)}" alt="${r.name}" loading="lazy" onerror="this.onerror=null;this.src=getSheikhAvatarSvg('${r.name}')">
-      <div class="reciter-list-copy">
-        <div class="reciter-name-bold">${r.name}</div>
-        <div class="reciter-subtitle">${r.info}</div>
-      </div>
-      <button class="action-btn action-btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">${(r.supportsMurattal || r.supportsMojawwad) ? 'استماع 📖' : 'النوادر 🎙️'}</button>
-    </div>
-  `).join('');
+  container.innerHTML = list.map(r => {
+    const favorite = getFavoriteReciterIds().includes(r.id);
+    const hasFullQuran = !!(r.supportsMurattal || r.supportsMojawwad);
+    const modes = [r.supportsMurattal ? 'مرتل' : '', r.supportsMojawwad ? 'مجود' : ''].filter(Boolean).join(' • ');
+    return `
+      <div class="card reciter-card" onclick="openReciterDirectoryItem('${r.id}', '${r.category}')">
+        <img class="reciter-list-avatar" src="${getSheikhAvatarImage(r.name)}" alt="${r.name}" loading="lazy" onerror="this.onerror=null;this.src=getSheikhAvatarSvg('${r.name}')">
+        <div class="reciter-list-copy">
+          <div class="reciter-name-bold">${r.name}</div>
+          <div class="reciter-subtitle">${r.info}</div>
+          <span class="reciter-capability-tag">${hasFullQuran ? 'مصحف كامل • ' + modes : 'تسجيلات تراثية / نوادر'}</span>
+        </div>
+        <button class="reciter-favorite-btn ${favorite ? 'is-favorite' : ''}" type="button" aria-label="${favorite ? 'إزالة من المفضلة' : 'إضافة للمفضلة'}" onclick="toggleFavoriteReciter('${r.id}', event)">${favorite ? '♥' : '♡'}</button>
+        <button class="action-btn action-btn-primary reciter-open-btn" type="button">${hasFullQuran ? 'استماع 📖' : 'استكشف 🎙️'}</button>
+      </div>`;
+  }).join('');
 }
 
 function filterRecitersCategory(category) {
-  document.querySelectorAll('#page-reciters .chip-btn').forEach(btn => {
-    const onclickAttr = btn.getAttribute('onclick') || '';
-    btn.classList.toggle('active', onclickAttr.includes(`'${category}'`));
+  RECITER_DIRECTORY_STATE.filter = category;
+  document.querySelectorAll('#page-reciters [data-reciter-filter]').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-reciter-filter') === category);
   });
-
-  const query = (document.getElementById('reciters-search-input')?.value || '').toLowerCase().trim();
-  let list = category === 'all' ? ALL_RECITERS_DATA : ALL_RECITERS_DATA.filter(r => r.category === category);
-
-  if (query) {
-    list = list.filter(r => r.name.toLowerCase().includes(query) || r.info.toLowerCase().includes(query));
-  }
-
-  renderRecitersGrid(list);
+  renderRecitersGrid(getFilteredReciters());
 }
 
-function searchReciters(query) {
-  const clean = query.toLowerCase().trim();
-  let list = ALL_RECITERS_DATA;
-
-  if (clean) {
-    list = list.filter(r => r.name.toLowerCase().includes(clean) || r.info.toLowerCase().includes(clean));
-  }
-
-  renderRecitersGrid(list);
-}
-
-function openReciterInReader(reciterId) {
-  const reciter = ALL_RECITERS_DATA.find(r => r.id === reciterId);
-  if (!reciter) return;
-
-  if (reciter.supportsMurattal === false && STATE.currentMode === 'murattal') {
-    STATE.currentMode = 'mojawwad';
-  } else if (reciter.supportsMojawwad === false && STATE.currentMode === 'mojawwad') {
-    STATE.currentMode = 'murattal';
-  }
-
-  const btnMurattal = document.getElementById('btn-mode-murattal');
-  const btnMojawwad = document.getElementById('btn-mode-mojawwad');
-  if (btnMurattal) btnMurattal.classList.toggle('active', STATE.currentMode === 'murattal');
-  if (btnMojawwad) btnMojawwad.classList.toggle('active', STATE.currentMode === 'mojawwad');
-
-  STATE.currentReciter = reciter;
-  populateReaderReciters();
-  const select = document.getElementById('reader-reciter-select');
-  if (select) select.value = reciterId;
-
-  updateReaderHudReciterDisplay();
-
-  navigateTo('reader');
-  loadSurahAudio(STATE.currentSurahNumber);
-  showToast(`تم اختيار القارئ: ${reciter.name}`);
+function searchReciters() {
+  renderRecitersGrid(getFilteredReciters());
 }
 
 // ═══════════════════════════════════════════════════════════════
