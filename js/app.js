@@ -293,6 +293,8 @@ function initAudioElements() {
       }
     });
     STATE.globalAudio.addEventListener('ended', () => {
+      // إذا كان التسجيل ضمن قائمة الاستماع، انتقل تلقائياً للتسجيل التالي.
+      if (playNextQueuedTrackOnEnd()) return;
       // انتهى الملف: أعد كل مؤشرات التشغيل إلى ▶ ولا تترك بطاقة عالقة على إيقاف مؤقت.
       updateModernPlayBtn(false);
       document.querySelectorAll('.audio-item-card.is-playing, .media-audio-card.is-playing').forEach(card => {
@@ -1802,6 +1804,29 @@ function writeAudioQueue(queue) {
   try { localStorage.setItem('el-magles-audio-queue',JSON.stringify(queue)); return true; }
   catch(e) { showToast('تعذر حفظ قائمة الاستماع على الجهاز'); return false; }
 }
+
+function playQueuedAdjacentTrack(direction, ended = false) {
+  const current = STATE.modernPlayer.track;
+  if (!current) return false;
+  const queue = readAudioQueue();
+  if (!queue.length) return false;
+  const index = queue.findIndex(item => item.id === current.id);
+  if (index < 0) return false;
+  if (queue.length === 1) {
+    if (ended) return false;
+    playModernTrack(queue[0]);
+    return true;
+  }
+  const nextIndex = index + direction;
+  if (ended && nextIndex >= queue.length) return false;
+  const wrappedIndex = (nextIndex + queue.length) % queue.length;
+  playModernTrack(queue[wrappedIndex]);
+  return true;
+}
+
+function playNextQueuedTrackOnEnd() {
+  return playQueuedAdjacentTrack(1, true);
+}
 function showAudioQueue() {
   const queue=readAudioQueue();
   let panel=document.getElementById('council-audio-queue-panel');
@@ -2180,6 +2205,8 @@ function playAdjacentAudioTrack(direction) {
     showToast('التنقل بين التسجيلات متاح من قائمة النوادر والابتهالات');
     return;
   }
+  // أولوية التنقل لقائمة الاستماع الشخصية إن كان المقطع الحالي ضمنها.
+  if (playQueuedAdjacentTrack(direction, false)) return;
   const items = getAllAudioItems();
   const index = items.findIndex(item => item.id === current.id);
   if (index < 0 || !items.length) {
