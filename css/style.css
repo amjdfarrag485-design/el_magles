@@ -2919,3 +2919,22 @@ select:-webkit-autofill {
 .council-auth-message { margin-top: 12px; color: #bfe9d7; font-size: .84rem; line-height: 1.7; overflow-wrap: anywhere; }
 .council-auth-message.is-error { color: #ffaaa5; }
 .council-auth-email { color: #e6d9aa; font-size: .84rem; direction: ltr; overflow-wrap: anywhere; }
+
+
+/* إشعار تحديث تطبيق المجلس */
+.council-update-banner {
+  position: fixed; z-index: 10050; right: 14px; left: 14px; bottom: calc(82px + env(safe-area-inset-bottom));
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px; border: 1px solid rgba(212,175,55,.55); border-radius: 18px;
+  background: linear-gradient(135deg,#202319,#111610); color: #fff;
+  box-shadow: 0 12px 36px rgba(0,0,0,.55); direction: rtl;
+}
+.council-update-banner div { display: grid; gap: 4px; min-width: 0; }
+.council-update-banner strong { color: var(--gold-light,#f0d77d); font-size: .94rem; }
+.council-update-banner small { color: #d0cbbb; font-size: .77rem; line-height: 1.5; }
+.council-update-banner button {
+  flex: 0 0 auto; min-height: 42px; padding: 0 15px; border: 0; border-radius: 12px;
+  background: linear-gradient(135deg,#f2d477,#c79b27); color: #15150f; font: inherit; font-weight: 800;
+}
+.council-update-banner button:disabled { opacity: .65; }
+@media (max-width: 360px) { .council-update-banner { right: 8px; left: 8px; padding: 11px; } .council-update-banner small { font-size: .7rem; } }
