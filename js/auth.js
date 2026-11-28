@@ -3,7 +3,7 @@
  */
 (() => {
   'use strict';
-  const SUPABASE_URL = 'https://xgisqwevqsvpegbwjvcc.supabase.co';
+  const SUPABASE_URL = 'https://xgisgwevqsvpgebwjvcc.supabase.co';
   const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_fSb7x_1Rv329ZWyriwF4ww_5lrvsF7D';
   let client = null;
   let currentUser = null;
