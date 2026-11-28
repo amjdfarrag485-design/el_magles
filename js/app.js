@@ -266,6 +266,13 @@ function initAudioElements() {
 
   // تهيئة عنصر صوت الأذان المستقل
   STATE.adhanAudio = document.getElementById('adhan-audio-element');
+  if (STATE.adhanAudio) {
+    STATE.adhanAudio.addEventListener('ended', () => { STATE.isAdhanActive = false; });
+    STATE.adhanAudio.addEventListener('error', () => {
+      STATE.isAdhanActive = false;
+      console.warn('Adhan audio file could not be loaded:', STATE.adhanAudio.currentSrc || STATE.adhanAudio.src);
+    });
+  }
 
   // أحداث المشغل الصوتي التفاعلي الموحد (الإذاعة والابتهالات والنوادر)
   if (STATE.globalAudio) {
@@ -513,40 +520,35 @@ function toggleMasterAdhan() {
   STATE.adhanSettings.enabled = !STATE.adhanSettings.enabled;
   savePersistedData('app_adhan_master_enabled', STATE.adhanSettings.enabled);
   updateAdhanMasterUI();
-
+  if (!STATE.adhanAudio) STATE.adhanAudio = document.getElementById('adhan-audio-element');
   if (STATE.adhanSettings.enabled) {
-    // تجربة الصوت فوراً لتفعيل إذن Autoplay في المتصفح
     if (!STATE.adhanAudio) {
-      STATE.adhanAudio = document.getElementById('adhan-audio-element');
+      showToast('تعذر العثور على ملف صوت الأذان. حدّث الصفحة وحاول مرة أخرى.');
+      return;
     }
-    if (STATE.adhanAudio) {
-      STATE.adhanAudio.volume = 1.0;
-      STATE.adhanAudio.currentTime = 0;
-      STATE.adhanAudio.play().then(() => {
-        setTimeout(() => {
-          if (STATE.adhanAudio && !STATE.isAdhanActive) {
-            try {
-              STATE.adhanAudio.pause();
-              STATE.adhanAudio.currentTime = 0;
-            } catch(e){}
-          }
-        }, 2200);
+    STATE.adhanAudio.pause();
+    STATE.adhanAudio.currentTime = 0;
+    STATE.adhanAudio.volume = 1;
+    const playPromise = STATE.adhanAudio.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise.then(() => {
+        STATE.isAdhanActive = true;
+        showToast('🔊 بدأ تشغيل الأذان التجريبي. اضغط الزر مرة أخرى لإيقافه.');
       }).catch(err => {
+        STATE.isAdhanActive = false;
         console.warn('Adhan preview error:', err);
+        showToast('لم يعمل الصوت. تأكد من الإنترنت وارفع صوت الوسائط ثم جرّب مرة أخرى.');
       });
     }
-    showToast('تم تفعيل الأذان التلقائي وسماح الصوت بنجاح 🔔');
   } else {
     if (STATE.adhanAudio) {
-      try {
-        STATE.adhanAudio.pause();
-        STATE.adhanAudio.currentTime = 0;
-      } catch(e){}
+      STATE.adhanAudio.pause();
+      STATE.adhanAudio.currentTime = 0;
     }
-    showToast('تم كتم الأذان التلقائي 🔕');
+    STATE.isAdhanActive = false;
+    showToast('تم إيقاف الأذان التلقائي 🔕');
   }
 }
-
 function updateAdhanMasterUI() {
   const isEn = STATE.adhanSettings.enabled;
   const btnHero = document.getElementById('adhan-master-toggle-btn');
@@ -590,10 +592,12 @@ function playAdhanAudio(prayerName, prayerId) {
   }
 
   STATE.adhanAudio.play().then(() => {
-    showToast(`🕌 الله أكبر.. حان الآن موعد ${prayerName} حسب التوقيت المحلي لمصر 🇪🇬`, 6000);
+    STATE.isAdhanActive = true;
+    showToast(`🕌 حان الآن موعد ${prayerName} حسب مواقيت موقعك 🇪🇬`, 6000);
   }).catch(err => {
+    STATE.isAdhanActive = false;
     console.warn('Adhan autoplay blocked by browser:', err);
-    showToast(`🕌 حان موعد ${prayerName} (انقر هنا لسماع الأذان) 🔊`, 8000);
+    showToast(`🕌 حان موعد ${prayerName}، لكن المتصفح منع التشغيل التلقائي. افتح التطبيق واضغط زر الأذان.`, 8000);
   });
 }
 
