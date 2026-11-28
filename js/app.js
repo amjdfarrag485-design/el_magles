@@ -2450,8 +2450,12 @@ function renderRareLibrary(){
   const list=groups.filter(x=>!q||x.title.toLowerCase().includes(q));
   body='<div class="rare-library-groups">'+list.map(g=>'<button class="rare-library-group" onclick="openRareLibraryGroup(\''+g.id+'\')"><span class="rare-group-icon">'+g.icon+'</span><span class="rare-group-copy"><strong>'+g.title+'</strong><small>'+g.items.length+' تسجيل</small></span><span class="rare-group-arrow">‹</span></button>').join('')+'</div>';
   if(!list.length)body='<div class="rare-library-empty">لا توجد أقسام مسجلة لهذا الشيخ حتى الآن.</div>';
- }else if(rareLibraryState.view==='tracks'&&selected&&(rareLibraryState.group==='all'||group)){
-  heading=rareLibraryState.group==='all'?selected.name:group.title;subtitle='التسجيلات المتاحة للشيخ';
+ }else if(rareLibraryState.view==='tracks'&&(rareLibraryState.group==='all'||group)){
+  heading=selected? (rareLibraryState.group==='all'?selected.name:group.title) : (rareLibraryState.reciter||'مكتبة القارئ');
+  subtitle='التسجيلات المتاحة لهذا الشيخ فقط';
+  if(!selected){
+   body='<div class="rare-library-empty">لسه مفيش تسجيلات مضافة للقارئ ده. أول ما نضيف تسجيلاته هتظهر هنا مباشرة.</div>';
+  } else {
   const sourceItems=rareLibraryState.group==='all'?selected.items:group.items;
   const list=sourceItems.filter(x=>!q||(x.title+' '+(x.desc||'')+' '+(x.badge||'')).toLowerCase().includes(q));
   const avatar=escapeRareLibraryText(getSheikhAvatarImage(selected.name,false));
@@ -2461,6 +2465,7 @@ function renderRareLibrary(){
    return '<article class="rare-library-track rare-library-track-classic '+(playing?'is-playing':'')+'"><span class="rare-track-avatar"><img src="'+avatar+'" alt="'+escapeRareLibraryText(selected.name)+'" loading="lazy" onerror="this.onerror=null;this.src=\''+fallback+'\'"></span><div class="rare-track-copy"><strong>'+escapeRareLibraryText(x.title)+'</strong><span>'+escapeRareLibraryText(selected.name)+'</span><div class="rare-track-meta"><span>'+escapeRareLibraryText(x.badge||x.sourceTag||'تسجيل نادر')+'</span><small>'+escapeRareLibraryText(x.duration||'المدة غير محددة')+'</small></div></div><button class="rare-track-play" aria-label="تشغيل التسجيل" onclick="playAudioItem(\''+escapeRareLibraryText(x.id)+'\')">'+(playing?'Ⅱ':'▶')+'</button></article>';
   }).join('')+'</div>';
   if(!list.length)body='<div class="rare-library-empty">لا توجد تسجيلات متاحة لهذا الشيخ.</div>';
+  }
  }else if(rareLibraryState.view==='verses'&&selected&&track){
   heading=track.title;subtitle=selected.name;
   const segments=getRareTrackTextSegments(track);
@@ -2474,7 +2479,7 @@ function renderRareLibrary(){
    body=source+'<div class="rare-library-empty"><strong>النص القرآني غير متاح لهذا التسجيل حاليًا.</strong><br>نقدر نشغّل التسجيل كاملًا، ولن نعرض آيات غير موثقة.</div>'+play;
   }
  }
- const count=rareLibraryState.view==='all'?all.length+' تسجيل':rareLibraryState.view==='sheikhs'?reciters.length+' قارئ':rareLibraryState.view==='groups'?(selected?selected.items.length:0)+' تسجيل':rareLibraryState.view==='tracks'?(rareLibraryState.group==='all'?(selected?selected.items.length:0):(group?group.items.length:0))+' تسجيل':(track?getRareTrackTextSegments(track).length:0)+' مقتطف متاح';
+ const count=rareLibraryState.view==='all'?all.length+' تسجيل':rareLibraryState.view==='sheikhs'?reciters.length+' قارئ':rareLibraryState.view==='groups'?(selected?selected.items.length:0)+' تسجيل':rareLibraryState.view==='tracks'?(selected?(rareLibraryState.group==='all'?selected.items.length:(group?group.items.length:0)):0)+' تسجيل':(track?getRareTrackTextSegments(track).length:0)+' مقتطف متاح';
  const placeholder=(rareLibraryState.view==='tracks'||rareLibraryState.view==='all')?'ابحث في التسجيلات...':rareLibraryState.view==='verses'?'ابحث في النص المتاح...':'ابحث عن شيخ...';
  root.innerHTML='<div class="rare-library-heading">'+back+'<div><h2>'+heading+'</h2><p>'+subtitle+'</p></div><span class="rare-library-mark">المجلس</span></div><label class="rare-library-search-wrap"><span>⌕</span><input id="rare-library-search" type="search" value="'+escapeRareLibraryText(q)+'" placeholder="'+placeholder+'" oninput="rareLibrarySearch(this.value)"></label><div class="rare-library-summary">'+count+' متاح</div>'+body;
 }
@@ -2566,13 +2571,13 @@ function initRecitersEncyclopedia() {
 
 function openReciterDirectoryItem(id, category) {
   const reciter = ALL_RECITERS_DATA.find(item => item.id === id);
-  if (reciter && (reciter.supportsMurattal || reciter.supportsMojawwad)) {
+  if (!reciter) return;
+  if (reciter.supportsMurattal || reciter.supportsMojawwad) {
     openReciterInReader(id);
     return;
   }
   navigateTo('rare-ibtehalat');
-  filterRareAndIbtehalat(category || 'rare_all');
-  if (reciter) showToast('تصفّح قسم النوادر للعثور على التسجيلات المتاحة لهذا الصوت');
+  openRareLibraryReciter(normalizeRareLibraryName(reciter.name));
 }
 
 function renderRecitersGrid(list) {
