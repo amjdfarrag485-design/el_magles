@@ -2882,3 +2882,40 @@ select:-webkit-autofill {
   .nav-tab-label { font-size: .62rem; }
   .nav-tab-icon { font-size: 1.12rem; }
 }
+
+
+/* ─── حساب المستخدم وتسجيل Google الحقيقي ─── */
+.council-account-trigger {
+  position: fixed; top: max(12px, env(safe-area-inset-top)); left: 14px; z-index: 1200;
+  width: 43px; height: 43px; border-radius: 50%; border: 1px solid rgba(212,175,55,.55);
+  color: #f3df9c; background: rgba(17,17,17,.94); box-shadow: 0 4px 18px rgba(0,0,0,.35);
+  font-size: 1.25rem; cursor: pointer; backdrop-filter: blur(10px);
+}
+.council-auth-backdrop {
+  position: fixed; inset: 0; z-index: 2200; display: none; align-items: center; justify-content: center;
+  padding: 18px; background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+}
+.council-auth-backdrop.show { display: flex; }
+.council-auth-dialog {
+  width: min(100%, 430px); max-height: min(82vh, 680px); overflow-y: auto; position: relative;
+  padding: 26px 20px 22px; border: 1px solid rgba(212,175,55,.42); border-radius: 22px;
+  background: linear-gradient(145deg,#191816,#101412); color: #f5f0df;
+  box-shadow: 0 20px 70px rgba(0,0,0,.65); text-align: center;
+}
+.council-auth-close {
+  position: absolute; top: 10px; left: 12px; width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.15); color: #eee; background: rgba(255,255,255,.06); font-size: 1.25rem;
+}
+.council-auth-mark { font-size: 2.2rem; margin: 8px 0; }
+.council-auth-dialog h2 { margin: 8px 0; color: var(--gold-light,#e7cb77); font-family: var(--font-uthmani,serif); }
+.council-auth-dialog p { color: #c9c5b8; line-height: 1.8; font-size: .92rem; }
+.council-google-button,.council-signout-button {
+  width: 100%; min-height: 49px; margin-top: 14px; border-radius: 13px; cursor: pointer; font: inherit; font-weight: 700;
+}
+.council-google-button { border: 1px solid rgba(47,143,112,.7); color: #fff; background: linear-gradient(110deg,#176b50,#2f8f70); }
+.council-google-button:disabled { opacity: .65; }
+.council-signout-button { border: 1px solid rgba(212,175,55,.35); color: #f3df9c; background: rgba(212,175,55,.08); }
+.council-auth-status { margin-top: 16px; padding: 11px; border-radius: 12px; background: rgba(47,143,112,.12); color: #bfe9d7; font-size: .86rem; overflow-wrap: anywhere; }
+.council-auth-message { margin-top: 12px; color: #bfe9d7; font-size: .84rem; line-height: 1.7; overflow-wrap: anywhere; }
+.council-auth-message.is-error { color: #ffaaa5; }
+.council-auth-email { color: #e6d9aa; font-size: .84rem; direction: ltr; overflow-wrap: anywhere; }
