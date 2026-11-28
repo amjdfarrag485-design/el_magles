@@ -1147,6 +1147,17 @@ const IBTEHALAT_DATA = [
 
 
   {
+    id: "minshawi_salat_alaika",
+    category: "minshawi",
+    title: "الصلاة والسلام عليك يا سيدي يا رسول الله",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    desc: "ابتهال نادر موثق بعنوانه من تسجيلات الشيخ محمد صديق المنشاوي",
+    youtubeId: "XbYwwfQKpHs",
+    badge: "ابتهال نادر",
+    sourceTag: "تسجيل مرئي مضمّن داخل المجلس",
+    duration: "غير محدد"
+  },
+  {
     id: "ramadan_tobar_ashraq",
     category: "ramadan",
     title: "أشرق الحق بالهدى",
@@ -2151,17 +2162,7 @@ const IBTEHALAT_DATA = [
     badge: "تواشيح تراثية",
     duration: "غير محدد"
   },
-  {
-    id: "minshawi_salat_alaika",
-    category: "minshawi",
-    title: "الصلاة والسلام عليك يا سيدي يا رسول الله",
-    reciter: "الشيخ محمد صديق المنشاوي",
-    desc: "ابتهال نادر موثق بعنوانه من تسجيلات الشيخ محمد صديق المنشاوي",
-    youtubeId: "XbYwwfQKpHs",
-    badge: "ابتهال نادر",
-    sourceTag: "تسجيل مرئي مضمّن داخل المجلس",
-    duration: "غير محدد"
-  },
+
 
   {
     id: "saeed_hafez_lughat_alkalam",
