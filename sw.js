@@ -16,9 +16,9 @@
 // 1. أسماء التخزين المؤقت (Cache Names)
 // ═══════════════════════════════════════════════════
 
-const CACHE_NAME = 'el-magles-v78';
-const STATIC_CACHE = 'el-magles-static-v78';
-const DYNAMIC_CACHE = 'el-magles-dynamic-v78';
+const CACHE_NAME = 'el-magles-v79';
+const STATIC_CACHE = 'el-magles-static-v79';
+const DYNAMIC_CACHE = 'el-magles-dynamic-v79';
 
 // ═══════════════════════════════════════════════════
 // 2. الملفات الثابتة المطلوب تخزينها عند التثبيت
@@ -85,7 +85,7 @@ self.addEventListener('install', (event) => {
       const response = await fetch(font);
       if (response.ok) await fontCache.put(font, response);
     }));
-    await self.skipWaiting();
+    // لا نفعّل الإصدار الجديد حتى يختار المستخدم «تحديث الآن».
   })());
 });
 
@@ -834,3 +834,11 @@ self.addEventListener('message', (event) => {
 // 15. تسجيل الـ Service Worker جاهز
 // ═══════════════════════════════════════════════════
 console.log('[SW] 🕌 Service Worker جاهز - بسم الله الرحمن الرحيم');
+
+
+// تفعيل الإصدار الجديد بطلب صريح من واجهة التطبيق.
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
