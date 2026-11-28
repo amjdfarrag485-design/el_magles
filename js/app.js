@@ -1697,6 +1697,12 @@ function updateCouncilMediaSession(track) {
         STATE.globalAudio.currentTime = Math.min(STATE.globalAudio.duration, STATE.globalAudio.currentTime + (details.seekOffset || 10));
       }
     });
+    navigator.mediaSession.setActionHandler('nexttrack', () => playAdjacentAudioTrack(1));
+    navigator.mediaSession.setActionHandler('previoustrack', () => playAdjacentAudioTrack(-1));
+    navigator.mediaSession.setActionHandler('stop', () => {
+      if (STATE.globalAudio) STATE.globalAudio.pause();
+      updateModernPlayBtn(false);
+    });
   } catch (error) {
     console.warn('Media Session metadata unavailable:', error);
   }
