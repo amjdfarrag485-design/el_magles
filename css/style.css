@@ -2761,3 +2761,72 @@ select:-webkit-autofill {
   -webkit-user-drag: none;
   touch-action: manipulation;
 }
+
+
+/* ─── واجهة موسوعة القراء المطوّرة ─── */
+.reciters-welcome-panel {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 18px;
+  padding: 22px 18px 18px;
+  border: 1px solid rgba(212, 175, 55, 0.72);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(212,175,55,.18), transparent 42%),
+    linear-gradient(145deg, #20251b 0%, #111610 58%, #0b0e0b 100%);
+  box-shadow: 0 8px 26px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.045);
+}
+.reciters-welcome-panel::after {
+  content: "۞";
+  position: absolute;
+  left: 12px;
+  bottom: -32px;
+  color: rgba(212,175,55,.09);
+  font-family: var(--font-uthmani);
+  font-size: 8rem;
+  line-height: 1;
+  pointer-events: none;
+}
+.reciters-welcome-kicker {
+  color: var(--gold-light);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .3px;
+  margin-bottom: 7px;
+}
+.reciters-welcome-panel h2 {
+  color: #fff;
+  font-family: var(--font-uthmani);
+  font-size: 1.45rem;
+  line-height: 1.55;
+  margin: 0 0 5px;
+}
+.reciters-welcome-panel p {
+  color: #c7c7bd;
+  font-size: .88rem;
+  line-height: 1.8;
+  margin: 0 0 15px;
+  max-width: 460px;
+}
+.reciters-featured-picks {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.reciters-featured-picks button {
+  padding: 8px 13px;
+  border: 1px solid rgba(212,175,55,.55) !important;
+  border-radius: 999px;
+  background: rgba(212,175,55,.10) !important;
+  color: #f4df9a !important;
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.reciters-featured-picks button:active {
+  background: rgba(212,175,55,.25) !important;
+  transform: scale(.97);
+}
