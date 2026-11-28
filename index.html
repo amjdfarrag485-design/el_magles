@@ -719,14 +719,14 @@
   </nav>
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
-  <script src="js/data.js?v=23"></script>
-  <script src="js/app.js?v=53"></script>
+  <script src="js/data.js?v=24"></script>
+  <script src="js/app.js?v=54"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
+        navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
           .then(reg => {
             console.log('PWA Service Worker registered:', reg.scope);
             try { reg.update(); } catch(e) {}
