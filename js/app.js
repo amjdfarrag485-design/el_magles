@@ -2461,7 +2461,7 @@ function renderRareLibrary(){
   heading=selected? (rareLibraryState.group==='all'?selected.name:group.title) : (rareLibraryState.reciter||'مكتبة القارئ');
   subtitle='التسجيلات المتاحة لهذا الشيخ فقط';
   if(!selected){
-   body='<div class="rare-library-empty">لسه مفيش تسجيلات مضافة للقارئ ده. أول ما نضيف تسجيلاته هتظهر هنا مباشرة.</div>';
+   body='<div class="rare-library-empty"><strong>مكتبة القارئ قيد التجهيز داخل المجلس</strong><br>مش هنفتح مواقع خارجية أو نعرض روابط مشغّلهاش المجلس. هنضيف هنا ملفات MP3 مباشرة بعد التحقق منها.</div>';
   } else {
   const sourceItems=rareLibraryState.group==='all'?selected.items:group.items;
   const list=sourceItems.filter(x=>!q||(x.title+' '+(x.desc||'')+' '+(x.badge||'')).toLowerCase().includes(q));
@@ -2574,6 +2574,31 @@ function getFilteredReciters() {
 function initRecitersEncyclopedia() {
   RECITER_DIRECTORY_STATE.filter = 'all';
   renderRecitersGrid(getFilteredReciters());
+}
+
+function openReciterInReader(reciterId) {
+  const reciter = ALL_RECITERS_DATA.find(item => item.id === reciterId);
+  if (!reciter) {
+    showToast('القارئ غير موجود في قائمة المصحف');
+    return;
+  }
+  const preferredMode = reciter.supportsMojawwad ? 'mojawwad' : 'murattal';
+  STATE.currentMode = preferredMode;
+  const murattalBtn = document.getElementById('btn-mode-murattal');
+  const mojawwadBtn = document.getElementById('btn-mode-mojawwad');
+  if (murattalBtn) murattalBtn.classList.toggle('active', preferredMode === 'murattal');
+  if (mojawwadBtn) mojawwadBtn.classList.toggle('active', preferredMode === 'mojawwad');
+  populateReaderReciters();
+  const select = document.getElementById('reader-reciter-select');
+  if (select) {
+    select.value = reciter.id;
+    onReaderReciterChange(reciter.id);
+  } else {
+    STATE.currentReciter = reciter;
+    updateReaderHudReciterDisplay();
+  }
+  navigateTo('reader');
+  if (typeof loadSurahAudio === 'function') loadSurahAudio(STATE.currentSurahNumber || 1);
 }
 
 function openReciterDirectoryItem(id, category) {
