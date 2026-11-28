@@ -150,6 +150,17 @@ const ALL_RECITERS_DATA = [
     serverMojawwad: "",
     info: "إمام المسجد النبوي وصاحب المدرسة الحجازية الخاشعة"
   },
+
+  {
+    id: "mohamed_el_halbaoui",
+    name: "محمد الهلباوي",
+    category: "golden",
+    supportsMurattal: true,
+    supportsMojawwad: false,
+    serverMurattal: "https://media.way2quran.com/mohamed-el-halbaoui/hafs-an-asim/",
+    serverMojawwad: "",
+    info: "قارئ ومبتهل مصري؛ المصحف المرتل برواية حفص عن عاصم"
+  },
   {
     id: "siddeeq_minshawi",
     name: "صديق السيد المنشاوي",
