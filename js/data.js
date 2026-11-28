@@ -2163,6 +2163,18 @@ const IBTEHALAT_DATA = [
     duration: "غير محدد"
   },
 
+  {
+    id: "saeed_hafez_lughat_alkalam",
+    category: "saeed_hafez",
+    title: "لغة الكلام",
+    reciter: "الشيخ سعيد حافظ",
+    desc: "ابتهال في مدح النبي ﷺ منشور على موقع قناة الكوثر",
+    url: "https://cdn1.alkawthartv.ir/original/2019/07/01/636975765381088574video.mp4",
+    badge: "مدح نبوي",
+    sourceTag: "قناة الكوثر",
+    duration: "غير محدد"
+  },
+
 ];
 
 // ═══════════════════════════════════════════════════════════════
