@@ -61,7 +61,10 @@ const STATE = {
   prayerTimes: null,
   nextPrayer: null,
   countdownInterval: null,
-  adhanMuteSettings: {},
+  adhanMuteSettings: { Fajr: true, Dhuhr: true, Asr: true, Maghrib: true, Isha: true },
+  adhanSettings: { enabled: false, playedToday: {} },
+  adhanAudio: null,
+  isAdhanActive: false,
 
   // السبحة الإلكترونية الذكية
   tasbeeh: {
@@ -140,13 +143,16 @@ function loadPersistedData() {
       STATE.tasbeeh.lastDate = todayStr;
     }
 
-    // استرجاع إعدادات كتم الأذان
+    // استرجاع إعدادات الأذان لكل صلاة
     const savedAdhan = localStorage.getItem('app_adhan_settings');
     if (savedAdhan) {
-      STATE.adhanMuteSettings = JSON.parse(savedAdhan);
-    } else {
-      STATE.adhanMuteSettings = { Fajr: true, Dhuhr: true, Asr: true, Maghrib: true, Isha: true };
+      STATE.adhanMuteSettings = { ...STATE.adhanMuteSettings, ...JSON.parse(savedAdhan) };
     }
+
+    // استرجاع زر الأذان الرئيسي وسجل الصلوات التي أُذّن لها اليوم
+    STATE.adhanSettings.enabled = localStorage.getItem('app_adhan_master_enabled') === 'true';
+    const playedToday = localStorage.getItem('app_adhan_played_today');
+    if (playedToday) STATE.adhanSettings.playedToday = JSON.parse(playedToday);
 
     // استرجاع علامة الختمة وآخر موضع قراءة
     const savedBookmark = localStorage.getItem('quran_bookmark');
@@ -338,15 +344,21 @@ function onQuranAudioLoadedMetadata() {
 async function initPrayerSystem() {
   updateHomeDates();
 
-  // جلب الإحداثيات الجغرافية أو اعتماد القاهرة كقيمة افتراضية رئيسية
+  // تحديد موقع المستخدم بدقة، مع الإسكندرية كبديل عند رفض الإذن أو تعذر GPS
+  const heroLoc = document.getElementById('hero-location-text');
+  const fullLoc = document.getElementById('full-prayer-location');
+  if (heroLoc) heroLoc.textContent = 'جارٍ تحديد موقعك...';
+  if (fullLoc) fullLoc.textContent = 'جارٍ تحديد موقعك...';
+
+  const useAlexandriaFallback = () => fetchPrayerTimings(31.2001, 29.9187, 'الإسكندرية، مصر');
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
-      (pos) => fetchPrayerTimings(pos.coords.latitude, pos.coords.longitude),
-      () => fetchPrayerTimings(30.0444, 31.2357, "القاهرة، مصر"),
-      { timeout: 8000 }
+      (pos) => fetchPrayerTimings(pos.coords.latitude, pos.coords.longitude, 'موقعك الحالي'),
+      () => useAlexandriaFallback(),
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     );
   } else {
-    fetchPrayerTimings(30.0444, 31.2357, "القاهرة، مصر");
+    useAlexandriaFallback();
   }
 }
 
@@ -380,6 +392,7 @@ async function fetchPrayerTimings(lat, lng, fallbackLocation = null) {
       renderHeroPrayers(data.data.timings);
       renderFullPrayersPage(data.data.timings);
       startPrayerCountdownLoop();
+      updateAdhanMasterUI();
     }
   } catch (error) {
     console.warn('Error fetching prayer times:', error);
@@ -476,6 +489,7 @@ function startPrayerCountdownLoop() {
       const prayerKey = `${now.toDateString()}_${STATE.nextPrayer.id}`;
       if (!STATE.adhanSettings.playedToday[prayerKey]) {
         STATE.adhanSettings.playedToday[prayerKey] = true;
+        savePersistedData('app_adhan_played_today', STATE.adhanSettings.playedToday);
         if (STATE.nextPrayer.id !== 'Sunrise') {
           playAdhanAudio(STATE.nextPrayer.name, STATE.nextPrayer.id);
         }
@@ -557,6 +571,7 @@ function updateAdhanMasterUI() {
 
 function playAdhanAudio(prayerName, prayerId) {
   if (!STATE.adhanSettings.enabled) return;
+  if (prayerId && STATE.adhanMuteSettings[prayerId] === false) return;
   if (!STATE.adhanAudio) {
     STATE.adhanAudio = document.getElementById('adhan-audio-element');
   }
@@ -603,7 +618,7 @@ function renderFullPrayersPage(timings) {
     const raw = timings[p.id];
     if (!raw) return '';
     const clean = raw.split(' ')[0];
-    const isMuted = STATE.adhanMuteSettings[p.id] === false;
+    const isEnabled = STATE.adhanMuteSettings[p.id] !== false;
 
     return `
       <div class="card" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px;">
@@ -615,7 +630,7 @@ function renderFullPrayersPage(timings) {
           <span style="font-size: 1.25rem; font-weight: 800; color: var(--gold-light);">${clean}</span>
           ${p.id !== 'Sunrise' ? `
             <button class="action-btn action-btn-secondary" style="padding: 6px 10px; font-size: 0.85rem;" onclick="toggleAdhanMute('${p.id}')">
-              ${isMuted ? '🔕 مكتوم' : '🔔 مفعّل'}
+              ${isEnabled ? '🔔 مفعّل' : '🔕 مكتوم'}
             </button>
           ` : ''}
         </div>
