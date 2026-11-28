@@ -657,30 +657,6 @@ const RADIO_STATIONS = [
 // 4.1. نوادر التلاوات والتسجيلات القرآنية التاريخية الخالدة لكبار القراء
 // ═══════════════════════════════════════════════════════════════
 const RARE_RECITATIONS_DATA = [
-  // ─── مداخل موثقة لمكتبات خارجية: لا ندّعي تشغيلها داخل مشغل المجلس ───
-  {
-    id: "external_mahmoud_siddeeq_library",
-    category: "mahmoud_siddeeq_minshawi",
-    title: "مكتبة محمود صديق المنشاوي – 145 تلاوة",
-    reciter: "الشيخ محمود صديق المنشاوي",
-    desc: "مكتبة تلاوات منشورة على شبكة تلاوة؛ يفتح التسجيل في صفحة المصدر.",
-    externalUrl: "https://tilawah.net/authors/mhmod-sdyk-almnshaoy",
-    badge: "مكتبة خارجية موثقة",
-    sourceTag: "شبكة تلاوة",
-    duration: "145 تلاوة"
-  },
-  {
-    id: "external_abu_alainain_library",
-    category: "abu_alainain_shishaa",
-    title: "مصحف أبو العينين شعيشع المجود – 44 سورة",
-    reciter: "الشيخ أبو العينين شعيشع",
-    desc: "مصحف مجود منشور على موقع التلاوة؛ يفتح المصدر لاختيار السورة وتشغيلها.",
-    externalUrl: "https://etilawa.com/reciters/abu-al-aynayn-shaisha/",
-    badge: "مكتبة خارجية موثقة",
-    sourceTag: "eTilawa",
-    duration: "44 ملفًا صوتيًا"
-  },
-
   // ─── إضافات موثقة من مكتبة MP3Quran ───
   {
     id: "rare_ayyub_fatiha",
