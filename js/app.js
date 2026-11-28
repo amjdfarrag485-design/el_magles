@@ -1593,6 +1593,8 @@ const SHEIKH_PORTRAITS = [
   { keys: ['السديس','عبد الرحمن السديس'], url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Abdur_Rahman_As-Sudais.jpg' },
   { keys: ['علي عبد الله جابر','علي جابر'], url: 'https://i0.wp.com/ahmalassaf.com/wp-content/uploads/2022/05/jaber.jpg?fit=784%2C578&ssl=1' },
   { keys: ['محمد الفيومي'], url: 'https://media.elbalad.news/2024/10/large/814/9/335.jpg' },
+  { keys: ['محمد الطوخي'], url: 'https://mediaaws.almasryalyoum.com/news/large/2015/06/22/341737_0.jpg' },
+  { keys: ['سعيد حافظ'], url: 'https://media.arabicradio.net/original/2021/10/17/637700580751789892.jpg' },
   { keys: ['محمد عمران','محمد أحمد عمران'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2023/04/10/2078766_0.jpeg' },
   { keys: ['أبو العينين شعيشع','ابو العينين شعيشع'], url: 'https://www.vetogate.com/Upload/libfiles/550/1/995.jpg' },
   { keys: ['محمد أيوب','محمد ايوب'], url: 'https://mediaaws-live.almasryalyoum.com/AMAYLivePictures/portalimages/news/original/2016/04/16/448289_0.jpeg' },
@@ -2426,10 +2428,25 @@ function renderRareLibrary(){
 function renderRareAndIbtehalatList(){renderRareLibrary();}
 function playRareQuranTrack(id){playAudioItem(id);}
 function playIbtehalTrack(id){playAudioItem(id);}
+function playYouTubeAudioItem(track) {
+  const old = document.getElementById('council-youtube-audio-overlay');
+  if (old) old.remove();
+  const overlay = document.createElement('div');
+  overlay.id = 'council-youtube-audio-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.94);display:flex;align-items:center;justify-content:center;padding:18px;direction:rtl;';
+  overlay.innerHTML = '<div style="width:min(100%,560px);background:#171611;border:1px solid #b99a42;border-radius:18px;padding:14px;color:#f6df91;box-shadow:0 12px 50px #000;">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;"><strong style="font-size:16px;line-height:1.6;">'+String(track.title||'ابتهال نادر').replace(/[<>]/g,'')+'</strong><button id="council-youtube-close" style="background:transparent;border:1px solid #b99a42;color:#f6df91;border-radius:50%;width:38px;height:38px;font-size:22px;">×</button></div>' +
+    '<div style="position:relative;padding-top:56.25%;overflow:hidden;border-radius:12px;background:#000;"><iframe title="تشغيل ابتهال المنشاوي" src="https://www.youtube-nocookie.com/embed/'+track.youtubeId+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe></div>' +
+    '<p style="color:#c9c1a8;font-size:12px;margin:10px 2px 0;">التشغيل داخل المجلس عبر مشغل YouTube المضمّن.</p></div>';
+  document.body.appendChild(overlay);
+  document.getElementById('council-youtube-close').onclick = () => overlay.remove();
+  overlay.addEventListener('click', event => { if (event.target === overlay) overlay.remove(); });
+}
 function playAudioItem(itemId) {
  const allItems=getAllAudioItems();
  const track=allItems.find(t=>t.id===itemId);
  if(!track)return;
+ if(track.youtubeId){playYouTubeAudioItem(track);return;}
  if(track.externalUrl){window.open(track.externalUrl,'_blank','noopener,noreferrer');showToast('تم فتح مصدر التسجيل الخارجي');return;}
  if(STATE.modernPlayer.track&&STATE.modernPlayer.track.id===itemId&&STATE.globalAudio&&STATE.globalAudio.src){toggleModernPlayPause();}
  else{playModernTrack(track);}
