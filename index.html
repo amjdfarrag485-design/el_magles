@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- ملف التصميم الفاخر الداكن -->
-  <link rel="stylesheet" href="css/style.css?v=26">
+  <link rel="stylesheet" href="css/style.css?v=27">
 
   <!-- App icons for browser and installed PWA -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
@@ -717,13 +717,19 @@
       <span class="nav-tab-label">المصحف</span>
     </button>
 
-    <!-- 3. النوادر والابتهالات -->
-    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')">
-      <span class="nav-tab-icon">🎙️</span>
-      <span class="nav-tab-label">النوادر والابتهالات</span>
+    <!-- 3. موسوعة كبار القراء -->
+    <button class="nav-tab-item" data-page="reciters" onclick="navigateTo('reciters')">
+      <span class="nav-tab-icon">👳</span>
+      <span class="nav-tab-label">القراء</span>
     </button>
 
-    <!-- 4. الإذاعة -->
+    <!-- 4. النوادر والابتهالات -->
+    <button class="nav-tab-item" data-page="rare-ibtehalat" onclick="navigateTo('rare-ibtehalat')">
+      <span class="nav-tab-icon">🎙️</span>
+      <span class="nav-tab-label">النوادر</span>
+    </button>
+
+    <!-- 5. الإذاعة -->
     <button class="nav-tab-item" data-page="radio" onclick="navigateTo('radio')">
       <span class="nav-tab-icon">📻</span>
       <span class="nav-tab-label">الإذاعة</span>
@@ -738,7 +744,7 @@
 
   <!-- ملفات البيانات والتطبيق البرمجية (مع كسر الكاش) -->
   <script src="js/data.js?v=28"></script>
-  <script src="js/app.js?v=60"></script>
+  <script src="js/app.js?v=61"></script>
 
   <!-- تسجيل PWA Service Worker مع التحديث التلقائي الفوري -->
   <script>
